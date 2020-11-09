@@ -7,8 +7,6 @@ else()
 	set(STRATIFYAPI_CONFIG_LIST release debug)
 endif()
 
-include(StratifyOS)
-
 if(NOT DEFINED IS_SDK)
 	sos_sdk_include_target(API "${STRATIFYAPI_CONFIG_LIST}")
 	sos_sdk_include_target(VarAPI "${STRATIFYAPI_CONFIG_LIST}")
