@@ -5,6 +5,7 @@
 #define THREADAPI_THREAD_THREAD_HPP
 
 #include <pthread.h>
+#include <signal.h>
 
 #include "Sched.hpp"
 #include "chrono/ClockTime.hpp"
