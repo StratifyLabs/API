@@ -15,10 +15,6 @@ project(API
 
 include(sos-sdk)
 
-
-include(StratifyOS)
-
-
 include(CTest)
 
 add_subdirectory(libraries/API API)
