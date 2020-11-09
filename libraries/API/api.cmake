@@ -56,7 +56,7 @@ macro(api_target NAME DIRECTORIES)
 
 		if(SOS_IS_LINK)
 			# this doesn't need to be added as a directory, just a dependency
-			list(APPEND LOCAL_DIRECTORIES StratifyOS)
+			# list(APPEND LOCAL_DIRECTORIES StratifyOS)
 		else()
 			list(APPEND LOCAL_DIRECTORIES StratifyOS_crt)
 		endif()

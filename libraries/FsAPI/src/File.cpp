@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <cstring>
 #include <fcntl.h>
+#include <sys/ioctl.h>
 
 #include "chrono/ClockTimer.hpp"
 #include "fs/File.hpp"
@@ -230,11 +231,6 @@ int File::fileno() const { return m_fd; }
 
 const File &File::sync() const {
   API_RETURN_VALUE_IF_ERROR(*this);
-#if defined __link
-  if (driver()) {
-    return *this;
-  }
-#endif
   if (m_fd >= 0) {
 #if !defined __win32
     API_SYSTEM_CALL("", internal_fsync(m_fd));
@@ -260,7 +256,7 @@ int File::flags() const {
 
 int File::fstat(struct stat *st) {
   API_RETURN_VALUE_IF_ERROR(-1);
-  return API_SYSTEM_CALL("", FSAPI_LINK_FSTAT(driver(), m_fd, st));
+  return API_SYSTEM_CALL("", ::fstat(m_fd, st));
 }
 
 void File::close() {
@@ -271,24 +267,22 @@ void File::close() {
 }
 
 int File::internal_open(const char *path, int flags, int mode) const {
-  return FSAPI_LINK_OPEN(driver(), path, flags, mode);
+  return ::open(path, flags, mode);
 }
 
 int File::interface_read(void *buf, int nbyte) const {
-  return FSAPI_LINK_READ(driver(), m_fd, buf, nbyte);
+  return ::read(m_fd, buf, nbyte);
 }
 
 int File::interface_write(const void *buf, int nbyte) const {
-  return FSAPI_LINK_WRITE(driver(), m_fd, buf, nbyte);
+  return ::write(m_fd, buf, nbyte);
 }
 
 int File::interface_ioctl(int request, void *argument) const {
-  return FSAPI_LINK_IOCTL(driver(), m_fd, request, argument);
+  return ::ioctl(m_fd, request, argument);
 }
 
-int File::internal_close(int fd) const {
-  return FSAPI_LINK_CLOSE(driver(), fd);
-}
+int File::internal_close(int fd) const { return ::close(fd); }
 
 int File::internal_fsync(int fd) const {
 #if defined __link
@@ -299,7 +293,7 @@ int File::internal_fsync(int fd) const {
 }
 
 int File::interface_lseek(int offset, int whence) const {
-  return FSAPI_LINK_LSEEK(driver(), m_fd, offset, whence);
+  return ::lseek(m_fd, offset, whence);
 }
 
 void File::open(var::StringView path, OpenMode flags, Permissions permissions) {

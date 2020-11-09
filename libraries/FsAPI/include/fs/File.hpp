@@ -398,9 +398,6 @@ public:
   File(File &&a) {}
   File &operator=(File &&a) {
     std::swap(m_fd, a.m_fd);
-#if defined __link
-    std::swap(m_driver, a.m_driver);
-#endif
     return *this;
   }
 
@@ -423,9 +420,6 @@ protected:
   int internal_fsync(int fd) const;
 
 private:
-#ifdef __link
-  API_AF(File, link_transport_mdriver_t *, driver, nullptr);
-#endif
   int m_fd = -1;
 
   int fstat(struct stat *st);
