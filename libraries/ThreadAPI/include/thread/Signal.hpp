@@ -143,7 +143,7 @@ public:
     API_AF(Construct, signal_function_callback_t, signal_function, nullptr);
     API_AF(Construct, signal_action_callback_t, signal_action, nullptr);
     API_AF(Construct, u32, flags, 0);
-    API_AF(Construct, sigset_t, mask, 0);
+    API_AF(Construct, sigset_t, mask, {0});
   };
 
   explicit SignalHandler(const Construct &options) {
