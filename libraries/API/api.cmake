@@ -9,7 +9,7 @@ macro(api_target NAME DIRECTORIES)
 
 	install(DIRECTORY include/ DESTINATION include/${NAME})
 
-	sos_sdk_add_subdirectory(PRIVATE_SOURCES src)
+	sos_sdk_add_subdirectory(PRIVATE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src)
 	sos_sdk_add_subdirectory(PUBLIC_SOURCES	${CMAKE_CURRENT_SOURCE_DIR}/include)
 	set(FORMAT_LIST ${PRIVATE_SOURCES} ${PUBLIC_SOURCES})
 
