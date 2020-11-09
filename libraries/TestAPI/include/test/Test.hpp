@@ -6,7 +6,6 @@
 #include <cstdarg>
 #if defined __link
 #include <errno.h>
-#include <sos/link.h>
 #endif
 
 #include "chrono/ClockTime.hpp"
