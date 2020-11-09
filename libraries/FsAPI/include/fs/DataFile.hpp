@@ -4,8 +4,6 @@
 #ifndef SAPI_FS_DATA_FILE_HPP_
 #define SAPI_FS_DATA_FILE_HPP_
 
-#include <sos/link.h>
-
 #include "File.hpp"
 #include "var/Data.hpp"
 

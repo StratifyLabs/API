@@ -4,7 +4,6 @@
 #ifndef SAPI_FS_FILE_HPP_
 #define SAPI_FS_FILE_HPP_
 
-#include <sos/link.h>
 
 #include "api/api.hpp"
 
@@ -21,11 +20,7 @@ public:
   enum class IsOverwrite { no, yes };
   enum class IsNull { yes };
 
-  enum class Whence {
-    set = LINK_SEEK_SET,
-    current = LINK_SEEK_CUR,
-    end = LINK_SEEK_END
-  };
+  enum class Whence { set = SEEK_SET, current = SEEK_CUR, end = SEEK_END };
 
   FileObject() = default;
   FileObject(const FileObject &a) = delete;

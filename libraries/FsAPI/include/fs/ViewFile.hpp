@@ -4,8 +4,6 @@
 #ifndef SAPI_FS_VIEW_FILE_HPP_
 #define SAPI_FS_VIEW_FILE_HPP_
 
-#include <sos/link.h>
-
 #include "api/api.hpp"
 
 #include "File.hpp"

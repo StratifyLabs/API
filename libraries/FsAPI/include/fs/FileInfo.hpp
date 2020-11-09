@@ -8,7 +8,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <sos/link/types.h>
 
 #include "var/StringView.hpp"
 
@@ -33,36 +32,36 @@ public:
 
   enum class OpenFlags {
     null = 0,
-    read_only /*! Open as read-only */ = LINK_O_RDONLY,
-    write_only /*! Open as write-only */ = LINK_O_WRONLY,
-    create /*! Create when opening (files) */ = LINK_O_CREAT,
-    truncate /*! Truncate when opening (files) */ = LINK_O_TRUNC,
-    append /*! Append when opening (files)*/ = LINK_O_APPEND,
-    exclusive /*! Create exclusively (files) */ = LINK_O_EXCL,
-    read_write /*! Open as read-write */ = LINK_O_RDWR,
-    non_block /*! Open as non-blocking */ = LINK_O_NONBLOCK,
-    no_delay /*! Open as non-blocking */ = LINK_O_NONBLOCK,
-    access_mode /*! Access mode mask */ = LINK_O_ACCMODE
+    read_only /*! Open as read-only */ = O_RDONLY,
+    write_only /*! Open as write-only */ = O_WRONLY,
+    create /*! Create when opening (files) */ = O_CREAT,
+    truncate /*! Truncate when opening (files) */ = O_TRUNC,
+    append /*! Append when opening (files)*/ = O_APPEND,
+    exclusive /*! Create exclusively (files) */ = O_EXCL,
+    read_write /*! Open as read-write */ = O_RDWR,
+    non_block /*! Open as non-blocking */ = O_NONBLOCK,
+    no_delay /*! Open as non-blocking */ = O_NONBLOCK,
+    access_mode /*! Access mode mask */ = O_ACCMODE
   };
 
   enum class AccessFlags {
     null = 0,
-    read_ok /*! Check if read access is allowed */ = LINK_R_OK,
-    write_ok /*! Check if write access is allowed */ = LINK_W_OK,
-    execute_ok /*! Check if execute access is allowed */ = LINK_X_OK,
-    file_ok /*! Check if file exists */ = LINK_F_OK
+    read_ok /*! Check if read access is allowed */ = R_OK,
+    write_ok /*! Check if write access is allowed */ = W_OK,
+    execute_ok /*! Check if execute access is allowed */ = X_OK,
+    file_ok /*! Check if file exists */ = F_OK
   };
 
   enum class TypeFlags {
     null = 0,
-    mask /*! Mode format mask */ = LINK_S_IFMT,
-    file_socket /*! Mode Socket mask */ = LINK_S_IFSOCK,
-    regular /*! Mode regular file value */ = LINK_S_IFREG,
-    block /*! Mode block device value */ = LINK_S_IFBLK,
-    character /*! Mode character device value */ = LINK_S_IFCHR,
-    directory /*! Mode directory value */ = LINK_S_IFDIR,
-    fifo /*! Mode FIFO value */ = LINK_S_IFDIR,
-    symbolic_link /*! Mode symbolic link value */ = LINK_S_IFLNK
+    mask /*! Mode format mask */ = S_IFMT,
+    file_socket /*! Mode Socket mask */ = S_IFSOCK,
+    regular /*! Mode regular file value */ = S_IFREG,
+    block /*! Mode block device value */ = S_IFBLK,
+    character /*! Mode character device value */ = S_IFCHR,
+    directory /*! Mode directory value */ = S_IFDIR,
+    fifo /*! Mode FIFO value */ = S_IFDIR,
+    symbolic_link /*! Mode symbolic link value */ = S_IFLNK
   };
 };
 

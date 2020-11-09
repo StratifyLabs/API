@@ -4,8 +4,6 @@
 #ifndef SAPI_FS_LAMBDA_FILE_HPP_
 #define SAPI_FS_LAMBDA_FILE_HPP_
 
-#include <sos/link.h>
-
 #include "File.hpp"
 
 namespace fs {

@@ -8,7 +8,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <sos/link.h>
 #include <string>
 
 #include "StringView.hpp"

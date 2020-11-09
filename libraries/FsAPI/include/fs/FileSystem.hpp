@@ -72,9 +72,6 @@ protected:
   int interface_rename(const char *old_name, const char *new_name) const;
 
 private:
-#ifdef __link
-  API_AF(FileSystem, link_transport_mdriver_t *, driver, nullptr);
-#endif
 };
 
 class TemporaryDirectory : public api::ExecutionContext {
