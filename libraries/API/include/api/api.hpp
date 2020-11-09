@@ -10,7 +10,7 @@
 
 #include <cstring>
 #include <errno.h>
-#include <sys/syslimits.h>
+#include <limits.h>
 
 #include <vector>
 
