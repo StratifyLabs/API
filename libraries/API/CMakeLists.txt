@@ -6,10 +6,10 @@ api_target(API "")
 target_sources(${RELEASE_TARGET}
 	PRIVATE
 	api.cmake
-	StratifyAPI.cmake
+	../API.cmake
 	)
 
 install(FILES
-	StratifyAPI.cmake
+	../API.cmake
 	DESTINATION
 	cmake/targets)
