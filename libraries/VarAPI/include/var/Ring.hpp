@@ -10,10 +10,9 @@
 #ifndef VAR_API_RING_HPP_
 #define VAR_API_RING_HPP_
 
-#include "Data.hpp"
 #include <new>
-#include <sos/dev/fifo.h>
-#include <sys/types.h>
+
+#include "Data.hpp"
 
 namespace var {
 
