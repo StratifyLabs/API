@@ -7,6 +7,28 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
+#if defined __win32
+#define posix_open _open
+#define posix_close _close
+#define posix_read _read
+#define posix_write _write
+#define posix_lseek _lseek
+#define posix_stat _stat
+#define posix_fstat _fstat
+#define POSIX_OPEN_FLAGS (O_BINARY)
+#define posix_nbyte_t unsigned int
+#else
+#define posix_open open
+#define posix_close close
+#define posix_read read
+#define posix_write write
+#define posix_lseek lseek
+#define posix_stat stat
+#define posix_fstat fstat
+#define POSIX_OPEN_FLAGS (0)
+#define posix_nbyte_t int
+#endif
+
 #include "chrono/ClockTimer.hpp"
 #include "fs/File.hpp"
 #include "var/StackString.hpp"
@@ -267,22 +289,27 @@ void File::close() {
 }
 
 int File::internal_open(const char *path, int flags, int mode) const {
-  return ::open(path, flags, mode);
+  return ::posix_open(path, flags, mode);
 }
 
 int File::interface_read(void *buf, int nbyte) const {
-  return ::read(m_fd, buf, nbyte);
+  return ::posix_read(m_fd, buf, nbyte);
 }
 
 int File::interface_write(const void *buf, int nbyte) const {
-  return ::write(m_fd, buf, nbyte);
+  return ::posix_write(m_fd, buf, nbyte);
 }
 
 int File::interface_ioctl(int request, void *argument) const {
+#if defined __win32
+  errno = ENOTSUP;
+  return -1;
+#else
   return ::ioctl(m_fd, request, argument);
+#endif
 }
 
-int File::internal_close(int fd) const { return ::close(fd); }
+int File::internal_close(int fd) const { return ::posix_close(fd); }
 
 int File::internal_fsync(int fd) const {
 #if defined __link
@@ -293,7 +320,7 @@ int File::internal_fsync(int fd) const {
 }
 
 int File::interface_lseek(int offset, int whence) const {
-  return ::lseek(m_fd, offset, whence);
+  return ::posix_lseek(m_fd, offset, whence);
 }
 
 void File::open(var::StringView path, OpenMode flags, Permissions permissions) {
