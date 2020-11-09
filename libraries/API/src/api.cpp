@@ -32,7 +32,7 @@ void api::api_assert(bool value, const char *function, int line) {
     void *array[200];
     size_t size;
     size = backtrace(array, 200);
-    backtrace_symbols_fd(array, size, stderr->_file);
+    backtrace_symbols_fd(array, size, fileno(stderr));
 #endif
     ::abort();
   }
