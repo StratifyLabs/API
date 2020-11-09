@@ -1,7 +1,7 @@
 #ifndef VARAPI_VAR_STACKSTRING_HPP
 #define VARAPI_VAR_STACKSTRING_HPP
 
-#include <sys/syslimits.h>
+#include <limits.h>
 
 #include "String.hpp"
 #include "StringView.hpp"
