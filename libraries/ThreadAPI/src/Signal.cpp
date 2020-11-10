@@ -59,7 +59,7 @@ const Signal &Signal::send_thread(pthread_t t) const {
 }
 
 const Signal &Signal::queue(pid_t pid) const {
-#if defined __macosx
+#if defined __macosx || defined __win32
   return send_pid(pid);
 #else
   API_RETURN_VALUE_IF_ERROR(*this);

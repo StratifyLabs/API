@@ -5,7 +5,6 @@
 #include <cstdio>
 #include <cstring>
 #include <fcntl.h>
-#include <sys/ioctl.h>
 
 #if defined __win32
 #define posix_open _open
@@ -18,6 +17,7 @@
 #define POSIX_OPEN_FLAGS (O_BINARY)
 #define posix_nbyte_t unsigned int
 #else
+#include <sys/ioctl.h>
 #define posix_open open
 #define posix_close close
 #define posix_read read
@@ -256,8 +256,6 @@ const File &File::sync() const {
   if (m_fd >= 0) {
 #if !defined __win32
     API_SYSTEM_CALL("", internal_fsync(m_fd));
-#else
-    ret = 0;
 #endif
   }
   return *this;

@@ -126,7 +126,13 @@ void Semaphore::open(
     m_handle
       = sem_open(name_string.cstring(), o_flags, perms.permissions(), value);
   } else {
-    m_handle = sem_open(name_string.cstring(), o_flags);
+    m_handle = sem_open(
+      name_string.cstring(),
+       o_flags
+       #if defined __win32
+       , perms.permissions(), 0
+       #endif
+       );
   }
   if (m_handle == SEM_FAILED) {
     API_RETURN_ASSIGN_ERROR(name_string.cstring(), errno);

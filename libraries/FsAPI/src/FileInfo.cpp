@@ -78,7 +78,11 @@ bool FileInfo::is_character_device() const {
 bool FileInfo::is_socket() const {
   TypeFlags masked = static_cast<TypeFlags>(m_stat.st_mode);
   masked &= TypeFlags::mask;
+  #if defined S_IFSOCK
   return masked == TypeFlags::file_socket;
+  #else
+  return false;
+  #endif
 }
 
 u32 FileInfo::size() const { return m_stat.st_size; }

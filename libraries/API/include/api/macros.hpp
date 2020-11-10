@@ -11,16 +11,13 @@
 #include <mcu/types.h>
 #if defined __win32
 
-/*
- * \tg
- *
- * There needs to be a list of POSIX error number
- *
- * For example,
- *
- * #define EIO 5
- *
- */
+#if !defined NAME_MAX
+#define NAME_MAX 256
+#endif
+
+#if !defined PATH_MAX
+#define PATH_MAX 1024
+#endif
 
 #endif
 

@@ -8,6 +8,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#if defined __win32
+#define O_NONBLOCK 0
+#endif
+
 
 #include "var/StringView.hpp"
 
@@ -55,13 +59,19 @@ public:
   enum class TypeFlags {
     null = 0,
     mask /*! Mode format mask */ = S_IFMT,
+    #if defined S_IFSOCK
     file_socket /*! Mode Socket mask */ = S_IFSOCK,
+    #endif
     regular /*! Mode regular file value */ = S_IFREG,
+    #if defined S_IFBLK
     block /*! Mode block device value */ = S_IFBLK,
+    #endif
     character /*! Mode character device value */ = S_IFCHR,
     directory /*! Mode directory value */ = S_IFDIR,
     fifo /*! Mode FIFO value */ = S_IFDIR,
+    #if defined S_IFLNK
     symbolic_link /*! Mode symbolic link value */ = S_IFLNK
+    #endif
   };
 };
 

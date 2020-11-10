@@ -246,7 +246,11 @@ Access FileSystem::access(var::StringView path) {
 #endif
 
 int FileSystem::interface_mkdir(const char *path, int mode) const {
-  return ::mkdir(path, mode);
+  return ::mkdir(path
+  #if !defined __win32
+   , mode
+   #endif
+   );
 }
 
 int FileSystem::interface_rmdir(const char *path) const {

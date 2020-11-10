@@ -67,8 +67,8 @@ void Printer::set_color_code(u32 code) {
 
 #if defined __link && defined __win32
   WORD color = static_cast<WORD>(m_default_color);
-  switch (code) {
-  case ColorCode::default:
+  switch (static_cast<ColorCode>(code)) {
+  case ColorCode::none:
     color = static_cast<WORD>(m_default_color);
     break;
   case ColorCode::black:

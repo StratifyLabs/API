@@ -7,7 +7,7 @@
 #ifdef __link
 #if defined __win32
 #include <windows.h>
-#include <winsock2.h>
+#include <windows.h>
 #if !defined FALSE
 #define FALSE 0
 #endif

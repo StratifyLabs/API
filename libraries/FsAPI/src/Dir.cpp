@@ -110,10 +110,18 @@ int Dir::interface_readdir_r(
 
 int Dir::interface_closedir() const { return ::closedir(m_dirp); }
 
-int Dir::interface_telldir() const { return ::telldir(m_dirp); }
+int Dir::interface_telldir() const { 
+  #if !defined __win32
+return ::telldir(m_dirp);
+#else
+return 0;
+#endif
+ }
 
 void Dir::interface_seekdir(size_t location) const {
+#if !defined __win32
   ::seekdir(m_dirp, location);
+#endif
 }
 
 void Dir::interface_rewinddir() const { ::rewinddir(m_dirp); }
