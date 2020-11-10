@@ -2,7 +2,7 @@
 macro(api_test_executable NAME DIRECTORIES)
 
 
-	sos_sdk_app_target(RELEASE ${NAME} "" release ${SOS_ARCH})
+	sos_sdk_app_target(RELEASE ${NAME} "unittest" release ${SOS_ARCH})
 	add_executable(${RELEASE_TARGET})
 	target_sources(${RELEASE_TARGET}
 		PRIVATE
@@ -37,14 +37,13 @@ macro(api_test_executable NAME DIRECTORIES)
 
 
 	get_target_property(MY_DIR ${RELEASE_TARGET} BINARY_DIR)
-	message(STATUS "BINARY DIR for ${RELEASE_TARGET} is ${MY_DIR}")
 
 	if(SOS_IS_LINK)
 
-		sos_sdk_add_test(${NAME} "" release)
-		sos_sdk_add_test(${NAME} "" coverage)
+		sos_sdk_add_test(${NAME} "unittest" release)
+		sos_sdk_add_test(${NAME} "unittest" coverage)
 
-		sos_sdk_app_target(COVERAGE ${NAME} "" coverage ${SOS_ARCH})
+		sos_sdk_app_target(COVERAGE ${NAME} "unittest" coverage ${SOS_ARCH})
 		add_executable(${COVERAGE_TARGET})
 		sos_sdk_copy_target(${RELEASE_TARGET} ${COVERAGE_TARGET})
 
