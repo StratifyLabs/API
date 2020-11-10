@@ -3,3 +3,5 @@
 tmp/
 cmake_arm/
 cmake_link/
+cmake_qt_link/
+build_*/

@@ -66,6 +66,7 @@ public:
         = SignalHandler(SignalHandler::Construct().set_signal_function(
           [](int a) { m_signal_number_io = 1; }));
 
+#if !defined __win32
       SignalHandler action_handler
         = SignalHandler(SignalHandler::Construct().set_signal_action(
           [](int signo, siginfo_t *sig_info, void *context) {
@@ -73,14 +74,15 @@ public:
           }));
 
       S s = S(S::Number::terminate).set_handler(handler);
-      S sa = S(S::Number::user1, 100).set_handler(action_handler);
+			S sa = S(S::Number::user1, 100).set_handler(action_handler);
 
       s.send_pid(Sched::get_pid());
       TEST_ASSERT(m_signal_number_io == 1);
 
       sa.send_pid(Sched::get_pid());
       printer().key_bool("sigqueue", m_signal_number_io == 100);
-    }
+#endif
+		}
 
     return true;
   }
