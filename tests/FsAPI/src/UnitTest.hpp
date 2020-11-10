@@ -36,14 +36,14 @@ public:
       = "0123456789012345678901234567890123456789012345678901234567890123456789"
         "0123456789";
 
-    API_ASSERT(DataFile().write(contents).return_value() == contents.length());
+		TEST_ASSERT(DataFile().write(contents).return_value() == contents.length());
 
     {
       DataFile df(OpenMode::read_write());
       df.seek(0).data().resize(contents.length());
       Data buffer(contents.length() + 4);
 
-      API_ASSERT(df.read(buffer).return_value() == contents.length());
+			TEST_ASSERT(df.read(buffer).return_value() == contents.length());
       df.seek(0);
       buffer.resize(7);
       while (df.read(buffer).return_value() > 0) {
@@ -65,7 +65,7 @@ public:
 
     u32 value;
 
-    API_ASSERT(
+		TEST_ASSERT(
       ViewFile(View(value)).write(contents).return_value() == sizeof(u32));
 
     return true;
@@ -255,20 +255,20 @@ public:
                     .write("Filesystem file")
                     .is_success());
 
-      TEST_EXPECT(FS().exists(file_name));
+			TEST_ASSERT(FS().exists(file_name));
 
       TEST_ASSERT(FS().exists("does_not_exist") == false);
 
       // not exists should not affect the error context
-      TEST_EXPECT(!FS().exists(file_name2) && is_success());
+			TEST_ASSERT(!FS().exists(file_name2) && is_success());
 
-      TEST_EXPECT(FS().remove(file_name).is_success());
-      TEST_EXPECT(!FS().exists(file_name) && is_success());
+			TEST_ASSERT(FS().remove(file_name).is_success());
+			TEST_ASSERT(!FS().exists(file_name) && is_success());
 
       TEST_ASSERT(
         F(F::IsOverwrite::yes, file_name).write(file_name2).is_success());
 
-      TEST_EXPECT(FS().get_info(file_name).size() == file_name2.length());
+			TEST_ASSERT(FS().get_info(file_name).size() == file_name2.length());
 
       TEST_ASSERT(FS().create_directory(dir_name).is_success());
       TEST_ASSERT(FS().remove_directory(dir_name).is_success());
@@ -280,18 +280,18 @@ public:
       reset_error();
       TEST_ASSERT(FS().remove_directory(dir_name).is_success());
 
-      TEST_EXPECT(FS().create_directory(dir_name_recursive).is_error());
+			TEST_ASSERT(FS().create_directory(dir_name_recursive).is_error());
 
-      TEST_EXPECT(dir_name_recursive == error().message());
-      TEST_EXPECT(error().message() == dir_name_recursive);
+			TEST_ASSERT(dir_name_recursive == error().message());
+			TEST_ASSERT(error().message() == dir_name_recursive);
 
       reset_error();
 
-      TEST_EXPECT(FS()
+			TEST_ASSERT(FS()
                     .create_directory(dir_name_recursive, FS::IsRecursive::yes)
                     .is_success());
 
-      TEST_EXPECT(F(F::IsOverwrite::yes, dir_name_recursive + "/tmp.txt")
+			TEST_ASSERT(F(F::IsOverwrite::yes, dir_name_recursive + "/tmp.txt")
                     .write("Hello")
                     .is_success);
 
@@ -302,7 +302,7 @@ public:
           .add_null_terminator()
         == StringView("Hello"));
 
-      TEST_EXPECT(F(F::IsOverwrite::yes,
+			TEST_ASSERT(F(F::IsOverwrite::yes,
                     fs::Path::parent_directory(dir_name_recursive) + "/tmp.txt")
                     .write("Hello2")
                     .is_success);
@@ -316,7 +316,7 @@ public:
           .add_null_terminator()
         == StringView("Hello2"));
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         F(F::IsOverwrite::yes,
           fs::Path::parent_directory(dir_name_recursive, 2) + "/tmp.txt")
           .write("Hello3")
@@ -331,21 +331,21 @@ public:
           .add_null_terminator()
         == StringView("Hello3"));
 
-      TEST_EXPECT(FS().exists(dir_name_recursive) == true);
+			TEST_ASSERT(FS().exists(dir_name_recursive) == true);
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         FS().exists(fs::Path::parent_directory(dir_name_recursive)) == true);
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         FS().exists(fs::Path::parent_directory(dir_name_recursive, 2)) == true);
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         FS().remove_directory(dir_name, FS::IsRecursive::yes).is_success());
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         FS().remove_directory(dir_name, FS::IsRecursive::yes).is_error());
 
-      TEST_EXPECT(error().message() == dir_name);
+			TEST_ASSERT(error().message() == dir_name);
 
       reset_error();
     }
@@ -425,18 +425,18 @@ public:
     TEST_ASSERT(
       F(F::IsOverwrite::yes, file_name).write(test_strings.at(0)).is_success());
 
-    TEST_EXPECT(
+		TEST_ASSERT(
       F(F::IsOverwrite::no, file_name).write(test_strings.at(0)).is_error());
 
-    TEST_EXPECT(var::StringView(error().message()) == file_name);
+		TEST_ASSERT(var::StringView(error().message()) == file_name);
 
     reset_error();
 
-    TEST_EXPECT(
+		TEST_ASSERT(
       String(DF().write(F(file_name, OpenMode::read_only())).data())
       == test_strings.at(0));
 
-    TEST_EXPECT(return_value() == StringView(test_strings.at(0)).length());
+		TEST_ASSERT(return_value() == StringView(test_strings.at(0)).length());
 
     TEST_ASSERT(F(F::IsOverwrite::yes, file_name)
                   .write(test_strings.at(0))
@@ -446,18 +446,18 @@ public:
                   .write(test_strings.at(4))
                   .is_success());
 
-    TEST_EXPECT(F("tmp1.txt", OpenMode::read_only()).is_error());
-    TEST_EXPECT(F(file_name, OpenMode::read_only()).is_error());
+		TEST_ASSERT(F("tmp1.txt", OpenMode::read_only()).is_error());
+		TEST_ASSERT(F(file_name, OpenMode::read_only()).is_error());
 
     reset_error();
-    TEST_EXPECT(F(file_name, OpenMode::read_only()).is_success());
+		TEST_ASSERT(F(file_name, OpenMode::read_only()).is_success());
 
     {
       F tmp(file_name, OpenMode::read_write());
 
-      TEST_EXPECT(FS().get_info(tmp).is_file());
+			TEST_ASSERT(FS().get_info(tmp).is_file());
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         DataFile()
           .reserve(256)
           .write(tmp, F::Write().set_terminator('\n'))
@@ -465,7 +465,7 @@ public:
           .add_null_terminator()
         == test_strings.at(0));
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         DataFile()
           .reserve(256)
           .write(tmp, F::Write().set_terminator('\n'))
@@ -473,7 +473,7 @@ public:
           .add_null_terminator()
         == test_strings.at(1));
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         DataFile()
           .reserve(256)
           .write(tmp, F::Write().set_terminator('\n'))
@@ -481,7 +481,7 @@ public:
           .add_null_terminator()
         == test_strings.at(2));
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         DataFile()
           .reserve(256)
           .write(tmp, F::Write().set_terminator('\n'))
@@ -489,7 +489,7 @@ public:
           .add_null_terminator()
         == test_strings.at(3));
 
-      TEST_EXPECT(
+			TEST_ASSERT(
         DataFile()
           .reserve(256)
           .write(tmp, F::Write().set_terminator('\n'))
@@ -497,14 +497,14 @@ public:
           .add_null_terminator()
         == test_strings.at(4));
 
-      TEST_EXPECT(
-        DataFile()
+			TEST_ASSERT(
+				DataFile()
           .reserve(256)
           .write(
             tmp.seek(var::StringView(test_strings.at(0)).length()),
             F::Write().set_terminator('\n'))
           .data()
-          .add_null_terminator()
+					.add_null_terminator()
         == test_strings.at(1));
     }
 
