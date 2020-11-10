@@ -41,7 +41,7 @@ String Base64::encode(View input) const {
   result.resize(get_encoded_size(input.size()));
   API_RETURN_VALUE_IF_ERROR(String());
   encode(result.to_char(), input.to_const_void(), input.size());
-  return std::move(result);
+  return result;
 }
 
 Data Base64::decode(StringView input) const {
@@ -51,7 +51,7 @@ Data Base64::decode(StringView input) const {
   API_RETURN_VALUE_IF_ERROR(Data());
   len -= decode(result.data(), input.data(), input.length());
   result.resize(len);
-  return std::move(result);
+  return result;
 }
 
 int Base64::encode(char *dest, const void *src, int nbyte) {

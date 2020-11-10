@@ -110,5 +110,5 @@ var::String Date::get_string(var::StringView format) const {
     API_SYSTEM_CALL("format time", -1);
     return var::String();
   }
-  return std::move(var::String(buffer));
+	return var::String(buffer);
 }

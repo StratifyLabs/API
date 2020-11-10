@@ -86,5 +86,5 @@ var::String Tokenizer::join(StringView delimeter) const {
     result.pop_back();
   }
 
-  return std::move(result);
+  return result;
 }

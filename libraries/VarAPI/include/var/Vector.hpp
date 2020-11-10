@@ -186,7 +186,7 @@ public:
     for (const auto &item : *this) {
       result.push_back(item);
     }
-    return std::move(result);
+    return result;
   }
 
   template <typename ConvertedType>
@@ -197,7 +197,7 @@ public:
     for (const auto &item : *this) {
       result.push_back(convert_function(item));
     }
-    return std::move(result);
+    return result;
   }
 
   static bool ascending(const T &a, const T &b) { return a < b; }

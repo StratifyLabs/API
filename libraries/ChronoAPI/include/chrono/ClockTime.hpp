@@ -139,14 +139,14 @@ public:
   using UniqueString = var::KeyString;
 
   static UniqueString get_unique_string() {
-    return std::move(ClockTime::get_system_time().get_string());
+		return ClockTime::get_system_time().get_string();
   }
 
   ClockTime age() const { return get_system_time() - *this; }
 
   UniqueString get_string() const {
-    return std::move(
-      UniqueString().format("%ld.%09ld", seconds(), nanoseconds()));
+		return
+			UniqueString().format("%ld.%09ld", seconds(), nanoseconds());
   }
 
   /*! \details Returns a pointer to a strut timespec. */

@@ -81,7 +81,7 @@ var::String FileObject::gets(char term) const {
     }
   }
 
-  return std::move(result);
+	return result;
 }
 
 const FileObject &FileObject::ioctl(int request, void *argument) const {
@@ -94,7 +94,7 @@ const FileObject &
 FileObject::write(const FileObject &source_file, const Write &options) const {
   API_RETURN_VALUE_IF_ERROR(*this);
 
-  if (options.location() != static_cast<u32>(-1)) {
+	if (options.location() != -1) {
     seek(options.location(), Whence::set);
   }
 

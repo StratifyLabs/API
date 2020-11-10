@@ -6,7 +6,7 @@
 
 #ifdef __link
 #if defined __win32
-#include <windows.h>
+#include <winsock2.h>
 #include <windows.h>
 #if !defined FALSE
 #define FALSE 0
@@ -14,7 +14,7 @@
 #if !defined TRUE
 #define TRUE 1
 #endif
-#include "dirent_windows.h"
+#include <dirent.h>
 #undef ERROR
 #else
 #include <dirent.h>

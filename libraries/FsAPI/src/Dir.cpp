@@ -105,7 +105,19 @@ DIR *Dir::interface_opendir(const char *path) const {
 int Dir::interface_readdir_r(
   struct dirent *result,
   struct dirent **resultp) const {
+#if defined __link
+	struct dirent * result_dirent = readdir(m_dirp);
+	if( result_dirent ){
+		memcpy(result, result_dirent, sizeof(struct dirent));
+		if( resultp != nullptr ){
+			*resultp = result;
+			return 0;
+		}
+	}
+	return -1;
+#else
   return ::readdir_r(m_dirp, result, resultp);
+#endif
 }
 
 int Dir::interface_closedir() const { return ::closedir(m_dirp); }

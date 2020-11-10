@@ -13,19 +13,19 @@
 #include "var/Tokenizer.hpp"
 
 var::String var::operator+(var::StringView lhs, const var::String &rhs) {
-  return std::move(String(lhs) + rhs);
+	return String(lhs) + rhs;
 }
 
 var::String var::operator+(var::StringView lhs, var::String &&rhs) {
-  return std::move(var::String(lhs) + std::move(rhs));
+	return var::String(lhs) + std::move(rhs);
 }
 
 var::String var::operator+(var::StringView lhs, var::StringView rhs) {
-  return std::move(var::String(lhs) + rhs);
+	return var::String(lhs) + rhs;
 }
 
 var::String var::operator+(const var::String &lhs, var::StringView rhs) {
-  return std::move(var::String(lhs) += rhs);
+	return var::String(lhs) += rhs;
 }
 
 using namespace var;
@@ -127,9 +127,9 @@ float String::to_float() const {
 }
 
 StringViewList String::split(StringView delimiter) const {
-  return std::move(
+	return
     Tokenizer(cstring(), Tokenizer::Construct().set_delimeters(delimiter))
-      .list());
+			.list();
 }
 
 size_t String::count(var::StringView occurance) const {

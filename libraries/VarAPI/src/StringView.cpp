@@ -42,8 +42,8 @@ StringView StringView::get_substring_with_length(size_t length) const {
 }
 
 StringViewList StringView::split(StringView delimeters) const {
-  return std::move(
-    Tokenizer(*this, Tokenizer::Construct().set_delimeters(delimeters)).list());
+	return
+		Tokenizer(*this, Tokenizer::Construct().set_delimeters(delimeters)).list();
 }
 
 float StringView::to_float() const {
@@ -73,7 +73,7 @@ int StringView::to_integer() const {
 }
 
 String StringView::get_string() const {
-  return std::move(String(data(), length()));
+	return String(data(), length());
 }
 
 String StringView::get_string(const StringView &a) { return a.get_string(); }
