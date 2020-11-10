@@ -25,11 +25,6 @@ macro(api_test_executable NAME DIRECTORIES)
 			)
 	endforeach(DIRECTORY)
 
-	#target_link_libraries(${RELEASE_TARGET}
-	#	PRIVATE
-	#	mbedtls
-	#	)
-
 	target_include_directories(${RELEASE_TARGET}
 		PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/../${NAME}/src
