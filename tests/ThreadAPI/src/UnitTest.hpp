@@ -89,7 +89,8 @@ public:
 
   bool sem_api_case() {
     printer::Printer::Object po(printer(), "sem_api_case()");
-    {
+#if !defined __win32
+		{
 
       Sem::unlink("sem");
       reset_error();
@@ -158,7 +159,7 @@ public:
       Sem::unlink("sem");
       reset_error();
     }
-
+#endif
     return true;
   }
 
@@ -245,8 +246,11 @@ public:
   }
 
   bool thread_api_case() {
+		TEST_ASSERT(is_success());
 
-    {
+#if !defined __win32
+		{
+
 
       TEST_ASSERT(
         T::Attributes().set_stack_size(4096).get_stack_size() >= 4096);
@@ -276,6 +280,7 @@ public:
       TEST_ASSERT(test_policy(this, Sched::Policy::round_robin));
       TEST_ASSERT(test_policy(this, Sched::Policy::fifo));
       TEST_ASSERT(test_policy(this, Sched::Policy::other));
+
     }
 
     {
@@ -322,6 +327,7 @@ public:
 
       TEST_ASSERT(is_success());
     }
+#endif
 
     {
       m_did_execute = false;
@@ -332,18 +338,25 @@ public:
             self->m_did_execute = true;
             return nullptr;
           }),
-        T::Attributes().set_detach_state(T::DetachState::joinable));
+				T::Attributes().set_detach_state(T::DetachState::joinable));
 
-      const int priority = Sched::get_priority_min(Sched::Policy::fifo);
+			TEST_ASSERT(is_success());
 
-      TEST_ASSERT(
+#if !defined __win32
+			const int priority = Sched::get_priority_min(Sched::Policy::fifo);
+
+			TEST_ASSERT(
         t.set_sched_parameters(Sched::Policy::fifo, priority)
           .get_sched_priority()
         == priority);
 
       TEST_ASSERT(t.get_sched_policy() == Sched::Policy::fifo);
 
+#endif
       TEST_ASSERT(t.join().is_success());
+
+			TEST_ASSERT(m_did_execute);
+
     }
 
     {
@@ -381,7 +394,13 @@ public:
         T::Construct().set_argument(this).set_function(
           [](void *args) -> void * {
             UnitTest *self = reinterpret_cast<UnitTest *>(args);
-            while (1) {
+						while (
+			 #if defined __win32
+									 0
+			 #else
+									 1
+			 #endif
+									 ) {
               wait(10_milliseconds);
             }
             self->m_did_execute = false;
@@ -394,8 +413,11 @@ public:
                     .cancel()
                     .join()
                     .is_success());
-
+#if defined __win32
+			TEST_ASSERT(m_did_execute == false);
+#else
       TEST_ASSERT(m_did_execute);
+#endif
     }
 
     {

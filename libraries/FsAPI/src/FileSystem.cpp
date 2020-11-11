@@ -59,7 +59,8 @@ const FileSystem &FileSystem::rename(const Rename &options) const {
 
 bool FileSystem::exists(var::StringView path) const {
   API_RETURN_VALUE_IF_ERROR(false);
-  bool result = File(path, OpenMode::read_only()).is_success();
+	get_info(path);
+	bool result = is_success();
   reset_error();
   return result;
 }
@@ -271,7 +272,10 @@ int FileSystem::interface_fstat(int fd, struct stat *stat) const {
 
 int FileSystem::interface_rename(const char *old_name, const char *new_name)
   const {
-  return ::rename(old_name, new_name);
+	int result = ::rename(old_name, new_name);
+	printf("rename result is %d\n", result);
+	perror("rename");
+	return result;
 }
 
 TemporaryDirectory::TemporaryDirectory(var::StringView parent)

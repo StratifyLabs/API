@@ -10,6 +10,8 @@
 
 #if defined __win32
 #define O_NONBLOCK 0
+#else
+#define O_BINARY 0
 #endif
 
 
@@ -45,6 +47,7 @@ public:
     read_write /*! Open as read-write */ = O_RDWR,
     non_block /*! Open as non-blocking */ = O_NONBLOCK,
     no_delay /*! Open as non-blocking */ = O_NONBLOCK,
+		binary = O_BINARY,
     access_mode /*! Access mode mask */ = O_ACCMODE
   };
 
@@ -149,7 +152,7 @@ class OpenMode : public FileInfoFlags {
 public:
   OpenMode() { m_flags = OpenFlags::null; }
   explicit OpenMode(OpenFlags flags) {
-    m_flags = static_cast<OpenFlags>(flags);
+		m_flags = static_cast<OpenFlags>(flags) | OpenFlags::binary;
   }
 
   static OpenMode create() {

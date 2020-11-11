@@ -98,6 +98,8 @@ public:
 
       FileInfo file_info = FS().get_info(td.path() + "/test.txt");
       TEST_ASSERT(file_info.is_directory() == false);
+
+#if !defined __win32
       TEST_ASSERT(file_info.permissions().is_owner_execute() == false);
       TEST_ASSERT(file_info.permissions().is_owner_read() == true);
       TEST_ASSERT(file_info.permissions().is_owner_write() == true);
@@ -105,6 +107,7 @@ public:
       TEST_ASSERT(file_info.permissions().is_public_execute() == false);
       TEST_ASSERT(file_info.permissions().is_public_read() == true);
       TEST_ASSERT(file_info.permissions().is_public_write() == false);
+#endif
 
       printer().object("file", file_info);
 
@@ -161,11 +164,11 @@ public:
         count++;
       }
       TEST_ASSERT(count == 5);
+#if !defined __win32
       TEST_ASSERT(d.tell() == (count - 1));
       TEST_ASSERT(d.seek(0).is_success());
       TEST_ASSERT(d.rewind().is_success());
       // const var::String entry = d.get_entry();
-      // printf("entry is %s\n", entry.cstring());
       TEST_ASSERT(d.get_entry() == "tmp/.");
 
       TEST_ASSERT(d.rewind().is_success());
@@ -173,6 +176,7 @@ public:
         printer().key("tell", NumberString(d.tell()).string_view());
         TEST_ASSERT(d.tell() == 0);
       }
+#endif
     }
 
     {
@@ -368,6 +372,13 @@ public:
       const StringView old_name = "old.txt";
       const StringView new_name = "new.txt";
 
+			//ensure a clean slate
+			FS().remove(old_name);
+			reset_error();
+
+			FS().remove(new_name);
+			reset_error();
+
       F(F::IsOverwrite::yes, old_name).write("Hello");
 
       TEST_ASSERT(FS().exists(old_name));
@@ -495,7 +506,7 @@ public:
           .write(tmp, F::Write().set_terminator('\n'))
           .data()
           .add_null_terminator()
-        == test_strings.at(4));
+				== test_strings.at(4));
 
 			TEST_ASSERT(
 				DataFile()

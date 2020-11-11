@@ -98,7 +98,7 @@ function(stratify_api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 
 
 	sos_sdk_app_target(RELEASE ${LOCAL_NAME} "unittest" release ${SOS_ARCH})
-	message(STATUS "API Test Executable ${RELEASE_TARGET}")
+  message(STATUS "API UnitTest Executable ${RELEASE_TARGET}")
 	add_executable(${RELEASE_TARGET})
 	target_sources(${RELEASE_TARGET}
 		PRIVATE

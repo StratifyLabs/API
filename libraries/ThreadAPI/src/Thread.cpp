@@ -10,6 +10,9 @@
 using namespace thread;
 
 Thread::Attributes::Attributes() {
+#if defined __win32
+	return;
+#endif
   API_RETURN_IF_ERROR();
   API_SYSTEM_CALL("", pthread_attr_init(&m_pthread_attr));
   set_inherit_sched(IsInherit::yes);
@@ -20,11 +23,13 @@ Thread::Attributes::Attributes() {
 }
 
 Thread::Attributes::~Attributes() {
-  API_RETURN_IF_ERROR();
-  API_SYSTEM_CALL("", pthread_attr_destroy(&m_pthread_attr));
+	pthread_attr_destroy(&m_pthread_attr);
 }
 
 Thread::Attributes &Thread::Attributes::set_stack_size(size_t value) {
+#if defined __win32
+	return *this;
+#endif
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL("", pthread_attr_setstacksize(&m_pthread_attr, value));
   return *this;
@@ -38,6 +43,9 @@ int Thread::Attributes::get_stack_size() const {
 }
 
 Thread::Attributes &Thread::Attributes::set_detach_state(DetachState value) {
+#if defined __win32
+	return *this;
+#endif
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL(
     "",
@@ -55,6 +63,9 @@ Thread::DetachState Thread::Attributes::get_detach_state() const {
 }
 
 Thread::Attributes &Thread::Attributes::set_inherit_sched(IsInherit value) {
+#if defined __win32
+	return *this;
+#endif
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL(
     "",
@@ -86,6 +97,9 @@ Thread::ContentionScope Thread::Attributes::get_scope() const {
 }
 
 Thread::Attributes &Thread::Attributes::set_sched_priority(int priority) {
+#if defined __win32
+	return *this;
+#endif
   API_RETURN_VALUE_IF_ERROR(*this);
   struct sched_param param = {0};
   param.sched_priority = priority;
@@ -94,6 +108,9 @@ Thread::Attributes &Thread::Attributes::set_sched_priority(int priority) {
 }
 
 Thread::Attributes &Thread::Attributes::set_sched_policy(Sched::Policy value) {
+#if defined __win32
+	return *this;
+#endif
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL(
     "",
