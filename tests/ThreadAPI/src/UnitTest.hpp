@@ -44,7 +44,7 @@ public:
       return false;
     }
 
-#if !defined __macosx
+#if !defined __macosx && !defined __win32
     if (!sem_api_case()) {
       return false;
     }
@@ -89,7 +89,6 @@ public:
 
   bool sem_api_case() {
     printer::Printer::Object po(printer(), "sem_api_case()");
-#if !defined __win32
 		{
 
       Sem::unlink("sem");
@@ -159,7 +158,6 @@ public:
       Sem::unlink("sem");
       reset_error();
     }
-#endif
     return true;
   }
 
