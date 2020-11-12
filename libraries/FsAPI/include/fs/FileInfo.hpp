@@ -11,7 +11,9 @@
 #if defined __win32
 #define O_NONBLOCK 0
 #else
+#if !defined O_BINARY
 #define O_BINARY 0
+#endif
 #endif
 
 
