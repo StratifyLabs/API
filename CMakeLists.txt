@@ -27,3 +27,5 @@ add_subdirectory(libraries/SysAPI SysAPI)
 add_subdirectory(libraries/TestAPI TestAPI)
 
 add_subdirectory(tests tests)
+
+install(DIRECTORY include/sdk DESTINATION include/sdk )

@@ -8,6 +8,11 @@ else()
 endif()
 
 if(NOT DEFINED IS_SDK)
+	message("API includes")
+	if(SOS_IS_ARM)
+		message("INCLUDE CRT")
+		sos_sdk_include_target(StratifyOS_crt "${STRATIFYAPI_CONFIG_LIST}")
+	endif()
 	sos_sdk_include_target(API "${STRATIFYAPI_CONFIG_LIST}")
 	sos_sdk_include_target(VarAPI "${STRATIFYAPI_CONFIG_LIST}")
 	sos_sdk_include_target(PrinterAPI "${STRATIFYAPI_CONFIG_LIST}")
@@ -16,6 +21,8 @@ if(NOT DEFINED IS_SDK)
 	sos_sdk_include_target(FsAPI "${STRATIFYAPI_CONFIG_LIST}")
 	sos_sdk_include_target(ThreadAPI "${STRATIFYAPI_CONFIG_LIST}")
 	sos_sdk_include_target(TestAPI "${STRATIFYAPI_CONFIG_LIST}")
+
+
 endif()
 
 function(stratifyapi_add_api_library NAME DEPENDENCIES)

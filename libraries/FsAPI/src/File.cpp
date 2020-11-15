@@ -245,6 +245,7 @@ File::File(
 
 File::~File() {
   if (fileno() >= 0) {
+    api::ErrorGuard error_guard;
     close();
   }
 }
