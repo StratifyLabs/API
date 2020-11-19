@@ -351,7 +351,7 @@ protected:
     Level m_verbose_level;
   };
 
-  virtual void interface_print_final(var::StringView view);
+  virtual void interface_print_final(const var::StringView view);
 
 private:
 #if defined __win32

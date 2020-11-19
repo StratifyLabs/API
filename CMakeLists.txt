@@ -17,6 +17,7 @@ include(sos-sdk)
 
 include(CTest)
 
+
 add_subdirectory(libraries/API API)
 add_subdirectory(libraries/VarAPI VarAPI)
 add_subdirectory(libraries/PrinterAPI PrinterAPI)
@@ -28,4 +29,3 @@ add_subdirectory(libraries/TestAPI TestAPI)
 
 add_subdirectory(tests tests)
 
-install(DIRECTORY include/sdk DESTINATION include/sdk )

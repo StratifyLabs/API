@@ -29,7 +29,6 @@ public:
     return *this;
   }
 
-  bool is_case_senstive() const { return m_is_case_sensitive; }
 
   const char *app_git_hash() const { return m_app_git_hash; }
 

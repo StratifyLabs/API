@@ -79,7 +79,7 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
   for (args = 1; args < count(); args++) {
     StringView arg = m_argv[args];
 
-    if (arg.find("--") == 0 && arg.length() >= 5) {
+    if (arg.find("--") == 0 && arg.length() >= 3) {
       const Tokenizer tokens(
         arg.pop_front(2),
         Tokenizer::Construct()
@@ -88,13 +88,7 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
           .set_maximum_delimeter_count(1));
 
       if (tokens.count() > 0) {
-        if (is_case_senstive() && (tokens.at(0) == name)) {
-          if (tokens.count() > 1) {
-            return tokens.at(1);
-          } else {
-            return var::StringView("true");
-          }
-        } else if (String(name).to_upper() == String(tokens.at(0)).to_upper()) {
+        if (tokens.at(0) == name) {
           if (tokens.count() > 1) {
             return tokens.at(1);
           } else {

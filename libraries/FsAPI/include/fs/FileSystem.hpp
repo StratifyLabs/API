@@ -76,7 +76,7 @@ private:
 
 class TemporaryDirectory : public api::ExecutionContext {
 public:
-  explicit TemporaryDirectory(var::StringView parent = "");
+  explicit TemporaryDirectory(const var::StringView parent = "");
   ~TemporaryDirectory();
 
 private:

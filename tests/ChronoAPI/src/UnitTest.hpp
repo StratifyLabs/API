@@ -17,10 +17,10 @@ public:
   using D = chrono::Date;
 
   bool execute_class_api_case() {
-    TEST_ASSERT_RESULT(execute_clocktime_api_case());
-    TEST_ASSERT_RESULT(execute_microtime_api_case());
-    TEST_ASSERT_RESULT(execute_clocktimer_api_case());
-    TEST_ASSERT_RESULT(execute_datetime_api_case());
+    execute_clocktime_api_case();
+    execute_microtime_api_case();
+    execute_clocktimer_api_case();
+    execute_datetime_api_case();
     return true;
   }
 
@@ -58,11 +58,12 @@ public:
       printer().key("date", d.get_string());
 
       TEST_ASSERT(d.year() == 2020);
-      TEST_ASSERT(d.month() == 10);
-      TEST_ASSERT(d.day() == 12);
+      TEST_EXPECT(d.month() == 10);
+      TEST_EXPECT(d.day() == 12);
       TEST_EXPECT(d.get_string() == "2020-10-12 03:30:31");
     }
 
+    printer().key("complete", __FUNCTION__);
     return true;
   }
 
@@ -122,6 +123,7 @@ public:
     TEST_EXPECT(0_seconds == t);
     TEST_EXPECT(0_seconds == t.micro_time());
 
+    printer().key("complete", __FUNCTION__);
     return true;
   }
 
@@ -164,6 +166,7 @@ public:
       TEST_EXPECT(ct.nanoseconds() == 5);
     }
 
+    printer().key("complete", __FUNCTION__);
     return true;
   }
 

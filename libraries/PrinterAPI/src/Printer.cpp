@@ -201,12 +201,15 @@ void Printer::print(
   }
 }
 
-void Printer::interface_print_final(var::StringView view) {
+void Printer::interface_print_final(const var::StringView view) {
 #if defined __link
   fwrite(view.data(), view.length(), 1, stdout);
   fflush(stdout);
 #else
-  ::write(stdout->_file, view.data(), view.length());
+  printf("%s", view.get_string().cstring());
+  fflush(stdout);
+  // something about writing directly causes some bytes to be dropped
+  //::write(stdout->_file, view.data(), view.length());
 #endif
 }
 
@@ -728,13 +731,13 @@ Printer &Printer::operator<<(var::View a) {
 #define USE_DEMANGLER 0
 
 Printer &Printer::operator<<(const api::Error &error_context) {
-  key(
-    "lineNumber",
-    var::NumberString(error_context.line_number()).string_view());
+  key("lineNumber",
+      var::NumberString(error_context.line_number()).string_view());
   key(
     "errorNumber",
     var::NumberString(error_context.error_number()).string_view());
   key("message", var::StringView(error_context.message()));
+#if defined __link
 
   api::Error::Backtrace backtrace(error_context);
 
@@ -757,6 +760,7 @@ Printer &Printer::operator<<(const api::Error &error_context) {
 
     offset++;
   } while (symbol != nullptr);
+#endif
 
   return *this;
 }

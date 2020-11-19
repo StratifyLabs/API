@@ -118,6 +118,7 @@ public:
   }
 
   bool view_api_case() {
+    Printer::Object po(printer(), "View");
 
     TEST_EXPECT(V().to_const_char() == nullptr);
 
@@ -198,10 +199,12 @@ public:
       TEST_ASSERT(View(buffer).pop_front(4).at<u32>(0) == 0x22334411);
     }
 
+    printer().key("complete", __FUNCTION__);
     return true;
   }
 
   bool tokenizer_api_case() {
+    Printer::Object po(printer(), "Tokenizer");
 
     {
       T t("0,1,2", T::Construct().set_delimeters(","));
@@ -299,20 +302,17 @@ public:
         token.sort(T::SortBy::descending).join(".") == "7.5.4.3.2.1.0");
     }
 
+    printer().key("complete", __FUNCTION__);
     return true;
   }
 
   bool base64_api_case() {
+    Printer::Object po(printer(), "Base64");
 
-    bool (*encode_test)(const char *, const char *)
-      = [](const char *input, const char *output) {
-          return (Base64().encode(SV(input)) == S(output));
-        };
-
-    printer().key("1", Base64().encode(StringView("1")));
-    printer().key(".", Base64().encode(StringView(".")));
-    printer().key("123.", Base64().encode(StringView("123.")));
-    printer().key("ks).", Base64().encode(StringView("ks).")));
+    bool (*encode_test)(const char *, const char *) = [](const char *input,
+                                                         const char *output) {
+      return (Base64().encode(SV(input)) == S(output));
+    };
 
     TEST_EXPECT(encode_test("1", "MQ=="));
     TEST_ASSERT(encode_test(".", "Lg=="));
@@ -480,6 +480,7 @@ public:
         == test_output);
     }
 
+    printer().key("complete", __FUNCTION__);
     return true;
   }
 
@@ -650,6 +651,7 @@ public:
       TEST_ASSERT(list.count() == 4);
     }
 
+    printer().key("complete", __FUNCTION__);
     return true;
   }
 
@@ -776,6 +778,7 @@ public:
 
     TEST_ASSERT(String().is_empty());
 
+    printer().key("complete", __FUNCTION__);
     return true;
   }
 

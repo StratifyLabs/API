@@ -192,8 +192,8 @@ const FileSystem &FileSystem::create_directory(
   var::StringView path,
   const Permissions &permissions) const {
 
-  const Permissions use_permissions
-    = permissions.permissions() == 0 ? get_permissions(path) : permissions;
+  const Permissions use_permissions =
+      permissions.permissions() == 0 ? get_permissions(path) : permissions;
 
   const var::PathString path_string(path);
   API_SYSTEM_CALL(
@@ -223,8 +223,9 @@ const FileSystem &FileSystem::create_directory(
   for (u32 i = 0; i < path_tokens.count(); i++) {
     if (path_tokens.at(i).is_empty() == false) {
       base_path += path_tokens.at(i);
-      if (create_directory(base_path.cstring(), permissions)
-            .is_error()) {
+
+      if ((directory_exists(base_path) == false) &&
+          create_directory(base_path, permissions).is_error()) {
         return *this;
       }
       base_path += "/";
@@ -273,19 +274,15 @@ int FileSystem::interface_fstat(int fd, struct stat *stat) const {
 int FileSystem::interface_rename(const char *old_name, const char *new_name)
   const {
 	int result = ::rename(old_name, new_name);
-	printf("rename result is %d\n", result);
-	perror("rename");
 	return result;
 }
 
-TemporaryDirectory::TemporaryDirectory(var::StringView parent)
-  : m_path(
-    var::PathString()
-      .append(
-        parent.is_empty() ? (
-          var::PathString(sys::System::user_data_path()).append("/").cstring())
-                          : "")
-      .append(chrono::ClockTime::get_unique_string().cstring())) {
+TemporaryDirectory::TemporaryDirectory(const var::StringView parent)
+    : m_path(var::PathString()
+                 .append(parent.is_empty() ? sys::System::user_data_path()
+                                           : parent)
+                 .append("/")
+                 .append(chrono::ClockTime::get_unique_string().cstring())) {
   FileSystem().create_directory(m_path);
   if (is_error()) {
     m_path.clear();

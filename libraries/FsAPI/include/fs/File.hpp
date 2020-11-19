@@ -390,7 +390,7 @@ public:
   File(const File &file) = delete;
   File &operator=(const File &file) = delete;
 
-  File(File &&a) {}
+  File(File &&a) { std::swap(m_fd, a.m_fd); }
   File &operator=(File &&a) {
     std::swap(m_fd, a.m_fd);
     return *this;

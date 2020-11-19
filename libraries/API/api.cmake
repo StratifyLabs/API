@@ -40,7 +40,7 @@ macro(api_target NAME DIRECTORIES)
 		INTERFACE
 		$<INSTALL_INTERFACE:include/${NAME}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
 		)
 
 	foreach(DIRECTORY ${DIRECTORIES})
@@ -54,9 +54,13 @@ macro(api_target NAME DIRECTORIES)
 	string(COMPARE EQUAL ${NAME} API IS_API)
 	set(LOCAL_DIRECTORIES ${DIRECTORIES})
 	if(IS_API)
-
 		if(SOS_IS_ARM)
 			list(APPEND LOCAL_DIRECTORIES StratifyOS_crt)
+
+			target_compile_options(${RELEASE_TARGET}
+				INTERFACE
+				-mlong-calls)
+
 		endif()
 		message(STATUS "DIRS ${LOCAL_DIRECTORIES}")
 	endif()

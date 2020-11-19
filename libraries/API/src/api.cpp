@@ -123,7 +123,6 @@ int ProgressCallback::update_function(
 
 Demangler::Demangler() { m_buffer = static_cast<char *>(malloc(m_length)); }
 Demangler::~Demangler() {
-  printf("Free buffer %d\n", 2048);
   if (m_buffer && length() == 2048) {
     free(m_buffer);
   }

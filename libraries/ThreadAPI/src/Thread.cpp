@@ -153,9 +153,9 @@ Thread::Thread(const Construct &options, const Attributes &attributes) {
   m_argument = options.argument();
 
   // First create the thread
-  int result = API_SYSTEM_CALL(
-    "",
-    pthread_create(&m_id, &attributes.m_pthread_attr, handle_thread, this));
+  int result =
+      API_SYSTEM_CALL("", pthread_create(&m_id, &attributes.m_pthread_attr,
+                                         handle_thread, this));
 
   if (result < 0) {
     set_id_error();
@@ -169,8 +169,11 @@ Thread::Thread(const Construct &options, const Attributes &attributes) {
 }
 
 Thread::~Thread() {
-  if (is_joinable()) {
+  api::ErrorGuard error_guard;
+  if (is_joinable() && (is_id_completed() == false)) {
+    API_RESET_ERROR();
     cancel();
+    API_RESET_ERROR();
     join();
   } else {
     // for detached threads, the function must be allowed to start before
