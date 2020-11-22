@@ -1,113 +1,244 @@
-# Stratify API
-
-![Build](https://github.com/StratifyLabs/StratifyAPI/workflows/Build/badge.svg) [![Coverity](https://scan.coverity.com/projects/10992/badge.svg)](https://scan.coverity.com/projects/stratifylabs-stratifyapi) 
+# API
 
 ## Overview
 
-- API Documentation
-- Naming Conventions
-- Building and Installing the Stratify API
+API is a collection of cross-platform C++ libraries for 
 
-If you want to write programs using the Stratify API, you should read through the naming conventions then dive into the API documentation. Also, please look at the Stratify OS programs that are published on Github as they make use of the API.
+- Windows
+- MacOS
+- Linux
+- Stratify OS (embedded)
 
-- [HelloWorld](https://github.com/StratifyLabs/HelloWorld)
-- [gpiotool](https://github.com/StratifyLabs/gpiotool)
-- [i2ctool](https://github.com/StratifyLabs/i2ctool)
+including
 
-## API Documenation
+- API: error handling and execution context
+- ChronoAPI: time and timing
+- FsAPI: File systems
+- PrinterAPI: printing variables
+- SysAPI: misc system functions
+- ThreadAPI: thread management
+- VarAPI: data management
 
-If you want to write applications using the Stratify API, please see the [API documentation](https://docs.stratifylabs.co/reference/StratifyAPI/api/).
+## Design
 
-## Naming Conventions
+The API framework is a hard to mis-use, non-onerous C++ API acheived using the following principles
 
-Stratify API uses the following naming conventions
+- Thread Local Error Context
+- Method Chaining
+- Filesystem Inspired Abstraction
+- Strong Arguments
+- RAII for Resource Management
 
-### Classes and Namespaces
+### Thread Local Error Context
 
-Classes use upper CamelCase with a strong preference for a single word. Namespaces use all lowercase letters and are preferably concise and a single word.
+#### Error Context
 
-### File and Directory Names
+- Cascading errors by returning `int` can be a huge pain
+- Use a single error context per thread
+  - Tracks return value of read/write and other system calls
+  - Monitors `errno` after system calls
+  - Execute backtrace on error for debugging
+  - Do not nest errors. If thread `is_error()`, operation is aborted.
 
-File names follow the class names and namespace names with hpp appended to header files and cpp appended to C++ source files.  Namespaces have their own directories which contain the header files of all the classes in the namespace.  The namespaces include a header file named after the namespace which includes all classes and declares 'using namespace <namespace>'.
-	
-```c++
-/*! \brief Standard Calculation and Software Routines
-*
-*/
-namespace calc {}
-#include "calc/Base64.hpp"
-#include "calc/Ema.hpp"
-#include "calc/Lookup.hpp"
-#include "calc/Pid.hpp"
-#include "calc/Rle.hpp"
-
-using namespace calc;
-```
-
-In an application, #include <sapi/calc.hpp> will allow you to declare Pid objects without using calc::Pid.  If you don't want to use the namespace (that is you need to avoid scope conflicts), just #include <sapi/calc/Pid.hpp> instead.  All library headers (including those in Stratify API) should use this approach and should never include a namespace header (or 'using namespace') in any header file other than the namespace's hpp file. The application developer can then decide to include <sapi/calc.hpp> or the individual classes <sapi/calc/Pid.hpp>.
-
-### Methods and Functions
-
-Methods and functions follow traditional C and C++ naming styles with lowercase and underscores to separate words.  Methods and functions should start with a verb except when directly accessing a variable.
+This means anything that can affect the error context (including changing the value of `errno`) must abort if the thread already has an error.
 
 ```c++
-Class Object {
-public:
-  int amount() const { return m_amount; } //this just returns the amount (no calculating, no fetching)
-  int set_amount(int v){ m_amount = v; } //this sets the value of amount
-  int calculate_amount() const; //this is an action that does something
-  int get_amount() const; //since this starts with a verb it needs to do something--like load amount from a file
-private:
-  int m_amount; //member variables have an m_ prefix
+const FileObject &FileObject::read(void *buf, int nbyte) const {
+  API_RETURN_VALUE_IF_ERROR(*this); //don't modify erroneous context
+  API_SYSTEM_CALL("", interface_read(buf, nbyte)); //update error context if needed
+  return *this; //used for method chaining
 }
 ```
 
-The above code uses `set_*` and `get_*` but not perhaps in the traditional way.  If `get_` is used, it implies the value is not immediately available and must be loaded from somewhere.  The convention used by the method `amount()` (no action word) is used if the value is immediately ready or ready with a trivial calculation such as
+#### Thread Local Error Context
+
+The process (primary thread) error context is creating statically at compile time. The value of `&errno` provides an error context signature for each thread. An error context is dynamically allocated if a new thread has an error.
 
 ```c++
-area(){ return m_width*m_height; }
+Error &PrivateExecutionContext::get_error() {
+  if (&(errno) == m_error.m_signature) {
+    return m_error;
+  }
+  if (m_error_list == nullptr) {
+    m_error_list = new std::vector<Error>();
+    API_ASSERT(m_error_list != nullptr);
+  }
+  for (Error &error : *m_error_list) {
+    if (error.m_signature == &(errno)) {
+      return error;
+    }
+    if (error.m_signature == nullptr) {
+      error.m_signature = &(errno);
+      return error;
+    }
+  }
+  m_error_list->push_back(Error(&(errno)));
+  return m_error_list->back();
+}
 ```
 
-#### References and Pointers
+### Method Chaining
 
-Parameters passed to methods and functions should be passed as references unless a pointer is more appropriate.  For example, if the item is a member of an array then a pointer would be appropriate. However, if the item will be operated on as a stand alone entity, a reference is preferred.  Also if the object uses only read-only methods, a const reference is best.
+Having a per thread error context, allows for very powerful (and concise) code using method chaining. This approach also helps to create strong arguments that are hard for application developers to use incorrectly..
 
 ```c++
-void copy_memory(const char * src, char * dest, int nbytes); //a pointer here is best because src points to the data
-void print_string(const String & str); //this is better as a reference because we are just reading str
+class Point {
+public:
+  int x() const { return m_x; }
+  int y() const { return m_y; }
+
+  Point& set_x(int value){
+    m_x = value;
+    return *this;
+  }
+
+  Point& set_y(int value){
+    m_y = value;
+    return *this;
+  }
+
+private:
+  int m_x = 0;
+  int m_y = 0;
+}
+
+Point p = Point().set_x(50).set_y(100);
 ```
-	
-Pointers are also appropriate if `nullptr` is a valid value even if there is only one item.
 
-### Variables and Member Variables
+### Filesystem Inspired Abstraction
 
-Variables are named the same way functions are except they don't start with an action verb.  Member variables have `m_` prefixed to the description variable name.  See the `amount()` and `m_amount` example above.
-
-### Type Definitions
-
-To maintain compatibility and interoperability with C (i.e. Stratify OS), type definitions are declared in `.h` files and follow C naming conventions.  Whenever typedef is used, `_t` should be appended to the type name like `size_t` or `pthread_t`.
-
-### Enums and Macros
-
-Macros are written in all caps with words separated by underscores. Enums are written in all lower case separated by underscores and prefixed the the singular of the enum name (enum names should be the plural version). Enums are preferred to macros when defining constants because this allows them to auto-populate when using code completion software.  Here is an example from the `fs::File` class:
+Almost anything in the `API` framework can be treated a `FileObject`. This provides a unified way to move data around between memory, the filesystem, the internet, and devices.
 
 ```c++
-enum flags {
-    flag_read_only /*! Open as read-only */ = LINK_O_RDONLY,
-    flag_write_only /*! Open as write-only */ = LINK_O_WRONLY,
-    flag_create /*! Create when opening (files) */ = LINK_O_CREAT,
-    flag_truncate /*! Truncate when opening (files) */ = LINK_O_TRUNC
-};
+//defines interface for using file like objects
+class FileObject {
+  //write source to this file
+  FileObject & write(const FileObject & source);
+}
+
+//interacts with a real file (POSIX style)
+class File : public FileObject;
+
+//uses malloc/free to manage contents
+class DataFile : public FileObject;
+
+//looks at existing memory for file contents
+class ViewFile : public FileObject;
+
+//use callbacks for file contents
+class LambdaFile : public FileObject;
+
+class Socket : public FileObject;
+class SecureSocket : public FileObject;
 ```
 
-## Building the Stratify API
+### Strong Arguments
 
-The latest API is built and distributed with the [Stratify Labs SDK](https://app.stratifylabs.co/). You only need to build and install the source code if you want to debug, contribute new features, or equip your local SDK with a previous or customized version.
+`API` classes are designed so that the functionality is obvious without looking at the declaration. The code below illustrates one example.
 
-Here are the steps to build and install the API using the Stratify Labs command line tool `sl`.
+```c++
+//weak -- don't do this
+FileSystem& rename(const StringView old_path, const StringView new_path);
+
+//which is old and which is new?
+FileSystem().rename("my_file.txt", "your_file.txt");
+
+//strong
+class Rename {
+  //API_ACCESS is a getter/setter macro supporting
+  //method chaining
+  API_ACCESS(Rename,StringView,old_path);
+  API_ACCESS(Rename,StringView,new_path);
+}
+FileSystem& rename(const Rename & options);
+
+//unambiguous functionality
+FileSystem().rename(
+  Rename()
+    .set_old_path("my_file.txt")
+    .set_new_path("your_file.txt"));
+```
+
+
+### Use RAII for resource management
+
+The constructor/deconstructor paradigm built into the C++ language is an excellent way to manage resources. If anything is "opened", it is done so in the constructor and then closed in the desctructor. This goes for lock/unlock, malloc/free, initialize/finalize and so on.
+
+```c++
+//open/close
+DataFile my_file;
+{
+  File f("myfile.txt"); //file is open
+  //read from f, write to my_file
+  my_file.write(f); 
+} //f is closed when leaving scope
+
+printf("my file is %s\n", my_file.data().add_null_terminator());
+
+//lock/unlock
+Mutex mutex;
+{
+  MutexGuard mutex_guard(mutex); //lock mutex
+  File f("file.txt");
+  printf("file size is %d\n", f.size());
+} // f is closed then mutex is unlocked
+```
+
+One limitation to this approach comes when, for example, you want to construct a File but open it later. The `API` allows for constructing an invalid file and swapping it for something valid later.
+
+```c++
+//this will just be an unopened file for now
+File f;
+
+//This is how we open it later
+f = File("myfile.txt").move();
+
+//this is also OK
+f = std::move(File("myfile.txt"));
+
+//But we can never make copies
+//this won't compile because the
+//copy constructor is deleted
+//this would cause problems concering
+//when the file should close
+File f_copy = f;
 
 ```
-sl sdk.install # install the SDK (if it isn't already installed)
-sl sdk.bootstrap
-sl sdk.update # this will pull, build, and install StratifyOS and StratifyAPI
+
+
+### Bringing it Together with an Example
+
+Using traditional C/POSIX style programming to copy a file looks something like this:
+
+```c++
+int file_fd = open("file.txt", O_READONLY);
+if( f < 0 ){ /*cascade the error up the chain*/ }
+
+int new_file_fd = open("new_file.txt", O_APPEND | O_CREAT | O_TRUNC, 0666);
+if( new_file_fd < 0 ){ /*cascade the error up the chain*/ }
+
+char buffer[64];
+int bytes_read = 0;
+
+while( (bytes_read = read(file_fd, buffer, 64)) > 0 ){
+  if( write(new_file_fd, buffer, bytes_read) < 0 ){
+    //cascade the error up the chain
+  }
+}
+
+if( close(file_fd) < 0){ /*cascade the error up the chain*/ }
+if( close(new_file_fd) < 0){ /*cascade the error up the chain*/ }
 ```
+
+The `API` way is much more concise.
+
+```c++
+//copy file.txt -> new_file.txt
+File(File::IsOverwrite::yes, "new_file.txt").write(File("file.txt"));
+if( api::ExecutionContext::is_error() ){
+  //something didn't work -- error context has the details
+}
+```
+
+The error context of the thread will record the precise location of the error and provide a backtrace. 
+
