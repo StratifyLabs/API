@@ -19,18 +19,15 @@ if(NOT DEFINED IS_SDK)
 	sos_sdk_include_target(FsAPI "${API_CONFIG_LIST}")
 	sos_sdk_include_target(ThreadAPI "${API_CONFIG_LIST}")
 	sos_sdk_include_target(TestAPI "${API_CONFIG_LIST}")
-
-
 endif()
 
-function(stratifyapi_add_api_library NAME DEPENDENCIES)
-	stratifyapi_add_api_library_option(${NAME} "${DEPENDENCIES}" "")
+function(api_add_api_library NAME DEPENDENCIES)
+	api_add_api_library_option(${NAME} "${DEPENDENCIES}" "")
 endfunction()
 
-function(stratifyapi_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
+function(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 
 	set(LOCAL_NAME ${NAME})
-	set(LIBRARIES ${DEPENDENCIES})
 
 
 	sos_sdk_library_target(RELEASE ${LOCAL_NAME} "${LIB_OPTION}" release ${SOS_ARCH})
@@ -65,16 +62,16 @@ function(stratifyapi_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 	sos_sdk_library_target(DEBUG ${LOCAL_NAME} "${LIB_OPTION}" debug ${SOS_ARCH})
 	add_library(${DEBUG_TARGET} STATIC)
 	sos_sdk_copy_target(${RELEASE_TARGET} ${DEBUG_TARGET})
-	sos_sdk_library_add_arch_targets("${DEBUG_OPTIONS}" ${SOS_ARCH} "${LIBRARIES}")
+	sos_sdk_library_add_arch_targets("${DEBUG_OPTIONS}" ${SOS_ARCH} "${DEPENDENCIES}")
 
 	if(SOS_IS_LINK)
 		sos_sdk_library_target(COVERAGE ${LOCAL_NAME} "${LIB_OPTION}" coverage ${SOS_ARCH})
 		add_library(${COVERAGE_TARGET} STATIC)
 		sos_sdk_copy_target(${RELEASE_TARGET} ${COVERAGE_TARGET})
-		sos_sdk_library_add_arch_targets("${COVERAGE_OPTIONS}" ${SOS_ARCH} "${LIBRARIES}")
+		sos_sdk_library_add_arch_targets("${COVERAGE_OPTIONS}" ${SOS_ARCH} "${DEPENDENCIES}")
 	endif()
 
-	sos_sdk_library_add_arch_targets("${RELEASE_OPTIONS}" ${SOS_ARCH} "${LIBRARIES}")
+	sos_sdk_library_add_arch_targets("${RELEASE_OPTIONS}" ${SOS_ARCH} "${DEPENDENCIES}")
 
 	target_compile_options(${RELEASE_TARGET}
 		PRIVATE
