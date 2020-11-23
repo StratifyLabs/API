@@ -33,8 +33,8 @@ namespace fs {
  * the following example:
  *
  * \code
- * #include <sapi/hal.hpp>
- * #include <sapi/sys.hpp>
+ * #include <hal.hpp>
+ * #include <sys.hpp>
  * #include <var.hpp>
  *
  * int main(int argc, char * argv[]){

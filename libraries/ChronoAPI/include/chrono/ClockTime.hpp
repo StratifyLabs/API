@@ -108,7 +108,7 @@ public:
    * the difference between the present time and the time held by this object.
    *
    * ```
-   * #include <sapi/chrono.hpp>
+   * #include <chrono.hpp>
    *
    * ClockTime instant = Clock::get_time();
    * ClockTime::wait_seconds(5);

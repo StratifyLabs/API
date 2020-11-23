@@ -21,7 +21,7 @@ namespace thread {
  *
  * \code
  *
- * #include <sapi/sys.hpp>
+ * #include <sys.hpp>
  *
  * Sem sem;
  * sem.create("my_semaphore", 10);

@@ -94,7 +94,7 @@ function(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 
 endfunction()
 
-function(stratify_api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
+function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 
 	set(LOCAL_NAME ${NAME})
 

@@ -79,7 +79,7 @@ namespace api {
  *
  * ```
  * //md2code:include
- * #include <sapi/sys.hpp>
+ * #include <sys.hpp>
  * ```
  */
 class ApiInfo {
@@ -373,8 +373,8 @@ void api_assert(bool value, const char *function, int line);
  * to update the progress of an operation.
  *
  * ```
- * #include <sapi/sys.hpp>
- * #include <sapi/inet.hpp>
+ * #include <sys.hpp>
+ * #include <inet.hpp>
  * Printer p;
  *
  * p.set_progress_key("downloading");

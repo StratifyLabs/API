@@ -98,8 +98,8 @@ public:
    * - -additional
    *
    * \code
-   * #include <sapi/test.hpp>
-   * #include <sapi/sys.hpp>
+   * #include <test.hpp>
+   * #include <sys.hpp>
    *
    * int main(int argc, char * argv[]){
    *   Cli cli(argc, argv);

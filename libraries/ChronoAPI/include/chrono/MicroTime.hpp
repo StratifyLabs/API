@@ -33,7 +33,7 @@ typedef u32 micro_time_t;
  *
  * ```
  * //md2code:include
- * #include <sapi/chrono.hpp>
+ * #include <chrono.hpp>
  * ```
  *
  */

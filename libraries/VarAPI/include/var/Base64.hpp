@@ -23,9 +23,9 @@ namespace var {
  *
  * \code
  * //md2code:include
- * #include <sapi/calc.hpp>
+ * #include <calc.hpp>
  * #include <var.hpp>
- * #include <sapi/fs.hpp>
+ * #include <fs.hpp>
  * \endcode
  *
  * Now do some encoding and decoding like a boss.

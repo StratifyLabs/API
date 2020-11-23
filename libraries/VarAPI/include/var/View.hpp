@@ -30,7 +30,7 @@ class Data;
  * ```
  * //md2code:include
  * #include <var.hpp>
- * #include <sapi/fs.hpp>
+ * #include <fs.hpp>
  * ```
  *
  * The reference includes a pointer to some data
@@ -198,7 +198,7 @@ public:
    * ```
    * //md2code:include
    * #include <var.hpp>
-   * #include <sapi/hal.hpp>
+   * #include <hal.hpp>
    * ```
    *
    * ```

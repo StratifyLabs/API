@@ -19,7 +19,7 @@
  *
  * ```
  * //md2code:include
- * #include <sapi/chrono.hpp>
+ * #include <chrono.hpp>
  * ```
  *
  * ```
