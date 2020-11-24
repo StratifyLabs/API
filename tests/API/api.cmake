@@ -11,10 +11,10 @@ macro(api_test_executable NAME DIRECTORIES)
 		${CMAKE_CURRENT_SOURCE_DIR}/../${NAME}/src/UnitTest.hpp
 		)
 
-		target_compile_options(${RELEASE_TARGET}
-			PRIVATE
-			-Os
-			)
+	target_compile_options(${RELEASE_TARGET}
+		PRIVATE
+		-Os
+		)
 
 	set_property(TARGET ${RELEASE_TARGET} PROPERTY CXX_STANDARD 17)
 
@@ -29,7 +29,6 @@ macro(api_test_executable NAME DIRECTORIES)
 		PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/../${NAME}/src
 		)
-
 
 	get_target_property(MY_DIR ${RELEASE_TARGET} BINARY_DIR)
 
