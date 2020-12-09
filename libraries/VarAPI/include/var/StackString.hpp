@@ -18,6 +18,15 @@ public:
 
   bool is_empty() const { return m_buffer[0] == 0; }
 
+  Derived &append(const char a) {
+    const size_t len = strnlen(m_buffer, Size - 1);
+    if (len < Size - 1) {
+      m_buffer[len] = a;
+      m_buffer[len + 1] = 0;
+    }
+    return static_cast<Derived &>(*this);
+  }
+
   Derived &append(const StringView a) {
     const size_t len = strnlen(m_buffer, Size - 1);
     const size_t s = a.length() > Size - 1 - len ? Size - 1 - len : a.length();

@@ -29,7 +29,6 @@ public:
   enum class Base { octal = 8, decimal = 10, hexadecimal = 16 };
 
   StringView() : m_string_view("") {}
-  StringView(const char value) : m_string_view(&value, 1) {}
   StringView(const char *value) : m_string_view(value) {}
   StringView(const String &value);
   StringView(const IdString &value);
