@@ -53,16 +53,11 @@ macro(api_target NAME DIRECTORIES)
 
 	string(COMPARE EQUAL ${NAME} API IS_API)
 	set(LOCAL_DIRECTORIES ${DIRECTORIES})
-	if(IS_API)
-		if(SOS_IS_ARM)
+	if(IS_API AND SOS_IS_ARM)
 			list(APPEND LOCAL_DIRECTORIES StratifyOS_crt)
-
 			target_compile_options(${RELEASE_TARGET}
 				INTERFACE
 				-mlong-calls)
-
-		endif()
-		message(STATUS "DIRS ${LOCAL_DIRECTORIES}")
 	endif()
 
 	target_include_directories(${RELEASE_TARGET}

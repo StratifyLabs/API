@@ -57,15 +57,13 @@ function(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 		PRIVATE
 		)
 
-
-
 	sos_sdk_library_target(DEBUG ${LOCAL_NAME} "${LIB_OPTION}" debug ${SOS_ARCH})
 	add_library(${DEBUG_TARGET} STATIC)
 	sos_sdk_copy_target(${RELEASE_TARGET} ${DEBUG_TARGET})
 
 	target_compile_options(${DEBUG_TARGET}
 		PRIVATE
-		-Og
+		-Os
 		)
 
 	sos_sdk_library_add_arch_targets("${DEBUG_OPTIONS}" ${SOS_ARCH} "${DEPENDENCIES}")
@@ -83,8 +81,6 @@ function(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 		)
 
 	sos_sdk_library_add_arch_targets("${RELEASE_OPTIONS}" ${SOS_ARCH} "${DEPENDENCIES}")
-
-
 
 	install(DIRECTORY include/
 		DESTINATION include/${LOCAL_NAME}

@@ -20,6 +20,8 @@
 #if !defined __win32
 #include <execinfo.h>
 #endif
+#else
+extern "C" int sos_trace_stack(u32 count);
 #endif
 
 /*!
@@ -203,6 +205,7 @@ private:
 #endif
 #else
     // need to implement backtrace on StratifyOS v4
+    sos_trace_stack(32);
 #endif
   }
 };
@@ -277,8 +280,10 @@ private:
 class ErrorGuard {
 public:
   ErrorGuard()
-    : m_error(ExecutionContext::m_private_context.m_error),
-      m_error_number(errno) {}
+      : m_error(ExecutionContext::m_private_context.m_error),
+        m_error_number(errno) {
+    ExecutionContext::reset_error();
+  }
   ~ErrorGuard() {
     ExecutionContext::m_private_context.m_error = m_error;
     errno = m_error_number;

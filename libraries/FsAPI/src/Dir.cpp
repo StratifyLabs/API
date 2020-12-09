@@ -34,8 +34,8 @@ var::PathString DirObject::get_entry() const {
   }
 
   return var::PathString(m_path)
-    .append((m_path.is_empty() == false) ? "/" : "")
-    .append(entry);
+      .append((m_path.is_empty() == false) ? "/" : "")
+      .append(entry);
 }
 
 Dir::Dir(var::StringView path) { open(path); }
@@ -45,9 +45,8 @@ Dir::~Dir() { close(); }
 Dir &Dir::open(var::StringView path) {
   API_RETURN_VALUE_IF_ERROR(*this);
   const var::PathString path_string(path);
-  m_dirp = API_SYSTEM_CALL_NULL(
-    path_string.cstring(),
-    interface_opendir(path_string.cstring()));
+  m_dirp = API_SYSTEM_CALL_NULL(path_string.cstring(),
+                                interface_opendir(path_string.cstring()));
   if (m_dirp) {
     set_path(path_string);
   }
@@ -102,19 +101,18 @@ DIR *Dir::interface_opendir(const char *path) const {
   return reinterpret_cast<DIR *>(::opendir(path));
 }
 
-int Dir::interface_readdir_r(
-  struct dirent *result,
-  struct dirent **resultp) const {
+int Dir::interface_readdir_r(struct dirent *result,
+                             struct dirent **resultp) const {
 #if defined __link
-	struct dirent * result_dirent = readdir(m_dirp);
-	if( result_dirent ){
-		memcpy(result, result_dirent, sizeof(struct dirent));
-		if( resultp != nullptr ){
-			*resultp = result;
-			return 0;
-		}
-	}
-	return -1;
+  struct dirent *result_dirent = readdir(m_dirp);
+  if (result_dirent) {
+    memcpy(result, result_dirent, sizeof(struct dirent));
+    if (resultp != nullptr) {
+      *resultp = result;
+      return 0;
+    }
+  }
+  return -1;
 #else
   return ::readdir_r(m_dirp, result, resultp);
 #endif
@@ -122,9 +120,7 @@ int Dir::interface_readdir_r(
 
 int Dir::interface_closedir() const { return ::closedir(m_dirp); }
 
-int Dir::interface_telldir() const { 
-	return ::telldir(m_dirp);
- }
+int Dir::interface_telldir() const { return ::telldir(m_dirp); }
 
 void Dir::interface_seekdir(size_t location) const {
   ::seekdir(m_dirp, location);

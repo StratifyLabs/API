@@ -15,6 +15,10 @@ project(API
 
 include(sos-sdk)
 
+if(SOS_IS_ARM)
+	include(StratifyOS)
+endif()
+
 include(CTest)
 
 
