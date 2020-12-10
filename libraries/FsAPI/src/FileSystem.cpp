@@ -117,7 +117,7 @@ const FileSystem &FileSystem::remove_directory(var::StringView path) const {
 
 PathList
 FileSystem::read_directory(const var::StringView path, IsRecursive is_recursive,
-                           bool (*exclude)(var::StringView entry)) const {
+                           bool (*exclude)(const var::StringView entry)) const {
   PathList result;
   bool is_the_end = false;
 

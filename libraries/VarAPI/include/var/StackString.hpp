@@ -13,6 +13,7 @@ public:
   using Base = StringView::Base;
   Derived &clear() {
     m_buffer[0] = 0;
+    m_buffer[Size - 1] = 0;
     return static_cast<Derived &>(*this);
   }
 
@@ -44,7 +45,6 @@ public:
     return 0;
   }
 
-  Derived &operator&(const StringView a) { return append(a); }
   Derived &operator&=(const StringView a) { return append(a); }
 
   bool operator==(const StringView a) const { return string_view() == a; }
@@ -66,10 +66,25 @@ public:
     return string_view() != StringView(a);
   }
 
+  bool operator<(const StackString &a) const {
+    return string_view() < a.string_view();
+  }
+
+  bool operator>(const StackString &a) const {
+    return string_view() > a.string_view();
+  }
+
   // explicit conversion
   char *to_char() { return m_buffer; }
   const char *cstring() const { return m_buffer; }
   const StringView string_view() const { return StringView(m_buffer); }
+
+  char at(size_t offset) const {
+    if (offset < Size) {
+      return m_buffer[offset];
+    }
+    return 0;
+  }
 
   // implicit conversion
   operator const char *() const { return m_buffer; }
@@ -166,26 +181,20 @@ public:
   PathString(const StringView a) : StackString(a) {}
   PathString(const char *a) : StackString(a) {}
 
-  PathString &operator/(const char *a) { return append("/").append(a); }
-
-  PathString &operator/(const PathString &a) {
-    append("/").append(a.cstring());
-    return *this;
+  PathString operator/(const var::StringView a) {
+    return PathString(*this).append("/").append(a);
   }
 
-  PathString &operator/(const NameString &a) {
-    append("/").append(a.cstring());
-    return *this;
-  }
-
-  PathString &operator/(const var::StringView a) {
-    append("/").append(a);
-    return *this;
+  PathString operator&(const var::StringView a) {
+    return PathString(*this).append(a);
   }
 
   // implicit conversion
   operator const char *() const { return m_buffer; }
 };
+
+PathString operator&(const StringView lhs, const StringView rhs);
+PathString operator/(const StringView lhs, const StringView rhs);
 
 class GeneralString : public StackString<GeneralString, 256> {
 public:

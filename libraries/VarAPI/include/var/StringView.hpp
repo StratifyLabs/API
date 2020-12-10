@@ -159,9 +159,21 @@ public:
   bool operator==(const String &a) const;
   bool operator!=(const String &a) const;
 
-  bool operator>(StringView a) const { return m_string_view > a.m_string_view; }
+  bool operator>(const StringView a) const {
+    return m_string_view > a.m_string_view;
+  }
 
-  bool operator<(StringView a) const { return m_string_view < a.m_string_view; }
+  bool operator>=(const StringView a) const {
+    return m_string_view >= a.m_string_view;
+  }
+
+  bool operator<(const StringView a) const {
+    return m_string_view < a.m_string_view;
+  }
+
+  bool operator<=(const StringView a) const {
+    return m_string_view <= a.m_string_view;
+  }
 
   long to_long(Base base = Base::decimal) const;
   float to_float() const;

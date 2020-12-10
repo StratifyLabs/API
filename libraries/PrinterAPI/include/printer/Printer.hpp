@@ -3,7 +3,7 @@
 #ifndef PRINTER_API_PRINTER_PRINTER_HPP_
 #define PRINTER_API_PRINTER_PRINTER_HPP_
 
-#include <mcu/types.h>
+#include <sdk/types.h>
 #include <cstdarg>
 
 #include "var/String.hpp"

@@ -37,10 +37,10 @@ public:
     IsRecursive is_recursive,
     const Permissions &permissions = Permissions(0)) const;
 
-  PathList read_directory(
-    const var::StringView path,
-    IsRecursive is_recursive = IsRecursive::no,
-    bool (*exclude)(var::StringView) = nullptr) const;
+  PathList
+  read_directory(const var::StringView path,
+                 IsRecursive is_recursive = IsRecursive::no,
+                 bool (*exclude)(const var::StringView) = nullptr) const;
 
   class Rename {
     API_AC(Rename, var::StringView, source);
