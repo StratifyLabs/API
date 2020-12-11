@@ -4,7 +4,7 @@ if(NOT SOS_SDK_PATH)
 	set(SOS_SDK_PATH $ENV{SOS_SDK_PATH})
 endif()
 
-set(CMAKE_MODULE_PATH ${SOS_SDK_PATH}/Tools/gcc/cmake)
+set(CMAKE_MODULE_PATH ${SOS_SDK_PATH}/cmake)
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_MODULE_PATH}/sos-toolchain.cmake)
 
 set(API_PROJECT_VERSION 4.0.0 CACHE INTERNAL "API version")
