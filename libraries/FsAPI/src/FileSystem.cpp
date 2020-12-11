@@ -185,6 +185,10 @@ const FileSystem &
 FileSystem::create_directory(var::StringView path,
                              const Permissions &permissions) const {
 
+  if (directory_exists(path)) {
+    return *this;
+  }
+
   const Permissions use_permissions =
       permissions.permissions() == 0 ? get_permissions(path) : permissions;
 
