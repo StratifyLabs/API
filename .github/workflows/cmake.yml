@@ -32,7 +32,7 @@ jobs:
     - name: Show
       shell: bash
       working-directory: ${{runner.workspace}}
-      run: ls API
+      run: ls -R && echo $GITHUB_WORKSPACE
       
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
