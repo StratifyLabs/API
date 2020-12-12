@@ -1,0 +1,50 @@
+name: CMake
+
+on: [push]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: macOS-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+      
+    - name: Checkout SDK
+      uses: actions/checkout@v2
+      with: 
+        repository: StratifyLabs/CMakeSDK
+        path: CMakeSDK
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/API/cmake_link
+      
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}/API/cmake_link
+      run: cmake ..
+      env:
+        SOS_SDK_PATH: ${{runner.workspace}}/API/CMakeSDK 
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/API/cmake_link
+      shell: bash
+      run: make -j12   
+      env:
+        SOS_SDK_PATH: ${{runner.workspace}}/API/CMakeSDK          
+
+    - name: Test
+      working-directory: ${{runner.workspace}}/API/cmake_link
+      shell: bash
+      run: make test
+      env:
+        SOS_SDK_PATH: ${{runner.workspace}}/API/CMakeSDK
+        CTEST_OUTPUT_ON_FAILURE: 1
