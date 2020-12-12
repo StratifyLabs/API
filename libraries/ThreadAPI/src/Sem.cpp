@@ -15,7 +15,6 @@ int SemaphoreObject::get_value() const {
 #else
   API_RETURN_VALUE_IF_ERROR(-1);
   int value = 0;
-  int ret;
   API_SYSTEM_CALL("", sem_getvalue(m_handle, &value));
   return value;
 #endif

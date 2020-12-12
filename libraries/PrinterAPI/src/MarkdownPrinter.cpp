@@ -20,11 +20,8 @@ void MarkdownPrinter::print_open_object(Level level, const StringView key) {
 
 void MarkdownPrinter::print_close_object() { close_list(); }
 
-void MarkdownPrinter::print(
-  Level level,
-  var::StringView key,
-  var::StringView value,
-  IsNewline is_newline) {
+void MarkdownPrinter::print(Level level, var::StringView key,
+                            var::StringView value, IsNewline is_newline) {
 
   if (level > verbose_level()) {
     return;
@@ -105,51 +102,45 @@ void MarkdownPrinter::print(
   }
 
 #if 0
-	//check for line wrapping
-	if( (container().type() != ContainerType::code) &&
-		 (container().type() != ContainerType::yaml_array) &&
-		 (container().type() != ContainerType::yaml_object) ){
+  // check for line wrapping
+  if ((container().type() != ContainerType::code) &&
+      (container().type() != ContainerType::yaml_array) &&
+      (container().type() != ContainerType::yaml_object)) {
 
-		size_t newline_position = content.find("\n");
-		if( newline_position != var::String::npos ){
-			m_line_length += newline_position;
-		} else {
-			m_line_length += 0;
-		}
+    size_t newline_position = content.find("\n");
+    if (newline_position != var::String::npos) {
+      m_line_length += newline_position;
+    } else {
+      m_line_length += 0;
+    }
 
-		if( m_line_length > m_wrap_length ){
-			size_t space_position = content.reverse_find(
-						" ",
-						var::String::Position());
+    if (m_line_length > m_wrap_length) {
+      size_t space_position =
+          content.reverse_find(" ", var::String::Position());
 
+      if (space_position != var::String::npos) {
+        content.at(space_position) = "\n";
+      } else {
+        content.insert("\n", var::String::Position(space_position));
+      }
+    }
+  }
 
-			if( space_position != var::String::npos ){
-				content.at(space_position) = "\n";
-			} else {
-				content.insert("\n", var::String::Position(space_position));
-			}
-
-		}
-	}
-#endif
-
-  if (
-    (container().type() == ContainerType::blockquote)
-    || (container().type() == ContainerType::paragraph)) {
+  if ((container().type() == ContainerType::blockquote) ||
+      (container().type() == ContainerType::paragraph)) {
     if (content.back() == '.') {
       content += " ";
     }
   }
+#endif
 
   // print the decoration
   interface_print_final((prefix + marker).cstring());
 
   // print the key/value pair
-  Printer::print(
-    level,
-    key,
-    value,
-    (is_print_newline && !is_suppress_newline) ? IsNewline::yes : IsNewline::no);
+  Printer::print(level, key, value,
+                 (is_print_newline && !is_suppress_newline) ? IsNewline::yes
+                                                            : IsNewline::no);
 }
 
 bool MarkdownPrinter::close_type(ContainerType type) {
@@ -166,40 +157,30 @@ bool MarkdownPrinter::close_type(ContainerType type) {
 }
 
 MarkdownPrinter &MarkdownPrinter::horizontal_line() {
-  print(
-    verbose_level(),
-    StringView().set_null(),
-    "-------------------------------\n");
+  print(verbose_level(), StringView().set_null(),
+        "-------------------------------\n");
   return *this;
 }
 
-MarkdownPrinter &MarkdownPrinter::hyperlink(
-  var::StringView text,
-  var::StringView link) {
+MarkdownPrinter &MarkdownPrinter::hyperlink(var::StringView text,
+                                            var::StringView link) {
 
   var::String output = var::String("[") + text + "](" + link + ")";
-  print(
-    this->verbose_level(),
-    StringView().set_null(),
-    output.string_view(),
-    IsNewline::no);
+  print(this->verbose_level(), StringView().set_null(), output.string_view(),
+        IsNewline::no);
   return *this;
 }
 
-MarkdownPrinter &MarkdownPrinter::image(
-  var::StringView text,
-  var::StringView link) {
+MarkdownPrinter &MarkdownPrinter::image(var::StringView text,
+                                        var::StringView link) {
   var::String output = var::String("![") + text + "](" + link + ")";
-  print(
-    this->verbose_level(),
-    StringView().set_null(),
-    output.string_view(),
-    IsNewline::no);
+  print(this->verbose_level(), StringView().set_null(), output.string_view(),
+        IsNewline::no);
   return *this;
 }
 
-MarkdownPrinter &
-MarkdownPrinter::open_header(var::StringView header, Level level) {
+MarkdownPrinter &MarkdownPrinter::open_header(var::StringView header,
+                                              Level level) {
   m_is_last_close = false;
   container_list().push_back(Container(level, ContainerType::header));
 
@@ -221,8 +202,8 @@ MarkdownPrinter &MarkdownPrinter::close_header() {
 // increase list level -- can be nested
 MarkdownPrinter &MarkdownPrinter::open_list(ListType type, Level level) {
   const ContainerType c_type = (type == ListType::ordered)
-                                 ? ContainerType::ordered_list
-                                 : ContainerType::unordered_list;
+                                   ? ContainerType::ordered_list
+                                   : ContainerType::unordered_list;
   m_is_last_close = false;
   container_list().push_back(Container(level, c_type));
   return *this;
@@ -237,16 +218,13 @@ MarkdownPrinter &MarkdownPrinter::close_list() {
 }
 
 // cannot be nested
-MarkdownPrinter &MarkdownPrinter::open_code(
-  var::StringView language,
-  // unique id value
-  Level level) {
+MarkdownPrinter &MarkdownPrinter::open_code(var::StringView language,
+                                            // unique id value
+                                            Level level) {
   m_is_last_close = false;
   container_list().push_back(Container(level, ContainerType::code));
-  print(
-    level,
-    StringView().set_null(),
-    (var::String() + "```" + language).string_view());
+  print(level, StringView().set_null(),
+        (var::String() + "```" + language).string_view());
   return *this;
 }
 MarkdownPrinter &MarkdownPrinter::close_code() {
@@ -303,8 +281,8 @@ MarkdownPrinter &MarkdownPrinter::close_paragraph() {
   return *this;
 }
 
-MarkdownPrinter &
-MarkdownPrinter::open_table(const var::StringList &header, Level level) {
+MarkdownPrinter &MarkdownPrinter::open_table(const var::StringList &header,
+                                             Level level) {
   m_is_last_close = false;
   return *this;
 }
@@ -385,9 +363,8 @@ MarkdownPrinter &MarkdownPrinter::close_pretty_table(Level level) {
       var::StringView cell = m_pretty_table.at(row).at(column).cstring();
       u32 value = column_widths.at(column);
       *this << MarkdownPrinter::Directive::suppress_newline;
-      *this
-        << (var::String(" ") + cell
-            + (var::String(" ") * (value + 1 - cell.length())) + "|");
+      *this << (var::String(" ") + cell +
+                (var::String(" ") * (value + 1 - cell.length())) + "|");
     }
     *this << MarkdownPrinter::Directive::insert_newline;
   }

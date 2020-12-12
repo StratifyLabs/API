@@ -18,8 +18,7 @@ using namespace fs;
 const char *DirObject::read() const {
   API_RETURN_VALUE_IF_ERROR(nullptr);
   struct dirent *dirent_result = nullptr;
-  int result;
-  result = interface_readdir_r(&m_entry, &dirent_result);
+  interface_readdir_r(&m_entry, &dirent_result);
   if (dirent_result == nullptr) {
     return nullptr;
   }

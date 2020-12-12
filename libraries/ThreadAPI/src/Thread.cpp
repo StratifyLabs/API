@@ -195,15 +195,15 @@ Thread &Thread::set_sched_parameters(Sched::Policy policy, int priority) {
 }
 
 Sched::Policy Thread::get_sched_policy() const {
-  int policy;
-  int priority;
+  int policy = 0;
+  int priority = 0;
   get_sched_parameters(policy, priority);
-  return static_cast<Sched::Policy>(policy);
+  return Sched::Policy(policy);
 }
 
 int Thread::get_sched_priority() const {
-  int policy;
-  int priority;
+  int policy = 0;
+  int priority = 0;
   get_sched_parameters(policy, priority);
   return priority;
 }

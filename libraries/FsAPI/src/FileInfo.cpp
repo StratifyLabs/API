@@ -76,9 +76,9 @@ bool FileInfo::is_character_device() const {
 }
 
 bool FileInfo::is_socket() const {
+  #if defined S_IFSOCK
   TypeFlags masked = static_cast<TypeFlags>(m_stat.st_mode);
   masked &= TypeFlags::mask;
-  #if defined S_IFSOCK
   return masked == TypeFlags::file_socket;
   #else
   return false;

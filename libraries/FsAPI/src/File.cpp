@@ -136,13 +136,14 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
                                ? file_size - size_processed
                                : read_buffer_size;
 
-    const int bytes_read
-      = source_file.read(file_read_buffer, page_size).return_value();
+    file_read_buffer[0] = 0;
+    const int bytes_read =
+        source_file.read(file_read_buffer, page_size).return_value();
 
     if (bytes_read > 0) {
       if (options.transformer()) {
-        const int transform_size
-          = options.transformer()->get_output_size(page_size);
+        const size_t transform_size =
+            options.transformer()->get_output_size(page_size);
         u8 file_write_buffer[transform_size];
         const int bytes_to_write = options.transformer()->transform(
           var::Transformer::Transform()
