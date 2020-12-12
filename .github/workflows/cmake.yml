@@ -30,8 +30,8 @@ jobs:
 
     - name: Show
       shell: bash
-      working-directory: ${{runner.workspace}}/API/cmake_link
-      run: ls ..
+      working-directory: ${{runner.workspace}}
+      run: ls .. && ls API && ls CMakeSDK
       
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
