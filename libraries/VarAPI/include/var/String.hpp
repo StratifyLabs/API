@@ -70,7 +70,6 @@ class Data;
 class String : public api::ExecutionContext {
 public:
   constexpr static size_t npos = std::string::npos;
-
   using Base = StringView::Base;
 
   using iterator = typename std::string::iterator;
@@ -117,7 +116,7 @@ public:
 
   String() = default;
 
-  explicit String(const char *s) { // cppcheck-suppress[noExplicitConstructor]
+  explicit String(const char *s) {
     if (s != nullptr) {
       m_string = s;
     }
@@ -152,7 +151,6 @@ public:
 
   explicit String(const std::string &a) : m_string(a) {}
   explicit String(std::string &&s) : m_string(s) {}
-
   explicit String(const var::View &item);
 
   String &operator+=(char a) {
@@ -200,42 +198,30 @@ public:
 
   String operator+(char rhs) const { return String(m_string + rhs); }
 
-  bool is_empty() const { return m_string.empty(); }
+  API_NO_DISCARD bool is_empty() const { return m_string.empty(); }
 
-  String &insert(const String &string_to_insert, const Insert &options) {
+  String &insert(const StringView string_to_insert, const Insert &options) {
     if (options.sub_position() == npos) {
-      m_string.insert(options.position(), string_to_insert.m_string);
+      m_string.insert(options.position(), string_to_insert.m_string_view);
     } else {
-      m_string.insert(
-        options.position(),
-        string_to_insert.m_string,
-        options.sub_position(),
-        options.sub_length());
+      m_string.insert(options.position(), string_to_insert.m_string_view,
+                      options.sub_position(), options.sub_length());
     }
     return *this;
   }
 
-  inline String &
-  operator()(const String &string_to_insert, const Insert &options) {
+  String &operator()(const StringView string_to_insert, const Insert &options) {
     return insert(string_to_insert, options);
   }
 
-  /*! \details Erases a portion of the string starting with the character at
-   * \a pos.
-   *
-   * @param pos The position to start erasing
-   * @param len The number of characters to erase
-   * @return A reference to this string.
-   *
-   */
   String &erase(const Erase &options) {
     m_string.erase(options.position(), options.length());
     return *this;
   }
 
-  inline String &operator()(const Erase &options) { return erase(options); }
 
   String &erase(StringView string_to_erase, size_t position = 0);
+  String &operator()(const Erase &options) { return erase(options); }
 
   class Replace {
     API_AC(Replace, StringView, old_string);
@@ -244,11 +230,11 @@ public:
     API_AF(Replace, size_t, count, 0);
   };
   String &replace(const Replace &options);
-  inline String &operator()(const Replace &options) { return replace(options); }
+  String &operator()(const Replace &options) { return replace(options); }
 
-  size_t count(var::StringView to_count) const;
-  size_t length() const { return m_string.length(); }
-  ssize_t length_signed() const {
+  API_NO_DISCARD size_t count(var::StringView to_count) const;
+  API_NO_DISCARD size_t length() const { return m_string.length(); }
+  API_NO_DISCARD ssize_t length_signed() const {
     return static_cast<ssize_t>(m_string.length());
   }
 
@@ -275,14 +261,14 @@ public:
     return erase(Erase().set_position(0).set_length(pop_size));
   }
 
-  char &at(size_t pos) { return m_string.at(pos); }
-  const char &at(size_t pos) const { return m_string.at(pos); }
+  API_NO_DISCARD char &at(size_t pos) { return m_string.at(pos); }
+  API_NO_DISCARD const char &at(size_t pos) const { return m_string.at(pos); }
 
-  char &front() { return m_string.front(); }
-  const char &front() const { return m_string.front(); }
+  API_NO_DISCARD char &front() { return m_string.front(); }
+  API_NO_DISCARD const char &front() const { return m_string.front(); }
 
-  char &back() { return m_string.back(); }
-  const char &back() const { return m_string.back(); }
+  API_NO_DISCARD char &back() { return m_string.back(); }
+  API_NO_DISCARD const char &back() const { return m_string.back(); }
 
   String &resize(size_t size) {
     m_string.resize(size);
@@ -300,27 +286,15 @@ public:
   String &to_upper();
   String &to_lower();
 
-  const char *cstring() const { return m_string.c_str(); }
-  operator const char *() const { return m_string.c_str(); }
+  API_NO_DISCARD const char *cstring() const { return m_string.c_str(); }
+  API_NO_DISCARD char *to_char() { return &m_string[0]; }
 
-  char *to_char() { return &m_string[0]; }
-
-  int compare(const String &string_to_compare) const {
+  API_NO_DISCARD int compare(const String &string_to_compare) const {
     return m_string.compare(string_to_compare.m_string);
   }
 
-  /*! \details Compares the object to \a str.
-   *
-   * @param position The position in this object to start the comparison
-   * @param length The length of the compared string (this object)
-   * @param string_to_compare A reference to the comparing string
-   * @param sub_position The position in the comparing string to start
-   * comparing
-   * @param sub_length The number string characters to compare
-   * @return Zero if the strings match
-   *
-   */
-  int compare(const String &string_to_compare, const Compare &options) const {
+  API_NO_DISCARD int compare(const String &string_to_compare,
+                             const Compare &options) const {
     return m_string.compare(
       options.position(),
       options.length(),
@@ -343,25 +317,28 @@ public:
   bool operator>=(const String &a) const { return m_string >= a.m_string; }
   bool operator<=(const String &a) const { return m_string <= a.m_string; }
 
-  int to_integer() const { return ::atoi(cstring()); }
+  API_NO_DISCARD int to_integer() const { return ::atoi(cstring()); }
 
-  float to_float() const;
+  API_NO_DISCARD float to_float() const;
 
-  long to_long(Base base = Base::decimal) const {
+  API_NO_DISCARD long to_long(Base base = Base::decimal) const {
     return ::strtol(cstring(), nullptr, static_cast<int>(base));
   }
 
-  unsigned long to_unsigned_long(Base base = Base::decimal) const {
+  API_NO_DISCARD unsigned long
+  to_unsigned_long(Base base = Base::decimal) const {
     return ::strtoul(cstring(), nullptr, static_cast<int>(base));
   }
 
-  u32 capacity() const { return m_string.capacity(); }
+  API_NO_DISCARD u32 capacity() const { return m_string.capacity(); }
 
-  StringViewList split(StringView delimiter) const;
+  API_NO_DISCARD StringViewList split(StringView delimiter) const;
 
-  StringView string_view() const { return StringView(cstring(), length()); }
+  API_NO_DISCARD StringView string_view() const {
+    return StringView(cstring(), length());
+  }
 
-  static const String &empty_string() { return m_empty_string; }
+  API_NO_DISCARD static const String &empty_string() { return m_empty_string; }
 
 private:
   friend class StringView;

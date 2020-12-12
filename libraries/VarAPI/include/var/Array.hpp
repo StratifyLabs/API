@@ -11,39 +11,6 @@
 
 namespace var {
 
-/*! \brief Array Class
- * \details The Array class is a template
- * used to contain a standard C array.
- *
- * It provides methods to access the array
- * safely.
- *
- * \code
- * #include <var.hpp>
- * u32 c_array[64]; //C style array
- * Array<u32, 64> array; //var::Array
- *
- * printf("C array is %ld bytes\n", sizeof(c_array));
- * printf("Array is %ld bytes\n", array.size());
- *
- * printf("C array has %ld items\n", sizeof(c_array)/sizeof(u32));
- * printf("Array has %ld items\n", array.count());
- *
- * printf("C array back is %ld\n",
- * c_array[sizeof(c_array)/sizeofstatic_cast<u32>(-1)]); printf("Array back is
- * %ld\n", array.back()); \endcode
- *
- * The Array class has a fixed number of items. It can be
- * created dynamically with `new` and `delete` or allocated
- * on the stack or heap.
- *
- * If you are looking for dynamic sizing, see var::Vector is
- * an array that is dynamically sized where items can be appended.
- *
- * var::Queue allows for pushing items on the front of a list
- * and popping them from the back.
- *
- */
 template <typename T, size_t SizeValue> class Array {
 public:
   Array() = default;
@@ -98,8 +65,10 @@ public:
     return m_array.crend();
   }
 
-  T &at(size_t position) { return m_array.at(position); }
-  const T &at(size_t position) const { return m_array.at(position); }
+  API_NO_DISCARD T &at(size_t position) { return m_array.at(position); }
+  API_NO_DISCARD const T &at(size_t position) const {
+    return m_array.at(position);
+  }
 
   T &operator[](size_t position) { return m_array[position]; }
   const T &operator[](size_t position) const { return m_array[position]; }
@@ -111,21 +80,8 @@ public:
   const T &front() const { return m_array.front(); }
   const T &back() const { return m_array.back(); }
 
-  /*! \details Returns the number of objects in the array.
-   *
-   * \code
-   * #include <var.hpp>
-   * Array<u32, 64> array;
-   * for(u32 i=0; i < array.count(); i++){
-   *   array.at(i) = i;
-   * }
-   * \endcode
-   *
-   *
-   */
-  size_t count() const { return m_array.size(); }
-
-  bool is_empty() const { return m_array.empty(); }
+  API_NO_DISCARD size_t count() const { return m_array.size(); }
+  API_NO_DISCARD bool is_empty() const { return m_array.empty(); }
 
   Array &fill(const T &value) {
     std::fill(begin(), end(), value);
@@ -135,11 +91,13 @@ public:
   std::array<T, SizeValue> &array() { return m_array; }
   const std::array<T, SizeValue> &array() const { return m_array; }
 
-  const T *data() const { return m_array.data(); }
-  T *data() { return m_array.data(); }
+  API_NO_DISCARD const T *data() const { return m_array.data(); }
+  API_NO_DISCARD T *data() { return m_array.data(); }
 
-  void *to_void() { return (void *)m_array.data(); }
-  const void *to_const_void() const { return (const void *)m_array.data(); }
+  API_NO_DISCARD void *to_void() { return (void *)m_array.data(); }
+  API_NO_DISCARD const void *to_const_void() const {
+    return (const void *)m_array.data();
+  }
 
 private:
   std::array<T, SizeValue> m_array;

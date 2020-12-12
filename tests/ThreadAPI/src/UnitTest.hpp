@@ -422,7 +422,7 @@ public:
 
     {
       TEST_ASSERT(m_mutex.lock().is_success());
-      Thread::self();
+      TEST_ASSERT(Thread::self() == Thread::self());
 
       m_did_execute = false;
       T t = T(T::Construct().set_argument(this).set_function(
@@ -431,7 +431,6 @@ public:
                     MutexGuard mg(self->m_mutex);
                     MutexGuard t_mg(self->m_thread_mutex);
                     self->printer().info("wait 250ms");
-                    Thread::self();
                     wait(250_milliseconds);
                     self->m_did_execute = true;
                     return nullptr;

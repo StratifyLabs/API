@@ -220,7 +220,7 @@ int Thread::get_sched_parameters(int &policy, int &priority) const {
 
 bool Thread::is_valid() const { return is_id_ready(); }
 
-Thread &Thread::cancel() {
+const Thread &Thread::cancel() const {
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL("", pthread_cancel(id()));
   return *this;
@@ -245,7 +245,7 @@ Thread &Thread::set_cancel_type(CancelType cancel_type) {
   return *this;
 }
 
-Thread &Thread::set_cancel_state(CancelState cancel_state) {
+const Thread &Thread::set_cancel_state(CancelState cancel_state) const {
   API_RETURN_VALUE_IF_ERROR(*this);
   int old = 0;
   API_SYSTEM_CALL(

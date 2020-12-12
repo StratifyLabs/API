@@ -72,58 +72,31 @@ public:
     fifo,
     other
 #else
-    round_robin /*! Round Robin style (task yields periodically) */
-    = SCHED_RR,
-    fifo /*! First in, first out (task won't yield until it calls
-                   Sched::yield(), sleeps or uses Sync IO) */
-    = SCHED_FIFO,
-    other /*! Default scheduling: round robin with no priority) */
-    = SCHED_OTHER
+    round_robin = SCHED_RR,
+    fifo = SCHED_FIFO,
+    other = SCHED_OTHER
 #endif
   };
 
-  /*! \details Yields the processor to another thread or process.
-   *
-   * It is the same as calling sched_yield().
-   *
-   */
   const Sched &yield() const {
     sched_yield();
     return *this;
   }
 
-  /*! \details Gets the current proccess ID (equivalent to getpid()). */
-  static pid_t get_pid() { return getpid(); }
+  API_NO_DISCARD static pid_t get_pid() { return getpid(); }
 
-  /*! \details Gets the max priority for the specified policy. */
-  static int get_priority_max(Policy value);
-  /*! \details Gets the min priority for the specified policy. */
-  static int get_priority_min(Policy value);
+  API_NO_DISCARD static int get_priority_max(Policy value);
+  API_NO_DISCARD static int get_priority_min(Policy value);
 
 #if !defined __link
-  /*! \details Gets the max priority for the specified policy. */
-  static int get_priority(pid_t pid);
-
-  /*! \details Gets the RR interval for the pid.
-   *
-   * @param pid  The process ID
-   * @return The RR interval in microseconds
-   */
-  static int get_rr_interval(pid_t pid);
+  API_NO_DISCARD static int get_priority(pid_t pid);
+  API_NO_DISCARD static int get_rr_interval(pid_t pid);
 
   class SetScheduler {
     API_AF(SetScheduler, Policy, policy, Policy::round_robin);
     API_AF(SetScheduler, u8, priority, 0);
     API_AF(SetScheduler, int, pid, 0);
   };
-
-  /*! \details Sets the scheduler with the given parameters.
-   *
-   * @param pid The process ID
-   * @param value The polic (such as Sched::FIFO)
-   * @param priority The priority (higher is higher priority)
-   * @return Zero on success of -1 with errno set
-   */
 
   const Sched &set_scheduler(const SetScheduler &options) const;
 #endif

@@ -107,14 +107,16 @@ public:
   Sched::Policy get_sched_policy() const;
   int get_sched_priority() const;
 
-  Thread &set_cancel_state(CancelState cancel_state);
+  const Thread &set_cancel_state(CancelState cancel_state) const;
+  Thread &set_cancel_state(CancelState cancel_state) {
+    return API_CONST_CAST_SELF(Thread, set_cancel_state, cancel_state);
+  }
 
-  Thread &cancel();
+  const Thread &cancel() const;
+  Thread &cancel() { return API_CONST_CAST_SELF(Thread, cancel); }
 
-  bool is_running() const;
-
-  /*! \details Returns the thread ID of the calling thread. */
-  static pthread_t self() { return pthread_self(); }
+  API_NO_DISCARD bool is_running() const;
+  API_NO_DISCARD static pthread_t self() { return pthread_self(); }
 
   const Thread &kill(int signal_number) const {
     API_RETURN_VALUE_IF_ERROR(*this);
@@ -124,9 +126,8 @@ public:
 
   Thread &join(void **value = nullptr);
 
-  bool is_joinable() const { return is_valid(); }
-
-  const api::Error *execution_context_error() const {
+  API_NO_DISCARD bool is_joinable() const { return is_valid(); }
+  API_NO_DISCARD const api::Error *execution_context_error() const {
     return m_execution_context_error;
   }
 

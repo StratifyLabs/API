@@ -11,13 +11,6 @@
 
 namespace var {
 
-/*! \brief Queue Class
- * \details The Queue class is a FIFO data structure
- * that allows data to be pushed on the back
- * and popped from the front. It is similar to the
- * std::queue container class.
- *
- */
 template <typename T> class Deque : public api::ExecutionContext {
 public:
   using iterator = typename std::deque<T>::iterator;
@@ -43,43 +36,12 @@ public:
   const_reverse_iterator crbegin() const noexcept { return m_deque.crbegin(); }
   const_reverse_iterator crend() const noexcept { return m_deque.crend(); }
 
-  /*! \details Returns a reference to the back item.
-   *
-   * The back item is the one that has most recently
-   * been pushed using push().
-   *
-   */
-  T &back() { return m_deque.back(); }
+  API_NO_DISCARD T &back() { return m_deque.back(); }
+  API_NO_DISCARD const T &back() const { return m_deque.back(); }
 
-  /*! \details Returns a read-only reference to the back item.
-   *
-   * The back item is the one that has most recently
-   * been pushed using push().
-   *
-   */
-  const T &back() const { return m_deque.back(); }
+  API_NO_DISCARD const T &front() const { return m_deque.front(); }
+  API_NO_DISCARD T &front() { return m_deque.front(); }
 
-  /*! \details Returns a read-only reference to the front item.
-   *
-   * The front item is the one that has been in
-   * the queue the longest. It will be popped
-   * on the next call to pop().
-   */
-  const T &front() const { return m_deque.front(); }
-
-  /*! \details Returns a reference to the front item.
-   *
-   * The front item is the one that has been in
-   * the queue the longest. It will be popped
-   * on the next call to pop().
-   */
-  T &front() { return m_deque.front(); }
-
-  /*! \details Pushes an item on the back of the queue.
-   *
-   * @param value The item to push
-   *
-   */
   Deque &push_front(const T &value) {
     m_deque.push_front(value);
     return *this;
@@ -90,30 +52,19 @@ public:
     return *this;
   }
 
-  /*! \details Pops an item from the front of the queue. */
   Deque &pop_front() {
     m_deque.pop_front();
     return *this;
   }
 
-  /*! \details Pops an item from the back of the queue. */
   Deque &pop_back() {
     m_deque.pop_back();
     return *this;
   }
 
-  /*! \details Returns true if the queue is empty. */
   bool is_empty() const { return m_deque.empty(); }
-
-  /*! \details Returns the number of items in the queue. */
   u32 count() const { return m_deque.size(); }
 
-  /*! \details Clears the contents of the queue.
-   *
-   * This will empty the queue and free all the
-   * resources associated with it.
-   *
-   */
   Deque &clear() {
     // deconstruct objects in the list using pop
     m_deque.clear();

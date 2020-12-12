@@ -23,6 +23,10 @@
 
 #define API_DEPRECATED(message) [[deprecated(message)]]
 #define API_DEPRECATED_NO_REPLACEMENT [[deprecated]]
+#define API_MAYBE_UNUSED [[maybe_unused]]
+#define API_NO_DISCARD [[nodiscard]]
+#define API_NO_RETURN [[noreturn]]
+#define API_FALLTHROUGH [[fallthrough]]
 
 #define API_ACCESS_BOOL(c, v, iv)                                              \
 public:                                                                        \

@@ -14,23 +14,6 @@
 
 namespace thread {
 
-/*! \brief Semaphore Class
- * \details This class is a wrapper for POSIX style semphores.
- *
- * Here is an example using named semaphores.
- *
- * \code
- *
- * #include <sys.hpp>
- *
- * Sem sem;
- * sem.create("my_semaphore", 10);
- * sem.wait(); //decrement the semaphore value, block if semaphore can't be
- * decremented sem.post(); //increment semaphore value sem.close(); //close
- * reference to semaphore sem.unlink(); //delete semaphore if all references are
- * closed \endcode
- *
- */
 class SemaphoreObject : public api::ExecutionContext {
 public:
   int get_value() const;
@@ -102,12 +85,8 @@ public:
 
   ~Semaphore();
 
-  /*! \details Deletes a named semaphore.
-   *
-   * @param name The name of the semaphore
-   *
-   */
   const Semaphore &unlink() const;
+  Semaphore &unlink() { return API_CONST_CAST_SELF(Semaphore, unlink); }
   static void unlink(var::StringView name);
 
 private:

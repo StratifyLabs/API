@@ -31,22 +31,14 @@ public:
 
   virtual ~FileObject() {}
 
-  /*! \details Returns the file size. */
-  size_t size() const;
-  ssize_t size_signed() const { return static_cast<ssize_t>(size()); }
+  API_NO_DISCARD size_t size() const;
+  API_NO_DISCARD ssize_t size_signed() const {
+    return static_cast<ssize_t>(size());
+  }
 
-  /*! \details Returns the location of the cursor in the device or file. */
-  int location() const;
+  API_NO_DISCARD int location() const;
+  API_NO_DISCARD int flags() const;
 
-  /*! \details Return the current flags for the file. */
-  int flags() const;
-
-  /*! \details Reads the file.
-   *
-   * @return The number of bytes read or less than zero on an error
-   *
-   *
-   */
   const FileObject &read(void *buf, int size) const;
   FileObject &read(void *buf, int size) {
     return API_CONST_CAST_SELF(FileObject, read, buf, size);
@@ -58,10 +50,6 @@ public:
 
   FileObject &read(var::View view) { return read(view.to_void(), view.size()); }
 
-  /*! \details Write the file.
-   *
-   * @return The number of bytes written or less than zero on an error
-   */
   const FileObject &write(const void *buf, int size) const;
   FileObject &write(const void *buf, int size) {
     return API_CONST_CAST_SELF(FileObject, write, buf, size);
@@ -129,14 +117,11 @@ public:
       options);
   }
 
-  /*! \details Seeks to a location in the file or on the device. */
   const FileObject &seek(int location, Whence whence = Whence::set) const;
   FileObject &seek(int location, Whence whence = Whence::set) {
     return API_CONST_CAST_SELF(FileObject, seek, location, whence);
   }
 
-  /*! \details Reads a line in to the var::String until end-of-file or \a term
-   * is reached. */
   var::String gets(char term = '\n') const;
 
   class Ioctl {
@@ -144,13 +129,6 @@ public:
     API_ACCESS_FUNDAMENTAL(Ioctl, void *, argument, nullptr);
   };
 
-  /*! \details Executes an IO control request.
-   *
-   *
-   * This method is typically only implemented for devices
-   * and other special file systems.
-   *
-   */
   const FileObject &ioctl(int request, void *arg) const;
   FileObject &ioctl(int request, void *arg) {
     return API_CONST_CAST_SELF(FileObject, ioctl, request, arg);
