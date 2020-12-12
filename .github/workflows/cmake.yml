@@ -29,6 +29,11 @@ jobs:
       # We'll use this as our working directory for all subsequent commands
       run: cmake -E make_directory ${{runner.workspace}}/API/cmake_link
 
+    - name: Show
+      shell: bash
+      working-directory: ${{runner.workspace}}/API/cmake_link
+      run: ls ..
+      
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
@@ -38,19 +43,12 @@ jobs:
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run: cmake ..
-    
-    - name: Show
-      shell: bash
-      working-directory: ${{runner.workspace}}/API/cmake_link
-      run: ls .. && ls
 
     - name: Build
       working-directory: ${{runner.workspace}}/API/cmake_link
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: make -j12            
-      env: 
-        SOS_SDK_PATH: ${{runner.workspace}}/CMakeSDK
 
     - name: Test
       working-directory: ${{runner.workspace}}/API/cmake_link
@@ -58,5 +56,3 @@ jobs:
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: make test
-      env: 
-        SOS_SDK_PATH: ${{runner.workspace}}/CMakeSDK
