@@ -24,66 +24,8 @@
 extern "C" int sos_trace_stack(u32 count);
 #endif
 
-/*!
- * \brief Application Programming Interface
- *
- * \details
- *
- * **Introduction**
- *
- * The Stratify API library contains classes that allow easy access
- * to Stratify OS hardware and POSIX constructs such as threads (sys::Thread),
- * mutexes (sys::Mutex), files (fs::File) and many more. It also contains
- * classes used to manage data (see the var namespace) in an embedded
- * friendly way.
- *
- * If you are just getting started with Stratify OS and the Stratify API,
- * try reading through some of the guides:
- *
- * - [Stratify OS](https://docs.stratifylabs.co/guides/Guide-Stratify-OS/)
- * - [Filesystems](https://docs.stratifylabs.co/guides/Guide-Filesystems/)
- * - [Threads](https://docs.stratifylabs.co/guides/Guide-Threads/)
- * - [CMake Projects](https://docs.stratifylabs.co/guides/Guide-CMake/)
- *
- * If you are ready to start tinkering, hal::Pin is a nice place to
- * start and allows you to read and write GPIO values. hal::Uart
- * can be used to access UART peripherals and fs::File is for
- * reading and writing files on any mounted filesystem.
- *
- * **Code Hierarchy**
- *
- * The api namespace contains all top level objects. All objects inherit
- * from api::ApiObject. Below api::ApiObject this is api::ApiWorkObject
- * and api::ApiInfoObject.
- *
- * **None of the classes that are part of the api
- * namespace should be directly declared.**
- *
- * Work objects include an error number and are the base for objects that do
- * work and make system calls.
- *
- * Info objects are used for storing and managing static data structures. They
- * don't make system calls and can't store errors. Info objects also include
- * classes with only static methods.
- *
- *
- */
 namespace api {
 
-/*! \brief ApiInfo Class
- * \details Provides inforamation abou the API library.
- *
- * This object is available in the api
- * namespace when including any object
- * or namespace within the StratifyAPI. For
- * this example, we will include `sapi/sys.hpp`
- * but any `sapi` header file will do.
- *
- * ```
- * //md2code:include
- * #include <sys.hpp>
- * ```
- */
 class ApiInfo {
 public:
   static const char *version();

@@ -19,10 +19,17 @@ DataFile().write(File("myfile.txt"));
 
 //save a variable to disk
 char save_this_buffer[64];
-File(File::IsOverwrite::yes, "myfile.txt").write(ViewFile(View(save_this_buffer)));
+File(File::IsOverwrite::yes, "myfile.txt").write(View(save_this_buffer));
 
 //read a section of a file to a variable
 struct my_header header;
 constexpr int location_of_header = 64;
 ViewFile(View(my_header)).write(File("header.bin").seek(location_of_header));
+
+//OR read header as a view
+File("header.bin").seek(location_of_header).read(View(header));
 ```
+
+
+
+

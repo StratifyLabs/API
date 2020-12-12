@@ -12,51 +12,11 @@
 
 namespace thread {
 
-/*! \brief Thread Class
- * \details This class creates and manages new threads using POSIX calls.
- *
- * Before creating the thread, the attributes should be set using:
- *
- * - set_stacksize()
- * - set_detachstate()
- *
- * Once the thread is running the scheduling policy can be updated using:
- *
- * - set_priority()
- *
- * ```
- *
- * static void thread_execute(void * args);
- *
- * Thread t; //default 4096 stack size and detached = true
- *
- * t.set_stacksize(2048);
- * t.set_detachstate(Thread::JOINABLE);
- *
- * //calling get_policy() or get_priority() before thread is created will return
- * an error
- *
- * t.create(thread_execute);
- *
- * t.set_priority(5, Sched::RR); //priority 5 round robin scheduling
- *
- * //now that the thread is running, the stacksize and detachstate cannot be
- * changed
- *
- * printf("Thread policy is %d\n", t.get_policy());
- * printf("Thread priority is %d\n", t.get_priority());
- * printf("Thread stacksize is %d\n", t.get_stacksize());
- * printf("Thread is joinable? %d\n", t.is_joinable());
- *
- * ```
- *
- *
- */
 class Thread : public api::ExecutionContext {
 public:
   enum class DetachState {
-    joinable /*! Joinable thread */ = PTHREAD_CREATE_JOINABLE,
-    detached /*! Detacthed thread */ = PTHREAD_CREATE_DETACHED
+    joinable = PTHREAD_CREATE_JOINABLE,
+    detached  = PTHREAD_CREATE_DETACHED
   };
   using Policy = Sched::Policy;
 
