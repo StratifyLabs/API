@@ -5,6 +5,7 @@ on: [push]
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  SOS_SDK_PATH: ${{runner.workspace}}/CMakeSDK  
 
 jobs:
   build:
@@ -37,8 +38,11 @@ jobs:
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run: cmake ..
-      env: 
-        SOS_SDK_PATH: ${{runner.workspace}}/CMakeSDK
+    
+    - name: Show
+      shell: bash
+      working-directory: ${{runner.workspace}}/API/cmake_link
+      run: ls .. && ls
 
     - name: Build
       working-directory: ${{runner.workspace}}/API/cmake_link
