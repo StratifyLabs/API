@@ -42,7 +42,7 @@ void JsonPrinter::print(
   Printer::print(level, key, value, IsNewline::no);
 }
 
-void JsonPrinter::print_open_object(Level level, var::StringView key) {
+void JsonPrinter::print_open_object(Level level, const var::StringView key) {
 
   if (verbose_level() >= level && !is_level_filtered()) {
     insert_comma();
@@ -57,7 +57,7 @@ void JsonPrinter::print_open_object(Level level, var::StringView key) {
   container_list().push_back(Container(level, ContainerType::object));
 }
 
-void JsonPrinter::print_open_array(Level level, var::StringView key) {
+void JsonPrinter::print_open_array(Level level, const var::StringView key) {
   if (verbose_level() >= level && !is_level_filtered()) {
     insert_comma();
     if (container().type() == ContainerType::object) {

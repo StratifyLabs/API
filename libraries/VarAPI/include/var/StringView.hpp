@@ -42,21 +42,25 @@ public:
     m_string_view = std::string_view(value, length);
   }
 
-  bool is_null() const { return m_string_view.data() == nullptr; }
+  API_NO_DISCARD bool is_null() const {
+    return m_string_view.data() == nullptr;
+  }
 
   StringView &set_null() {
     m_string_view = std::string_view(nullptr, 0);
     return *this;
   }
 
-  bool is_null_terminated() const { return data() && (data()[length()] == 0); }
+  API_NO_DISCARD bool is_null_terminated() const {
+    return data() && (data()[length()] == 0);
+  }
 
-  char at(size_t value) const { return m_string_view.at(value); }
-  char front() const { return m_string_view.front(); }
-  char back() const { return m_string_view.back(); }
-  size_t length() const { return m_string_view.length(); }
+  API_NO_DISCARD char at(size_t value) const { return m_string_view.at(value); }
+  API_NO_DISCARD char front() const { return m_string_view.front(); }
+  API_NO_DISCARD char back() const { return m_string_view.back(); }
+  API_NO_DISCARD size_t length() const { return m_string_view.length(); }
 
-  bool is_empty() const { return m_string_view.empty(); }
+  API_NO_DISCARD bool is_empty() const { return m_string_view.empty(); }
 
   StringView &pop_front(size_t length = 1) {
     m_string_view.remove_prefix(length);
@@ -74,14 +78,14 @@ public:
   };
 
   StringView get_substring(const GetSubstring &options) const;
-  inline StringView operator()(const GetSubstring &options) const {
+  StringView operator()(const GetSubstring &options) const {
     return get_substring(options);
   }
 
   StringView get_substring_at_position(size_t position) const;
   StringView get_substring_with_length(size_t length) const;
 
-  var::Vector<StringView> split(StringView delimeters) const;
+  API_NO_DISCARD var::Vector<StringView> split(StringView delimeters) const;
 
   using iterator = typename std::string_view::iterator;
   using const_iterator = typename std::string_view::const_iterator;
@@ -113,35 +117,38 @@ public:
     return m_string_view.crend();
   }
 
-  size_t find(StringView a, size_t position = 0) const {
+  API_NO_DISCARD size_t find(StringView a, size_t position = 0) const {
     return m_string_view.find(a.m_string_view, position);
   }
 
-  size_t find(char a, size_t position = 0) const {
+  API_NO_DISCARD size_t find(char a, size_t position = 0) const {
     return m_string_view.find(a, position);
   }
 
-  size_t find_first_of(StringView a, size_t position = 0) const {
+  API_NO_DISCARD size_t find_first_of(StringView a, size_t position = 0) const {
     return m_string_view.find_first_of(a.m_string_view, position);
   }
 
-  size_t find_first_not_of(StringView a, size_t position = 0) const {
+  API_NO_DISCARD size_t find_first_not_of(StringView a,
+                                          size_t position = 0) const {
     return m_string_view.find_first_not_of(a.m_string_view, position);
   }
 
-  size_t reverse_find(StringView a, size_t position = npos) const {
+  API_NO_DISCARD size_t reverse_find(StringView a,
+                                     size_t position = npos) const {
     return m_string_view.rfind(a.m_string_view, position);
   }
 
-  size_t reverse_find(char a, size_t position = npos) const {
+  API_NO_DISCARD size_t reverse_find(char a, size_t position = npos) const {
     return m_string_view.rfind(a, position);
   }
 
-  size_t find_last_of(StringView a, size_t position = 0) const {
+  API_NO_DISCARD size_t find_last_of(StringView a, size_t position = 0) const {
     return m_string_view.find_last_of(a.m_string_view, position);
   }
 
-  size_t find_last_not_of(StringView a, size_t position = 0) const {
+  API_NO_DISCARD size_t find_last_not_of(StringView a,
+                                         size_t position = 0) const {
     return m_string_view.find_last_not_of(a.m_string_view, position);
   }
 
@@ -175,18 +182,16 @@ public:
     return m_string_view <= a.m_string_view;
   }
 
-  long to_long(Base base = Base::decimal) const;
-  float to_float() const;
-  unsigned long to_unsigned_long(Base base = Base::decimal) const;
-  int to_integer() const;
+  API_NO_DISCARD long to_long(Base base = Base::decimal) const;
+  API_NO_DISCARD float to_float() const;
+  API_NO_DISCARD unsigned long
+  to_unsigned_long(Base base = Base::decimal) const;
+  API_NO_DISCARD int to_integer() const;
 
-  const char *data() const { return m_string_view.data(); }
+  API_NO_DISCARD const char *data() const { return m_string_view.data(); }
 
-  String get_string() const;
-
-  // static StringView boolean(bool a) { return a ? "true" : "false"; }
-
-  static String get_string(const StringView &a);
+  API_NO_DISCARD String get_string() const;
+  API_NO_DISCARD static String get_string(const StringView &a);
 
 private:
   friend class String;

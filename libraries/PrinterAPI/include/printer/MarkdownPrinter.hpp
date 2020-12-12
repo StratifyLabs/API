@@ -34,8 +34,8 @@ public:
 
   MarkdownPrinter &horizontal_line();
 
-  MarkdownPrinter &
-  open_object(var::StringView key, Level level = Level::fatal) {
+  MarkdownPrinter &open_object(const var::StringView key,
+                               Level level = Level::fatal) {
     open_header(key, level);
     return open_list(ListType::unordered, level);
   }
@@ -50,8 +50,8 @@ public:
     return close_header();
   }
 
-  MarkdownPrinter &
-  open_array(var::StringView key, Level level = Level::fatal) {
+  MarkdownPrinter &open_array(const var::StringView key,
+                              Level level = Level::fatal) {
     open_header(key, level);
     return open_list(ListType::ordered, level);
   }
@@ -62,8 +62,8 @@ public:
   }
 
   // increase header level -- can be nested
-  MarkdownPrinter &
-  open_header(var::StringView key, Level level = Level::info);
+  MarkdownPrinter &open_header(const var::StringView key,
+                               Level level = Level::info);
   MarkdownPrinter &close_header();
 
   MarkdownPrinter &open_paragraph(Level level = Level::info);
@@ -106,10 +106,10 @@ public:
     return m_pretty_table;
   }
 
-  MarkdownPrinter &
-  hyperlink(var::StringView text, var::StringView link);
-
-  MarkdownPrinter &image(var::StringView text, var::StringView link);
+  MarkdownPrinter &hyperlink(const var::StringView text,
+                             const var::StringView link);
+  MarkdownPrinter &image(const var::StringView text,
+                         const var::StringView link);
 
   class Header {
   public:

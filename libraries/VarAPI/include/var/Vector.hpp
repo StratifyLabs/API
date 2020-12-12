@@ -12,21 +12,10 @@
 
 namespace var {
 
-/*! \brief Vector Class
- * \details The Vector class
- * is similar to std::vector but is embedded friendly.
- *
- *
- */
 template <typename T> class Vector : public api::ExecutionContext {
 public:
+  Vector() = default;
 
-  /*! \details Constructs an empty object.
-   *
-   */
-  Vector() {}
-
-  /*! \details Constructs a vector with \a count uninitialized items. */
   explicit Vector(size_t count) { m_vector.resize(count); }
 
   Vector(std::initializer_list<T> il) : m_vector(il) {}
@@ -35,7 +24,6 @@ public:
     return *this;
   }
 
-  ~Vector() {}
 
   Vector<T> &operator<<(const T &a) { return push_back(a); }
 
@@ -96,14 +84,16 @@ public:
     return *this;
   }
 
-  T &at(size_t position) { return m_vector.at(position); }
-  const T &at(size_t position) const { return m_vector.at(position); }
+  API_NO_DISCARD T &at(size_t position) { return m_vector.at(position); }
+  API_NO_DISCARD const T &at(size_t position) const {
+    return m_vector.at(position);
+  }
 
-  T &back() { return m_vector.back(); }
-  const T &back() const { return m_vector.back(); }
+  API_NO_DISCARD T &back() { return m_vector.back(); }
+  API_NO_DISCARD const T &back() const { return m_vector.back(); }
 
-  T &front() { return m_vector.front(); }
-  const T &front() const { return m_vector.front(); }
+  API_NO_DISCARD T &front() { return m_vector.front(); }
+  API_NO_DISCARD const T &front() const { return m_vector.front(); }
 
   Vector<T> &push_back(const T &a) {
     m_vector.push_back(a);
@@ -132,17 +122,21 @@ public:
     return *this;
   }
 
+  Vector &operator()(const Erase &options) { return erase(options); }
+
   Vector &remove(u32 pos) { return erase(Erase().set_position(pos)); }
 
-  const T &operator[](size_t offset) const { return m_vector[offset]; }
-  T &operator[](size_t offset) { return m_vector[offset]; }
+  API_NO_DISCARD const T &operator[](size_t offset) const {
+    return m_vector[offset];
+  }
+  API_NO_DISCARD T &operator[](size_t offset) { return m_vector[offset]; }
 
-  size_t find_offset(const T &a) const {
+  API_NO_DISCARD size_t find_offset(const T &a) const {
     size_t offset = std::find(begin(), end(), a) - begin();
     return offset;
   }
 
-  const T &find(const T &a, const T &not_found = T()) const {
+  API_NO_DISCARD const T &find(const T &a, const T &not_found = T()) const {
     size_t offset = find_offset(a);
     if (offset == count()) {
       return not_found;
@@ -150,12 +144,13 @@ public:
     return at(offset);
   }
 
-  T *search(const T &a) {
+  API_NO_DISCARD T *search(const T &a) {
     return reinterpret_cast<T *>(
       bsearch(&a, std::vector<T>::data(), count(), sizeof(T), ascending));
   }
 
-  T *search(const T &a, int (*compare)(const void *, const void *)) {
+  API_NO_DISCARD T *search(const T &a,
+                           int (*compare)(const void *, const void *)) {
     return reinterpret_cast<T *>(
       bsearch(&a, std::vector<T>::data(), count(), sizeof(T), compare));
   }
@@ -201,9 +196,7 @@ public:
   }
 
   static bool ascending(const T &a, const T &b) { return a < b; }
-
   static bool descending(const T &a, const T &b) { return b < a; }
-
   typedef bool (*sort_compartor_t)(const T &a, const T &b);
 
   Vector<T> &sort(sort_compartor_t compare_function) {
@@ -211,22 +204,15 @@ public:
     return *this;
   }
 
-  u32 count() const { return m_vector.size(); }
+  API_NO_DISCARD u32 count() const { return m_vector.size(); }
 
   Vector<T> operator+(const Vector<T> &a) const { return operate(a, add); }
-
   Vector<T> operator-(const Vector<T> &a) const { return operate(a, subtract); }
-
   Vector<T> operator*(const Vector<T> &a) const { return operate(a, multiply); }
-
   Vector<T> operator/(const Vector<T> &a) const { return operate(a, divide); }
-
   Vector<T> operator+(const T &a) const { return operate_single(a, add); }
-
   Vector<T> operator-(const T &a) const { return operate_single(a, subtract); }
-
   Vector<T> operator*(const T &a) const { return operate_single(a, multiply); }
-
   Vector<T> operator/(const T &a) const { return operate_single(a, divide); }
 
   Vector<T> operator<<(u32 a) const {
@@ -256,22 +242,22 @@ public:
     return *this;
   }
 
-  bool is_empty() const { return m_vector.empty(); }
+  API_NO_DISCARD bool is_empty() const { return m_vector.empty(); }
 
-  std::vector<T> &vector() { return m_vector; }
-  const std::vector<T> &vector() const { return m_vector; }
+  API_NO_DISCARD std::vector<T> &vector() { return m_vector; }
+  API_NO_DISCARD const std::vector<T> &vector() const { return m_vector; }
 
-  const T *data() const { return m_vector.data(); }
-  T *data() { return m_vector.data(); }
+  API_NO_DISCARD const T *data() const { return m_vector.data(); }
+  API_NO_DISCARD T *data() { return m_vector.data(); }
 
-  void *to_void() { return (void *)m_vector.data(); }
-  const void *to_const_void() const { return (const void *)m_vector.data(); }
+  API_NO_DISCARD void *to_void() { return (void *)m_vector.data(); }
+  API_NO_DISCARD const void *to_const_void() const {
+    return (const void *)m_vector.data();
+  }
 
-  T sum() const { return std::accumulate(begin(), end(), T()); }
-
-  T mean() const { return sum() / count(); }
-
-  T variance() const {
+  API_NO_DISCARD T sum() const { return std::accumulate(begin(), end(), T()); }
+  API_NO_DISCARD T mean() const { return sum() / count(); }
+  API_NO_DISCARD T variance() const {
     T local_mean = this->mean();
     T result = std::accumulate(
       begin(),

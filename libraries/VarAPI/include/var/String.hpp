@@ -18,55 +18,6 @@ namespace var {
 class View;
 class Data;
 
-/*! \brief String class
- * \details This is an embedded friendly string class.  It is similar
- * to the C++ string type but is built on var::Data and
- * cstring functions.  The naming convention follows includes
- * many std::string methods.
- *
- *
- *
- * \code
- * #include <var.hpp>
- *
- * String s1;
- * String s2;
- * s1 = "This is my string";
- * printf("%s", s1.cstring());
- *  //Strings can be compared
- * s2 = "This is another string";
- * if( s1 == s2 ){
- * 	printf("The strings are the same!\n");
- * } else {
- * 	printf("The strings are different\n");
- * }
- * \endcode
- *
- * The above code outputs:
- * \code
- * This is my string 64
- * The strings are different
- * \endcode
- *
- *
- *
- * \note
- *
- * A note about copy initialization:
- *
- * \code
- *
- * String hello("hello"); //OK: const char[6] converted from ConstString
- * String hello = "hello"; //Error: no conversion from const char [6] to String
- * (in copy-initialization)
- *
- * String hello; hello = "hello"; //OK const char[6] converted from ConstString
- * for assignment
- *
- * \endcode
- *
- *
- */
 class String : public api::ExecutionContext {
 public:
   constexpr static size_t npos = std::string::npos;

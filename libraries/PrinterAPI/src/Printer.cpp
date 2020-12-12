@@ -115,11 +115,8 @@ void Printer::set_color_code(u32 code) {
 #endif
 }
 
-void Printer::print(
-  Level verbose_level,
-  var::StringView key,
-  var::StringView value,
-  IsNewline is_newline) {
+void Printer::print(Level verbose_level, const var::StringView key,
+                    const var::StringView value, IsNewline is_newline) {
   // default flat printer behavior
   if (verbose_level > this->verbose_level()) {
     return;
@@ -213,7 +210,7 @@ void Printer::interface_print_final(const var::StringView view) {
 #endif
 }
 
-Printer &Printer::open_object(var::StringView key, Level level) {
+Printer &Printer::open_object(const var::StringView key, Level level) {
   print_open_object(level, key);
   return *this;
 }
@@ -223,7 +220,7 @@ Printer &Printer::close_object() {
   return *this;
 }
 
-Printer &Printer::open_array(var::StringView key, Level level) {
+Printer &Printer::open_array(const var::StringView key, Level level) {
   print_open_array(level, key);
   return *this;
 }
@@ -267,7 +264,7 @@ void Printer::clear_color_code() {
 #endif
 }
 
-Printer::ColorCode Printer::color_code(var::StringView color) {
+Printer::ColorCode Printer::color_code(const var::StringView color) {
   var::String color_upper(color);
   color_upper.to_upper();
   if (color_upper == "BLACK") {
@@ -329,7 +326,7 @@ void Printer::print(const char * fmt, ...){
 }
 #endif
 
-Printer &Printer::set_verbose_level(var::StringView level) {
+Printer &Printer::set_verbose_level(const var::StringView level) {
   if (level == "debug") {
     set_verbose_level(Level::debug);
   } else if (level == "info") {
@@ -546,37 +543,37 @@ bool Printer::update_progress(int progress, int total) {
   return false;
 }
 
-Printer &Printer::key(var::StringView key, const var::String &a) {
+Printer &Printer::key(const var::StringView key, const var::String &a) {
   print(Level::info, key, a.cstring());
   return *this;
 }
 
-Printer &Printer::key_bool(var::StringView key, bool a) {
+Printer &Printer::key_bool(const var::StringView key, bool a) {
   print(Level::info, key, a ? "true" : "false");
   return *this;
 }
 
-Printer &Printer::key(var::StringView key, var::StringView a) {
+Printer &Printer::key(const var::StringView key, var::StringView a) {
   print(Level::info, key, a);
   return *this;
 }
 
-Printer &Printer::debug(var::StringView a) {
+Printer &Printer::debug(const var::StringView a) {
   print(Level::debug, "debug", a);
   return *this;
 }
 
-Printer &Printer::info(var::StringView a) {
+Printer &Printer::info(const var::StringView a) {
   print(Level::info, "info", a);
   return *this;
 }
 
-Printer &Printer::message(var::StringView a) {
+Printer &Printer::message(const var::StringView a) {
   print(Level::message, "message", a);
   return *this;
 }
 
-Printer &Printer::warning(var::StringView a) {
+Printer &Printer::warning(const var::StringView a) {
   if (flags() & Flags::yellow_warnings) {
     set_color_code(ColorCode::yellow);
   }
@@ -587,8 +584,7 @@ Printer &Printer::warning(var::StringView a) {
   return *this;
 }
 
-
-Printer &Printer::error(var::StringView a) {
+Printer &Printer::error(const var::StringView a) {
   if (flags() & Flags::red_errors) {
     set_color_code(ColorCode::red);
   }
@@ -599,7 +595,7 @@ Printer &Printer::error(var::StringView a) {
   return *this;
 }
 
-Printer &Printer::fatal(var::StringView a) {
+Printer &Printer::fatal(const var::StringView a) {
   if (flags() & Flags::red_errors) {
     set_color_code(ColorCode::red);
   }
@@ -624,7 +620,7 @@ Printer::trace(const char *function, int line, var::StringView message) {
   return *this;
 }
 
-Printer &Printer::operator<<(var::View a) {
+Printer &Printer::operator<<(const var::View a) {
   const Flags o_flags = flags();
   const s8 *ptrs8 = a.to_const_s8();
   const s16 *ptrs16 = a.to_const_s16();
@@ -765,7 +761,7 @@ Printer &Printer::operator<<(const api::Error &error_context) {
   return *this;
 }
 
-Printer &Printer::operator<<(var::StringView a) {
+Printer &Printer::operator<<(const var::StringView a) {
   interface_print_final(a);
   return *this;
 }

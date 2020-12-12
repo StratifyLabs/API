@@ -10,11 +10,6 @@
 
 namespace var {
 
-/*! \brief Tokenize a String
- * \details The Token Class can convert any String into a list of tokens.  The
- * class is similar to STDC strtok().
- *
- */
 class Tokenizer : public api::ExecutionContext {
 public:
   class Construct {
@@ -25,24 +20,14 @@ public:
 
   Tokenizer(StringView input, const Construct &options);
 
-  /*! \details Sorting Options used with sort() */
-  enum class SortBy {
-    none /*! Don't sort */,
-    ascending /*! Sort from A to Z */,
-    descending /*! Sort from Z to A */
-  };
+  enum class SortBy { none, ascending, descending };
 
-  /*! \details Sorts the tokens as specified. */
   Tokenizer &sort(SortBy sort_option);
 
-  /*! \details Returns the total number of tokens. */
-  u32 count() const { return m_token_list.count(); }
-
-  /*! \details Returns a pointer to the token specified by offset. */
-  StringView at(u32 n) const;
+  API_NO_DISCARD u32 count() const { return m_token_list.count(); }
+  API_NO_DISCARD StringView at(u32 n) const;
 
   const StringViewList &list() const { return m_token_list; }
-
   String join(StringView delimeter) const;
 
 protected:

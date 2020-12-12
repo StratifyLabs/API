@@ -162,8 +162,8 @@ MarkdownPrinter &MarkdownPrinter::horizontal_line() {
   return *this;
 }
 
-MarkdownPrinter &MarkdownPrinter::hyperlink(var::StringView text,
-                                            var::StringView link) {
+MarkdownPrinter &MarkdownPrinter::hyperlink(const var::StringView text,
+                                            const var::StringView link) {
 
   var::String output = var::String("[") + text + "](" + link + ")";
   print(this->verbose_level(), StringView().set_null(), output.string_view(),
@@ -171,8 +171,8 @@ MarkdownPrinter &MarkdownPrinter::hyperlink(var::StringView text,
   return *this;
 }
 
-MarkdownPrinter &MarkdownPrinter::image(var::StringView text,
-                                        var::StringView link) {
+MarkdownPrinter &MarkdownPrinter::image(const var::StringView text,
+                                        const var::StringView link) {
   var::String output = var::String("![") + text + "](" + link + ")";
   print(this->verbose_level(), StringView().set_null(), output.string_view(),
         IsNewline::no);
@@ -218,7 +218,7 @@ MarkdownPrinter &MarkdownPrinter::close_list() {
 }
 
 // cannot be nested
-MarkdownPrinter &MarkdownPrinter::open_code(var::StringView language,
+MarkdownPrinter &MarkdownPrinter::open_code(const var::StringView language,
                                             // unique id value
                                             Level level) {
   m_is_last_close = false;

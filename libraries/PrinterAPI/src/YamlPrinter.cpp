@@ -8,11 +8,8 @@ YamlPrinter::YamlPrinter() {
   container_list().push_back(Container(Level::fatal, ContainerType::array));
 }
 
-void YamlPrinter::print(
-  Level level,
-  var::StringView key,
-  var::StringView value,
-  IsNewline is_newline) {
+void YamlPrinter::print(Level level, const var::StringView key,
+                        const var::StringView value, IsNewline is_newline) {
 
   if (level > verbose_level()) {
     return;

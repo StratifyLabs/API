@@ -22,59 +22,6 @@ namespace var {
 
 class Data;
 
-/*! \brief View Class
- * \details The View class
- * is for referring to data. The data has a
- * pointer to a buffer and a size.
- *
- * ```
- * //md2code:include
- * #include <var.hpp>
- * #include <fs.hpp>
- * ```
- *
- * The reference includes a pointer to some data
- * and the size of the data.
- *
- * This class allows passing the data reference as
- * an argument without passing the size separately.
- * Here is a quick example of how this is useful (and good).
- *
- * ```
- * //this is good because you can't mess up the size
- * int write(const DataItem & data);
- *
- * //this is not good because you can mess up the size
- * int write(const void * data, int bytes_in_data);
- * ```
- *
- * Now let's see this in practice.
- *
- * ```
- * //md2code:main
- *
- * File f;
- * f.open(
- *   arg::FilePath("/home/test.txt"),
- *   OpenFlags::append()
- *   );
- *
- * u32 data[4];
- *
- * f.write(
- *   arg::SourceData(DataItem(data))
- *   ); //writes 4 * sizeof(u32) bytes
- * //or
- * f.write(
- *   arg::SourceBuffer(data),
- *   //above cases needn't worry about size
- *   arg::Size(sizeof(data))
- *   );
- * ```
- *
- *
- *
- */
 class View : public api::ExecutionContext {
 public:
   class Construct {
@@ -84,8 +31,7 @@ public:
   };
 
   View() = default;
-
-  View(const Construct &options);
+  explicit View(const Construct &options);
 
   View(const Data &data);
   View(Data &data);
@@ -170,8 +116,8 @@ public:
     }
   }
 
-  bool is_valid() const { return size() > 0; }
-  bool is_null() const { return m_data == nullptr; }
+  API_NO_DISCARD bool is_valid() const { return size() > 0; }
+  API_NO_DISCARD bool is_null() const { return m_data == nullptr; }
 
   template <typename T> View &fill(const T &value) {
     for (u32 i = 0; i < this->count<T>(); i++) {
@@ -184,45 +130,8 @@ public:
 
   enum class SwapBy { byte, half_word, word };
 
-  /*! \details Swaps the byte order of the data.
-   *
-   * @param size 4 to swap as 32-bit words, otherwise swap 16-bit words
-   * (default is 4)
-   *
-   * If the data is read-only, no change is made
-   * and error_number() is set to EINVAL.
-   *
-   * On Cortex-M chips this method makes use of the built-in byte
-   * swapping instructions (so it is fast).
-   *
-   * ```
-   * //md2code:include
-   * #include <var.hpp>
-   * #include <hal.hpp>
-   * ```
-   *
-   * ```
-   * //md2code:main
-   * char buffer[16];
-   * View data_reference(buffer);
-   *
-   * //assume the spi outputs big endian data -- swaps 32-bit words
-   * data_reference.swap_byte_order();
-   * data_reference.swap_byte_order(4); //this is the same as calling
-   * swap_byte_order()
-   *
-   * //or for swapping bytes in 16-bit words
-   * data_reference.swap_byte_order(2);
-   * ```
-   *
-   *
-   */
   View &swap_byte_order(SwapBy order);
 
-  /*! \details Returns true if the contents
-   * of both View objects are the same.
-   *
-   */
   bool operator==(const View &a) const {
     if (a.size() == size()) {
       return memcmp(read_data(), a.read_data(), size()) == 0;
@@ -230,18 +139,11 @@ public:
     return false;
   }
 
-  /*! \details Returns true if the contents of the
-   * data objects are not the same.
-   *
-   */
   bool operator!=(const View &a) const { return !(*this == a); }
 
-  /*!
-   * \details Returns the effective size of the data.
-   *
-   *
-   */
-  size_t size() const { return m_size_read_only & ~m_size_read_only_flag; }
+  API_NO_DISCARD size_t size() const {
+    return m_size_read_only & ~m_size_read_only_flag;
+  }
 
   View &truncate(size_t new_size) {
     if (size() > new_size) {
@@ -270,35 +172,12 @@ public:
 
   ssize_t size_signed() const { return static_cast<ssize_t>(size()); }
 
-  /*! \details Returns true if the data object is read only.
-   *
-   */
-  bool is_read_only() const {
+  API_NO_DISCARD bool is_read_only() const {
     return m_size_read_only & (m_size_read_only_flag);
   }
 
   View &copy(const View &source);
 
-  /*! \details Returns a pointer to the data (read/write)
-   * This will return zero if the data is readonly.
-   *
-   * ```
-   * //md2code:main
-   * char buffer[64];
-   * View a(buffer); //allocate 64 bytes of data
-   * u32 * value = a.to<u32>(); //casts data as u32*
-   * const u32 * const_value = a.to<const u32>(); //works with read only
-   * data if( value == const_value ){ printf("prints for read-write
-   * objects but not read-only\n");
-   * }
-   * ```
-   *
-   * Many common types are implemented as a non-template
-   * function.
-   *
-   * See to_u8(), to_u16(), to_s32(), etc
-   *
-   */
   template <typename T> T *to() const {
     if (std::is_const<T>::value) {
       return (T *)read_data();
@@ -339,23 +218,6 @@ public:
   const float *to_const_float() const { return to<const float>(); }
   float *to_float() const { return to<float>(); }
 
-  /*! \details Accesses a value in the data.
-   *
-   *
-   * If the index exceeds the size of the data, the index is set to 0.
-   *
-   * ```
-   * //md2code:main
-   * char buffer[64];
-   * DataReference a(buffer); //a is 64 bytes
-   * a.at<char>(arg::Position(0)) = 'a'; //assign 'a' to the first char location
-   * a.at<u32>(arg::Position(4)) = 0xAAAA5555; //assigns a u32 value assuming a
-   * is a u32 array u32 value = a.at<u32>(arg::Position(4)); //reads a value as
-   * if a is a u32 array printf("value is 0x%lx\n", value);
-   * ```
-   *
-   *
-   */
   template <typename T> T &at(size_t position) {
     u32 local_count = size() / sizeof(T);
     position = position % local_count;
