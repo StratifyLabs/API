@@ -1,5 +1,7 @@
 # API
 
+![Build](https://github.com/StratifyLabs/API/workflows/Build/badge.svg)
+
 ## Overview
 
 API is a collection of cross-platform C++ libraries for 
