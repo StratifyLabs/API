@@ -7,7 +7,7 @@ else()
 	set(API_CONFIG_LIST release debug)
 endif()
 
-if(NOT DEFINED IS_SDK)
+if(NOT DEFINED API_IS_SDK)
 	if(SOS_IS_ARM)
 		sos_sdk_include_target(StratifyOS_crt "${API_CONFIG_LIST}")
 	endif()
@@ -97,7 +97,6 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 
 	set(LOCAL_NAME ${NAME})
 
-
 	sos_sdk_app_target(RELEASE ${LOCAL_NAME} "unittest" release ${SOS_ARCH})
   message(STATUS "API UnitTest Executable ${RELEASE_TARGET}")
 	add_executable(${RELEASE_TARGET})
@@ -118,9 +117,6 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 	set(CTEST_OUTPUT_ON_FAILURE ON)
 	if(SOS_IS_LINK)
 
-		sos_sdk_add_test(${LOCAL_NAME} ${LIB_OPTION}unittest release)
-		sos_sdk_add_test(${LOCAL_NAME} ${LIB_OPTION}unittest coverage)
-
 		sos_sdk_app_target(COVERAGE ${LOCAL_NAME} "${LIB_OPTION}unittest" coverage ${SOS_ARCH})
 		add_executable(${COVERAGE_TARGET})
 		sos_sdk_copy_target(${RELEASE_TARGET} ${COVERAGE_TARGET})
@@ -140,5 +136,13 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 		PRIVATE
 		-Os
 		)
+
+	if(SOS_IS_LINK)
+
+		sos_sdk_add_test(${LOCAL_NAME} ${LIB_OPTION}unittest release)
+		#sos_sdk_add_test(${LOCAL_NAME} ${LIB_OPTION}unittest coverage)
+
+
+	endif()
 
 endfunction()
