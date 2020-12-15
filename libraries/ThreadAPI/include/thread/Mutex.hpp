@@ -129,19 +129,29 @@ class SyncPoint {
 public:
   SyncPoint(const chrono::MicroTime period = 10_milliseconds)
       : m_period(period) {}
+
   void wait_here() {
-    Mutex::Guard mg0(m_mutex_pair.at(0));
-    wait_until_locked(m_mutex_pair.at(1));
+    Mutex::Guard mg0(m_here);
+    wait_until_locked(m_there);
   }
 
   void wait_there() {
-    wait_until_locked(m_mutex_pair.at(0));
-    Mutex::Guard mg1(m_mutex_pair.at(1));
-    { Mutex::Guard mg0(m_mutex_pair.at(0)); }
+    wait_until_locked(m_here);
+    Mutex::Guard mg1(m_there);
+    { Mutex::Guard mg0(m_here); }
+  }
+
+  bool try_here() {
+    if (m_here.try_lock() == true) {
+      m_here.unlock();
+      return false;
+    }
+    return true;
   }
 
 private:
-  var::Array<Mutex, 2> m_mutex_pair;
+  Mutex m_here;
+  Mutex m_there;
   chrono::MicroTime m_period = 10_milliseconds;
 
   void wait_until_locked(Mutex &mutex) {
@@ -149,15 +159,6 @@ private:
       mutex.unlock();
       chrono::wait(m_period);
     }
-  }
-
-  void wait_for_synchronization(Mutex &mine, Mutex &theirs) {
-    mine.lock();
-    while (theirs.try_lock() == true) {
-      theirs.unlock();
-      chrono::wait(m_period);
-    }
-    mine.unlock();
   }
 };
 
