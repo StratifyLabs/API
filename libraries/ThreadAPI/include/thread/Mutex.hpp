@@ -10,8 +10,8 @@
 
 #include "chrono/ClockTime.hpp"
 
-#include <sdk/types.h>
 #include <pthread.h>
+#include <sdk/types.h>
 
 #if defined __android
 #define PTHREAD_PRIO_PROTECT PTHREAD_PRIO_NONE
@@ -46,7 +46,7 @@ public:
   public:
     Attributes();
     explicit Attributes(const pthread_mutexattr_t &mutexattr)
-      : m_item(mutexattr) {}
+        : m_item(mutexattr) {}
 
     ~Attributes();
 
@@ -110,6 +110,13 @@ public:
       }
     }
     explicit Guard(Mutex &mutex) : m_mutex(&mutex) { mutex.lock(); }
+
+    Guard(Mutex &mutex, void *context, void (*execute)(void *context))
+        : m_mutex(&mutex) {
+      mutex.lock();
+      execute(context);
+    }
+
     ~Guard() {
       if (m_mutex) {
         m_mutex->unlock();
@@ -125,23 +132,37 @@ private:
   Mutex &set_attributes(const Attributes &attr);
 };
 
-class SyncPoint {
+class SyncMutex {
 public:
-  SyncPoint(const chrono::MicroTime period = 10_milliseconds)
+  SyncMutex(const chrono::MicroTime period = 10_milliseconds)
       : m_period(period) {}
 
-  void wait_here() {
-    Mutex::Guard mg0(m_here);
-    wait_until_locked(m_there);
+  // blocks until unlock is called in another thread
+  // unblocks if unlock() already waiting
+  void lock_synced() {
+    API_ASSERT(m_is_here == false);
+    if (m_is_here == false) {
+      m_is_here = true;
+      Mutex::Guard mg0(m_here);
+      wait_until_locked(m_there);
+      m_is_here = false;
+    }
   }
 
-  void wait_there() {
-    wait_until_locked(m_here);
-    Mutex::Guard mg1(m_there);
-    { Mutex::Guard mg0(m_here); }
+  // unblocks lock() in another thread
+  // OR blocks until lock() called in another thread
+  void unlock_synced() {
+    API_ASSERT(m_is_there == false);
+    if (m_is_there == false) {
+      m_is_there = true;
+      wait_until_locked(m_here);
+      Mutex::Guard mg1(m_there);
+      { Mutex::Guard mg0(m_here); }
+      m_is_there = false;
+    }
   }
 
-  bool try_here() {
+  bool try_lock_synced() {
     if (m_here.try_lock() == true) {
       m_here.unlock();
       return false;
@@ -152,6 +173,8 @@ public:
 private:
   Mutex m_here;
   Mutex m_there;
+  bool m_is_here = false;
+  bool m_is_there = false;
   chrono::MicroTime m_period = 10_milliseconds;
 
   void wait_until_locked(Mutex &mutex) {
