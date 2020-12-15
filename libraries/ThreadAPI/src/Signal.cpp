@@ -34,7 +34,7 @@ Signal &Signal::reset_handler() {
   return *this;
 }
 
-const Signal &Signal::send_pid(pid_t pid) const {
+const Signal &Signal::send(pid_t pid) const {
 #if !defined __macosx
   if (m_sigvalue.sival_int != 0) {
     return queue(pid);
@@ -52,15 +52,28 @@ const Signal &Signal::send_pid(pid_t pid) const {
   return *this;
 }
 
-const Signal &Signal::send_thread(pthread_t t) const {
+const Signal &Signal::send(const Thread &t) const {
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL("", ::pthread_kill(t, m_signo));
+  API_SYSTEM_CALL("", ::pthread_kill(t.id(), m_signo));
   return *this;
+}
+
+Signal Signal::wait(const Set &set) {
+  API_RETURN_VALUE_IF_ERROR(Signal(Number::null));
+  int signal_number = 0;
+  int result = 0;
+  sigset_t sigset = set.m_sigset;
+  result = sigwait(&sigset, &signal_number);
+  if (result > 0) {
+    errno = result;
+    handle_system_call_result(__LINE__, "", -1);
+  }
+  return Signal(Number(signal_number));
 }
 
 const Signal &Signal::queue(pid_t pid) const {
 #if defined __macosx || defined __win32
-  return send_pid(pid);
+  return send(pid);
 #else
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL("", sigqueue(pid, m_signo, m_sigvalue));

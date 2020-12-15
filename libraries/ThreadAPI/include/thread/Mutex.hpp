@@ -6,6 +6,7 @@
 #define THREADAPI_THREAD_MUTEX_HPP_
 
 #include "api/api.hpp"
+#include "var/Array.hpp"
 
 #include "chrono/ClockTime.hpp"
 
@@ -101,27 +102,63 @@ public:
   API_NO_DISCARD bool try_lock();
   Mutex &unlock();
 
+  class Guard {
+  public:
+    explicit Guard(Mutex *mutex) : m_mutex(mutex) {
+      if (mutex) {
+        mutex->lock();
+      }
+    }
+    explicit Guard(Mutex &mutex) : m_mutex(&mutex) { mutex.lock(); }
+    ~Guard() {
+      if (m_mutex) {
+        m_mutex->unlock();
+      }
+    }
+
+  private:
+    Mutex *m_mutex;
+  };
+
 private:
   pthread_mutex_t m_mutex;
   Mutex &set_attributes(const Attributes &attr);
 };
 
-class MutexGuard {
+class SyncPoint {
 public:
-  explicit MutexGuard(Mutex *mutex) : m_mutex(mutex) {
-    if (mutex) {
-      mutex->lock();
-    }
+  SyncPoint(const chrono::MicroTime period = 10_milliseconds)
+      : m_period(period) {}
+  void wait_here() {
+    Mutex::Guard mg0(m_mutex_pair.at(0));
+    wait_until_locked(m_mutex_pair.at(1));
   }
-  explicit MutexGuard(Mutex &mutex) : m_mutex(&mutex) { mutex.lock(); }
-  ~MutexGuard() {
-    if (m_mutex) {
-      m_mutex->unlock();
-    }
+
+  void wait_there() {
+    wait_until_locked(m_mutex_pair.at(0));
+    Mutex::Guard mg1(m_mutex_pair.at(1));
+    { Mutex::Guard mg0(m_mutex_pair.at(0)); }
   }
 
 private:
-  Mutex *m_mutex;
+  var::Array<Mutex, 2> m_mutex_pair;
+  chrono::MicroTime m_period = 10_milliseconds;
+
+  void wait_until_locked(Mutex &mutex) {
+    while (mutex.try_lock() == true) {
+      mutex.unlock();
+      chrono::wait(m_period);
+    }
+  }
+
+  void wait_for_synchronization(Mutex &mine, Mutex &theirs) {
+    mine.lock();
+    while (theirs.try_lock() == true) {
+      theirs.unlock();
+      chrono::wait(m_period);
+    }
+    mine.unlock();
+  }
 };
 
 } // namespace thread

@@ -76,8 +76,10 @@ public:
     return *this;
   }
   Thread(Thread &&a) { swap(std::move(a)); }
+  Thread &&move() { return std::move(*this); }
 
-  Thread(const Construct &options, const Attributes &attributes = Attributes());
+  Thread(const Construct &options);
+  Thread(const Attributes &attributes, const Construct &options);
   ~Thread();
 
   /*! \details Gets the ID of the thread. */
@@ -90,7 +92,7 @@ public:
    * also return false;
    *
    */
-  bool is_valid() const;
+  volatile bool is_valid() const;
 
   enum class CancelType {
     deferred = PTHREAD_CANCEL_DEFERRED,
@@ -126,52 +128,34 @@ public:
 
   Thread &join(void **value = nullptr);
 
-  API_NO_DISCARD bool is_joinable() const { return is_valid(); }
+  API_NO_DISCARD bool is_joinable() const { return m_state == State::joinable; }
   API_NO_DISCARD const api::Error *execution_context_error() const {
     return m_execution_context_error;
   }
 
 private:
-  enum thread_flags {
-    id_completed = static_cast<u32>(-3),
-    id_error /*! ID is an error */ = static_cast<u32>(-2),
-    id_ready = 1
-  };
+  enum class State { null = 0, completed, error, joinable, detached };
 
-  static void *handle_thread(void *args);
-  volatile function_t m_function;
-  void *m_argument;
+  volatile function_t m_function = nullptr;
+  void *m_argument = nullptr;
   const api::Error *m_execution_context_error = nullptr;
+  volatile State m_state = State::null;
 
+  pthread_t m_id =
 #if defined __link
-  u32 m_private_context;
-  pthread_t m_id = {0};
-#define THREADAPI_STATUS_ID m_private_context
+      {0};
 #else
-  pthread_t m_id = 0;
-#define THREADAPI_STATUS_ID m_id
+      0;
 #endif
 
   void swap(Thread &&a) {
     std::swap(m_id, a.m_id);
-#if defined __link
-    std::swap(m_private_context, a.m_private_context);
-#endif
+    std::swap(m_state, a.m_state);
   }
+
+  static void *handle_thread(void *args);
 
   int get_sched_parameters(int &policy, int &priority) const;
-
-  void set_id_error() { THREADAPI_STATUS_ID = id_error; }
-  void set_id_completed() { THREADAPI_STATUS_ID = id_completed; }
-  void set_id_ready() {
-#if defined __link
-    THREADAPI_STATUS_ID = id_ready;
-#endif
-  }
-
-  bool is_id_ready() const { return THREADAPI_STATUS_ID > 0; }
-  bool is_id_error() const { return THREADAPI_STATUS_ID == id_error; }
-  bool is_id_completed() const { return THREADAPI_STATUS_ID == id_completed; }
 };
 
 } // namespace thread

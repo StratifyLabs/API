@@ -82,10 +82,10 @@ public:
       S s = S(S::Number::terminate).set_handler(handler);
       S sa = S(S::Number::user1, 100).set_handler(action_handler);
 
-      s.send_pid(Sched::get_pid());
+      s.send(Sched::get_pid());
       TEST_ASSERT(m_signal_number_io == 1);
 
-      sa.send_pid(Sched::get_pid());
+      sa.send(Sched::get_pid());
       printer().key_bool("sigqueue", m_signal_number_io == 100);
 #endif
     }
@@ -131,7 +131,8 @@ public:
 
       m_did_execute = false;
 
-      T t = T(T::Construct().set_argument(this).set_function(
+      T t = T(T::Attributes().set_detach_state(T::DetachState::joinable),
+              T::Construct().set_argument(this).set_function(
                   [](void *args) -> void * {
                     UnitTest *self = reinterpret_cast<UnitTest *>(args);
                     PRINTER_TRACE(self->printer(), "wait sem in thread");
@@ -141,8 +142,7 @@ public:
                     sem.post();
                     printer().key_bool("error", is_error());
                     return nullptr;
-                  }),
-              T::Attributes().set_detach_state(T::DetachState::joinable));
+                  }));
 
       TEST_ASSERT(m_did_execute == false);
       wait(250_milliseconds);
@@ -175,15 +175,15 @@ public:
 
       TEST_ASSERT(m.lock().lock().lock().is_success());
 
-      T t = T(T::Construct().set_argument(this).set_function(
+      T t = T(T::Attributes().set_detach_state(T::DetachState::joinable),
+              T::Construct().set_argument(this).set_function(
                   [](void *args) -> void * {
                     UnitTest *self = reinterpret_cast<UnitTest *>(args);
                     self->m_mutex_pointer->lock().lock();
                     self->m_did_execute = true;
                     self->m_mutex_pointer->unlock().unlock();
                     return nullptr;
-                  }),
-              T::Attributes().set_detach_state(T::DetachState::joinable));
+                  }));
 
       TEST_ASSERT(m.unlock().unlock().unlock().is_success());
       // TEST_ASSERT(t.wait().is_success());
@@ -329,13 +329,13 @@ public:
 
     {
       m_did_execute = false;
-      T t(T::Construct().set_argument(this).set_function(
+      T t(T::Attributes().set_detach_state(T::DetachState::joinable),
+          T::Construct().set_argument(this).set_function(
               [](void *args) -> void * {
                 UnitTest *self = reinterpret_cast<UnitTest *>(args);
                 self->m_did_execute = true;
                 return nullptr;
-              }),
-          T::Attributes().set_detach_state(T::DetachState::joinable));
+              }));
 
       TEST_ASSERT(is_success());
 
@@ -354,13 +354,13 @@ public:
 
     {
       m_did_execute = false;
-      T(T::Construct().set_argument(this).set_function(
+      T(T::Attributes().set_detach_state(T::DetachState::joinable),
+        T::Construct().set_argument(this).set_function(
             [](void *args) -> void * {
               UnitTest *self = reinterpret_cast<UnitTest *>(args);
               self->m_did_execute = true;
               return nullptr;
-            }),
-        T::Attributes().set_detach_state(T::DetachState::joinable))
+            }))
           .join();
 
       wait(2_seconds);
@@ -368,13 +368,13 @@ public:
       TEST_ASSERT(m_did_execute);
 
       m_did_execute = false;
-      T(T::Construct().set_argument(this).set_function(
+      T(T::Attributes().set_detach_state(T::DetachState::detached),
+        T::Construct().set_argument(this).set_function(
             [](void *args) -> void * {
               UnitTest *self = reinterpret_cast<UnitTest *>(args);
               self->m_did_execute = true;
               return nullptr;
-            }),
-        T::Attributes().set_detach_state(T::DetachState::detached));
+            }));
 
       wait(50_milliseconds);
       TEST_ASSERT(is_success());
@@ -384,7 +384,8 @@ public:
     {
 
       m_did_execute = true;
-      T t = T(T::Construct().set_argument(this).set_function(
+      T t = T(T::Attributes().set_detach_state(T::DetachState::joinable),
+              T::Construct().set_argument(this).set_function(
                   [](void *args) -> void * {
                     UnitTest *self = reinterpret_cast<UnitTest *>(args);
 
@@ -393,8 +394,7 @@ public:
                     }
                     self->m_did_execute = false;
                     return nullptr;
-                  }),
-              T::Attributes().set_detach_state(T::DetachState::joinable));
+                  }));
 
       TEST_ASSERT(t.set_cancel_state(T::CancelState::enable)
                       .set_cancel_type(T::CancelType::deferred)
@@ -407,14 +407,14 @@ public:
 
     {
       m_did_execute = false;
-      T(T::Construct().set_argument(this).set_function(
+      T(T::Attributes()
+            .set_detach_state(T::DetachState::joinable)
+            .set_stack_size(8192),
+        T::Construct().set_argument(this).set_function(
             [](void *args) -> void * {
               reinterpret_cast<UnitTest *>(args)->m_did_execute = true;
               return nullptr;
-            }),
-        T::Attributes()
-            .set_detach_state(T::DetachState::joinable)
-            .set_stack_size(8192))
+            }))
           .join();
 
       TEST_ASSERT(m_did_execute);
@@ -425,17 +425,17 @@ public:
       TEST_ASSERT(Thread::self() == Thread::self());
 
       m_did_execute = false;
-      T t = T(T::Construct().set_argument(this).set_function(
+      T t = T(T::Attributes().set_detach_state(T::DetachState::joinable),
+              T::Construct().set_argument(this).set_function(
                   [](void *args) -> void * {
                     UnitTest *self = reinterpret_cast<UnitTest *>(args);
-                    MutexGuard mg(self->m_mutex);
-                    MutexGuard t_mg(self->m_thread_mutex);
+                    Mutex::Guard mg(self->m_mutex);
+                    Mutex::Guard t_mg(self->m_thread_mutex);
                     self->printer().info("wait 250ms");
                     wait(250_milliseconds);
                     self->m_did_execute = true;
                     return nullptr;
-                  }),
-              T::Attributes().set_detach_state(T::DetachState::joinable));
+                  }));
 
       // unlock to allow thread to continue
       TEST_ASSERT(m_mutex.unlock().is_success());

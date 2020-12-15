@@ -143,11 +143,36 @@ void *Thread::handle_thread(void *args) {
   return result;
 }
 
-Thread::Thread(const Construct &options, const Attributes &attributes) {
+Thread::Thread(const Attributes &attributes, const Construct &options) {
   API_RETURN_IF_ERROR();
   API_ASSERT(options.function() != nullptr);
 
-  DetachState detach_state = attributes.get_detach_state();
+  m_function = options.function();
+  m_argument = options.argument();
+
+  // First create the thread
+  printf("this is %p\n", this);
+  int result =
+      API_SYSTEM_CALL("", pthread_create(&m_id, &attributes.m_pthread_attr,
+                                         handle_thread, this));
+
+  if (result < 0) {
+    m_state = State::error;
+  } else {
+    m_state = attributes.get_detach_state() == DetachState::joinable
+                  ? State::joinable
+                  : State::detached;
+
+    while (m_function != nullptr) {
+      chrono::wait(1_milliseconds);
+    }
+  }
+}
+
+Thread::Thread(const Construct &options) {
+  API_RETURN_IF_ERROR();
+  API_ASSERT(options.function() != nullptr);
+  Attributes attributes;
 
   m_function = options.function();
   m_argument = options.argument();
@@ -158,19 +183,20 @@ Thread::Thread(const Construct &options, const Attributes &attributes) {
                                          handle_thread, this));
 
   if (result < 0) {
-    set_id_error();
+    m_state = State::error;
   } else {
-    if (detach_state == DetachState::detached) {
-      set_id_completed();
-    } else {
-      set_id_ready();
+    m_state = attributes.get_detach_state() == DetachState::joinable
+                  ? State::joinable
+                  : State::detached;
+    while (m_function != nullptr) {
+      chrono::wait(1_milliseconds);
     }
   }
 }
 
 Thread::~Thread() {
   api::ErrorGuard error_guard;
-  if (is_joinable() && (is_id_completed() == false)) {
+  if (is_joinable() && (m_state != State::completed)) {
     API_RESET_ERROR();
     cancel();
     API_RESET_ERROR();
@@ -218,7 +244,9 @@ int Thread::get_sched_parameters(int &policy, int &priority) const {
   return result;
 }
 
-bool Thread::is_valid() const { return is_id_ready(); }
+volatile bool Thread::is_valid() const {
+  return (m_state == State::joinable) || (m_state == State::detached);
+}
 
 const Thread &Thread::cancel() const {
   API_RETURN_VALUE_IF_ERROR(*this);
@@ -263,7 +291,7 @@ Thread &Thread::join(void **value) {
 
   const int local_result = API_SYSTEM_CALL("", pthread_join(id(), ptr));
   if (local_result == 0) {
-    set_id_completed();
+    m_state = State::completed;
   }
   return *this;
 }

@@ -50,8 +50,9 @@ namespace thread {
 class SignalFlags {
 public:
   enum class Number {
+    null = 0,
     abort = SIGABRT,
-    FPE = SIGFPE,
+    fpe = SIGFPE,
     interrupt = SIGINT,
     illegal = SIGILL,
     segmentation = SIGSEGV,
@@ -123,6 +124,37 @@ private:
 
 class Signal : public api::ExecutionContext, public SignalFlags {
 public:
+  class Set {
+  public:
+    Set &add(Number signo) {
+      sigaddset(&m_sigset, static_cast<int>(signo));
+      return *this;
+    }
+
+    Set &del(Number signo) {
+      sigdelset(&m_sigset, static_cast<int>(signo));
+      return *this;
+    }
+
+    Set &fill() {
+      sigfillset(&m_sigset);
+      return *this;
+    }
+
+    Set &clear() {
+      sigemptyset(&m_sigset);
+      return *this;
+    }
+
+    API_NO_DISCARD bool is_member(Number signo) const {
+      return sigismember(&m_sigset, static_cast<int>(signo));
+    }
+
+  private:
+    friend class Signal;
+    sigset_t m_sigset = {0};
+  };
+
   explicit Signal(Number signo, int signal_value = 0) {
     m_signo = static_cast<int>(signo);
     m_sigvalue.sival_int = signal_value;
@@ -133,24 +165,19 @@ public:
     m_sigvalue.sival_ptr = signal_pointer;
   }
 
-  const Signal &send_pid(pid_t pid) const;
-  Signal &send_pid(pid_t pid) {
-    return API_CONST_CAST_SELF(Signal, send_pid, pid);
-  }
+  const Signal &send(pid_t pid) const;
+  Signal &send(pid_t pid) { return API_CONST_CAST_SELF(Signal, send, pid); }
 
   const Signal &queue(pid_t pid) const;
   Signal &queue(pid_t pid) { return API_CONST_CAST_SELF(Signal, queue, pid); }
 
-  const Signal &send_thread(pthread_t t) const;
-  Signal &send_thread(pthread_t t) {
-    return API_CONST_CAST_SELF(Signal, send_thread, t);
-  }
-
-  const Signal &send_self() const { return send_thread(pthread_self()); }
-  Signal &send_self() { return API_CONST_CAST_SELF(Signal, send_self); }
+  const Signal &send(const Thread &t) const;
+  Signal &send(const Thread &t) { return API_CONST_CAST_SELF(Signal, send, t); }
 
   Signal &set_handler(const SignalHandler &handler);
   Signal &reset_handler();
+
+  static Signal wait(const Set &set);
 
   API_NO_DISCARD int signo() const { return m_signo; }
   API_NO_DISCARD int sigvalue() const { return m_sigvalue.sival_int; }

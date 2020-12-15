@@ -67,8 +67,9 @@ public:
     void *thread_error_signature;
     // create a thread and make sure it's error context is independent
     Thread t(
-      Thread::Construct().set_argument(this).set_function(
-        [](void *args) -> void * {
+        Thread::Attributes().set_detach_state(Thread::DetachState::joinable),
+        Thread::Construct().set_argument(this).set_function([](void *args)
+                                                                -> void * {
           Test *self = reinterpret_cast<Test *>(args);
           self->printer().key(
             "threadSignature",
@@ -80,8 +81,7 @@ public:
           TEST_SELF_EXPECT(StringView(error().message()) == "threadmessage");
 
           return error().signature();
-        }),
-      Thread::Attributes().set_detach_state(Thread::DetachState::joinable));
+        }));
     t.join(&thread_error_signature);
 
     printer().key("signature", String().format("%p", error().signature()));
