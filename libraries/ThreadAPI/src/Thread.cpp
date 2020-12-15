@@ -151,7 +151,6 @@ Thread::Thread(const Attributes &attributes, const Construct &options) {
   m_argument = options.argument();
 
   // First create the thread
-  printf("this is %p\n", this);
   int result =
       API_SYSTEM_CALL("", pthread_create(&m_id, &attributes.m_pthread_attr,
                                          handle_thread, this));

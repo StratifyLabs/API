@@ -339,12 +339,14 @@ public:
 
       TEST_ASSERT(is_success());
 
-#if !defined __win32
+#if !defined __link
       const int priority = Sched::get_priority_min(Sched::Policy::fifo);
 
       TEST_ASSERT(t.set_sched_parameters(Sched::Policy::fifo, priority)
                       .get_sched_priority() == priority);
 
+      printer().key("policy",
+                    NumberString(static_cast<int>(t.get_sched_policy())));
       TEST_ASSERT(t.get_sched_policy() == Sched::Policy::fifo);
 
 #endif
