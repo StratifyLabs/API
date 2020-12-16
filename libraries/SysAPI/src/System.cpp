@@ -32,6 +32,23 @@ var::StringView System::processor() {
 #elif defined __processor_aarch64
   return "arm64";
 #else
+#if defined __StratifyOS__
+#if defined __v7m
+  return "v7m";
+#endif
+#if defined __v7em
+  return "v7em";
+#endif
+#if defined __v7em_f4sh
+  return "v7em_f4sh";
+#endif
+#if defined __v7em_f5dh
+  return "v7em_f5dh";
+#endif
+#if defined __v7em_f5sh
+  return "v7em_f5sh";
+#endif
+#endif
   return "unknown";
 #endif
 }
