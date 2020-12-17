@@ -148,13 +148,10 @@ FileSystem::read_directory(const var::StringView path, IsRecursive is_recursive,
               read_directory(entry_path, is_recursive, exclude);
 
           for (const auto &intermediate_entry : intermediate_result) {
-            const var::PathString intermediate_path =
-                var::PathString(entry_path) / intermediate_entry;
-
-            result.push_back(intermediate_path);
+            result.push_back(entry / intermediate_entry);
           }
         } else {
-          result.push_back(entry_path);
+          result.push_back(entry);
         }
       } else {
         result.push_back(entry);
