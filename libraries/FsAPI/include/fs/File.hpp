@@ -90,6 +90,19 @@ public:
       nullptr);
   };
 
+  class LocationGuard {
+  public:
+    LocationGuard(const FileObject &object) : m_object(object) {
+      m_location = object.location();
+    }
+
+    ~LocationGuard() { m_object.seek(m_location); }
+
+  private:
+    const FileObject &m_object;
+    int m_location;
+  };
+
   const FileObject &
   write(const FileObject &source_file, const Write &options = Write()) const;
 

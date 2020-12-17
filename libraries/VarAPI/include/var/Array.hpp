@@ -73,6 +73,8 @@ public:
   T &operator[](size_t position) { return m_array[position]; }
   const T &operator[](size_t position) const { return m_array[position]; }
 
+  bool operator==(const Array &a) const { return m_array == a.m_array; }
+
   T &front() {
     return m_array.front();
   }

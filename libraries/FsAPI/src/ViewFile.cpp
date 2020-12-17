@@ -17,6 +17,7 @@ using namespace fs;
 int ViewFile::interface_read(void *buf, int nbyte) const {
 
   if (flags().is_write_only()) {
+    errno = EBADF;
     return -1;
   }
 
@@ -39,6 +40,7 @@ int ViewFile::interface_read(void *buf, int nbyte) const {
 int ViewFile::interface_write(const void *buf, int nbyte) const {
 
   if (flags().is_read_only()) {
+    errno = EBADF;
     return -1;
   }
 

@@ -26,6 +26,7 @@ DataFile::DataFile(fs::File &file_to_load) {
 int DataFile::interface_read(void *buf, int nbyte) const {
 
   if (flags().is_write_only()) {
+    errno = EBADF;
     return -1;
   }
 
@@ -48,6 +49,7 @@ int DataFile::interface_read(void *buf, int nbyte) const {
 int DataFile::interface_write(const void *buf, int nbyte) const {
 
   if (flags().is_read_only()) {
+    errno = EBADF;
     return -1;
   }
 
