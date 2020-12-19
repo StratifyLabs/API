@@ -17,11 +17,6 @@
 
 namespace thread {
 
-/*! \brief Mutex Class
- * \details This class holds a Mutex used with
- * multi-threaded applications.
- *
- */
 class Mutex : public api::ExecutionContext {
 public:
   enum class Type {

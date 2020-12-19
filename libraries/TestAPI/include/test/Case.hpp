@@ -1,7 +1,7 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#ifndef SAPI_TEST_CASE_HPP_
-#define SAPI_TEST_CASE_HPP_
+#ifndef TESTAPI_TEST_CASE_HPP_
+#define TESTAPI_TEST_CASE_HPP_
 
 #include "var/String.hpp"
 
@@ -20,4 +20,4 @@ private:
 
 } // namespace test
 
-#endif // SAPI_TEST_CASE_HPP_
+#endif // TESTAPI_TEST_CASE_HPP_

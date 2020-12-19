@@ -1,7 +1,7 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#ifndef SYSAPI_SYS_HPP
-#define SYSAPI_SYS_HPP
+#ifndef SOSAPI_HPP
+#define SOSAPI_HPP
 
 namespace sys {}
 
@@ -11,4 +11,4 @@ namespace sys {}
 
 using namespace sys;
 
-#endif /* SYSAPI_SYS_HPP */
+#endif /* SOSAPI_HPP */

@@ -1,6 +1,6 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
-#ifndef SYSAPI_SYS_VERSION_HPP_
-#define SYSAPI_SYS_VERSION_HPP_
+#ifndef SOSAPI_VERSION_HPP_
+#define SOSAPI_VERSION_HPP_
 
 #include "var/StackString.hpp"
 
@@ -33,4 +33,4 @@ private:
 };
 } // namespace sys
 
-#endif // SYSAPI_SYS_VERSION_HPP_
+#endif // SOSAPI_VERSION_HPP_

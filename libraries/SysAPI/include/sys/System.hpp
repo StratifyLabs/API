@@ -1,6 +1,6 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
-#ifndef SYSAPI_SYS_SYSTEM_HPP
-#define SYSAPI_SYS_SYSTEM_HPP
+#ifndef SOSAPI_SYSTEM_HPP
+#define SOSAPI_SYSTEM_HPP
 
 #include <sdk/types.h>
 
@@ -26,4 +26,4 @@ public:
 
 } // namespace sys
 
-#endif // SYSAPI_SYS_SYSTEM_HPP
+#endif // SOSAPI_SYSTEM_HPP
