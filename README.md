@@ -13,12 +13,12 @@ API is a collection of cross-platform C++ libraries for
 
 including
 
-- [API: error handling and execution context](libraries/API/README.md)
-- [ChronoAPI: time and timing](libraries/ChronoAPI/README.md)
-- [FsAPI: File systems](libraries/FsAPI/README.md)
+- [API](libraries/API): error handling and execution context
+- [ChronoAPI](libraries/ChronoAPI): time and timing
+- [FsAPI](libraries/FsAPI): File systems
 - [PrinterAPI](libraries/PrinterAPI): printing variables
 - SysAPI: misc system functions
-- [ThreadAPI: thread management](libraries/ThreadAPI/README.md)
+- [ThreadAPI: thread management](libraries/ThreadAPI)
 - VarAPI: data management
 
 ## Design
@@ -109,7 +109,7 @@ Point p = Point().set_x(50).set_y(100);
 
 ### Filesystem Inspired Abstraction
 
-Almost anything in the `API` framework can be treated a `FileObject`. This provides a unified way to move data around between memory, the filesystem, the internet, and devices.
+Almost any data in the `API` framework can be treated a `FileObject`. This provides a unified way to move data around between memory, the filesystem, the internet, and devices.
 
 ```c++
 //defines interface for using file like objects
@@ -130,6 +130,7 @@ class ViewFile : public FileObject;
 //use callbacks for file contents
 class LambdaFile : public FileObject;
 
+// these are part of the InetAPI (separate repo)
 class Socket : public FileObject;
 class SecureSocket : public FileObject;
 ```
@@ -159,18 +160,35 @@ FileSystem().rename(
   Rename()
     .set_old_path("my_file.txt")
     .set_new_path("your_file.txt"));
+
+// strong argument calls also include a call operator shortcut
+FileSystem& operator()(const Rename & options){
+  return rename(options);
+}
+
+//called like this
+FileSystem()(Rename()
+  .set_old_path("my_file.txt")
+  .set_new_path("your_file.txt"));
+
 ```
 
 
 ### Use RAII for resource management
 
+> RAII = resource acquisition is initialization
+
 The constructor/deconstructor paradigm built into the C++ language is an excellent way to manage resources. If anything is "opened", it is done so in the constructor and then closed in the desctructor. This goes for lock/unlock, malloc/free, initialize/finalize and so on.
+
+Here are a few examples:
 
 ```c++
 //open/close
 DataFile my_file;
 {
-  File f("myfile.txt"); //file is open
+  //file is opened on construction
+  //OR that is, it is "initialized" on "acquisition"
+  File f("myfile.txt"); 
   //read from f, write to my_file
   my_file.write(f); 
 } //f is closed when leaving scope
@@ -186,11 +204,17 @@ Mutex mutex;
 } // f is closed then mutex is unlocked
 ```
 
-One limitation to this approach comes when, for example, you want to construct a File but open it later. The `API` allows for constructing an invalid file and swapping it for something valid later.
+One limitation to this approach comes when, for example, you want to construct a File but open it later. The `API` allows for constructing an unopened file and swapping it for something valid later.
+
+Keep in mind, you can `move` a `File` but you cannot copy the object. This will be true throughout the `API` for any class that is associated with a system resource.
 
 ```c++
 //this will just be an unopened file for now
 File f;
+
+if( f.is_valid() == false ){
+ //yep, it's not valid (also not erroneous)
+}
 
 //This is how we open it later
 f = File("myfile.txt").move();
@@ -201,14 +225,10 @@ f = std::move(File("myfile.txt"));
 //But we can never make copies
 //this won't compile because the
 //copy constructor is deleted
-//this would cause problems concering
-//when the file should close
 File f_copy = f;
-
 ```
 
-
-### Bringing it Together with an Example
+### File Copy Example
 
 Using traditional C/POSIX style programming to copy a file looks something like this:
 
@@ -242,5 +262,5 @@ if( api::ExecutionContext::is_error() ){
 }
 ```
 
-The error context of the thread will record the precise location of the error and provide a backtrace. 
+The error context of the thread will record the precise location of the error and provide a backtrace.
 
