@@ -54,7 +54,7 @@ const FileObject &FileObject::read(void *buf, int nbyte) const {
 
 #### Thread Local Error Context
 
-The process (primary thread) error context is creating statically at compile time. The value of `&errno` provides an error context signature for each thread. An error context is dynamically allocated if a new thread has an error.
+The process (primary thread) error context is created statically at compile time. The value of `&errno` provides an error context signature for each thread. An error context is dynamically allocated if a new thread has an error.
 
 ```c++
 Error &PrivateExecutionContext::get_error() {
@@ -81,7 +81,7 @@ Error &PrivateExecutionContext::get_error() {
 
 ### Method Chaining
 
-Having a per thread error context, allows for very powerful (and concise) code using method chaining. This approach also helps to create strong arguments that are hard for application developers to use incorrectly..
+Having a per thread error context, allows for very powerful (and concise) code using method chaining. This approach also helps to create strong arguments that are hard for application developers to use incorrectly.
 
 ```c++
 class Point {
