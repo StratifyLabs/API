@@ -206,12 +206,9 @@ public:
           FS().read_directory(HOME_FOLDER "/tmp", FS::IsRecursive::yes);
       printer().object("files", list);
 
-      TEST_ASSERT(list.find(var::PathString(HOME_FOLDER "/tmp/test0.txt")) ==
-                  HOME_FOLDER "/tmp/test0.txt");
-      TEST_ASSERT(list.find(var::PathString(HOME_FOLDER "/tmp/test1.txt")) ==
-                  HOME_FOLDER "/tmp/test1.txt");
-      TEST_ASSERT(list.find(var::PathString(HOME_FOLDER "/tmp/test2.txt")) ==
-                  HOME_FOLDER "/tmp/test2.txt");
+      TEST_ASSERT(list.find("test0.txt") == "test0.txt");
+      TEST_ASSERT(list.find("test1.txt") == "test1.txt");
+      TEST_ASSERT(list.find("test2.txt") == "test2.txt");
     }
 
     {
@@ -222,13 +219,9 @@ public:
             return entry.find("filesystem") != StringView::npos;
           });
       printer().object("files", list);
-      TEST_ASSERT(list.find(var::PathString(HOME_FOLDER "/tmp2/test0.txt")) ==
-                  var::PathString(HOME_FOLDER "/tmp2/test0.txt"));
-      TEST_ASSERT(
-          list.find(var::PathString(HOME_FOLDER "/tmp2/filesystem.txt")) ==
-          var::PathString());
-      TEST_ASSERT(list.find(var::PathString(HOME_FOLDER "/tmp2/test2.txt")) ==
-                  var::PathString(HOME_FOLDER "/tmp2/test2.txt"));
+      TEST_ASSERT(list.find("test0.txt") == "test0.txt");
+      TEST_ASSERT(list.find("filesystem.txt") == "");
+      TEST_ASSERT(list.find("test2.txt") == "test2.txt");
     }
 
     {
