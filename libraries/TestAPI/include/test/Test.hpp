@@ -1,7 +1,7 @@
-/*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see
-             // LICENSE.md for rights.
-#ifndef SAPI_TEST_TEST_HPP_
-#define SAPI_TEST_TEST_HPP_
+// Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
+
+#ifndef TESTAPI_TEST_HPP_
+#define TESTAPI_TEST_HPP_
 
 #include <cstdarg>
 #if defined __link
@@ -257,4 +257,4 @@ private:
 
 } // namespace test
 
-#endif // SAPI_TEST_TEST_HPP_
+#endif // TESTAPI_TEST_HPP_

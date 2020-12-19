@@ -1,4 +1,3 @@
-/*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md for rights.
 /*
  * Dirent interface for Microsoft Visual Studio
  * Version 1.23.1

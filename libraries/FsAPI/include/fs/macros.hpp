@@ -1,3 +1,5 @@
+// Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
+
 #ifndef FSAPI_FS_MACROS_HPP
 #define FSAPI_FS_MACROS_HPP
 

@@ -1,5 +1,4 @@
-/*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see
-             // LICENSE.md for rights.
+// Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
 #ifndef THREADAPI_THREAD_SCHED_HPP_
 #define THREADAPI_THREAD_SCHED_HPP_
@@ -9,7 +8,7 @@
 #include <unistd.h>
 
 #if defined __win32
-//typedef int pid_t;
+// typedef int pid_t;
 #else
 #include <sys/types.h>
 #endif

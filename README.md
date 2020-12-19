@@ -264,3 +264,54 @@ if( api::ExecutionContext::is_error() ){
 
 The error context of the thread will record the precise location of the error and provide a backtrace.
 
+## Conventions
+
+## getters and setters
+
+The `API` framework uses `set_value()` for setting and `value()` for access to a value. If the method needs to do something extra to return the value, `get_value()` is used.
+
+The `chrono::ClockTime` has some good examples:
+
+```c++
+//access seconds -- nothing to calculate or fetch
+s32 seconds() const { return m_value.tv_sec; }
+
+//setting the seconds
+ClockTime &set_seconds(u32 seconds) {
+  m_value.tv_sec = seconds;
+  return *this;
+}
+
+// the age isn't readily available, so we do get_age() rather than age()
+ClockTime get_age() const { return get_system_time() - *this; }
+```
+
+## `is_valid()`
+
+If a class can have a valid/invalid state, the method `is_valid()` is used to check.
+
+Examples:
+
+```c++
+#include <thread.hpp>
+#include <fs.hpp>
+
+File f;
+if( f.is_valid() ){}
+
+Thread t;
+if( t.is_valid() ){}
+```
+
+## Documentation
+
+The code and a few guides (README.md docs in the repo) are all the documentation that is available. For many years, I believed in doxygen style comments, but most of the documentation just ended up being redundant. In fact, this snippet was taken directly from the code before the comments were removed.
+
+```c++
+/*! \details Compares <= to another MicroTime object. */
+bool operator<=(const MicroTime &a) const {
+  return microseconds() <= a.microseconds();
+}
+```
+
+Comments in the code exists to explain why and give insights that are not obvious. They are not there to explain what. The API and code should do that on its own.

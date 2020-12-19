@@ -1,6 +1,4 @@
-/*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see
-             // LICENSE.md for rights.
-/* Copyright 2016 tgil All Rights Reserved */
+// Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
 #ifndef THREADAPI_THREAD_MUTEX_HPP_
 #define THREADAPI_THREAD_MUTEX_HPP_

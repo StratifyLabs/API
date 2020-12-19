@@ -28,3 +28,7 @@ PathString var::operator&(const StringView lhs, const StringView rhs) {
 PathString var::operator/(const StringView lhs, const StringView rhs) {
   return PathString(lhs).append("/").append(rhs);
 }
+
+GeneralString var::operator|(const StringView lhs, const StringView rhs) {
+  return GeneralString(lhs).append(rhs);
+}

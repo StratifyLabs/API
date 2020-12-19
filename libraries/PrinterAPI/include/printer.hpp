@@ -3,15 +3,9 @@
 #ifndef PRINTER_API_PRINTER_HPP_
 #define PRINTER_API_PRINTER_HPP_
 
-/*! \brief System Access (POSIX wrappers)
- * \details The sys namespace includes classes for
- * accessing the system.
- *
- */
 namespace printer {}
 
 #include "printer/Printer.hpp"
-
 #include "printer/JsonPrinter.hpp"
 #include "printer/MarkdownPrinter.hpp"
 #include "printer/YamlPrinter.hpp"

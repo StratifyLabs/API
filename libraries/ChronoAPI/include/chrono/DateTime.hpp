@@ -1,5 +1,4 @@
-/*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see
-             // LICENSE.md for rights.
+// Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
 #ifndef CHRONO_API_CHRONO_TIME_HPP_
 #define CHRONO_API_CHRONO_TIME_HPP_
@@ -7,7 +6,6 @@
 #include <ctime>
 
 #include "var/String.hpp"
-
 #include "MicroTime.hpp"
 
 namespace chrono {

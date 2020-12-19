@@ -1,7 +1,6 @@
-/*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see
-             // LICENSE.md for rights.
+// Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
+
 #include "api/api.hpp"
-// #include "var/String.hpp"
 
 #if defined __link
 #include <cxxabi.h>

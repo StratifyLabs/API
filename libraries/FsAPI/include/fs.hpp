@@ -1,14 +1,8 @@
-/*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see
-             // LICENSE.md for rights.
+// Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#ifndef SAPI_FILE_HPP_
-#define SAPI_FILE_HPP_
+#ifndef FSAPI_FILE_HPP_
+#define FSAPI_FILE_HPP_
 
-/*! \brief File (POSIX wrappers)
- * \details The file namespace includes
- * classes for accessing files.
- *
- */
 namespace fs {}
 
 #if !defined __link
@@ -26,5 +20,4 @@ namespace fs {}
 
 using namespace fs;
 
-
-#endif /* SAPI_FILE_HPP_ */
+#endif /* FSAPI_FILE_HPP_ */

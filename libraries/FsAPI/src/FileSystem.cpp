@@ -1,3 +1,4 @@
+// Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
 #include <sys/stat.h>
 
@@ -273,7 +274,7 @@ int FileSystem::interface_rename(const char *old_name,
 
 TemporaryDirectory::TemporaryDirectory(const var::StringView parent)
     : m_path((parent.is_empty() ? sys::System::user_data_path() : parent) /
-             chrono::ClockTime::get_system_time().get_unique_string()) {
+             chrono::ClockTime::get_system_time().to_unique_string()) {
   FileSystem().create_directory(m_path);
   if (is_error()) {
     m_path.clear();

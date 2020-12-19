@@ -1,3 +1,4 @@
+// Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 #ifndef SYSAPI_SYS_SYSTEM_HPP
 #define SYSAPI_SYS_SYSTEM_HPP
 

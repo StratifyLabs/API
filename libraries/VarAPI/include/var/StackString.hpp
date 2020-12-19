@@ -200,7 +200,14 @@ public:
   GeneralString(const char *a) : StackString(a) {}
   // implicit conversion
   operator const char *() const { return m_buffer; }
+
+  GeneralString &operator|=(const StringView a) { return append(a); }
+  GeneralString operator|(const var::StringView a) {
+    return GeneralString(string_view()).append(a);
+  }
 };
+
+GeneralString operator|(const StringView lhs, const StringView rhs);
 
 class NumberString : public StackString<NumberString, 64> {
 public:

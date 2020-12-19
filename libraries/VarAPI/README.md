@@ -52,7 +52,7 @@ These classes are all API-style wrappers for the equivalent `std::container`:
 Strings use one of three types:
 
 - `StringView`: wrapper for C++17 `std::string_view`
-- `StackString<int size>`: Template class for fixed buffer-sized strings (on the stack)
+- `StackString<int size>`: Template class for fixed buffer-sized strings (on the)
 - `String`: wrapper for C++ `std::string` (uses dynamic memory allocation for longer strings)
 
 **StringView**
@@ -82,7 +82,7 @@ There are several standard `StackString` declarations for common usage:
   - The `/` operator concatenates by inserting '/'
 - `GeneralString` for larger strings
   - Size is up to 256 bytes
-  - The `&&` operator is used for concatenation
+  - The `|` operator is used for concatenation
 - `NumberString` for easily converting number to strings (up to 64 bytes length)
   - Special constructor to immediately convert numbers to strings
 
@@ -104,10 +104,10 @@ PathString path = "directory" / key & ".txt";
 File("directory" / key & ".txt");
 
 const StringView name = "general";
-GeneralString general = "this is a " && name && " string.";
+GeneralString general = "this is a " | name | " string.";
 
-GeneralString with_numbers = "there are " && NumberString(general.length())
-  && " characters in general".
+GeneralString with_numbers = "there are " | NumberString(general.length())
+  | " characters in general".
 
 //This is really bad -- never do this
 //`discard_string` will refer to a PathString rvalue that is destroyed
@@ -115,7 +115,7 @@ const StringView discard_string = "directory" / key & ".txt";
 
 //This is really good
 const auto make_it_happen_string0 = "directory" / key & ".txt";
-const auto make_it_happen_string1 = "directory" && key && ".txt";
+const auto make_it_happen_string1 = "directory" | key | ".txt";
 ```
 
 Stack strings are always null-terminated and provide a `cstring()` method to access a `const char *`.
@@ -137,7 +137,7 @@ The `String` class should only be used when the string length is unknown and def
 //PathString used
 printf("%s\n", ("path" & "string").cstring());
 //GeneralString used
-printf("%s\n", ("path" && "string").cstring());
+printf("%s\n", ("path" | "string").cstring());
 
 //String used
 printf("%s\n", ("just a " + "string").cstring());

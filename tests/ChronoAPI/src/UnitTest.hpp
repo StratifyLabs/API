@@ -154,12 +154,12 @@ public:
 
     TEST_EXPECT(CT(5_seconds) - CT(3000_milliseconds) == CT(2000_milliseconds));
 
-    TEST_EXPECT(CT(12345678_microseconds).get_unique_string() ==
+    TEST_EXPECT(CT(12345678_microseconds).to_unique_string() ==
                 "12.345678000");
 
-    const auto unique = CT::get_system_time().get_unique_string();
+    const auto unique = CT::get_system_time().to_unique_string();
     wait(1_milliseconds);
-    TEST_EXPECT(unique != CT::get_system_time().get_unique_string());
+    TEST_EXPECT(unique != CT::get_system_time().to_unique_string());
 
     {
       CT ct = CT().set_seconds(10).set_nanoseconds(5);
