@@ -18,8 +18,8 @@ including
 - [FsAPI](libraries/FsAPI): File systems
 - [PrinterAPI](libraries/PrinterAPI): printing variables
 - SysAPI: misc system functions
-- [ThreadAPI: thread management](libraries/ThreadAPI)
-- VarAPI: data management
+- [ThreadAPI](libraries/ThreadAPI): thread management
+- [VarAPI](libraries/VarAPI): data and strings
 
 ## Design
 
