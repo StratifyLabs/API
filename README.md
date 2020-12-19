@@ -16,7 +16,7 @@ including
 - [API: error handling and execution context](libraries/API/README.md)
 - [ChronoAPI: time and timing](libraries/ChronoAPI/README.md)
 - [FsAPI: File systems](libraries/FsAPI/README.md)
-- [PrinterAPI](libraries/PrinterAPI/README.md): printing variables
+- [PrinterAPI](libraries/PrinterAPI): printing variables
 - SysAPI: misc system functions
 - [ThreadAPI: thread management](libraries/ThreadAPI/README.md)
 - VarAPI: data management
