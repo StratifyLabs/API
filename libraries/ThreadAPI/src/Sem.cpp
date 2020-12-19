@@ -60,7 +60,7 @@ const Semaphore &Semaphore::unlink() const {
 
 void Semaphore::unlink(var::StringView name) {
   API_RETURN_IF_ERROR();
-  const var::NameString name_string(name);
+  const var::KeyString name_string(name);
   API_SYSTEM_CALL(name_string.cstring(), sem_unlink(name_string.cstring()));
 }
 
@@ -120,7 +120,7 @@ void Semaphore::open(
   int o_flags,
   fs::Permissions perms) {
   API_RETURN_IF_ERROR();
-  const var::NameString name_string(name);
+  const var::KeyString name_string(name);
   if (value > 0) {
     m_handle
       = sem_open(name_string.cstring(), o_flags, perms.permissions(), value);

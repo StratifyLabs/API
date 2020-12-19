@@ -190,8 +190,8 @@ public:
 
   API_NO_DISCARD const char *data() const { return m_string_view.data(); }
 
-  API_NO_DISCARD String get_string() const;
-  API_NO_DISCARD static String get_string(const StringView &a);
+  API_NO_DISCARD String to_string() const;
+  API_NO_DISCARD static String to_string(const StringView &a);
 
 private:
   friend class String;

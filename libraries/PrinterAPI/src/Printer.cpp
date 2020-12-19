@@ -27,7 +27,7 @@ Printer::Printer() {
   m_progress_width = 50;
   m_progress_state = 0;
   m_verbose_level = Level::info;
-  m_progress_key = "progress";
+  m_progress_key = var::StringView("progress");
 #if defined __win32
   if (m_default_color == static_cast<unsigned int>(-1)) {
     CONSOLE_SCREEN_BUFFER_INFO info;
@@ -203,7 +203,7 @@ void Printer::interface_print_final(const var::StringView view) {
   fwrite(view.data(), view.length(), 1, stdout);
   fflush(stdout);
 #else
-  printf("%s", view.get_string().cstring());
+  printf("%s", view.to_string().cstring());
   fflush(stdout);
   // something about writing directly causes some bytes to be dropped
   //::write(stdout->_file, view.data(), view.length());

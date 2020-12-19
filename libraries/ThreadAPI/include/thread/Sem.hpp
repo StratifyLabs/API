@@ -90,7 +90,7 @@ public:
   static void unlink(var::StringView name);
 
 private:
-  var::NameString m_name;
+  var::KeyString m_name;
 
   void
   open(int value, var::StringView name, int o_flags, fs::Permissions perms);

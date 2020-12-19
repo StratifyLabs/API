@@ -144,7 +144,7 @@ FileSystem::read_directory(const var::StringView path, IsRecursive is_recursive,
         FileInfo info = get_info(entry_path.cstring());
 
         if (info.is_directory()) {
-          PathList intermediate_result =
+          const PathList intermediate_result =
               read_directory(entry_path, is_recursive, exclude);
 
           for (const auto &intermediate_entry : intermediate_result) {
@@ -272,11 +272,8 @@ int FileSystem::interface_rename(const char *old_name,
 }
 
 TemporaryDirectory::TemporaryDirectory(const var::StringView parent)
-    : m_path(var::PathString()
-                 .append(parent.is_empty() ? sys::System::user_data_path()
-                                           : parent)
-                 .append("/")
-                 .append(chrono::ClockTime::get_unique_string().cstring())) {
+    : m_path((parent.is_empty() ? sys::System::user_data_path() : parent) /
+             chrono::ClockTime::get_system_time().get_unique_string()) {
   FileSystem().create_directory(m_path);
   if (is_error()) {
     m_path.clear();

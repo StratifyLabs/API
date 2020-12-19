@@ -43,7 +43,7 @@ Dir::~Dir() { close(); }
 
 Dir &Dir::open(var::StringView path) {
   API_RETURN_VALUE_IF_ERROR(*this);
-  const var::PathString path_string(path);
+  var::PathString path_string(path);
   m_dirp = API_SYSTEM_CALL_NULL(path_string.cstring(),
                                 interface_opendir(path_string.cstring()));
   if (m_dirp) {

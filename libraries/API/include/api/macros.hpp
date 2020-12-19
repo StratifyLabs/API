@@ -129,7 +129,7 @@ public:                                                                        \
     return m_##VALUE_NAME.string_view();                                       \
   }                                                                            \
   PARENT_VALUE &set_##VALUE_NAME(const var::StringView value) {                \
-    m_##VALUE_NAME = value.get_string();                                       \
+    m_##VALUE_NAME = value.to_string();                                        \
     return *this;                                                              \
   }                                                                            \
                                                                                \

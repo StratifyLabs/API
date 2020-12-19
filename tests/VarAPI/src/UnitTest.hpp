@@ -54,6 +54,10 @@ public:
       return false;
     }
 
+    const StringView sv0 = "this is ok";
+    const StringView sv1 = PathString("this is not ok");
+    printer().key("sv0", sv0).key("sv1", sv1);
+
     return true;
   }
 
@@ -770,7 +774,7 @@ public:
 
     {
       StringViewList string_view_list = {"test", "test1", "test2"};
-      StringList string_list = string_view_list.convert(StringView::get_string);
+      StringList string_list = string_view_list.convert(StringView::to_string);
       for (u32 i = 0; i < string_view_list.count(); i++) {
         TEST_ASSERT(string_list.at(i) == string_view_list.at(i));
       }

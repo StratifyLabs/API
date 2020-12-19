@@ -52,7 +52,7 @@ const FileObject &FileObject::read(void *buf, int nbyte) const {
 }
 ```
 
-#### Thread Local Error Context
+#### Thread Locality
 
 The process (primary thread) error context is created statically at compile time. The value of `&errno` provides an error context signature for each thread. An error context is dynamically allocated if a new thread has an error.
 

@@ -49,10 +49,10 @@ These classes are all API-style wrappers for the equivalent `std::container`:
 
 ## Strings
 
-Strings use one of three string types:
+Strings use one of three types:
 
 - `StringView`: wrapper for C++17 `std::string_view`
-- `StackString<int size>`: Template class for fixed buffer size strings
+- `StackString<int size>`: Template class for fixed buffer-sized strings (on the stack)
 - `String`: wrapper for C++ `std::string` (uses dynamic memory allocation for longer strings)
 
 **StringView**
@@ -61,8 +61,12 @@ The `StringView` is just a view (pointer and size) of the string. The data must 
 
 VarAPI is designed to use `StringView` as the most basic string. Any and all string types (including `const char*`) are easily converted to `StringView`.
 
+> All these guidelines also apply to `std::string_view`.
+
 - Always pass `StringView` by value
 - Always use `const StringView` when using string parameters to methods
+- Avoid using `StringView` as a local variable (use `auto` instead)
+- Don't return a `StringView` unless you are sure about the lifetime of the string being viewed and the lifetime of the owner taking the return.
 
 `StringView` has no guaratee of null-termination.
 
@@ -108,6 +112,10 @@ GeneralString with_numbers = "there are " && NumberString(general.length())
 //This is really bad -- never do this
 //`discard_string` will refer to a PathString rvalue that is destroyed
 const StringView discard_string = "directory" / key & ".txt";
+
+//This is really good
+const auto make_it_happen_string0 = "directory" / key & ".txt";
+const auto make_it_happen_string1 = "directory" && key && ".txt";
 ```
 
 Stack strings are always null-terminated and provide a `cstring()` method to access a `const char *`.

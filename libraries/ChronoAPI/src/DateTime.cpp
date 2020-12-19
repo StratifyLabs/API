@@ -101,7 +101,7 @@ Date::Date(const DateTime &date_time, const Construct &options) {
 #endif
 }
 
-var::String Date::get_string(var::StringView format) const {
+var::String Date::to_string(var::StringView format) const {
   API_RETURN_VALUE_IF_ERROR(var::String());
   char buffer[64] = {0};
   size_t result

@@ -55,12 +55,12 @@ public:
       printer().object("time", t);
 
       D d(t, D::Construct().set_daylight_savings(false).set_time_zone(-7));
-      printer().key("date", d.get_string());
+      printer().key("date", d.to_string());
 
       TEST_ASSERT(d.year() == 2020);
       TEST_EXPECT(d.month() == 10);
       // TEST_EXPECT(d.day() == 12);
-      // TEST_EXPECT(d.get_string() == "2020-10-12 03:30:31");
+      // TEST_EXPECT(d.to_string() == "2020-10-12 03:30:31");
     }
 
     printer().key("complete", __FUNCTION__);
@@ -154,11 +154,12 @@ public:
 
     TEST_EXPECT(CT(5_seconds) - CT(3000_milliseconds) == CT(2000_milliseconds));
 
-    TEST_EXPECT(CT(12345678_microseconds).get_string() == "12.345678000");
+    TEST_EXPECT(CT(12345678_microseconds).get_unique_string() ==
+                "12.345678000");
 
-    CT::UniqueString unique = CT::get_unique_string();
+    const auto unique = CT::get_system_time().get_unique_string();
     wait(1_milliseconds);
-    TEST_EXPECT(unique != CT::get_unique_string().cstring());
+    TEST_EXPECT(unique != CT::get_system_time().get_unique_string());
 
     {
       CT ct = CT().set_seconds(10).set_nanoseconds(5);

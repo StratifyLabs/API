@@ -9,22 +9,22 @@ using namespace var;
 
 StringView::StringView(const String &value) : m_string_view(value.m_string) {}
 StringView::StringView(const IdString &value)
-  : m_string_view(value.cstring()) {}
+    : m_string_view(value.cstring()) {}
 StringView::StringView(const KeyString &value)
-  : m_string_view(value.cstring()) {}
+    : m_string_view(value.cstring()) {}
 StringView::StringView(const NumberString &value)
-  : m_string_view(value.cstring()) {}
+    : m_string_view(value.cstring()) {}
 StringView::StringView(const PathString &value)
-  : m_string_view(value.cstring()) {}
+    : m_string_view(value.cstring()) {}
 StringView::StringView(const NameString &value)
-  : m_string_view(value.cstring()) {}
+    : m_string_view(value.cstring()) {}
 StringView::StringView(const GeneralString &value)
-  : m_string_view(value.cstring()) {}
+    : m_string_view(value.cstring()) {}
 
 StringView StringView::get_substring(const GetSubstring &options) const {
   if (options.length() != StringView::npos) {
     return StringView(
-      m_string_view.substr(options.position(), options.length()));
+        m_string_view.substr(options.position(), options.length()));
   }
   return StringView(m_string_view.substr(options.position()));
 }
@@ -42,8 +42,8 @@ StringView StringView::get_substring_with_length(size_t length) const {
 }
 
 StringViewList StringView::split(StringView delimeters) const {
-	return
-		Tokenizer(*this, Tokenizer::Construct().set_delimeters(delimeters)).list();
+  return Tokenizer(*this, Tokenizer::Construct().set_delimeters(delimeters))
+      .list();
 }
 
 float StringView::to_float() const {
@@ -55,28 +55,22 @@ float StringView::to_float() const {
 }
 
 long StringView::to_long(Base base) const {
-  return ::strtol(
-    NumberString(*this).cstring(),
-    nullptr,
-    static_cast<int>(base));
+  return ::strtol(NumberString(*this).cstring(), nullptr,
+                  static_cast<int>(base));
 }
 
 unsigned long StringView::to_unsigned_long(Base base) const {
-  return ::strtoul(
-    NumberString(*this).cstring(),
-    nullptr,
-    static_cast<int>(base));
+  return ::strtoul(NumberString(*this).cstring(), nullptr,
+                   static_cast<int>(base));
 }
 
 int StringView::to_integer() const {
   return ::atoi(NumberString(*this).cstring());
 }
 
-String StringView::get_string() const {
-	return String(data(), length());
-}
+String StringView::to_string() const { return String(data(), length()); }
 
-String StringView::get_string(const StringView &a) { return a.get_string(); }
+String StringView::to_string(const StringView &a) { return a.to_string(); }
 
 bool StringView::operator==(const String &a) const {
   return m_string_view == a.m_string;

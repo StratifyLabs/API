@@ -45,8 +45,6 @@ public:
     return 0;
   }
 
-  Derived &operator&=(const StringView a) { return append(a); }
-
   bool operator==(const StringView a) const { return string_view() == a; }
   bool operator!=(const StringView a) const { return string_view() != a; }
 
@@ -85,9 +83,6 @@ public:
     }
     return 0;
   }
-
-  // implicit conversion
-  operator const char *() const { return m_buffer; }
 
   template <typename... Args>
   Derived &format(const char *format, Args... args) {
@@ -180,6 +175,8 @@ public:
   PathString() {}
   PathString(const StringView a) : StackString(a) {}
   PathString(const char *a) : StackString(a) {}
+
+  PathString &operator&=(const StringView a) { return append(a); }
 
   PathString operator/(const var::StringView a) {
     return PathString(*this).append("/").append(a);

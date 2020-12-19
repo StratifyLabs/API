@@ -136,17 +136,12 @@ public:
   /*! \details Returns the nanoseconds component. */
   s32 nanoseconds() const { return m_value.tv_nsec; }
 
-  using UniqueString = var::KeyString;
-
-  static UniqueString get_unique_string() {
-		return ClockTime::get_system_time().get_string();
-  }
 
   ClockTime age() const { return get_system_time() - *this; }
 
-  UniqueString get_string() const {
-		return
-			UniqueString().format("%ld.%09ld", seconds(), nanoseconds());
+  using UniqueString = var::KeyString;
+  UniqueString get_unique_string() const {
+    return UniqueString().format("%ld.%09ld", seconds(), nanoseconds());
   }
 
   /*! \details Returns a pointer to a strut timespec. */
