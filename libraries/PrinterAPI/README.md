@@ -29,11 +29,9 @@ Downstream classes can define the `<<` operator to seamlessly integrate with the
 
 ```c++
 namespace printer {
-class Printer;
-printer::Printer &
-operator<<(printer::Printer &printer, const chrono::ClockTime &a){
-  printer.key("seconds", var::NumberString(a.seconds());
-  printer.key("nanoseconds", var::NumberString(a.nanoseconds());
+Printer & operator<<(Printer &printer, const chrono::ClockTime &a){
+  printer.key("seconds", var::NumberString(a.seconds())
+    .key("nanoseconds", var::NumberString(a.nanoseconds());
   return printer;
 }
 } // namespace printer
