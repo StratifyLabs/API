@@ -388,6 +388,8 @@ public:
 
   virtual ~File();
 
+  bool is_valid() const { return fileno() >= 0; }
+
   int fileno() const;
   int flags() const;
   const File &sync() const;
