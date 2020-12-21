@@ -96,7 +96,7 @@ private:
   void assign(u32 seconds, u32 nanoseconds);
   static ClockTime add(const ClockTime &a, const ClockTime &b);
   static ClockTime subtract(const ClockTime &a, const ClockTime &b);
-  struct timespec m_value;
+  struct timespec m_value = {0};
 };
 
 } // namespace chrono
