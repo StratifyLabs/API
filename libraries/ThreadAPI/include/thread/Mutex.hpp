@@ -155,6 +155,7 @@ public:
     }
   }
 
+  // returns true if lock_synced() is waiting for unlock_synced()
   bool try_lock_synced() {
     if (m_here.try_lock() == true) {
       m_here.unlock();
