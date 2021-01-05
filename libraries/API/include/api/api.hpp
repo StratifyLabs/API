@@ -76,8 +76,8 @@ public:
 #if defined __link
 #if !defined __win32
       m_entry_count = context.m_backtrace_count;
-      m_symbol_pointer
-        = backtrace_symbols(context.m_backtrace_buffer, m_entry_count);
+      m_symbol_pointer =
+          backtrace_symbols(context.m_backtrace_buffer, m_entry_count);
 #endif
 #else
 
@@ -114,6 +114,8 @@ public:
 
   bool is_error() const { return line_number() > 0; }
   void reset() { m_line_number = 0; }
+  bool is_guarded() const { return m_is_guarded; }
+  void set_guarded(bool value = true) { m_is_guarded = value; }
 
 private:
   Error(void *signature) : m_signature(signature) {}
@@ -122,11 +124,11 @@ private:
   static constexpr size_t m_message_size = PATH_MAX;
   static constexpr size_t m_backtrace_buffer_size =
 #if defined __link
-    512
+      512
 #else
-    32
+      32
 #endif
-    ;
+      ;
 
   void *m_signature;
   int m_error_number = 0;
@@ -134,16 +136,19 @@ private:
   char m_message[m_message_size + 1];
   void *m_backtrace_buffer[m_backtrace_buffer_size];
   size_t m_backtrace_count = 0;
+  bool m_is_guarded = false;
 
   inline void capture_backtrace() {
+    if (!is_guarded()) {
 #if defined __link
 #if !defined __win32
-    m_backtrace_count = backtrace(m_backtrace_buffer, m_backtrace_buffer_size);
+      m_backtrace_count =
+          backtrace(m_backtrace_buffer, m_backtrace_buffer_size);
 #endif
 #else
-    // need to implement backtrace on StratifyOS v4
-    sos_trace_stack(32);
+      sos_trace_stack(32);
 #endif
+    }
   }
 };
 
@@ -175,8 +180,8 @@ private:
 
 class ExecutionContext {
 public:
-  static int
-  handle_system_call_result(int line, const char *message, int value) {
+  static int handle_system_call_result(int line, const char *message,
+                                       int value) {
     if (value >= 0) {
       errno = value;
     } else {
@@ -186,8 +191,8 @@ public:
   }
 
   template <typename T>
-  static T *
-  handle_system_call_null_result(int line, const char *message, T *value) {
+  static T *handle_system_call_null_result(int line, const char *message,
+                                           T *value) {
     if (value == nullptr) {
       m_private_context.update_error_context(-1, line, message);
     }
@@ -219,16 +224,19 @@ public:
   ErrorGuard()
       : m_error(ExecutionContext::m_private_context.m_error),
         m_error_number(errno) {
+    m_is_guarded = ExecutionContext::m_private_context.m_error.is_guarded();
     ExecutionContext::reset_error();
   }
   ~ErrorGuard() {
     ExecutionContext::m_private_context.m_error = m_error;
+    ExecutionContext::m_private_context.m_error.set_guarded(m_is_guarded);
     errno = m_error_number;
   }
 
 private:
   Error m_error;
   int m_error_number;
+  bool m_is_guarded;
 };
 
 class ThreadExecutionContext {
@@ -273,39 +281,29 @@ void api_assert(bool value, const char *function, int line);
   }
 
 #define API_SYSTEM_CALL(message_value, return_value)                           \
-  api::ExecutionContext::handle_system_call_result(                            \
-    __LINE__,                                                                  \
-    message_value,                                                             \
-    return_value)
+  api::ExecutionContext::handle_system_call_result(__LINE__, message_value,    \
+                                                   return_value)
 
 #define API_SYSTEM_CALL_NULL(message_value, return_value)                      \
   api::ExecutionContext::handle_system_call_null_result(                       \
-    __LINE__,                                                                  \
-    message_value,                                                             \
-    return_value)
+      __LINE__, message_value, return_value)
 
 #define API_RESET_ERROR() api::ExecutionContext::reset_error()
 
-#define API_RETURN_VALUE_ASSIGN_ERROR(                                         \
-  return_value,                                                                \
-  message_value,                                                               \
-  error_number_value)                                                          \
+#define API_RETURN_VALUE_ASSIGN_ERROR(return_value, message_value,             \
+                                      error_number_value)                      \
   do {                                                                         \
     errno = error_number_value;                                                \
-    api::ExecutionContext::handle_system_call_result(                          \
-      __LINE__,                                                                \
-      message_value,                                                           \
-      -1);                                                                     \
+    api::ExecutionContext::handle_system_call_result(__LINE__, message_value,  \
+                                                     -1);                      \
     return return_value;                                                       \
   } while (0)
 
 #define API_RETURN_ASSIGN_ERROR(message_value, error_number_value)             \
   do {                                                                         \
     errno = error_number_value;                                                \
-    api::ExecutionContext::handle_system_call_result(                          \
-      __LINE__,                                                                \
-      message_value,                                                           \
-      -1);                                                                     \
+    api::ExecutionContext::handle_system_call_result(__LINE__, message_value,  \
+                                                     -1);                      \
     return;                                                                    \
   } while (0)
 

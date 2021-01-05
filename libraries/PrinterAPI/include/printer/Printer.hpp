@@ -6,6 +6,7 @@
 #include <sdk/types.h>
 #include <cstdarg>
 
+#include "var/Data.hpp"
 #include "var/String.hpp"
 #include "var/StringView.hpp"
 #include "var/View.hpp"
@@ -28,6 +29,7 @@ struct PrinterFlags {
     type_unsigned = (1 << 1),
     type_signed = (1 << 2),
     type_char = (1 << 3),
+    type_float = (1 << 25),
     width_8 = 0,
     width_16 = (1 << 4),
     width_32 = (1 << 5),
@@ -134,6 +136,9 @@ public:
   Printer &operator<<(const var::StringList &a);
   Printer &operator<<(const var::StringViewList &a);
   Printer &operator<<(const api::Error &error_context);
+#if !defined __link
+  Printer &operator<<(const var::DataInfo &a);
+#endif
 
   Printer &set_verbose_level(Level level) {
     m_verbose_level = level;
@@ -194,6 +199,7 @@ public:
   bool update_progress(int progress, int total);
 
   Printer &set_progress_key(var::StringView progress_key) {
+    m_progress_state = 0;
     m_progress_key = progress_key;
     return *this;
   }

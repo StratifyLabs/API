@@ -20,7 +20,7 @@ using namespace printer;
 
 Printer::Printer() {
   m_progress_callback.set_callback(Printer::update_progress_callback)
-    .set_context(this);
+      .set_context(this);
   m_print_flags = Flags::width_8 | Flags::hex;
   m_indent = 0;
   m_progress_width = 50;
@@ -152,9 +152,8 @@ void Printer::print(Level verbose_level, const var::StringView key,
     if (m_print_flags & Flags::bold_keys) {
       clear_format_code(static_cast<int>(FormatType::bold));
     }
-    if (
-      m_print_flags
-      & (Flags::cyan_keys | Flags::yellow_keys | Flags::magenta_keys | Flags::red_keys)) {
+    if (m_print_flags & (Flags::cyan_keys | Flags::yellow_keys |
+                         Flags::magenta_keys | Flags::red_keys)) {
       clear_color_code();
     }
   }
@@ -185,9 +184,8 @@ void Printer::print(Level verbose_level, const var::StringView key,
     if (m_print_flags & Flags::bold_values) {
       clear_format_code(static_cast<int>(FormatType::bold));
     }
-    if (
-      m_print_flags
-      & (Flags::green_values | Flags::yellow_values | Flags::red_values | Flags::cyan_values)) {
+    if (m_print_flags & (Flags::green_values | Flags::yellow_values |
+                         Flags::red_values | Flags::cyan_values)) {
       clear_color_code();
     }
   }
@@ -240,9 +238,7 @@ void Printer::print_close_object() {
   }
 }
 
-void Printer::print_open_array(
-  Level verbose_level,
-  var::StringView key) {
+void Printer::print_open_array(Level verbose_level, var::StringView key) {
   print(verbose_level, key, "");
   m_indent++;
 }
@@ -469,12 +465,9 @@ bool Printer::update_progress(int progress, int total) {
     if ((m_progress_state == 0) && total) {
 
       // only print the key once with total == -1
-      print(
-        Level::info,
-        m_progress_key,
-        var::StringView().set_null(),
-        IsNewline::no);
-      if (total != -1) {
+      print(Level::info, m_progress_key, var::StringView().set_null(),
+            IsNewline::no);
+      if (total != api::ProgressCallback::indeterminate_progress_total()) {
         if (m_print_flags & Flags::value_quotes) {
           interface_print_final("\"");
         }
@@ -494,7 +487,7 @@ bool Printer::update_progress(int progress, int total) {
     if (m_progress_state > 0) {
 
       if (total == api::ProgressCallback::indeterminate_progress_total()) {
-        var::StringView  animation = "-\\|/";
+        const var::StringView animation = "-\\|/";
         if ((m_print_flags & Flags::value_quotes) && (m_progress_state == 1)) {
           interface_print_final("\"");
         }
@@ -502,11 +495,10 @@ bool Printer::update_progress(int progress, int total) {
 
         if ((m_print_flags & Flags::simple_progress) == 0) {
           var::NumberString output;
-          output.format(
-            "%c" F32U,
-            animation.at(m_progress_state % animation.length()),
-            progress);
-          interface_print_final(output.cstring());
+          output.format("%c" F32U,
+                        animation.at(m_progress_state % animation.length()),
+                        progress);
+          interface_print_final(output);
           for (const auto c : output.string_view()) {
             interface_print_final("\b"); // backspace
           }
@@ -516,9 +508,8 @@ bool Printer::update_progress(int progress, int total) {
 
       } else {
 
-        while (
-          (total != 0)
-          && (m_progress_state <= (progress * width + total / 2) / total)) {
+        while ((total != 0) &&
+               (m_progress_state <= (progress * width + total / 2) / total)) {
           interface_print_final("#");
           m_progress_state++;
           fflush(stdout);
@@ -530,11 +521,11 @@ bool Printer::update_progress(int progress, int total) {
       }
     }
     if (total == 0) {
-      if ((m_print_flags & Flags::no_progress_newline) == false) {
-        interface_print_final("\n");
-      }
       if (m_print_flags & Flags::value_quotes) {
         interface_print_final("\"");
+      }
+      if ((m_print_flags & Flags::no_progress_newline) == false) {
+        interface_print_final("\n");
       }
     }
   }
@@ -605,19 +596,25 @@ Printer &Printer::fatal(const var::StringView a) {
   return *this;
 }
 
-Printer &
-Printer::trace(const char *function, int line, var::StringView message) {
+Printer &Printer::trace(const char *function, int line,
+                        var::StringView message) {
 
   if (verbose_level() == Level::trace) {
     const var::String s = var::String().format(
-      ">> trace %s:%d %s\n",
-      function,
-      line,
-      var::String(message).cstring());
+        ">> trace %s:%d %s\n", function, line, var::String(message).cstring());
     interface_print_final(s);
   }
   return *this;
 }
+
+#if !defined __link
+Printer &Printer::operator<<(const var::DataInfo &a) {
+  return key("arena", var::NumberString(a.arena()))
+      .key("freeSize", var::NumberString(a.free_size()))
+      .key("usedSize", var::NumberString(a.used_size()))
+      .key("freeBlockCount", var::NumberString(a.free_block_count()));
+}
+#endif
 
 Printer &Printer::operator<<(const var::View a) {
   const Flags o_flags = flags();
@@ -627,6 +624,7 @@ Printer &Printer::operator<<(const var::View a) {
   const u8 *ptru8 = a.to_const_u8();
   const u16 *ptru16 = a.to_const_u16();
   const u32 *ptru32 = a.to_const_u32();
+  const float *ptrfloat = a.to_const_float();
 
   const int count = [](size_t size, Flags o_flags) -> int {
     if (o_flags & Flags::width_32) {
@@ -690,6 +688,9 @@ Printer &Printer::operator<<(const var::View a) {
       } else if (ptru8[i] < 128) {
         data_string = var::NumberString().format(" %c", ptru8[i]).string_view();
       }
+    } else if (o_flags & Flags::type_float) {
+      data_string =
+          var::NumberString().format("%0.3f", ptrfloat[i]).string_view();
     } else {
       // default is signed values
       if (o_flags & Flags::width_32) {
@@ -722,9 +723,8 @@ Printer &Printer::operator<<(const var::View a) {
 Printer &Printer::operator<<(const api::Error &error_context) {
   key("lineNumber",
       var::NumberString(error_context.line_number()).string_view());
-  key(
-    "errorNumber",
-    var::NumberString(error_context.error_number()).string_view());
+  key("errorNumber",
+      var::NumberString(error_context.error_number()).string_view());
   key("message", var::StringView(error_context.message()));
 #if defined __link
 

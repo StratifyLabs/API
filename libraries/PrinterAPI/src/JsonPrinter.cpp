@@ -48,7 +48,7 @@ void JsonPrinter::print_open_object(Level level, const var::StringView key) {
     insert_comma();
     if (container().type() == ContainerType::object) {
       const var::String string_key = "\"" + key + "\":{";
-      interface_print_final(string_key.cstring());
+      interface_print_final(string_key);
     } else {
       interface_print_final("{");
     }
@@ -62,7 +62,7 @@ void JsonPrinter::print_open_array(Level level, const var::StringView key) {
     insert_comma();
     if (container().type() == ContainerType::object) {
       const var::String string_key = "\"" + key + "\":[";
-      interface_print_final(string_key.cstring());
+      interface_print_final(string_key);
     } else {
       interface_print_final("[");
     }
