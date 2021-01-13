@@ -214,15 +214,12 @@ bool FileObject::verify(const FileObject &source_file,
 
   size_t size_processed = 0;
 
-  const size_t verify_size = size();
-
   if (this == &source_file) {
     return true;
   }
 
-  if (verify_size != source_file.size()) {
-    return false;
-  }
+  const size_t verify_size =
+      options.size() != static_cast<size_t>(-1) ? options.size() : size();
 
   if (options.progress_callback()) {
     options.progress_callback()->update(static_cast<int>(0),

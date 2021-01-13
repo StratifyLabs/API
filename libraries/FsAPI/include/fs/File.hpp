@@ -96,9 +96,12 @@ public:
 
   class Verify {
   public:
-    Verify() : m_page_size(FSAPI_LINK_DEFAULT_PAGE_SIZE) {}
+    Verify()
+        : m_page_size(FSAPI_LINK_DEFAULT_PAGE_SIZE),
+          m_size(static_cast<size_t>(-1)) {}
 
   private:
+    API_ACCESS_FUNDAMENTAL(Verify, size_t, size, static_cast<size_t>(-1));
     API_ACCESS_FUNDAMENTAL(Verify, u32, page_size,
                            FSAPI_LINK_DEFAULT_PAGE_SIZE);
     API_ACCESS_FUNDAMENTAL(Verify, const api::ProgressCallback *,
