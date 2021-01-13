@@ -72,12 +72,14 @@ public:
     return string_view() > a.string_view();
   }
 
-  // explicit conversion
-  char *to_char() { return m_buffer; }
-  const char *cstring() const { return m_buffer; }
-  const StringView string_view() const { return StringView(m_buffer); }
+  API_NO_DISCARD constexpr size_t capacity() const { return Size - 1; }
+  API_NO_DISCARD char *data() { return m_buffer; }
+  API_NO_DISCARD const char *cstring() const { return m_buffer; }
+  API_NO_DISCARD const StringView string_view() const {
+    return StringView(m_buffer);
+  }
 
-  char at(size_t offset) const {
+  API_NO_DISCARD char at(size_t offset) const {
     if (offset < Size) {
       return m_buffer[offset];
     }
@@ -122,7 +124,6 @@ public:
     return replace(options);
   }
 
-  constexpr size_t capacity() const { return Size - 1; }
 
 protected:
   StackString() { m_buffer[0] = 0; }

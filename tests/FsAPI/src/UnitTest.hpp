@@ -412,10 +412,36 @@ public:
     constexpr const char *file_name = HOME_FOLDER "/tmp.txt";
 
     const std::array<StringView, 5> test_strings = {
-        "Testing String 0\n", "Testing String 1\n", "Testing String 2\n",
+        "Testing String 0\n", "-Testing String 1-\n", "Testing String 2\n",
         "Testing String 3\n", "Testing String 4\n"};
 
     reset_error();
+
+    {
+      constexpr const char *file1_name = HOME_FOLDER "/verify1.txt";
+      constexpr const char *file2_name = HOME_FOLDER "/verify2.txt";
+
+      F(F::IsOverwrite::yes, file1_name).write(test_strings.at(0));
+      F(F::IsOverwrite::yes, file2_name).write(test_strings.at(1));
+      DataFile data1_file = DataFile().write(test_strings.at(0)).move();
+      DataFile data2_file = DataFile().write(test_strings.at(1)).move();
+
+      TEST_ASSERT(F(file1_name).verify(data1_file.seek(0)));
+      TEST_ASSERT(F(file2_name).verify(data2_file.seek(0)));
+      TEST_ASSERT(F(file1_name).verify(File(file1_name)));
+      TEST_ASSERT(F(file1_name).verify(File(file2_name)) == false);
+      TEST_ASSERT(F(file1_name).verify(data2_file.seek(0)) == false);
+      TEST_ASSERT(F(file2_name).verify(data1_file.seek(0)) == false);
+      TEST_ASSERT(data1_file.seek(0).verify(data2_file.seek(0)) == false);
+      TEST_ASSERT(data1_file.seek(0).verify(data1_file.seek(0)));
+      printer().set_progress_key("verify");
+      TEST_ASSERT(
+          F(file1_name)
+              .verify(data1_file.seek(0), F::Verify().set_progress_callback(
+                                              printer().progress_callback())));
+
+      FS().remove(file1_name).remove(file2_name);
+    }
 
     DataFile f;
 
@@ -458,7 +484,8 @@ public:
                     .write(test_strings.at(4))
                     .is_success());
 
-    TEST_ASSERT(F(HOME_FOLDER "/tmp1.txt", OpenMode::read_only()).is_error());
+    TEST_ASSERT(
+        F(HOME_FOLDER "/does_not_exist.txt", OpenMode::read_only()).is_error());
     TEST_ASSERT(F(file_name, OpenMode::read_only()).is_error());
 
     reset_error();

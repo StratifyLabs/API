@@ -299,11 +299,4 @@ protected:
 
 } // namespace var
 
-#if USE_PRINTER
-namespace sys {
-class Printer;
-Printer &operator<<(Printer &printer, const var::View &a);
-} // namespace sys
-#endif
-
 #endif /* VAR_API_ITEM_HPP_ */

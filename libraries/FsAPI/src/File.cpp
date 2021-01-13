@@ -208,6 +208,72 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
   return *this;
 }
 
+bool FileObject::verify(const FileObject &source_file,
+                        const Verify &options) const {
+  API_RETURN_VALUE_IF_ERROR(false);
+
+  size_t size_processed = 0;
+
+  const size_t verify_size = size();
+
+  if (this == &source_file) {
+    return true;
+  }
+
+  if (verify_size != source_file.size()) {
+    return false;
+  }
+
+  if (options.progress_callback()) {
+    options.progress_callback()->update(static_cast<int>(0),
+                                        static_cast<int>(verify_size));
+  }
+
+  char source_file_buffer[options.page_size()];
+  char this_file_buffer[options.page_size()];
+
+  do {
+    const size_t remaining = verify_size - size_processed;
+    const size_t current_page_size =
+        (remaining > options.page_size()) ? options.page_size() : remaining;
+
+    var::View source_file_view(source_file_buffer, current_page_size);
+    var::View this_file_view(this_file_buffer, current_page_size);
+
+    const int source_result = source_file.read(source_file_view).return_value();
+    const int this_result = read(this_file_view).return_value();
+
+    if (source_result != this_result) {
+      return false;
+    }
+
+    if (source_file_view != this_file_view) {
+      return false;
+    }
+
+    size_processed += current_page_size;
+
+    if (options.progress_callback()) {
+      // abort the transaction
+      if (options.progress_callback()->update(static_cast<int>(size_processed),
+                                              static_cast<int>(verify_size)) ==
+          true) {
+        options.progress_callback()->update(0, 0);
+        API_SYSTEM_CALL("aborted", size_processed);
+        return false;
+      }
+    }
+
+  } while (size_processed < verify_size);
+
+  if (options.progress_callback()) {
+    options.progress_callback()->update(static_cast<int>(0),
+                                        static_cast<int>(0));
+  }
+
+  return true;
+}
+
 void FileObject::fake_seek(
   int &location,
   const size_t size,

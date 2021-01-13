@@ -649,14 +649,16 @@ Printer &Printer::operator<<(const var::View a) {
         data_string = var::NumberString().format("%X", ptru16[i]).string_view();
       } else if (o_flags & Flags::blob) {
         for (u32 j = 0; j < 16; j++) {
-          data_string |= var::NumberString().format("%02X ", ptru8[i * 16 + j]);
+          if (i * 16 + j < a.size()) {
+            data_string |=
+                var::NumberString().format("%02X", ptru8[i * 16 + j]);
+          } else {
+            data_string |= "__";
+          }
           if (j < 15) {
             data_string |= " ";
           }
           bytes_printed++;
-          if (bytes_printed == count) {
-            break;
-          }
         }
       } else {
         data_string |= var::NumberString(ptru8[i], "%X");
@@ -669,7 +671,11 @@ Printer &Printer::operator<<(const var::View a) {
         data_string = var::NumberString().format("%u", ptru16[i]).string_view();
       } else if (o_flags & Flags::blob) {
         for (u32 j = 0; j < 16; j++) {
-          data_string |= var::NumberString().format("%u", ptru8[i * 16 + j]);
+          if (i * 16 + j < a.size()) {
+            data_string |= var::NumberString().format("%u", ptru8[i * 16 + j]);
+          } else {
+            data_string |= "___";
+          }
           if (j < 15) {
             data_string |= " ";
           }
@@ -699,8 +705,13 @@ Printer &Printer::operator<<(const var::View a) {
         data_string = var::NumberString().format("%d", ptrs16[i]).string_view();
       } else if (o_flags & Flags::blob) {
         for (u32 j = 0; j < 16; j++) {
-          data_string |=
-              var::NumberString().format("%d", ptru8[i * 16 + j]).string_view();
+          if (i * 16 + j < a.size()) {
+            data_string |= var::NumberString()
+                               .format("%d", ptru8[i * 16 + j])
+                               .string_view();
+          } else {
+            data_string |= "__";
+          }
           if (j < 15) {
             data_string |= " ";
           }

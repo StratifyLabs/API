@@ -65,8 +65,10 @@ public:
   class Write {
   public:
     Write()
-      : m_location(-1), m_page_size(FSAPI_LINK_DEFAULT_PAGE_SIZE),
-        m_size(static_cast<size_t>(-1)) {}
+        : m_location(-1), m_page_size(FSAPI_LINK_DEFAULT_PAGE_SIZE),
+          m_size(static_cast<size_t>(-1)) {}
+
+  private:
     API_ACCESS_FUNDAMENTAL(Write, int, location, -1);
     API_ACCESS_FUNDAMENTAL(Write, u32, page_size, FSAPI_LINK_DEFAULT_PAGE_SIZE);
     API_ACCESS_FUNDAMENTAL(Write, size_t, size, static_cast<size_t>(-1));
@@ -89,6 +91,23 @@ public:
       nullptr);
   };
 
+  const FileObject &write(const FileObject &source_file,
+                          const Write &options = Write()) const;
+
+  class Verify {
+  public:
+    Verify() : m_page_size(FSAPI_LINK_DEFAULT_PAGE_SIZE) {}
+
+  private:
+    API_ACCESS_FUNDAMENTAL(Verify, u32, page_size,
+                           FSAPI_LINK_DEFAULT_PAGE_SIZE);
+    API_ACCESS_FUNDAMENTAL(Verify, const api::ProgressCallback *,
+                           progress_callback, nullptr);
+  };
+
+  bool verify(const FileObject &source_file,
+              const Verify &options = Verify()) const;
+
   class LocationGuard {
   public:
     LocationGuard(const FileObject &object) : m_object(object) {
@@ -102,8 +121,6 @@ public:
     int m_location;
   };
 
-  const FileObject &
-  write(const FileObject &source_file, const Write &options = Write()) const;
 
   FileObject &
   write(const FileObject &source_file, const Write &options = Write()) {
