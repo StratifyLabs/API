@@ -154,7 +154,7 @@ public:
     return API_CONST_CAST_SELF(FileObject, seek, location, whence);
   }
 
-  var::String gets(char term = '\n') const;
+  var::GeneralString gets(char term = '\n') const;
 
   class Ioctl {
     API_ACCESS_FUNDAMENTAL(Ioctl, int, request, 0);

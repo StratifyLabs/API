@@ -11,7 +11,6 @@
 #include "var/String.hpp"
 
 #if !defined __link
-#include <mcu/arch.h>
 #include <reent.h>
 #endif
 

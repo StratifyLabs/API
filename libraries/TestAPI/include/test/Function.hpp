@@ -2,7 +2,7 @@
 #ifndef SAPI_TEST_FUNCTION_HPP_
 #define SAPI_TEST_FUNCTION_HPP_
 
-#include <mcu/types.h>
+#include <sdk/types.h>
 #include <errno.h>
 #include <cstdio>
 #include <cstring>

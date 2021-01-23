@@ -1,6 +1,3 @@
-
-
-
 if(SOS_IS_LINK)
 	set(API_CONFIG_LIST release debug coverage)
 else()
@@ -9,6 +6,7 @@ endif()
 
 if(NOT DEFINED API_IS_SDK)
 	if(SOS_IS_ARM)
+		sos_sdk_include_target(StratifyOS_iface "${API_CONFIG_LIST}")
 		sos_sdk_include_target(StratifyOS_crt "${API_CONFIG_LIST}")
 	endif()
 	sos_sdk_include_target(API "${API_CONFIG_LIST}")

@@ -1,7 +1,13 @@
 
 include(${CMAKE_CURRENT_LIST_DIR}/api.cmake)
 
-api_target(API "")
+if(SOS_IS_ARM)
+	set(DIRECTORIES StratifyOS_iface)
+else()
+	set(DIRECTORIES "")
+endif()
+
+api_target(API "${DIRECTORIES}")
 
 target_sources(${RELEASE_TARGET}
 	PRIVATE

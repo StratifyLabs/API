@@ -21,6 +21,8 @@ endif()
 
 include(CTest)
 
+option(IS_TEST ON)
+
 
 add_subdirectory(libraries/API API)
 add_subdirectory(libraries/VarAPI VarAPI)
@@ -31,5 +33,7 @@ add_subdirectory(libraries/ThreadAPI ThreadAPI)
 add_subdirectory(libraries/SysAPI SysAPI)
 add_subdirectory(libraries/TestAPI TestAPI)
 
-add_subdirectory(tests tests)
+if(IS_TEST)
+	add_subdirectory(tests tests)
+endif()
 

@@ -205,7 +205,7 @@ private:                                                                       \
 #define API_MINIMUM_CHUNK_SIZE 1024
 #define API_MALLOC_CHUNK_SIZE 1024
 #else
-#include <mcu/arch.h>
+#include <sos/arch.h>
 #define API_MALLOC_CHUNK_SIZE MALLOC_CHUNK_SIZE
 #define API_MINIMUM_CHUNK_SIZE (MALLOC_CHUNK_SIZE - 12)
 #endif

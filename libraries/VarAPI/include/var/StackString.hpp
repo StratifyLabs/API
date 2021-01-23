@@ -75,9 +75,7 @@ public:
   API_NO_DISCARD constexpr size_t capacity() const { return Size - 1; }
   API_NO_DISCARD char *data() { return m_buffer; }
   API_NO_DISCARD const char *cstring() const { return m_buffer; }
-  API_NO_DISCARD const StringView string_view() const {
-    return StringView(m_buffer);
-  }
+  API_NO_DISCARD StringView string_view() const { return StringView(m_buffer); }
 
   API_NO_DISCARD char at(size_t offset) const {
     if (offset < Size) {

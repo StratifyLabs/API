@@ -68,18 +68,23 @@ int FileObject::location() const {
   return seek(0, Whence::current).return_value();
 }
 
-var::String FileObject::gets(char term) const {
+var::GeneralString FileObject::gets(char term) const {
   char c = 0;
-  var::String result;
+  var::GeneralString result;
+  int bytes_received = 0;
   while ((c != term) && is_success()) {
     if (read(var::View(c)).return_value() == 1) {
-      result += c;
+      result.append(c);
+      bytes_received++;
+      if (bytes_received == result.capacity()) {
+        c = term;
+      }
     } else {
       c = term;
     }
   }
 
-	return result;
+  return result;
 }
 
 const FileObject &FileObject::ioctl(int request, void *argument) const {
@@ -88,19 +93,19 @@ const FileObject &FileObject::ioctl(int request, void *argument) const {
   return *this;
 }
 
-const FileObject &
-FileObject::write(const FileObject &source_file, const Write &options) const {
+const FileObject &FileObject::write(const FileObject &source_file,
+                                    const Write &options) const {
   API_RETURN_VALUE_IF_ERROR(*this);
 
-	if (options.location() != -1) {
+  if (options.location() != -1) {
     seek(options.location(), Whence::set);
   }
 
   size_t size_processed = 0;
 
   const size_t file_size = (options.size() == static_cast<size_t>(-1))
-                             ? source_file.size()
-                             : options.size();
+                               ? source_file.size()
+                               : options.size();
 
   if (file_size == 0) {
     if (options.progress_callback()) {
@@ -113,26 +118,26 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
 
   chrono::ClockTimer clock_timer;
 
-  const size_t effective_page_size
-    = options.page_size() ? options.page_size() : FSAPI_LINK_DEFAULT_PAGE_SIZE;
+  const size_t effective_page_size =
+      options.page_size() ? options.page_size() : FSAPI_LINK_DEFAULT_PAGE_SIZE;
 
-  const size_t page_size_with_boundary
-    = (options.transformer() == nullptr)
-        ? (effective_page_size)
-        : (
-          (effective_page_size / options.transformer()->page_size_boundary())
-          * options.transformer()->page_size_boundary());
+  const size_t page_size_with_boundary =
+      (options.transformer() == nullptr)
+          ? (effective_page_size)
+          : ((effective_page_size /
+              options.transformer()->page_size_boundary()) *
+             options.transformer()->page_size_boundary());
 
-  const size_t read_buffer_size
-    = options.terminator() != '\0' ? 1 : page_size_with_boundary;
+  const size_t read_buffer_size =
+      options.terminator() != '\0' ? 1 : page_size_with_boundary;
 
   u8 file_read_buffer[read_buffer_size];
 
   clock_timer.start();
   do {
     const size_t page_size = ((file_size - size_processed) < read_buffer_size)
-                               ? file_size - size_processed
-                               : read_buffer_size;
+                                 ? file_size - size_processed
+                                 : read_buffer_size;
 
     file_read_buffer[0] = 0;
     const int bytes_read =
@@ -144,9 +149,9 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
             options.transformer()->get_output_size(page_size);
         u8 file_write_buffer[transform_size];
         const int bytes_to_write = options.transformer()->transform(
-          var::Transformer::Transform()
-            .set_input(var::View(file_read_buffer, page_size))
-            .set_output(var::View(file_write_buffer, transform_size)));
+            var::Transformer::Transform()
+                .set_input(var::View(file_read_buffer, page_size))
+                .set_output(var::View(file_write_buffer, transform_size)));
 
         write(file_write_buffer, bytes_to_write);
       } else {
@@ -158,9 +163,8 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
       }
 
       size_processed += static_cast<size_t>(bytes_read);
-      if (
-        options.terminator() != 0
-        && static_cast<char>(file_read_buffer[0]) == options.terminator()) {
+      if (options.terminator() != 0 &&
+          static_cast<char>(file_read_buffer[0]) == options.terminator()) {
         break;
       }
 
@@ -181,11 +185,9 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
 
     if (options.progress_callback()) {
       // abort the transaction
-      if (
-        options.progress_callback()->update(
-          static_cast<int>(size_processed),
-          static_cast<int>(file_size))
-        == true) {
+      if (options.progress_callback()->update(static_cast<int>(size_processed),
+                                              static_cast<int>(file_size)) ==
+          true) {
         options.progress_callback()->update(0, 0);
         API_SYSTEM_CALL("aborted", size_processed);
         return *this;
@@ -271,11 +273,8 @@ bool FileObject::verify(const FileObject &source_file,
   return true;
 }
 
-void FileObject::fake_seek(
-  int &location,
-  const size_t size,
-  int offset,
-  int whence) {
+void FileObject::fake_seek(int &location, const size_t size, int offset,
+                           int whence) {
   switch (static_cast<Whence>(whence)) {
   case Whence::current:
     location += offset;
@@ -297,11 +296,8 @@ void FileObject::fake_seek(
 
 File::File(var::StringView name, OpenMode flags) { open(name, flags); }
 
-File::File(
-  IsOverwrite is_overwrite,
-  var::StringView path,
-  OpenMode open_mode,
-  Permissions perms) {
+File::File(IsOverwrite is_overwrite, var::StringView path, OpenMode open_mode,
+           Permissions perms) {
   internal_create(is_overwrite, path, open_mode, perms);
 }
 
@@ -388,19 +384,14 @@ void File::open(var::StringView path, OpenMode flags, Permissions permissions) {
   API_ASSERT(m_fd == -1);
   API_RETURN_IF_ERROR();
   const var::PathString path_string(path);
-  API_SYSTEM_CALL(
-    path_string.cstring(),
-    m_fd = internal_open(
-      path_string.cstring(),
-      static_cast<int>(flags.o_flags()),
-      permissions.permissions()));
+  API_SYSTEM_CALL(path_string.cstring(),
+                  m_fd = internal_open(path_string.cstring(),
+                                       static_cast<int>(flags.o_flags()),
+                                       permissions.permissions()));
 }
 
-void File::internal_create(
-  IsOverwrite is_overwrite,
-  var::StringView path,
-  OpenMode open_mode,
-  Permissions perms) {
+void File::internal_create(IsOverwrite is_overwrite, var::StringView path,
+                           OpenMode open_mode, Permissions perms) {
   OpenMode flags = OpenMode(open_mode).set_create();
   if (is_overwrite == IsOverwrite::yes) {
     flags.set_truncate();
