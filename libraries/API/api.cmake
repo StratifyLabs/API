@@ -93,12 +93,12 @@ macro(api_target NAME DIRECTORIES)
 		endforeach()
 
 		add_custom_target(coverage_mkdir_${COVERAGE_TARGET}
-			COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/coverage/${COVERAGE_TARGET}
+			COMMAND mkdir -p ${CMAKE_CURRENT_SOURCE_DIR}/coverage/${COVERAGE_TARGET}
 			)
 
 		add_custom_target(coverage_${COVERAGE_TARGET}
 			COMMAND gcov ${GCOV_SOURCES}
-			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/coverage/${COVERAGE_TARGET}
+			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/coverage/${COVERAGE_TARGET}
 			DEPENDS coverage_mkdir_${COVERAGE_TARGET}
 			)
 

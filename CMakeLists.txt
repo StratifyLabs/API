@@ -15,14 +15,11 @@ project(API
 
 include(sos-sdk)
 
-if(SOS_IS_ARM)
+if(SOS_IS_ARM AND NOT DEFINED API_IS_SDK)
 	include(StratifyOS)
 endif()
 
 include(CTest)
-
-option(IS_TEST ON)
-
 
 add_subdirectory(libraries/API API)
 add_subdirectory(libraries/VarAPI VarAPI)
@@ -33,7 +30,7 @@ add_subdirectory(libraries/ThreadAPI ThreadAPI)
 add_subdirectory(libraries/SysAPI SysAPI)
 add_subdirectory(libraries/TestAPI TestAPI)
 
-if(IS_TEST)
+if(SOS_IS_TEST)
 	add_subdirectory(tests tests)
 endif()
 

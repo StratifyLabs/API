@@ -6,7 +6,7 @@ endif()
 
 if(NOT DEFINED API_IS_SDK)
 	if(SOS_IS_ARM)
-		sos_sdk_include_target(StratifyOS_iface "${API_CONFIG_LIST}")
+		#sos_sdk_include_target(StratifyOS_iface "${API_CONFIG_LIST}")
 		sos_sdk_include_target(StratifyOS_crt "${API_CONFIG_LIST}")
 	endif()
 	sos_sdk_include_target(API "${API_CONFIG_LIST}")
@@ -85,7 +85,7 @@ function(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 		PATTERN CMakelists.txt EXCLUDE)
 
 	install(FILES ${LOCAL_NAME}.cmake
-		DESTINATION cmake/targets)
+		DESTINATION ${SOS_SDK_PATH}/cmake/targets)
 
 
 
