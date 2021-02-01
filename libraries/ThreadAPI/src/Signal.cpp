@@ -56,6 +56,7 @@ const Signal &Signal::send(const Thread &t) const {
   return *this;
 }
 
+#if !defined __link
 Signal Signal::wait(const Set &set) {
   API_RETURN_VALUE_IF_ERROR(Signal(Number::null));
   int signal_number = 0;
@@ -68,6 +69,7 @@ Signal Signal::wait(const Set &set) {
   }
   return Signal(Number(signal_number));
 }
+#endif
 
 const Signal &Signal::queue(pid_t pid) const {
 #if defined __macosx || defined __win32

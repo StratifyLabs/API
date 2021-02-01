@@ -123,6 +123,8 @@ private:
 
 class Signal : public api::ExecutionContext, public SignalFlags {
 public:
+
+#if !defined __link
   class Set {
   public:
     Set &add(Number signo) {
@@ -153,6 +155,7 @@ public:
     friend class Signal;
     sigset_t m_sigset = {0};
   };
+#endif
 
   explicit Signal(Number signo, int signal_value = 0) {
     m_signo = static_cast<int>(signo);
@@ -176,7 +179,9 @@ public:
   Signal &set_handler(const SignalHandler &handler);
   Signal &reset_handler();
 
+#if !defined __link
   static Signal wait(const Set &set);
+#endif
 
   API_NO_DISCARD int signo() const { return m_signo; }
   API_NO_DISCARD int sigvalue() const { return m_sigvalue.sival_int; }
