@@ -1,8 +1,7 @@
 
 *.user
 tmp/
-cmake_arm/
-cmake_link/
-cmake_qt_link/
+cmake*_arm/
+cmake*_link/
 build_*/
 tests/sl_report.txt
