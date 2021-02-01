@@ -156,6 +156,12 @@ const FileObject &FileObject::write(const FileObject &source_file,
         write(file_write_buffer, bytes_to_write);
       } else {
         write(file_read_buffer, bytes_read);
+        if (return_value() != bytes_read) {
+          if (options.progress_callback()) {
+            options.progress_callback()->update(0, 0);
+          }
+          API_RETURN_VALUE_ASSIGN_ERROR(*this, "bad page size", EINVAL);
+        }
       }
 
       if (is_error()) {

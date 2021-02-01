@@ -548,6 +548,11 @@ Printer &Printer::key(const var::StringView key, var::StringView a) {
   return *this;
 }
 
+Printer &Printer::newline() {
+  interface_print_final("\n");
+  return *this;
+}
+
 Printer &Printer::debug(const var::StringView a) {
   print(Level::debug, "debug", a);
   return *this;
@@ -734,6 +739,8 @@ Printer &Printer::operator<<(const var::View a) {
 Printer &Printer::operator<<(const api::Error &error_context) {
   key("lineNumber",
       var::NumberString(error_context.line_number()).string_view());
+  key("returnValue",
+      var::NumberString(api::ExecutionContext::return_value()).string_view());
   key("errorNumber",
       var::NumberString(error_context.error_number()).string_view());
   key("message", var::StringView(error_context.message()));

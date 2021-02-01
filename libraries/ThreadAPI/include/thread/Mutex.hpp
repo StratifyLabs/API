@@ -3,19 +3,20 @@
 #ifndef THREADAPI_THREAD_MUTEX_HPP_
 #define THREADAPI_THREAD_MUTEX_HPP_
 
+#include <pthread.h>
+
 #include "api/api.hpp"
 #include "var/Array.hpp"
 
 #include "chrono/ClockTime.hpp"
-
-#include <pthread.h>
-#include <sdk/types.h>
 
 #if defined __android
 #define PTHREAD_PRIO_PROTECT PTHREAD_PRIO_NONE
 #endif
 
 namespace thread {
+
+class Cond;
 
 class Mutex : public api::ExecutionContext {
 public:
@@ -121,6 +122,7 @@ public:
   };
 
 private:
+  friend class Cond;
   pthread_mutex_t m_mutex;
   Mutex &set_attributes(const Attributes &attr);
 };

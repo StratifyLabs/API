@@ -1,5 +1,6 @@
 
 set(SOURCES
+	Cond.cpp
 	Thread.cpp
 	Mutex.cpp
 	Signal.cpp

@@ -1,6 +1,7 @@
 
 set(SOURCES
 	thread.hpp
+	thread/Cond.hpp
 	thread/Thread.hpp
 	thread/Mutex.hpp
 	thread/Signal.hpp

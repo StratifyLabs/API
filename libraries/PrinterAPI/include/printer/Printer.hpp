@@ -157,6 +157,7 @@ public:
   Printer &warning(const var::StringView a);
   Printer &error(const var::StringView a);
   Printer &fatal(const var::StringView a);
+  Printer &newline();
 
   Printer &error(const api::PrivateExecutionContext result, u32 line_number);
 
