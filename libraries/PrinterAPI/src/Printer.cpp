@@ -200,10 +200,18 @@ void Printer::interface_print_final(const var::StringView view) {
   fwrite(view.data(), view.length(), 1, stdout);
   fflush(stdout);
 #else
-  printf("%s", view.to_string().cstring());
-  fflush(stdout);
-  // something about writing directly causes some bytes to be dropped
-  //::write(stdout->_file, view.data(), view.length());
+  const char *begin = view.data();
+  size_t sent = 0;
+  int result;
+  do {
+    const size_t page_size = view.length() - sent;
+    result = ::write(stdout->_file, begin, page_size);
+    if (result > 0) {
+      sent += result;
+      begin += result;
+    }
+
+  } while (sent < view.length() && (result > 0));
 #endif
 }
 

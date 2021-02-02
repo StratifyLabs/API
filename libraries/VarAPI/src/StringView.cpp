@@ -47,11 +47,7 @@ StringViewList StringView::split(StringView delimeters) const {
 }
 
 float StringView::to_float() const {
-#ifndef __link
   return ::atoff(NumberString(*this).cstring());
-#else
-  return ::atof(NumberString(*this).cstring());
-#endif
 }
 
 long StringView::to_long(Base base) const {

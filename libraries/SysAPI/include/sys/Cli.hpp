@@ -31,7 +31,7 @@ public:
 
   const char *app_git_hash() const { return m_app_git_hash; }
 
-  var::String to_string() const;
+  var::GeneralString to_general_string() const;
   var::StringView at(u16 value) const;
 
   var::StringView get_option(
@@ -57,7 +57,7 @@ private:
   char **m_argv;
   bool m_is_case_sensitive;
   const char *m_app_git_hash;
-  mutable var::StringList m_help_list;
+  mutable var::Vector<var::PathString> m_help_list;
 };
 
 } /* namespace sys */

@@ -53,12 +53,12 @@ const Cli &Cli::handle_version(const HandleVersion &options) const {
   return *this;
 }
 
-var::String Cli::to_string() const {
-  String result;
+var::GeneralString Cli::to_general_string() const {
+  GeneralString result;
   for (u32 i = 1; i < count(); i++) {
-    result += at(i);
+    result |= at(i);
     if (i < count() - 1) {
-      result += " ";
+      result |= " ";
     }
   }
   return result;
@@ -72,7 +72,7 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
   u32 args;
 
   if (help.is_empty() == false) {
-    m_help_list.push_back(name + ": " + help);
+    m_help_list.push_back(name & ": " & help);
   }
 
   for (args = 1; args < count(); args++) {
@@ -121,9 +121,9 @@ var::StringView Cli::get_path() const {
 }
 
 Cli &Cli::show_help(const ShowHelp &options) {
-  printf("%s options:\n", var::String(get_name()).cstring());
-  for (u32 i = 0; i < m_help_list.count(); i++) {
-    printf("- %s\n", m_help_list.at(i).cstring());
+  printf("%s options:\n", var::PathString(get_name()).cstring());
+  for (const auto &help_item : m_help_list) {
+    printf("- %s\n", help_item.cstring());
   }
   return *this;
 }

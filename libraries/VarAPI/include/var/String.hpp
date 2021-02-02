@@ -5,9 +5,7 @@
 #define VAR_API_STRING_HPP_
 
 #include <cstdarg>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
+
 #include <string>
 
 #include "StringView.hpp"

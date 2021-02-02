@@ -15,6 +15,7 @@ project(API
 
 include(sos-sdk)
 
+
 if(SOS_IS_ARM AND NOT DEFINED API_IS_SDK)
 	include(StratifyOS)
 endif()

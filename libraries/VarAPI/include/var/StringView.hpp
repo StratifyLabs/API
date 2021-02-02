@@ -8,8 +8,13 @@
 #include <string_view>
 
 #include "api/api.hpp"
-
 #include "Vector.hpp"
+
+#if defined __link
+#define atoff atof
+#else
+extern float atoff(const char *);
+#endif
 
 namespace var {
 

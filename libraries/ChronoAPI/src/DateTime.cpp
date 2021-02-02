@@ -6,6 +6,8 @@
 #include <unistd.h>
 #endif
 
+#include <ctime>
+
 #include "var/StackString.hpp"
 
 #include "printer/Printer.hpp"
@@ -49,12 +51,9 @@ DateTime::DateTime() { m_ctime = 0; }
 
 DateTime::DateTime(const Construct &options) {
   struct tm tm = {0};
-  if (
-    strptime(
-      var::StackString64(options.time()).cstring(),
-      var::StackString64(options.format()).cstring(),
-      &tm)
-    != nullptr) {
+  if (strptime(var::StackString64(options.time()).cstring(),
+               var::StackString64(options.format()).cstring(),
+               &tm) != nullptr) {
     m_ctime = mktime(&tm);
   } else {
     m_ctime = 0;

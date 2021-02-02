@@ -16,7 +16,20 @@ macro(api_target NAME DIRECTORIES)
 	sos_sdk_library_target(RELEASE ${NAME} "" release ${SOS_ARCH})
 	add_library(${RELEASE_TARGET} STATIC)
 
-	set_property(TARGET ${RELEASE_TARGET} PROPERTY CXX_STANDARD 17)
+	set_property(TARGET ${RELEASE_TARGET}
+		PROPERTY
+		CXX_STANDARD 17
+		)
+
+	set_property(TARGET ${RELEASE_TARGET}
+		PROPERTY
+		CXX_STANDARD_REQUIRED ON
+		)
+
+	set_property(TARGET ${RELEASE_TARGET}
+		PROPERTY
+		CXX_EXTENSIONS ON
+		)
 
 	target_sources(${RELEASE_TARGET}
 		PRIVATE
