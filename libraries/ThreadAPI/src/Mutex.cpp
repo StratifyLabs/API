@@ -129,7 +129,8 @@ bool Mutex::try_lock() {
 }
 
 Mutex &Mutex::unlock() {
-  API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL("", pthread_mutex_unlock(&m_mutex));
+  // unlock even if there is an error in the context
+  api::ErrorGuard error_guard;
+  pthread_mutex_unlock(&m_mutex);
   return *this;
 }
