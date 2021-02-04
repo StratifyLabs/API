@@ -101,7 +101,7 @@ var::StringView System::user_data_path() {
 
   if (is_linux()) {
     path = getenv("HOME");
-    result = path + "/.StratifyAPI";
+    result = path + "/.StratifyLabs";
   }
 
   return result.cstring();
