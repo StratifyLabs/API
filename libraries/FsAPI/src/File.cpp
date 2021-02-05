@@ -135,8 +135,9 @@ const FileObject &FileObject::write(const FileObject &source_file,
 
   clock_timer.start();
   do {
-    const size_t page_size = ((file_size - size_processed) < read_buffer_size)
-                                 ? file_size - size_processed
+    const size_t remaining_size = file_size - size_processed;
+    const size_t page_size = ((remaining_size) < read_buffer_size)
+                                 ? remaining_size
                                  : read_buffer_size;
 
     file_read_buffer[0] = 0;

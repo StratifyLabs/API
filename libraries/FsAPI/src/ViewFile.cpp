@@ -44,6 +44,7 @@ int ViewFile::interface_write(const void *buf, int nbyte) const {
 
   int size_ready = 0;
   if (flags().is_append()) {
+    errno = EINVAL;
     return -1;
   } else {
     // limit writes to the current size of the data
@@ -54,6 +55,8 @@ int ViewFile::interface_write(const void *buf, int nbyte) const {
   }
 
   if (size_ready < 0) {
+    //EOF should return 0 bytes written
+    errno = ENOSPC;
     return -1;
   }
 
