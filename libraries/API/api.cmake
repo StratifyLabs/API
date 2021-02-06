@@ -67,7 +67,7 @@ macro(api_target NAME DIRECTORIES)
 	string(COMPARE EQUAL ${NAME} API IS_API)
 	set(LOCAL_DIRECTORIES ${DIRECTORIES})
 	if(IS_API AND SOS_IS_ARM)
-			list(APPEND LOCAL_DIRECTORIES StratifyOS_crt)
+			#list(APPEND LOCAL_DIRECTORIES StratifyOS_crt)
 			target_compile_options(${RELEASE_TARGET}
 				INTERFACE
 				-mlong-calls)
@@ -128,6 +128,16 @@ macro(api_target NAME DIRECTORIES)
 	if(IS_API)
 		get_target_property(RELEASE_LINK_LIBS ${RELEASE_TARGET} INTERFACE_LINK_LIBRARIES)
 		get_target_property(DEBUG_LINK_LIBS ${DEBUG_TARGET} INTERFACE_LINK_LIBRARIES)
+		target_link_libraries(API_release_${SOS_ARCH} PUBLIC StratifyOS_crt_release_${SOS_ARCH} stdc++ supc++)
+		target_link_libraries(API_debug_${SOS_ARCH} PUBLIC StratifyOS_crt_debug_${SOS_ARCH} stdc++ supc++)
+		message(STATUS "API_release_${SOS_ARCH} -> crt stdc++ supc++")
+		message(STATUS "API_debug_${SOS_ARCH} -> crt stdc++ supc++")
+		foreach(ARCH ${SOS_ARCH_LIST})
+			target_link_libraries(API_release_${ARCH} PUBLIC StratifyOS_crt_release_${ARCH} stdc++ supc++)
+			target_link_libraries(API_debug_${ARCH} PUBLIC StratifyOS_crt_debug_${ARCH} stdc++ supc++)
+			message(STATUS "API_release_${ARCH} -> crt stdc++ supc++")
+			message(STATUS "API_debug_${ARCH} -> crt stdc++ supc++")
+		endforeach()
 	endif()
 
 	add_custom_target(
@@ -139,3 +149,4 @@ macro(api_target NAME DIRECTORIES)
 		)
 
 endmacro()
+
