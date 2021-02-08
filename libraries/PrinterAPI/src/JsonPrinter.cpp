@@ -1,5 +1,7 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
+#include <var/StackString.hpp>
+
 #include "printer/JsonPrinter.hpp"
 
 using namespace printer;
@@ -39,6 +41,13 @@ void JsonPrinter::print(
     key = var::StringView().set_null();
   }
 
+  Printer::FlagGuard flag_guard(*this);
+
+  if( value == "true" || value == "false" ){
+    Flags f = flags();
+    f &= ~Flags::value_quotes;
+    set_flags(f);
+  }
   Printer::print(level, key, value, IsNewline::no);
 }
 
@@ -47,7 +56,7 @@ void JsonPrinter::print_open_object(Level level, const var::StringView key) {
   if (verbose_level() >= level && !is_level_filtered()) {
     insert_comma();
     if (container().type() == ContainerType::object) {
-      const var::String string_key = "\"" + key + "\":{";
+      const auto string_key = "\"" | key | "\":{";
       interface_print_final(string_key);
     } else {
       interface_print_final("{");
@@ -61,7 +70,7 @@ void JsonPrinter::print_open_array(Level level, const var::StringView key) {
   if (verbose_level() >= level && !is_level_filtered()) {
     insert_comma();
     if (container().type() == ContainerType::object) {
-      const var::String string_key = "\"" + key + "\":[";
+      const auto string_key = "\"" | key | "\":[";
       interface_print_final(string_key);
     } else {
       interface_print_final("[");
