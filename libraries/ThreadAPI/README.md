@@ -19,7 +19,7 @@ Thread(
 
 ## Mutexes
 
-A mutex is ready to use once it has been constructed. The best to to lock/unlock mutexes is using the `MutexGuard` class which will lock/unlock on construction/deconstruction.
+A mutex is ready to use once it has been constructed. The best way to lock/unlock mutexes is using the `MutexGuard` class which will lock/unlock on construction/deconstruction.
 
 ```c++
 #include <thread.hpp>
