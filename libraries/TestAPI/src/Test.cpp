@@ -46,7 +46,7 @@ u32 Test::get_score(u32 microseconds) {
 }
 
 void Test::execute(const sys::Cli &cli) {
-  ExecuteFlags o_flags = ExecuteFlags::none;
+  ExecuteFlags o_flags = ExecuteFlags::null;
 
   if (cli.get_option("api") == "true") {
     o_flags |= ExecuteFlags::api;
@@ -62,7 +62,7 @@ void Test::execute(const sys::Cli &cli) {
     o_flags |= ExecuteFlags::all;
   }
 
-  if (o_flags == ExecuteFlags::none) {
+  if (o_flags == ExecuteFlags::null) {
     o_flags = ExecuteFlags::api;
   }
 
@@ -78,17 +78,20 @@ void Test::open_case(var::StringView case_name) {
 
 void Test::close_case() {
   m_case_timer.stop();
-  printer::Printer::Object po(printer(), "caseResult");
-  m_test_duration_microseconds += m_case_timer.micro_time().microseconds();
-  printer().key_bool("result", m_case_result);
-  printer().key(
-    "score",
-    NumberString(get_score(m_case_timer.micro_time().microseconds()))
-      .string_view());
-  printer().key(
-    "microseconds",
-    NumberString(m_case_timer.micro_time().microseconds()).string_view());
-  printer().key_bool("memoryLeak", m_case_data_info == var::DataInfo());
+  {
+    printer::Printer::Object po(printer(), "caseResult");
+    m_test_duration_microseconds += m_case_timer.micro_time().microseconds();
+    printer()
+        .key_bool("result", m_case_result)
+        .key("score",
+             NumberString(get_score(m_case_timer.micro_time().microseconds()))
+                 .string_view())
+        .key("microseconds",
+             NumberString(m_case_timer.micro_time().microseconds())
+                 .string_view())
+        .key_bool("memoryLeak", m_case_data_info == var::DataInfo());
+  }
+  printer().close_object();
   m_case_result = true;
 }
 
@@ -116,24 +119,21 @@ void Test::initialize(const Initialize &options) {
 }
 
 Test::ExecuteFlags Test::parse_execution_flags(const sys::Cli &cli) {
-  ExecuteFlags o_execute_flags = ExecuteFlags::none;
+  ExecuteFlags o_execute_flags = ExecuteFlags::null;
 
   bool is_all = false;
 
-  if (
-    cli.get_option(
-      "all",
-      "execute all tests and types (if no type "
-      "(api|stress|performance|additional) is specified")
-    == "true") {
+  if (cli.get_option("all",
+                     "execute all tests and types (if no type "
+                     "(api|stress|performance|additional) is specified") ==
+      "true") {
     is_all = true;
   }
 
-  if (
-    cli.get_option(
-      "allTypes",
-      "execute all test types (api|stress|performance|additional)")
-    == "true") {
+  if (cli.get_option(
+          "allTypes",
+          "execute all test types (api|stress|performance|additional)") ==
+      "true") {
     o_execute_flags |= ExecuteFlags::all_types;
   }
 
@@ -150,7 +150,7 @@ Test::ExecuteFlags Test::parse_execution_flags(const sys::Cli &cli) {
   }
 
   if (is_all) {
-    if (o_execute_flags == ExecuteFlags::none) {
+    if (o_execute_flags == ExecuteFlags::null) {
       o_execute_flags = ExecuteFlags::all;
     } else {
       o_execute_flags |= ~(ExecuteFlags::all_types);
@@ -173,17 +173,15 @@ u32 Test::parse_test(const sys::Cli &cli, var::StringView name, u32 test_flag) {
 void Test::finalize() {
   Printer::Object pg(printer(), "finalResult");
   printer().key_bool("result", m_final_result);
-  printer().key(
-    "finalResult",
-    m_final_result ? StringView("___finalResultPass___")
-                   : StringView("___finalResultFail___"));
-  printer().key(
-    "microseconds",
-    NumberString(m_final_duration_microseconds).string_view());
+  printer().key("finalResult", m_final_result
+                                   ? StringView("___finalResultPass___")
+                                   : StringView("___finalResultFail___"));
+  printer().key("microseconds",
+                NumberString(m_final_duration_microseconds).string_view());
   printer().key_bool("memoryLeak", m_final_data_info == var::DataInfo());
   printer().key(
-    "score",
-    NumberString(get_score(m_final_duration_microseconds)).string_view());
+      "score",
+      NumberString(get_score(m_final_duration_microseconds)).string_view());
 }
 
 void Test::execute_api_case() {

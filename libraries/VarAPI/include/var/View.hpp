@@ -161,6 +161,12 @@ public:
     return *this;
   }
 
+  View &set_size(size_t value){
+    m_size_read_only
+        = (m_size_read_only & m_size_read_only_flag) | (value);
+    return *this;
+  }
+
   View &pop_front(size_t pop_size = 1) {
     if (size() > pop_size) {
       m_size_read_only

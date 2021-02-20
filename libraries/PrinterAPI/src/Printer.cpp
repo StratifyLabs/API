@@ -121,8 +121,8 @@ void Printer::print(Level verbose_level, const var::StringView key,
     return;
   }
 
-  for (u32 indent = 0; indent < m_indent; indent++) {
-    interface_print_final("  ");
+  for (u32 indent = 0; indent < m_indent*m_indent_size; indent++) {
+    interface_print_final(" ");
   }
 
   if (key.is_null() == false) {
@@ -200,20 +200,25 @@ void Printer::interface_print_final(const var::StringView view) {
   fwrite(view.data(), view.length(), 1, stdout);
   fflush(stdout);
 #else
+  write_fileno(stdout->_file, view);
+#endif
+}
+
+void Printer::write_fileno(int fd, const var::StringView view) const {
   const char *begin = view.data();
   size_t sent = 0;
   int result;
   do {
     const size_t page_size = view.length() - sent;
-    result = ::write(stdout->_file, begin, page_size);
+    result = ::write(fd, begin, page_size);
     if (result > 0) {
       sent += result;
       begin += result;
     }
 
   } while (sent < view.length() && (result > 0));
-#endif
 }
+
 
 Printer &Printer::open_object(const var::StringView key, Level level) {
   print_open_object(level, key);

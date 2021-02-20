@@ -50,7 +50,7 @@ namespace test {
 
 struct TestFlags {
   enum class ExecuteFlags : u32 {
-    none = 0,
+    null = 0,
     api /*! API Test Execution flag */ = (1 << 0),
     stress /*! Stress Test Execution flag */ = (1 << 1),
     performance /*! Performance Test Execution flag */ = (1 << 2),

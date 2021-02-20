@@ -6,6 +6,8 @@
 #include <sdk/types.h>
 #include <time.h>
 
+#include "api/macros.hpp"
+
 namespace chrono {
 #include "chrono/MicroTime.hpp"
 
@@ -30,15 +32,24 @@ public:
     return *this;
   }
 
+  MicroTime &operator *= (u32 a) {
+    m_value_microseconds *= a;
+    return *this;
+  }
+
+  MicroTime &operator /= (u32 a) {
+    m_value_microseconds /= a;
+    return *this;
+  }
+
+
   MicroTime operator+(const MicroTime &a) const {
     return MicroTime(microseconds() + a.microseconds());
   }
 
-  MicroTime operator*(const MicroTime &a) const {
-    return MicroTime(microseconds() * a.microseconds());
-  }
 
   MicroTime operator*(u32 a) const { return MicroTime(microseconds() * a); }
+  MicroTime operator/(u32 a) const { return MicroTime(microseconds() / a); }
 
   MicroTime operator-(const MicroTime &a) const {
     return MicroTime(microseconds() - a.microseconds());
@@ -71,7 +82,10 @@ public:
   u32 seconds() const { return microseconds() / 1000000UL; }
   micro_time_t microseconds() const { return m_value_microseconds; }
   u32 milliseconds() const { return microseconds() / 1000UL; }
-  MicroTime &wait();
+  const MicroTime &wait() const;
+  MicroTime& wait(){
+    return API_CONST_CAST_SELF(MicroTime, wait);
+  }
 
 private:
   micro_time_t m_value_microseconds;

@@ -64,6 +64,13 @@ const FileObject &FileObject::seek(int location, Whence whence) const {
   return *this;
 }
 
+const FileObject &FileObject::sync() const {
+  API_RETURN_VALUE_IF_ERROR(*this);
+  API_SYSTEM_CALL("", interface_fsync());
+  return *this;
+}
+
+
 int FileObject::location() const {
   return seek(0, Whence::current).return_value();
 }
@@ -317,15 +324,7 @@ File::~File() {
 
 int File::fileno() const { return m_fd; }
 
-const File &File::sync() const {
-  API_RETURN_VALUE_IF_ERROR(*this);
-  if (m_fd >= 0) {
-#if !defined __win32
-    API_SYSTEM_CALL("", internal_fsync(m_fd));
-#endif
-  }
-  return *this;
-}
+
 
 int File::flags() const {
   API_RETURN_VALUE_IF_ERROR(-1);
@@ -375,11 +374,11 @@ int File::interface_ioctl(int request, void *argument) const {
 
 int File::internal_close(int fd) const { return ::posix_close(fd); }
 
-int File::internal_fsync(int fd) const {
+int File::interface_fsync() const {
 #if defined __link
   return 0;
 #else
-  return ::fsync(fd);
+  return ::fsync(m_fd);
 #endif
 }
 

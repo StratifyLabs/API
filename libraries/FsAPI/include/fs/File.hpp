@@ -177,11 +177,20 @@ public:
     return ioctl(options.request(), options.argument());
   }
 
+  const FileObject &sync() const;
+  FileObject &sync(){
+    return API_CONST_CAST_SELF(FileObject, sync);
+  }
+
 protected:
   virtual int interface_lseek(int offset, int whence) const = 0;
   virtual int interface_read(void *buf, int nbyte) const = 0;
   virtual int interface_write(const void *buf, int nbyte) const = 0;
   virtual int interface_ioctl(int request, void *argument) const = 0;
+
+  virtual int interface_fsync() const {
+    return 0;
+  }
 
   static void
   fake_seek(int &location, const size_t size, int offset, int whence);
@@ -229,6 +238,14 @@ public:
 
   Derived &write(var::View view) {
     return static_cast<Derived &>(FileObject::write(view));
+  }
+
+  const Derived &sync() const {
+    return static_cast<const Derived &>(FileObject::sync());
+  }
+
+  Derived &sync() {
+    return static_cast<Derived &>(FileObject::sync());
   }
 
   const Derived &
@@ -412,7 +429,6 @@ public:
 
   int fileno() const;
   int flags() const;
-  const File &sync() const;
   File &set_fileno(int fd) {
     m_fd = fd;
     return *this;
@@ -424,7 +440,7 @@ protected:
   int interface_write(const void *buf, int nbyte) const override;
   int interface_ioctl(int request, void *argument) const override;
 
-  int internal_fsync(int fd) const;
+  int interface_fsync() const;
 
 private:
   int m_fd = -1;

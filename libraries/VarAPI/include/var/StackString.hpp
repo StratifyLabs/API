@@ -169,7 +169,7 @@ public:
   operator const char *() const { return m_buffer; }
 };
 
-class PathString : public StackString<PathString, PATH_MAX> {
+class PathString : public StackString<PathString, PATH_MAX + 1> {
 public:
   PathString() {}
   PathString(const StringView a) : StackString(a) {}

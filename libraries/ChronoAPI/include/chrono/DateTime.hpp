@@ -55,6 +55,8 @@ public:
 
   DateTime &operator-=(const DateTime &a);
   static DateTime get_system_time();
+  DateTime& set_system_time();
+
   DateTime &set_time(time_t tm) {
     m_ctime = tm;
     return *this;

@@ -25,7 +25,7 @@ void chrono::wait(const chrono::MicroTime &duration) {
   ::usleep(period.microseconds());
 }
 
-chrono::MicroTime &chrono::MicroTime::wait() {
+const chrono::MicroTime &chrono::MicroTime::wait() const{
   chrono::wait(*this);
   return *this;
 }

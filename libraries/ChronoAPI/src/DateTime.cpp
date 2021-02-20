@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <sos/dev/rtc.h>
 #include <unistd.h>
+#include <sys/time.h>
 #endif
 
 #include <ctime>
@@ -76,6 +77,16 @@ DateTime DateTime::get_system_time() {
     t = 962668800;
   }
   return DateTime(t);
+}
+
+DateTime& DateTime::set_system_time(){
+#if !defined __link
+  struct timeval tp = {0};
+  struct timezone tz = {0};
+  tp.tv_sec = m_ctime;
+  //_settimeofday(&tp, &tz);
+#endif
+  return *this;
 }
 
 u32 DateTime::second() const { return m_ctime % 60; }

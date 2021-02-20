@@ -34,8 +34,8 @@ namespace thread {
  *
  * - It's round robin time is expired and it will be pre-empted
  * - It makes a call to a blocking function:
- *   - usleep() (chrono::Timer::wait_microseconds())
- *   - sleep() (chrono::Timer::wait_seconds())
+ *   - usleep() (chrono::ClockTimer::wait_microseconds())
+ *   - sleep() (chrono::ClockTimer::wait_seconds())
  *   - read() or write() (not all read or writes will yield the CPU, only those
  * that can be accomplished in the background)
  *   - sched_yield() (Sched::yield())

@@ -3,8 +3,8 @@
 #ifndef PRINTER_API_PRINTER_PRINTER_HPP_
 #define PRINTER_API_PRINTER_PRINTER_HPP_
 
-#include <sdk/types.h>
 #include <cstdarg>
+#include <sdk/types.h>
 
 #include "var/Data.hpp"
 #include "var/String.hpp"
@@ -149,8 +149,7 @@ public:
 
   Level verbose_level() const { return m_verbose_level; }
 
-  Printer &
-  trace(const char *function, int line, var::StringView message);
+  Printer &trace(const char *function, int line, var::StringView message);
   Printer &debug(const var::StringView a);
   Printer &message(const var::StringView a);
   Printer &info(const var::StringView a);
@@ -179,12 +178,24 @@ public:
   class FlagGuard {
   public:
     FlagGuard(Printer &printer)
-      : m_printer(printer), m_flags(printer.flags()) {}
+        : m_printer(printer), m_flags(printer.flags()) {}
 
     ~FlagGuard() { m_printer.set_flags(m_flags); }
 
   private:
     Flags m_flags;
+    Printer &m_printer;
+  };
+
+  class LevelGuard {
+  public:
+    LevelGuard(Printer &printer)
+        : m_printer(printer), m_level(printer.verbose_level()) {}
+
+    ~LevelGuard() { m_printer.set_verbose_level(m_level); }
+
+  private:
+    Level m_level;
     Printer &m_printer;
   };
 
@@ -205,6 +216,20 @@ public:
     return *this;
   }
 
+  Printer &set_indent_size(u16 value) {
+    m_indent_size = value;
+    return *this;
+  }
+
+  u16 indent_size() const {
+    return m_indent_size;
+  }
+
+  Printer &set_progress_width(u16 value) {
+    m_progress_width = value;
+    return *this;
+  }
+
   API_NO_DISCARD var::StringView progress_key() const { return m_progress_key; }
   API_NO_DISCARD static char get_bitmap_pixel_character(u32 color,
                                                         u8 bits_per_pixel);
@@ -222,8 +247,8 @@ public:
   Printer &key(const var::StringView key, const var::String &a);
 
   template <class T>
-  Printer &
-  object(var::StringView key, const T &value, Level level = Level::fatal) {
+  Printer &object(var::StringView key, const T &value,
+                  Level level = Level::fatal) {
     print_open_object(level, key);
     *this << value;
     print_close_object();
@@ -251,8 +276,7 @@ public:
   virtual void print_open_object(Level verbose_level, var::StringView key);
   virtual void print_close_object();
 
-  virtual void
-  print_open_array(Level verbose_level, var::StringView key);
+  virtual void print_open_array(Level verbose_level, var::StringView key);
   virtual void print_close_array();
 
   virtual void print(Level level, const var::StringView key,
@@ -262,7 +286,7 @@ public:
   class Object {
   public:
     Object(Printer &printer, var::StringView name, Level level = Level::info)
-      : m_printer(printer) {
+        : m_printer(printer) {
       printer.open_object(name, level);
     }
 
@@ -275,7 +299,7 @@ public:
   class Array {
   public:
     Array(Printer &printer, var::StringView name, Level level = Level::info)
-      : m_printer(printer) {
+        : m_printer(printer) {
       printer.open_array(name, level);
     }
 
@@ -289,7 +313,7 @@ protected:
   template <typename T> class ContainerAccess {
   public:
     ContainerAccess(Level verbose_level, T type)
-      : m_type(type), m_count(1), m_verbose_level(verbose_level) {}
+        : m_type(type), m_count(1), m_verbose_level(verbose_level) {}
 
     Level verbose_level() const { return m_verbose_level; }
     void set_verbose_level(Level level) { m_verbose_level = level; }
@@ -307,6 +331,8 @@ protected:
 
   virtual void interface_print_final(const var::StringView view);
 
+  void write_fileno(int fd, const var::StringView view) const;
+
 private:
 #if defined __win32
   static unsigned int m_default_color;
@@ -316,8 +342,9 @@ private:
   u16 m_progress_width;
   u16 m_progress_state;
   u16 m_indent;
+  u16 m_indent_size = 2;
   Flags m_print_flags = Flags::null;
-  var::StringView  m_progress_key;
+  var::StringView m_progress_key;
   Level m_verbose_level;
 
 #if defined __link

@@ -39,6 +39,8 @@ public:
     IsRecursive is_recursive,
     const Permissions &permissions = Permissions(0)) const;
 
+  size_t get_entry_count(const var::StringView path, IsRecursive is_recursive = IsRecursive::no) const;
+
   PathList
   read_directory(const var::StringView path,
                  IsRecursive is_recursive = IsRecursive::no,

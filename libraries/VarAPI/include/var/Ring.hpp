@@ -12,14 +12,16 @@
 
 #include <new>
 
-#include "Data.hpp"
+#include "Array.hpp"
 
 namespace var {
 
-template <typename T> class Ring : public Data {
+template <typename T, size_t item_count> class Ring {
 public:
-  Ring(size_t count) : Data(count * sizeof(T)) {
-    m_count = count;
+
+  using Buffer = Array<T, item_count>;
+
+  Ring(){
     m_head = 0;
     m_tail = 0;
     m_is_overflow_allowed = true;
@@ -30,8 +32,6 @@ public:
       pop();
     }
   }
-
-  u32 count() const { return m_count; }
 
   u32 count_ready() const {
     // how many item are available
@@ -49,50 +49,50 @@ public:
   bool is_full() const { return m_tail == m_count; }
   bool is_empty() const { return m_tail == m_head; }
 
-  Ring<T> &set_overflow_allowed(bool value = true) {
+  Ring &set_overflow_allowed(bool value = true) {
     m_is_overflow_allowed = value;
     return *this;
   }
 
   T &at(size_t position) {
     u32 offset = m_head + position;
-    return View(*this).at<T>(offset % count());
+    return m_buffer.at(offset % item_count);
   }
 
   const T &at(size_t position) const {
     u32 offset = m_head + position;
-    return View(*this).at<T>(offset % count());
+    return m_buffer.at(offset % item_count);
   }
 
   T &back() {
     if (m_tail == m_count) {
-      return View(*this).at<T>(m_head);
+      return m_buffer.at(m_head);
     }
-    return View(*this).at<T>(m_tail);
+    return m_buffer.at(m_tail);
   }
 
   const T &back() const {
     if (m_tail == m_count) {
-      return View(*this).at<T>(m_head);
+      return m_buffer.at(m_head);
     }
-    return View(*this).at<T>(m_tail);
+    return m_buffer.at(m_tail);
   }
 
   T &front() {
     if (m_head) {
-      return View(*this).at<T>(m_head - 1);
+      return m_buffer.at(m_head - 1);
     }
-    return View(*this).at<T>(m_count - 1);
+    return m_buffer.at(m_count - 1);
   }
 
   const T &front() const {
     if (m_head) {
-      return View(*this).at<T>(m_head - 1);
+      return m_buffer.at(m_head - 1);
     }
-    return View(*this).at<T>(m_count - 1);
+    return m_buffer.at(m_count - 1);
   }
 
-  Ring<T> &push(const T &value) {
+  Ring &push(const T &value) {
     if (m_tail == m_count) {
       if (m_is_overflow_allowed) {
         back().~T(); // destruct item that will be lost
@@ -103,7 +103,7 @@ public:
     }
 
     // construct a new item at head
-    new ((void *)(static_cast<T *>(data()) + m_head)) T(value);
+    new ((void *)(static_cast<T *>(&m_buffer.at(m_head)))) T(value);
 
     // increment the head
     m_head++;
@@ -117,7 +117,7 @@ public:
     return *this;
   }
 
-  Ring<T> &pop() {
+  Ring &pop() {
     if (m_head == m_tail) {
       // Ring is empty
       return *this;
@@ -134,20 +134,13 @@ public:
     return *this;
   }
 
-  API_NO_DISCARD Data to_linear_data() const {
-    Data result(size());
+  API_NO_DISCARD Array<T, item_count> to_linear_data() const {
+    Array<T, item_count> result;
     // this needs to be constructed
-    for (u32 i = 0; i < count(); i++) {
-      new ((void *)(View(result).to<T>() + i)) T(at(i));
+    for (size_t i = 0; i < item_count; i++) {
+      result.at(i) = at(i);
     }
     return result;
-  }
-
-  Ring &operator<<(const Data &data) {
-    for (u32 i = 0; i < data.size() / sizeof(T); i++) {
-      push(View(data).at<T>(i));
-    }
-    return *this;
   }
 
   Ring &rotate_forward() {
@@ -180,6 +173,8 @@ private:
   bool m_is_overflow_allowed;
 
   u32 frame_size() { return sizeof(T); }
+
+  Buffer m_buffer;
 };
 
 } /* namespace var */

@@ -21,8 +21,8 @@ void YamlPrinter::print(Level level, const var::StringView key,
     }
   }
 
-  for (size_t i = 0; i < container_list().count() - 1; i++) {
-    interface_print_final("   ");
+  for (size_t i = 0; i < (container_list().count() - 1)*indent_size(); i++) {
+    interface_print_final(" ");
   }
 
   if (container().type() == ContainerType::array) {

@@ -116,14 +116,37 @@ const FileSystem &FileSystem::remove_directory(var::StringView path) const {
   return *this;
 }
 
+size_t FileSystem::get_entry_count(const var::StringView path,
+                                   IsRecursive is_recursive) const {
+  Dir directory(path);
+  size_t result = 0;
+  const char *entry;
+  while ((entry = directory.read()) != nullptr) {
+    const var::StringView entry_view = entry;
+    if (entry_view != "." && entry_view != "..") {
+      result++;
+      if (is_recursive == IsRecursive::yes) {
+        const auto entry_path = path / entry;
+        const auto info = get_info(entry_path);
+        if (info.is_directory() ) {
+          result += get_entry_count(entry_path, IsRecursive::yes);
+        }
+      }
+    }
+  }
+  return result;
+}
+
 PathList
 FileSystem::read_directory(const var::StringView path, IsRecursive is_recursive,
                            bool (*exclude)(const var::StringView entry)) const {
   PathList result;
   bool is_the_end = false;
 
-  Dir directory(path);
+  size_t count = get_entry_count(path, is_recursive);
+  result.reserve(count);
 
+  Dir directory(path);
   do {
     const char *entry_result = directory.read();
     const var::PathString entry = (entry_result != nullptr)
