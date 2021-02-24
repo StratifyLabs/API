@@ -206,17 +206,17 @@ void Printer::interface_print_final(const var::StringView view) {
 
 void Printer::write_fileno(int fd, const var::StringView view) const {
   const char *begin = view.data();
+  const size_t length = view.length();
   size_t sent = 0;
   int result;
+  api::ErrorGuard error_guard;
   do {
     const size_t page_size = view.length() - sent;
-    result = ::write(fd, begin, page_size);
+    result = ::write(fd, begin + sent, page_size);
     if (result > 0) {
       sent += result;
-      begin += result;
     }
-
-  } while (sent < view.length() && (result > 0));
+  } while ((sent < length) && (result > 0));
 }
 
 

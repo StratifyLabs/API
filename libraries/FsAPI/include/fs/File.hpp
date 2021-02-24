@@ -440,7 +440,7 @@ protected:
   int interface_write(const void *buf, int nbyte) const override;
   int interface_ioctl(int request, void *argument) const override;
 
-  int interface_fsync() const;
+  int interface_fsync() const override;
 
 private:
   int m_fd = -1;
