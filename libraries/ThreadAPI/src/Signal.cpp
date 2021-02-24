@@ -27,7 +27,7 @@ Signal &Signal::reset_handler() {
   API_RETURN_VALUE_IF_ERROR(*this);
   auto result = ::signal(m_signo, SIG_DFL);
   if (result == SIG_ERR) {
-    API_RETURN_VALUE_ASSIGN_ERROR(*this, "", errno);
+    API_RETURN_VALUE_ASSIGN_ERROR(*this, "signal result is SIG_ERR", errno);
   }
   return *this;
 }

@@ -56,7 +56,7 @@ int Dir::count() const {
   int count;
 
   if (!is_open()) {
-    API_RETURN_VALUE_ASSIGN_ERROR(-1, "", EBADF);
+    API_RETURN_VALUE_ASSIGN_ERROR(-1, "directory is not open", EBADF);
   }
 
 #if defined __link

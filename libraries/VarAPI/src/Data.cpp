@@ -39,7 +39,7 @@ Data &Data::resize(size_t s) {
   m_data.resize(s);
   if (m_data.size() < s) {
     // set memory error
-    API_RETURN_VALUE_ASSIGN_ERROR(*this, "Data::resize", ENOMEM);
+    API_RETURN_VALUE_ASSIGN_ERROR(*this, "error when resizing data", ENOMEM);
   }
   return *this;
 }
