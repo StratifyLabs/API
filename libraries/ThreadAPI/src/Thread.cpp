@@ -9,7 +9,7 @@ using namespace thread;
 
 Thread::Attributes::Attributes() {
 #if defined __win32
-	return;
+  return;
 #endif
   API_RETURN_IF_ERROR();
   API_SYSTEM_CALL("", pthread_attr_init(&m_pthread_attr));
@@ -20,13 +20,11 @@ Thread::Attributes::Attributes() {
   set_sched_priority(Sched::get_priority_min(Sched::Policy::other));
 }
 
-Thread::Attributes::~Attributes() {
-	pthread_attr_destroy(&m_pthread_attr);
-}
+Thread::Attributes::~Attributes() { pthread_attr_destroy(&m_pthread_attr); }
 
 Thread::Attributes &Thread::Attributes::set_stack_size(size_t value) {
 #if defined __win32
-	return *this;
+  return *this;
 #endif
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL("", pthread_attr_setstacksize(&m_pthread_attr, value));
@@ -42,48 +40,43 @@ int Thread::Attributes::get_stack_size() const {
 
 Thread::Attributes &Thread::Attributes::set_detach_state(DetachState value) {
 #if defined __win32
-	return *this;
+  return *this;
 #endif
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL(
-    "",
-    pthread_attr_setdetachstate(&m_pthread_attr, static_cast<int>(value)));
+  API_SYSTEM_CALL("", pthread_attr_setdetachstate(&m_pthread_attr,
+                                                  static_cast<int>(value)));
   return *this;
 }
 
 Thread::DetachState Thread::Attributes::get_detach_state() const {
   API_RETURN_VALUE_IF_ERROR(DetachState::detached);
   int detach_state = 0;
-  API_SYSTEM_CALL(
-    "",
-    pthread_attr_getdetachstate(&m_pthread_attr, &detach_state));
+  API_SYSTEM_CALL("",
+                  pthread_attr_getdetachstate(&m_pthread_attr, &detach_state));
   return static_cast<DetachState>(detach_state);
 }
 
 Thread::Attributes &Thread::Attributes::set_inherit_sched(IsInherit value) {
 #if defined __win32
-	return *this;
+  return *this;
 #endif
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL(
-    "",
-    pthread_attr_setinheritsched(&m_pthread_attr, static_cast<int>(value)));
+  API_SYSTEM_CALL("", pthread_attr_setinheritsched(&m_pthread_attr,
+                                                   static_cast<int>(value)));
   return *this;
 }
 Thread::IsInherit Thread::Attributes::get_inherit_sched() const {
   API_RETURN_VALUE_IF_ERROR(IsInherit::yes);
   int inherit_sched = 0;
-  API_SYSTEM_CALL(
-    "",
-    pthread_attr_getdetachstate(&m_pthread_attr, &inherit_sched));
+  API_SYSTEM_CALL("",
+                  pthread_attr_getdetachstate(&m_pthread_attr, &inherit_sched));
   return static_cast<IsInherit>(inherit_sched);
 }
 
 Thread::Attributes &Thread::Attributes::set_scope(ContentionScope value) {
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL(
-    "",
-    pthread_attr_setscope(&m_pthread_attr, static_cast<int>(value)));
+      "", pthread_attr_setscope(&m_pthread_attr, static_cast<int>(value)));
   return *this;
 }
 
@@ -96,7 +89,7 @@ Thread::ContentionScope Thread::Attributes::get_scope() const {
 
 Thread::Attributes &Thread::Attributes::set_sched_priority(int priority) {
 #if defined __win32
-	return *this;
+  return *this;
 #endif
   API_RETURN_VALUE_IF_ERROR(*this);
   struct sched_param param = {0};
@@ -107,12 +100,11 @@ Thread::Attributes &Thread::Attributes::set_sched_priority(int priority) {
 
 Thread::Attributes &Thread::Attributes::set_sched_policy(Sched::Policy value) {
 #if defined __win32
-	return *this;
+  return *this;
 #endif
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL(
-    "",
-    pthread_attr_setschedpolicy(&m_pthread_attr, static_cast<int>(value)));
+  API_SYSTEM_CALL("", pthread_attr_setschedpolicy(&m_pthread_attr,
+                                                  static_cast<int>(value)));
   return *this;
 }
 
@@ -185,20 +177,17 @@ Thread::Thread(const Construct &options) {
     m_state = attributes.get_detach_state() == DetachState::joinable
                   ? State::joinable
                   : State::detached;
-    while (m_function != nullptr) {
-      chrono::wait(1_milliseconds);
-    }
   }
 }
 
 Thread::~Thread() {
   api::ErrorGuard error_guard;
-  if (is_joinable() && (m_state != State::completed)) {
+  if (is_joinable()) {
     API_RESET_ERROR();
     cancel();
     API_RESET_ERROR();
     join();
-  } else {
+  } else if( m_state == State::detached ){
     // for detached threads, the function must be allowed to start before
     // destroying the object
     while (m_function != nullptr) {
@@ -212,8 +201,7 @@ Thread &Thread::set_sched_parameters(Sched::Policy policy, int priority) {
   struct sched_param param = {0};
   param.sched_priority = priority;
   API_SYSTEM_CALL(
-    "",
-    pthread_setschedparam(id(), static_cast<int>(policy), &param));
+      "", pthread_setschedparam(id(), static_cast<int>(policy), &param));
   return *this;
 }
 
@@ -235,8 +223,8 @@ int Thread::get_sched_parameters(int &policy, int &priority) const {
   API_RETURN_VALUE_IF_ERROR(-1);
   API_ASSERT(is_valid());
   struct sched_param param = {0};
-  int result
-    = API_SYSTEM_CALL("", pthread_getschedparam(id(), &policy, &param));
+  int result =
+      API_SYSTEM_CALL("", pthread_getschedparam(id(), &policy, &param));
   priority = param.sched_priority;
   return result;
 }
@@ -264,18 +252,16 @@ bool Thread::is_running() const {
 Thread &Thread::set_cancel_type(CancelType cancel_type) {
   API_RETURN_VALUE_IF_ERROR(*this);
   int old = 0;
-  API_SYSTEM_CALL(
-    "",
-    pthread_setcanceltype(static_cast<int>(cancel_type), &old));
+  API_SYSTEM_CALL("",
+                  pthread_setcanceltype(static_cast<int>(cancel_type), &old));
   return *this;
 }
 
 const Thread &Thread::set_cancel_state(CancelState cancel_state) const {
   API_RETURN_VALUE_IF_ERROR(*this);
   int old = 0;
-  API_SYSTEM_CALL(
-    "",
-    pthread_setcancelstate(static_cast<int>(cancel_state), &old));
+  API_SYSTEM_CALL("",
+                  pthread_setcancelstate(static_cast<int>(cancel_state), &old));
   return *this;
 }
 

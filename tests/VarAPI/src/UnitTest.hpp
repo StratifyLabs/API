@@ -131,21 +131,18 @@ public:
     View view_buffer(buffer);
     TEST_ASSERT(view_buffer.size() == sizeof(buffer));
     TEST_ASSERT(view_buffer.to_char() == buffer);
-    TEST_ASSERT(view_buffer.is_read_only() == false);
 
     const char test[] = "test1234567890\n";
     View view_test(test);
     printer().key("view test size", NumberString(view_test.size()).string_view());
     printer().key("test size", NumberString(sizeof(test)).string_view());
     TEST_ASSERT(view_test.size() == sizeof(test) - 1);
-    TEST_ASSERT(view_test.to_char() == nullptr);
+    TEST_ASSERT(view_test.to_char() == test);
     TEST_ASSERT(view_test.to_const_char() == test);
-    TEST_ASSERT(view_test.is_read_only() == true);
 
     u32 value_u32 = 0x12345678;
     TEST_ASSERT(View(value_u32).size() == sizeof(value_u32));
     TEST_ASSERT(View(value_u32).to<u32>() == &value_u32);
-    TEST_ASSERT(View(value_u32).is_read_only() == false);
 
     printer().key("value", View(value_u32).to_string());
     TEST_ASSERT(View(value_u32).to_string() == "78563412");
@@ -194,7 +191,6 @@ public:
       u32 buffer[4];
 
       TEST_ASSERT(View(value_list).size() == value_list.count() * sizeof(u32));
-      TEST_ASSERT(View(value_list).is_read_only());
       TEST_ASSERT(View(buffer).copy(View(value_list)).is_success());
       TEST_ASSERT(View(buffer) == View(value_list));
 

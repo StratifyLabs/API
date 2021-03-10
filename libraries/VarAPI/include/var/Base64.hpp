@@ -13,12 +13,21 @@ public:
   API_NO_DISCARD var::String encode(var::View input) const;
   API_NO_DISCARD var::Data decode(var::StringView input) const;
 
+  const Base64& encode(var::View input, var::String & output) const;
+  const Base64& decode(var::StringView input, var::Data & output) const;
+
+  static constexpr size_t get_decoded_size(size_t nbyte) {
+    // adds three bytes to padding, actual is returned by decode method
+    return (nbyte * 3 + 3) / 4;
+  }
+
+  static constexpr size_t get_encoded_size(size_t nbyte) {
+    return ((((nbyte * 4 + 2) / 3) + 3) / 4) * 4;
+  }
+
 private:
   friend class Base64Encoder;
   friend class Base64Decoder;
-
-  static size_t get_decoded_size(size_t nbyte);
-  static size_t get_encoded_size(size_t nbyte);
 
   static int encode(char *dest, const void *src, int nbyte);
   static int decode(void *dest, const char *src, int nbyte);

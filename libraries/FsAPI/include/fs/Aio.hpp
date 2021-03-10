@@ -1,7 +1,7 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#ifndef SAPI_SYS_AIO_HPP_
-#define SAPI_SYS_AIO_HPP_
+#ifndef FSAPI_FS_AIO_HPP
+#define FSAPI_FS_AIO_HPP
 
 #if !defined __link
 
@@ -124,7 +124,7 @@ public:
    * @param nbytes The number of bytes to transfer
    *
    */
-  Aio &refer_to(const var::View &item) {
+  Aio &refer_to(var::View item) {
     m_aio_var.aio_buf = (volatile void *)item.to_void();
     m_aio_var.aio_nbytes = item.size();
     return *this;
@@ -202,4 +202,4 @@ private:
 
 #endif
 
-#endif /* SAPI_SYS_AIO_HPP_ */
+#endif /* FSAPI_FS_AIO_HPP */

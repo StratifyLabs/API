@@ -17,8 +17,7 @@ public:
   ViewFile &operator=(ViewFile &&view_file) = default;
 
   ViewFile(var::View view)
-    : m_open_flags(
-      view.is_read_only() ? OpenMode::read_only() : OpenMode::read_write()) {
+    : m_open_flags(OpenMode::read_write()) {
     m_view = view;
   }
 

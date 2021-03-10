@@ -17,7 +17,7 @@ int Base64Encoder::transform(const Transform &options) const {
   }
 
   return Base64::encode(
-    options.output().to_char(),
+      View(options.output()).to_char(),
     options.input().to_const_void(),
     options.input().size());
 }
@@ -29,9 +29,9 @@ int Base64Decoder::transform(const Transform &options) const {
 
   const size_t decoded_size = Base64::get_decoded_size(options.input().size());
 
-  return decoded_size
-         - Base64::decode(
-           options.output().to_void(),
+  return decoded_size -
+         Base64::decode(
+               View(options.output()).to_void(),
            options.input().to_const_char(),
            options.input().size());
 }
@@ -52,6 +52,22 @@ Data Base64::decode(StringView input) const {
   len -= decode(result.data(), input.data(), input.length());
   result.resize(len);
   return result;
+}
+
+const Base64& Base64::encode(var::View input, var::String & output) const {
+  API_RETURN_VALUE_IF_ERROR(*this);
+  output.resize(get_encoded_size(input.size()));
+  encode(output.to_char(), input.to_const_void(), input.size());
+  return *this;
+}
+
+const Base64& Base64::decode(var::StringView input, var::Data & output) const {
+  API_RETURN_VALUE_IF_ERROR(*this);
+  size_t len = get_decoded_size(input.length());
+  output.resize(len);
+  len -= decode(output.data(), input.data(), input.length());
+  output.resize(len);
+  return *this;
 }
 
 int Base64::encode(char *dest, const void *src, int nbyte) {
@@ -107,9 +123,6 @@ int Base64::encode(char *dest, const void *src, int nbyte) {
   return strlen(dest);
 }
 
-size_t Base64::get_encoded_size(size_t nbyte) {
-  return ((((nbyte * 4 + 2) / 3) + 3) / 4) * 4;
-}
 
 int Base64::decode(void *dest, const char *src, int nbyte) {
   char *data = (char *)dest;
@@ -140,10 +153,7 @@ int Base64::decode(void *dest, const char *src, int nbyte) {
   return padding;
 }
 
-size_t Base64::get_decoded_size(size_t nbyte) {
-  // adds three bytes to padding, actual is returned by decode method
-  return (nbyte * 3 + 3) / 4;
-}
+
 
 // This is a helper function to convert a six-bit value to base64
 char Base64::encode_six(u8 six_bit_value) {

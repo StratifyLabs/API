@@ -60,7 +60,7 @@ int ViewFile::interface_write(const void *buf, int nbyte) const {
     return -1;
   }
 
-  memcpy(item().to_u8() + m_location, buf, size_ready);
+  memcpy(var::View(item()).to_u8() + m_location, buf, size_ready);
 
   m_location += size_ready;
   return size_ready;
