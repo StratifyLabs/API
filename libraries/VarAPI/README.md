@@ -157,7 +157,7 @@ The `String` class (a wrapper for std::string) should only be used when the stri
 
 ```c++
 
-#include <var.hpp
+#include <var.hpp>
 
 //PathString used
 printf("%s\n", ("path" & "string").cstring());
