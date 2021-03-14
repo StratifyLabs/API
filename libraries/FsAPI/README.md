@@ -30,6 +30,23 @@ ViewFile(View(my_header)).write(File("header.bin").seek(location_of_header));
 File("header.bin").seek(location_of_header).read(View(header));
 ```
 
+You can also perform file operations using a [View](../VarAPI/README.md) object.
 
+```c++
+#include <fs.hpp>
+#include <var.hpp>
+
+File file(File::IsOverwrite::yes, "myfile.txt");
+
+char buffer[32];
+
+file.write(View(buffer)); //explicit View from fundamental type
+file.write("Hello World\n"); //implicit View from const char *
+file.seek(0).read(View(buffer)); //read the contents of buffer back
+
+if( file.is_error() ){
+  //something didn't work
+}
+```
 
 

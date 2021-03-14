@@ -111,14 +111,14 @@ public:
   }
 
   View &pop_back(size_t pop_size = 1) {
-    if (size() > pop_size) {
+    if (size() >= pop_size) {
       m_size = size() - pop_size;
     }
     return *this;
   }
 
   View &pop_front(size_t pop_size = 1) {
-    if (size() > pop_size) {
+    if (size() >= pop_size) {
       m_size = (size() - pop_size);
       m_data = (static_cast<u8 *>(m_data)) + pop_size;
     }
