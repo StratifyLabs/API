@@ -215,7 +215,7 @@ public:
       TEST_ASSERT(FS().directory_exists(HOME_FOLDER "/tmp2"));
       PathList list = FS().read_directory(
           HOME_FOLDER "/tmp2", FS::IsRecursive::yes,
-          [](StringView entry) -> bool {
+          [](StringView entry, void * context) -> bool {
             return entry.find("filesystem") != StringView::npos;
           });
       printer().object("files", list);

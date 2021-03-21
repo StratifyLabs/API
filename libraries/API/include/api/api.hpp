@@ -239,6 +239,8 @@ private:
   bool m_is_guarded;
 };
 
+using ErrorContext = ErrorGuard;
+
 class ThreadExecutionContext {
 public:
   ~ThreadExecutionContext() { ExecutionContext::free_context(); }

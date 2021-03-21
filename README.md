@@ -9,7 +9,7 @@ API is a collection of cross-platform C++ libraries for
 - Windows
 - MacOS
 - Linux
-- Stratify OS (embedded)
+- [Stratify OS](https://github.com/StratifyLabs/StratifyOS) (embedded)
 
 including
 
@@ -17,7 +17,7 @@ including
 - [ChronoAPI](libraries/ChronoAPI): time and timing
 - [FsAPI](libraries/FsAPI): File systems
 - [PrinterAPI](libraries/PrinterAPI): printing variables
-- SysAPI: misc system functions
+- [SysAPI](libraries/SysAPI): command line interface, system name, semantic versions
 - [ThreadAPI](libraries/ThreadAPI): thread management
 - [VarAPI](libraries/VarAPI): data and strings
 
@@ -25,11 +25,11 @@ including
 
 The API framework is a hard to mis-use, non-onerous C++ API acheived using the following principles
 
-- Thread Local Error Context
-- Method Chaining
-- Filesystem Inspired Abstraction
-- Strong Arguments
-- RAII for Resource Management
+- [Thread Local Error Context](#thread-local-error-context)
+- [Method Chaining](#method-chaining)
+- [Filesystem Inspired Abstraction](#filesystem-inspired-abstraction)
+- [Strong Arguments](#strong-arguments)
+- [RAII for Resource Management](#use-raii-for-resource-management)
 
 ### Thread Local Error Context
 

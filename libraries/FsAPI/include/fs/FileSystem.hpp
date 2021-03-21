@@ -44,7 +44,8 @@ public:
   PathList
   read_directory(const var::StringView path,
                  IsRecursive is_recursive = IsRecursive::no,
-                 bool (*exclude)(const var::StringView) = nullptr) const;
+                 bool (*exclude)(const var::StringView, void * context) = nullptr,
+                 void * context = nullptr) const;
 
   class Rename {
     API_AC(Rename, var::StringView, source);
