@@ -39,7 +39,16 @@ public:
     Attributes &set_stack_size(size_t value);
     int get_stack_size() const;
 
+
     Attributes &set_detach_state(DetachState value);
+    Attributes& set_joinable(){
+      return set_detach_state(DetachState::joinable);
+    }
+
+    Attributes& set_detached(){
+      return set_detach_state(DetachState::detached);
+    }
+
     DetachState get_detach_state() const;
 
     Attributes &set_inherit_sched(IsInherit value);

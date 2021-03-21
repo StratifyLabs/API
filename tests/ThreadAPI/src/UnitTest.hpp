@@ -41,24 +41,95 @@ public:
   UnitTest(var::StringView name) : test::Test(name) {}
 
   bool execute_class_api_case() {
-
-    if (!thread_api_case()) {
-      return false;
-    }
-
-    if (!mutex_api_case()) {
-      return false;
-    }
+    TEST_ASSERT_RESULT(thread_api_case());
+    TEST_ASSERT_RESULT(mutex_api_case());
+    TEST_ASSERT_RESULT(cond_api_case());
 
 #if !defined __macosx && !defined __win32
-    if (!sem_api_case()) {
-      return false;
-    }
+    TEST_ASSERT_RESULT(sem_api_case());
 #endif
 
-    if (!signal_api_case()) {
-      return false;
+    TEST_ASSERT_RESULT(signal_api_case());
+    TEST_ASSERT_RESULT(sched_api_case());
+
+    return true;
+  }
+
+  bool cond_api_case() {
+    printer::Printer::Object po(printer(), "cond_api_case()");
+
+    class ConditionContext {
+    public:
+      ConditionContext() : cond(mutex) {}
+      Cond cond;
+      Mutex mutex;
+      volatile bool ready = false;
+    };
+
+    auto set_ready = [](ConditionContext & context) -> void * {
+      Mutex::Guard mg(context.mutex);
+      context.ready = true;
+      context.cond.signal();
+      return nullptr;
+    };
+
+    auto wait_for_ready = [](void *args) -> void * {
+      ConditionContext *context = reinterpret_cast<ConditionContext *>(args);
+      Mutex::Guard mg(context->mutex);
+      while( context->ready == false ){
+        context->cond.wait();
+      }
+      return nullptr;
+    };
+
+    TEST_ASSERT(is_success());
+
+    {
+      ConditionContext context;
+      Thread t = Thread(Thread::Attributes().set_joinable(),
+                        Thread::Construct().set_argument(&context).set_function(
+                            wait_for_ready))
+                     .move();
+      printer().key("wait", "ready");
+      set_ready(context);
+      printer().key("cond", "signal");
+      context.cond.signal();
+      t.join();
     }
+    TEST_ASSERT(is_success());
+
+    {
+      ConditionContext context;
+      Thread t = Thread(Thread::Attributes().set_joinable(),
+                        Thread::Construct().set_argument(&context).set_function(
+                            wait_for_ready))
+                     .move();
+      printer().key("set", "ready");
+      set_ready(context);
+      printer().key("cond", "broadcast");
+      context.cond.broadcast();
+      t.join();
+    }
+    TEST_ASSERT(is_success());
+
+    auto wait_timed_for_condition = [](void *args) -> void * {
+      ConditionContext *context = reinterpret_cast<ConditionContext *>(args);
+      context->cond.lock();
+      context->ready = true;
+      context->cond.wait_timed(ClockTime(250_milliseconds));
+      return nullptr;
+    };
+
+    {
+      ConditionContext context;
+      Thread t = Thread(Thread::Attributes().set_joinable(),
+                        Thread::Construct().set_argument(&context).set_function(
+                            wait_timed_for_condition))
+                     .move();
+      printer().key("wait", "timed");
+      t.join();
+    }
+    TEST_ASSERT(is_success());
 
     return true;
   }
