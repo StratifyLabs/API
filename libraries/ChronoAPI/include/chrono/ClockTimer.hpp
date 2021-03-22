@@ -6,11 +6,21 @@
 #include "ClockTime.hpp"
 #include "MicroTime.hpp"
 
+namespace printer {
+class Printer;
+}
+
 namespace chrono {
 
 class ClockTimer : public api::ExecutionContext {
 public:
+
+  enum class IsRunning {
+    no, yes
+  };
+
   ClockTimer();
+  ClockTimer(IsRunning is_running);
 
   // start if not started
   ClockTimer &start();
@@ -94,6 +104,17 @@ inline bool operator<=(const MicroTime &lhs, const ClockTimer &rhs) {
 inline bool operator>=(const MicroTime &lhs, const ClockTimer &rhs) {
   return lhs >= rhs.micro_time();
 }
+
+class PerformanceContext {
+public:
+  PerformanceContext(const var::StringView name, const ClockTimer &timer, printer::Printer &printer);
+  ~PerformanceContext();
+
+private:
+  const ClockTimer &m_timer;
+  printer::Printer &m_printer;
+  u32 m_start;
+};
 
 } // namespace chrono
 
