@@ -240,6 +240,7 @@ private:
 };
 
 using ErrorContext = ErrorGuard;
+using ErrorScope = ErrorGuard;
 
 class ThreadExecutionContext {
 public:

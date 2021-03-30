@@ -121,65 +121,14 @@ public:
     Mutex *m_mutex;
   };
 
+  using Scope = Guard;
+
 private:
   friend class Cond;
   pthread_mutex_t m_mutex;
   Mutex &set_attributes(const Attributes &attr);
 };
 
-class SyncMutex {
-public:
-  SyncMutex(const chrono::MicroTime period = 10_milliseconds)
-      : m_period(period) {}
-
-  // blocks until unlock is called in another thread
-  // unblocks if unlock() already waiting
-  void lock_synced() {
-    API_ASSERT(m_is_here == false);
-    if (m_is_here == false) {
-      m_is_here = true;
-      Mutex::Guard mg0(m_here);
-      wait_until_locked(m_there);
-      m_is_here = false;
-    }
-  }
-
-  // unblocks lock() in another thread
-  // OR blocks until lock() called in another thread
-  void unlock_synced() {
-    API_ASSERT(m_is_there == false);
-    if (m_is_there == false) {
-      m_is_there = true;
-      wait_until_locked(m_here);
-      Mutex::Guard mg1(m_there);
-      { Mutex::Guard mg0(m_here); }
-      m_is_there = false;
-    }
-  }
-
-  // returns true if lock_synced() is waiting for unlock_synced()
-  bool try_lock_synced() {
-    if (m_here.try_lock() == true) {
-      m_here.unlock();
-      return false;
-    }
-    return true;
-  }
-
-private:
-  Mutex m_here;
-  Mutex m_there;
-  bool m_is_here = false;
-  bool m_is_there = false;
-  chrono::MicroTime m_period = 10_milliseconds;
-
-  void wait_until_locked(Mutex &mutex) {
-    while (mutex.try_lock() == true) {
-      mutex.unlock();
-      chrono::wait(m_period);
-    }
-  }
-};
 
 } // namespace thread
 
