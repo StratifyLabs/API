@@ -1,10 +1,10 @@
 # FsAPI
 
-The `FsAPI` defines a C++ abstraction layer for accessing the filesystem.
+The `FsAPI` defines a C++ abstraction layer for accessing the filesystem as well as other file-like constructs.
 
 ## The `FileObject`
 
-The `FileObject` is one of the most important parts of the `API` framework. It defines a pure virtual class for accessing files.
+The `FileObject` is one of the most important parts of the `API` framework. It defines a pure virtual class for accessing files and file-like constructs.
 
 - The [File](include/fs/File.hpp) class provides access to a standard file.
 - The [DataFile](include/fs/DataFile.hpp) class creates a file like storage object on the heap

@@ -198,7 +198,7 @@ printf("my file is %s\n", my_file.data().add_null_terminator());
 //lock/unlock
 Mutex mutex;
 {
-  MutexGuard mutex_guard(mutex); //lock mutex
+  Mutex::Scope mutex_scope(mutex); //lock mutex
   File f("file.txt");
   printf("file size is %d\n", f.size());
 } // f is closed then mutex is unlocked

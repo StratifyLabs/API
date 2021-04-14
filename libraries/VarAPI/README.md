@@ -29,17 +29,16 @@ View(header).fill<u8>(0xaa);
 File("path.data").read(View(header));
 ```
 
-A `View` cannot be constructed from a class or any type where the size is not known at runtime. The following won't compile:
+A `View` cannot be constructed from a class or any type where the size is not known at compile-time. The following won't compile:
 
 ```c++
 #include <var.hpp>
 
 int my_function(int size){
-  char buffer[size];
+  File f;
   
   //can't compile this
-  View(buffer).fill(0);
-
+  View(f).fill(0);
 
   char buffer2[64];
   View buffer_view(buffer2); // this is OK

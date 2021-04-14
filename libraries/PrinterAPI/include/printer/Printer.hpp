@@ -187,6 +187,8 @@ public:
     Printer &m_printer;
   };
 
+  using FlagScope = FlagGuard;
+
   class LevelGuard {
   public:
     LevelGuard(Printer &printer)
@@ -198,6 +200,8 @@ public:
     Level m_level;
     Printer &m_printer;
   };
+
+  using LevelScope = LevelGuard;
 
   API_NO_DISCARD const api::ProgressCallback *progress_callback() const {
     return &m_progress_callback;

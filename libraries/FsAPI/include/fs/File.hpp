@@ -124,6 +124,7 @@ public:
     int m_location;
   };
 
+  using LocationScope = LocationGuard;
 
   FileObject &
   write(const FileObject &source_file, const Write &options = Write()) {
