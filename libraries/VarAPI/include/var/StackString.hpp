@@ -104,6 +104,20 @@ public:
     return static_cast<Derived &>(*this);
   }
 
+  Derived &pop_front(size_t count = 1){
+    const auto safe_count = count < capacity() ? count : capacity();
+    for (size_t i = safe_count; i < capacity(); i++) {
+      m_buffer[i-safe_count] = m_buffer[i];
+    }
+    return static_cast<Derived &>(*this);
+  }
+
+  Derived &pop_back(size_t count = 1){
+    const auto end = length() > count ? length() - count : 0;
+    m_buffer[end] = 0;
+    return static_cast<Derived &>(*this);
+  }
+
   class Replace {
     API_AF(Replace, char, old_character, 0);
     API_AF(Replace, char, new_character, 0);
