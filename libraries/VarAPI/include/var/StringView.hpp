@@ -31,7 +31,7 @@ class StringView {
 public:
   constexpr static size_t npos = std::string_view::npos;
 
-  enum class Base { octal = 8, decimal = 10, hexadecimal = 16 };
+  enum class Base { auto_ = 0, octal = 8, decimal = 10, hexadecimal = 16 };
 
   StringView() : m_string_view("") {}
   StringView(const char *value) : m_string_view(value) {}
@@ -187,6 +187,7 @@ public:
     return m_string_view <= a.m_string_view;
   }
 
+
   API_NO_DISCARD long to_long(Base base = Base::decimal) const;
   API_NO_DISCARD float to_float() const;
   API_NO_DISCARD unsigned long
@@ -203,6 +204,9 @@ private:
   std::string_view m_string_view;
 
   StringView(const std::string_view string_view) : m_string_view(string_view) {}
+
+  Base get_base(Base input) const;
+
 };
 
 inline bool operator==(const char *lhs, StringView rhs) { return rhs == lhs; }

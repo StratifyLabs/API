@@ -50,14 +50,34 @@ float StringView::to_float() const {
   return ::atoff(NumberString(*this).cstring());
 }
 
+StringView::Base StringView::get_base(Base input) const {
+  if( input != Base::auto_ ){
+    return input;
+  }
+
+  if( m_string_view.find("0x") == 0 ){
+    return Base::hexadecimal;
+  }
+
+  if( m_string_view.find("0X") == 0 ){
+    return Base::hexadecimal;
+  }
+
+  if( m_string_view.find("0") == 0 ){
+    return Base::octal;
+  }
+
+  return Base::decimal;
+}
+
 long StringView::to_long(Base base) const {
   return ::strtol(NumberString(*this).cstring(), nullptr,
-                  static_cast<int>(base));
+                  static_cast<int>(get_base(base)));
 }
 
 unsigned long StringView::to_unsigned_long(Base base) const {
   return ::strtoul(NumberString(*this).cstring(), nullptr,
-                   static_cast<int>(base));
+                   static_cast<int>(get_base(base)));
 }
 
 int StringView::to_integer() const {
