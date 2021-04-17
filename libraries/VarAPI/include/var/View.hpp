@@ -33,7 +33,7 @@ public:
   View(StringView str) { set_view(str.data(), str.length()); }
   View(const String &str) { set_view(str.cstring(), str.length()); }
   View(String &str) { set_view(str.to_char(), str.length()); }
-  View(const void *buffer, size_t size) { set_view(buffer, size); }
+  View(const void *buffer, size_t size){ set_view(buffer, size); }
   View(void *buffer, size_t size) { set_view(buffer, size); }
 
   var::String to_string() const;
@@ -135,7 +135,7 @@ public:
 
   template <typename T> T *to() { return static_cast<T *>(data()); }
 
-  const char *to_const_char() const { return to< char>(); }
+  const char *to_const_char() const { return to<char>(); }
   char *to_char() { return to<char>(); }
 
   const void *to_const_void() const { return to<const void>(); }
@@ -180,9 +180,7 @@ public:
     return to<T>()[position];
   }
 
-  const char at_const_char(size_t position) const {
-    return at<const char>(position);
-  }
+  char at_const_char(size_t position) const { return at<const char>(position); }
   char &at_char(size_t position) { return at<char>(position); }
 
   u8 at_const_u8(size_t position) const { return at<const u8>(position); }
@@ -214,13 +212,18 @@ public:
   }
   float &at_float(size_t position) { return at<float>(position); }
 
-
   const void *data() const { return m_data; }
   void *data() { return m_data; }
 
 protected:
-  void set_view(void *buffer, size_t size);
-  void set_view(const void *buffer, size_t size);
+  void set_view(void *buffer, size_t size) {
+    m_data = buffer;
+    m_size = size;
+  }
+  void set_view(const void *buffer, size_t size) {
+    m_size = size;
+    m_data = const_cast<void *>(buffer);
+  }
 
 private:
   void *m_data = nullptr;

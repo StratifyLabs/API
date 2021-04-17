@@ -116,6 +116,8 @@ private:
   u32 m_start;
 };
 
+using PerformanceScope = PerformanceContext;
+
 } // namespace chrono
 
 #endif // CHRONO_API_CHRONO_TIMER_HPP_

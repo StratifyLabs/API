@@ -9,6 +9,12 @@
 #include "test/Test.hpp"
 #include "var.hpp"
 
+#if defined __link
+#define BIG_BUFFER_SIZE 10*1024*1024
+#else
+#define BIG_BUFFER_SIZE 1024
+#endif
+
 using S = var::String;
 using SV = var::StringView;
 using D = var::Data;
@@ -22,37 +28,15 @@ public:
   UnitTest(var::StringView name) : test::Test(name) {}
 
   bool execute_class_api_case() {
-    if (!string_api_case()) {
-      return false;
-    }
 
-    if (!string_view_api_case()) {
-      return false;
-    }
-
-    if (!stack_string_api_case()) {
-      return false;
-    }
-
-    if (!base64_api_case()) {
-      return false;
-    }
-
-    if (!tokenizer_api_case()) {
-      return false;
-    }
-
-    if (!view_api_case()) {
-      return false;
-    }
-
-    if (!data_api_case()) {
-      return false;
-    }
-
-    if (!vector_api_case()) {
-      return false;
-    }
+    TEST_ASSERT_RESULT(string_api_case());
+    TEST_ASSERT_RESULT(string_view_api_case());
+    TEST_ASSERT_RESULT(stack_string_api_case());
+    TEST_ASSERT_RESULT(base64_api_case());
+    TEST_ASSERT_RESULT(tokenizer_api_case());
+    TEST_ASSERT_RESULT(view_api_case());
+    TEST_ASSERT_RESULT(data_api_case());
+    TEST_ASSERT_RESULT(vector_api_case());
 
     const StringView sv0 = "this is ok";
     const StringView sv1 = PathString("this is not ok");
@@ -183,6 +167,55 @@ public:
       TEST_ASSERT(first == 0x11223344);
       View(third).copy(View(first));
       TEST_ASSERT(third == 0x3344);
+
+      char source[BIG_BUFFER_SIZE];
+      char dest[BIG_BUFFER_SIZE];
+      TEST_ASSERT(View(source).size() == sizeof(source));
+      TEST_ASSERT(View(source).size() == sizeof(source));
+      View(source).fill(0);
+      View(dest).fill<u32>(0xaaaa5555);
+      {
+        ClockTimer ct(ClockTimer::IsRunning::yes);
+        PerformanceScope ps("memcpyCharBuffer", ct, printer());
+        memcpy(dest, source, sizeof(source));
+      }
+      TEST_ASSERT(View(source) == View(dest));
+      View(dest).fill<u32>(0xaaaa5555);
+      TEST_ASSERT(View(source) != View(dest));
+      {
+        ClockTimer ct(ClockTimer::IsRunning::yes);
+        PerformanceScope ps("viewCopy", ct, printer());
+        View(dest).copy(View(source));
+      }
+      {
+        ClockTimer ct(ClockTimer::IsRunning::yes);
+        PerformanceScope ps("viewCompare", ct, printer());
+        TEST_ASSERT(View(source) == View(dest));
+      }
+      {
+        ClockTimer ct(ClockTimer::IsRunning::yes);
+        PerformanceScope ps("fill8", ct, printer());
+        View(dest).fill<u8>(0x00);
+      }
+      TEST_ASSERT(View(source) == View(dest));
+      {
+        ClockTimer ct(ClockTimer::IsRunning::yes);
+        PerformanceScope ps("fill16", ct, printer());
+        View(dest).fill<u16>(0x00);
+      }
+      TEST_ASSERT(View(source) == View(dest));
+      {
+        ClockTimer ct(ClockTimer::IsRunning::yes);
+        PerformanceScope ps("fill32", ct, printer());
+        View(dest).fill<u32>(0x00);
+      }
+      TEST_ASSERT(View(source) == View(dest));
+      {
+        ClockTimer ct(ClockTimer::IsRunning::yes);
+        PerformanceScope ps("fill64", ct, printer());
+        View(dest).fill<u64>(0x00);
+      }
+      TEST_ASSERT(View(source) == View(dest));
     }
 
     {
@@ -544,6 +577,12 @@ public:
       }
 
       TEST_EXPECT(sv.to_long() == 0);
+
+      TEST_EXPECT(StringView("0x08000000").to_unsigned_long(SV::Base::auto_) ==
+                  0x08000000);
+      TEST_EXPECT(StringView("8000000").to_unsigned_long(SV::Base::auto_) ==
+                  8000000);
+      TEST_EXPECT(StringView("0777").to_unsigned_long(SV::Base::auto_) == 0777);
 
       TEST_EXPECT(sv.pop_front(4) == "ing");
     }

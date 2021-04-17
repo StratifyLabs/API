@@ -26,15 +26,6 @@ const int View::m_zero_value MCU_ALIGN(4) = 0;
 // this value corresponds to the malloc chunk size used in Stratify OS
 // this may be something that could be determined through a system call
 
-void View::set_view(void * buffer, size_t size) {
-  m_size = size;
-  m_data = buffer;
-}
-
-void View::set_view(const void* buffer, size_t size){
-  m_size = size;
-  m_data = const_cast<void*>(buffer);
-}
 
 View::View(const Data &data) {
   set_view(data.data(), data.size());
@@ -80,12 +71,8 @@ View &View::swap_byte_order(SwapBy swap) {
 }
 
 View &View::copy(const View &source) {
-
-  // bytes to copy is lowests of source, options and this objects size -
-  // destination position
   const size_t bytes_to_copy = size() < source.size() ? size() : source.size();
-  memcpy(to_char(), source.to_const_void(), bytes_to_copy);
-
+  memcpy(data(), source.to_const_void(), bytes_to_copy);
   return *this;
 }
 
