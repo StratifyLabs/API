@@ -273,7 +273,7 @@ void Printer::clear_color_code() {
 }
 
 Printer::ColorCode Printer::color_code(const var::StringView color) {
-  var::String color_upper(color);
+  var::IdString color_upper(color);
   color_upper.to_upper();
   if (color_upper == "BLACK") {
     return ColorCode::black;
@@ -618,8 +618,8 @@ Printer &Printer::trace(const char *function, int line,
                         var::StringView message) {
 
   if (verbose_level() == Level::trace) {
-    const var::String s = var::String().format(
-        ">> trace %s:%d %s\n", function, line, var::String(message).cstring());
+    const auto s = var::GeneralString().format(
+        ">> trace %s:%d %s\n", function, line, var::GeneralString(message).cstring());
     interface_print_final(s);
   }
   return *this;

@@ -43,9 +43,9 @@ public:
   DirObject(DirObject &&dir) = default;
   DirObject &operator=(DirObject &&dir) = default;
 
-  static const var::String filter_hidden(const var::String &entry) {
-    if (!entry.is_empty() && entry.front() == '.') {
-      return var::String();
+  static const var::PathString filter_hidden(const var::PathString &entry) {
+    if (!entry.is_empty() && entry.string_view().front() == '.') {
+      return var::PathString();
     }
     return entry;
   }

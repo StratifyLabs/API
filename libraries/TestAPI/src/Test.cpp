@@ -21,7 +21,7 @@ u32 Test::m_final_duration_microseconds = 0;
 
 Test::Test(var::StringView name) {
   printer().open_object(name);
-  m_name = String(name);
+  m_name = name;
   m_test_result = true;
   m_test_duration_microseconds = 0;
 }
@@ -162,7 +162,7 @@ Test::ExecuteFlags Test::parse_execution_flags(const sys::Cli &cli) {
 
 u32 Test::parse_test(const sys::Cli &cli, var::StringView name, u32 test_flag) {
 
-  const var::String help = "Execute the " + name + " test suite";
+  const var::GeneralString help = "Execute the " | name | " test suite";
   if (cli.get_option(name, help) == "true") {
     return test_flag;
   }

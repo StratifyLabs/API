@@ -187,7 +187,7 @@ public:
 #if !defined __win32
       TEST_EXPECT(d.seek(0).is_success());
       TEST_ASSERT(d.rewind().is_success());
-      // const var::String entry = d.get_entry();
+      // const auto entry = d.get_entry();
 #if defined __link
       // TEST_ASSERT(d.get_entry() == "tmp/.");
 #endif
@@ -246,6 +246,7 @@ public:
 
   bool file_system_api_case() {
     Printer::Object po(printer(), __FUNCTION__);
+    API_PRINTF_TRACE_LINE();
 
     {
       printer::Printer::Object po(printer(), "create/remove directories");

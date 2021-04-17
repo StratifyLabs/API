@@ -3,7 +3,7 @@
 #include <string>
 
 #include "sys/System.hpp"
-#include "var/String.hpp"
+#include "var/StackString.hpp"
 
 using namespace sys;
 
@@ -85,9 +85,8 @@ bool System::is_processor_arm64() {
 
 var::StringView System::user_data_path() {
 #if defined __link
-  static var::String result;
-  result.clear();
-  var::String path;
+  static var::PathString result;
+  var::PathString path;
   if (is_windows()) {
     path = getenv("LocalAppData");
     result = path;
@@ -96,12 +95,12 @@ var::StringView System::user_data_path() {
   if (is_macosx()) {
     // read env home variable
     path = getenv("HOME");
-    result = path + "/Library/Application Support";
+    result = path / "Library/Application Support";
   }
 
   if (is_linux()) {
     path = getenv("HOME");
-    result = path + "/.StratifyLabs";
+    result = path / ".StratifyLabs";
   }
 
   return result.cstring();

@@ -242,7 +242,7 @@ private:
   var::DataInfo m_test_data_info;
   chrono::ClockTimer m_case_timer;
   u32 m_test_duration_microseconds;
-  var::String m_name;
+  var::KeyString m_name;
   Test *m_parent = nullptr;
 
   static var::DataInfo m_final_data_info;

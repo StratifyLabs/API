@@ -3,8 +3,8 @@
 #if defined __StratifyOS__
 #include <fcntl.h>
 #include <sos/dev/rtc.h>
-#include <unistd.h>
 #include <sys/time.h>
+#include <unistd.h>
 #endif
 
 #include <ctime>
@@ -39,8 +39,8 @@ static char *strptime(const char *s, const char *f, struct tm *tm) {
 
 #endif
 
-printer::Printer &
-printer::operator<<(printer::Printer &printer, const chrono::DateTime &a) {
+printer::Printer &printer::operator<<(printer::Printer &printer,
+                                      const chrono::DateTime &a) {
   printer.key("ctime", var::NumberString(a.ctime()).string_view());
   return printer;
 }
@@ -79,7 +79,7 @@ DateTime DateTime::get_system_time() {
   return DateTime(t);
 }
 
-DateTime& DateTime::set_system_time(){
+DateTime &DateTime::set_system_time() {
 #if !defined __link
   struct timeval tp = {0};
   struct timezone tz = {0};
@@ -96,8 +96,8 @@ u32 DateTime::minute() const { return (m_ctime % 3600) / 60; }
 u32 DateTime::hour() const { return m_ctime / 3600 % 24; }
 
 Date::Date(const DateTime &date_time, const Construct &options) {
-  time_t ctime = date_time.ctime() + options.is_daylight_savings() * 3600
-                 + options.time_zone() * 3600;
+  time_t ctime = date_time.ctime() + options.is_daylight_savings() * 3600 +
+                 options.time_zone() * 3600;
 #if defined __win32
   struct tm *ptr;
   ptr = gmtime(&ctime);
@@ -109,14 +109,14 @@ Date::Date(const DateTime &date_time, const Construct &options) {
 #endif
 }
 
-var::String Date::to_string(var::StringView format) const {
-  API_RETURN_VALUE_IF_ERROR(var::String());
+var::GeneralString Date::to_string(var::StringView format) const {
+  API_RETURN_VALUE_IF_ERROR(var::GeneralString());
   char buffer[64] = {0};
-  size_t result
-    = strftime(buffer, 63, var::StackString64(format).cstring(), &m_tm);
+  size_t result =
+      strftime(buffer, 63, var::StackString64(format).cstring(), &m_tm);
   if (result == 0) {
     API_SYSTEM_CALL("format time", -1);
-    return var::String();
+    return var::GeneralString();
   }
-	return var::String(buffer);
+  return var::GeneralString(buffer);
 }

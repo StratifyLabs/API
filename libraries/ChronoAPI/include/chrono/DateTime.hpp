@@ -86,7 +86,7 @@ public:
     const DateTime &date_time,
     const Construct &options = Construct());
 
-  var::String to_string(var::StringView format = "%Y-%m-%d %H:%M:%S") const;
+  var::GeneralString to_string(var::StringView format = "%Y-%m-%d %H:%M:%S") const;
 
   int second() const { return m_tm.tm_sec; }
   int minute() const { return m_tm.tm_min; }

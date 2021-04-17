@@ -9,9 +9,9 @@
 #include "var/StackString.hpp"
 #include "var/String.hpp"
 
-printer::Printer &
-printer::operator<<(printer::Printer &printer, const fs::FileInfo &a) {
-  var::String type;
+printer::Printer &printer::operator<<(printer::Printer &printer,
+                                      const fs::FileInfo &a) {
+  var::IdString type;
   if (a.is_directory()) {
     type = "directory";
   }
@@ -34,17 +34,16 @@ printer::operator<<(printer::Printer &printer, const fs::FileInfo &a) {
   if (a.is_file()) {
     printer.key("size", var::NumberString(a.size()).string_view());
   }
-  printer.key(
-    "mode",
-    var::NumberString(a.permissions().permissions() & 0777, "0%o")
-      .string_view());
+  printer.key("mode",
+              var::NumberString(a.permissions().permissions() & 0777, "0%o")
+                  .string_view());
 
   return printer;
 }
 
 using namespace fs;
 
-FileInfo::FileInfo() { m_stat = {0}; }
+FileInfo::FileInfo() : m_stat{} {}
 
 bool FileInfo::is_directory() const {
   TypeFlags masked = static_cast<TypeFlags>(m_stat.st_mode);
@@ -75,14 +74,13 @@ bool FileInfo::is_character_device() const {
 }
 
 bool FileInfo::is_socket() const {
-  #if defined S_IFSOCK
+#if defined S_IFSOCK
   TypeFlags masked = static_cast<TypeFlags>(m_stat.st_mode);
   masked &= TypeFlags::mask;
   return masked == TypeFlags::file_socket;
-  #else
+#else
   return false;
-  #endif
+#endif
 }
 
 u32 FileInfo::size() const { return m_stat.st_size; }
-
