@@ -52,7 +52,6 @@ public:
   explicit Data(std::initializer_list<u8> il) : m_data(il) {}
   explicit Data(size_t size);
 
-  API_NO_DISCARD String to_string() const { return View(*this).to_string(); }
   API_NO_DISCARD static Data from_string(var::StringView value);
   API_NO_DISCARD static u32 minimum_capacity();
   API_NO_DISCARD static u32 block_size();

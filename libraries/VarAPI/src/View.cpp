@@ -76,10 +76,3 @@ View &View::copy(const View &source) {
   return *this;
 }
 
-var::String View::to_string() const {
-  var::String result = var::String().reserve(size() * 2);
-  for (u32 i = 0; i < size(); i++) {
-    result += NumberString(to_const_u8()[i], "%02X").string_view();
-  }
-  return result;
-}

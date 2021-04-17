@@ -115,6 +115,11 @@ public:
     return *this;
   }
 
+  String & append(const StringView &a){
+    m_string.append(a.m_string_view);
+    return *this;
+  }
+
   String &operator+=(std::initializer_list<char> il) {
     m_string += il;
     return *this;

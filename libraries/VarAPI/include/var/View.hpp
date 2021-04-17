@@ -12,6 +12,7 @@
 
 #include "Array.hpp"
 #include "String.hpp"
+#include "StackString.hpp"
 #include "Vector.hpp"
 
 #if !defined __link
@@ -36,7 +37,13 @@ public:
   View(const void *buffer, size_t size){ set_view(buffer, size); }
   View(void *buffer, size_t size) { set_view(buffer, size); }
 
-  var::String to_string() const;
+  template<class StringType> StringType to_string() const {
+    StringType result;
+    for (u32 i = 0; i < size(); i++) {
+      result.append(NumberString(to_const_u8()[i], "%02X").string_view());
+    }
+    return result;
+  }
 
   template <typename T> View(const Vector<T> &vector) {
     set_view(vector.data(), vector.count() * sizeof(T));

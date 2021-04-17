@@ -91,7 +91,8 @@ public:
 
     TEST_ASSERT(data_list.size() == View(value_list).size() * 2);
 
-    String s = data_list.to_string();
+    String s = data_list.view().to_string<String>();
+    GeneralString gs = data_list.view().to_string<GeneralString>();
 
     Data copy_list = Data::from_string(s);
 
@@ -129,8 +130,8 @@ public:
     TEST_ASSERT(View(value_u32).size() == sizeof(value_u32));
     TEST_ASSERT(View(value_u32).to<u32>() == &value_u32);
 
-    printer().key("value", View(value_u32).to_string());
-    TEST_ASSERT(View(value_u32).to_string() == "78563412");
+    printer().key("value", View(value_u32).to_string<String>());
+    TEST_ASSERT(View(value_u32).to_string<NumberString>() == "78563412");
 
     {
       struct test_struct {
