@@ -28,7 +28,7 @@ public:
   FileObject(FileObject &&a) = default;
   FileObject &operator=(FileObject &&a) = default;
 
-  virtual ~FileObject() {}
+  //virtual ~FileObject() {}
 
   API_NO_DISCARD size_t size() const;
   API_NO_DISCARD ssize_t size_signed() const {
@@ -101,9 +101,9 @@ public:
           m_size(static_cast<size_t>(-1)) {}
 
   private:
-    API_ACCESS_FUNDAMENTAL(Verify, size_t, size, static_cast<size_t>(-1));
     API_ACCESS_FUNDAMENTAL(Verify, u32, page_size,
                            FSAPI_LINK_DEFAULT_PAGE_SIZE);
+    API_ACCESS_FUNDAMENTAL(Verify, size_t, size, static_cast<size_t>(-1));
     API_ACCESS_FUNDAMENTAL(Verify, const api::ProgressCallback *,
                            progress_callback, nullptr);
   };

@@ -33,6 +33,16 @@ public:
 
   Cond(Mutex &mutex);
   Cond(Mutex &mutex, const Attributes &attr);
+  Cond(const Cond & Cond) = delete;
+  Cond& operator=(const Cond&mutex) = delete;
+  Cond(Cond && a) : m_mutex(a.m_mutex){
+    std::swap(m_cond, a.m_cond);
+  }
+  Cond& operator=(Cond&&a){
+    std::swap(m_cond, a.m_cond);
+    std::swap(m_mutex, a.m_mutex);
+    return *this;
+  }
   ~Cond();
 
   Cond &lock();

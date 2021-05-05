@@ -85,6 +85,16 @@ public:
 
   Mutex();
   explicit Mutex(const Attributes &attr);
+  Mutex(const Mutex & mutex) = delete;
+  Mutex& operator=(const Mutex&mutex) = delete;
+  Mutex(Mutex && a){
+    std::swap(m_mutex, a.m_mutex);
+  }
+  Mutex& operator=(Mutex&&a){
+    std::swap(m_mutex, a.m_mutex);
+    return *this;
+  }
+
   ~Mutex();
 
   Mutex &lock();
@@ -126,6 +136,7 @@ public:
 private:
   friend class Cond;
   pthread_mutex_t m_mutex;
+
   Mutex &set_attributes(const Attributes &attr);
 };
 

@@ -28,6 +28,15 @@ public:
 
 protected:
   SemaphoreObject() = default;
+  SemaphoreObject(const SemaphoreObject & a) = delete;
+  SemaphoreObject& operator=(const SemaphoreObject & a) = delete;
+  SemaphoreObject(SemaphoreObject && a){
+    std::swap(m_handle, a.m_handle);
+  }
+  SemaphoreObject& operator=(SemaphoreObject && a){
+    std::swap(m_handle, a.m_handle);
+    return *this;
+  }
 
 private:
   friend class UnnamedSemaphore;
@@ -59,6 +68,15 @@ public:
   enum class ProcessShared { no, yes };
 
   UnnamedSemaphore(ProcessShared process_shared, unsigned int value);
+  UnnamedSemaphore(const UnnamedSemaphore & a) = delete;
+  UnnamedSemaphore& operator=(const UnnamedSemaphore & a) = delete;
+  UnnamedSemaphore(UnnamedSemaphore && a){
+    std::swap(m_sem, a.m_sem);
+  }
+  UnnamedSemaphore& operator=(UnnamedSemaphore && a){
+    std::swap(m_sem, a.m_sem);
+    return *this;
+  }
   ~UnnamedSemaphore();
 
 private:
