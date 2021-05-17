@@ -96,9 +96,18 @@ public:
     return count;
   }
 
-  template <typename T> size_t count() const { return size() / sizeof(T); }
+  template <typename Type> size_t count() const { return size() / sizeof(Type); }
 
   enum class SwapBy { half_word, word };
+
+  template <typename Type> bool verify_zero_sum() const {
+    Type sum = 0;
+    const auto count = size() / sizeof(Type);
+    for(size_t i = 0; i < count; i++){
+      sum += to<Type>()[i];
+    }
+    return sum == 0;
+  }
 
   View &swap_byte_order(SwapBy order);
 

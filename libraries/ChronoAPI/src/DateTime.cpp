@@ -51,7 +51,7 @@ using namespace chrono;
 DateTime::DateTime() { m_ctime = 0; }
 
 DateTime::DateTime(const Construct &options) {
-  struct tm tm = {0};
+  struct tm tm{};
   if (strptime(var::StackString64(options.time()).cstring(),
                var::StackString64(options.format()).cstring(),
                &tm) != nullptr) {
@@ -81,10 +81,10 @@ DateTime DateTime::get_system_time() {
 
 DateTime &DateTime::set_system_time() {
 #if !defined __link
-  struct timeval tp = {0};
-  struct timezone tz = {0};
+  struct timeval tp{};
+  struct timezone tz{};
   tp.tv_sec = m_ctime;
-  //_settimeofday(&tp, &tz);
+  settimeofday(&tp, &tz);
 #endif
   return *this;
 }
