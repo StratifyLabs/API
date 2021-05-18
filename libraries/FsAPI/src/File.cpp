@@ -231,6 +231,9 @@ bool FileObject::verify(const FileObject &source_file,
   size_t size_processed = 0;
 
   if (this == &source_file) {
+    if (options.progress_callback()) {
+      options.progress_callback()->update(0,0);
+    }
     return true;
   }
 
@@ -238,7 +241,7 @@ bool FileObject::verify(const FileObject &source_file,
       options.size() != static_cast<size_t>(-1) ? options.size() : size();
 
   if (options.progress_callback()) {
-    options.progress_callback()->update(static_cast<int>(0),
+    options.progress_callback()->update(0,
                                         static_cast<int>(verify_size));
   }
 
@@ -257,10 +260,16 @@ bool FileObject::verify(const FileObject &source_file,
     const int this_result = read(this_file_view).return_value();
 
     if (source_result != this_result) {
+      if (options.progress_callback()) {
+        options.progress_callback()->update(0,0);
+      }
       return false;
     }
 
     if (source_file_view != this_file_view) {
+      if (options.progress_callback()) {
+        options.progress_callback()->update(0,0);
+      }
       return false;
     }
 
@@ -280,8 +289,7 @@ bool FileObject::verify(const FileObject &source_file,
   } while (size_processed < verify_size);
 
   if (options.progress_callback()) {
-    options.progress_callback()->update(static_cast<int>(0),
-                                        static_cast<int>(0));
+    options.progress_callback()->update(0,0);
   }
 
   return true;
