@@ -148,7 +148,11 @@ protected:
 
   StackString(const char *a) {
     m_buffer[Size - 1] = 0;
-    strncpy(m_buffer, a, Size - 1);
+    if( a == nullptr ){
+      m_buffer[0] = 0;
+    } else {
+      strncpy(m_buffer, a, Size - 1);
+    }
   }
 
 

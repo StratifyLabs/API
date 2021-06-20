@@ -246,7 +246,6 @@ public:
 
   bool file_system_api_case() {
     Printer::Object po(printer(), __FUNCTION__);
-    API_PRINTF_TRACE_LINE();
 
     {
       printer::Printer::Object po(printer(), "create/remove directories");

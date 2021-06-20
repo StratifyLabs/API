@@ -19,10 +19,10 @@ public:
   static ClockTime get_system_time(ClockId clock_id = ClockId::realtime);
   static ClockTime get_system_resolution(ClockId clock_id = ClockId::realtime);
 
+  ClockTime() = default;
   ClockTime(const struct timespec &nano_time) : m_value(nano_time) {}
   explicit ClockTime(const MicroTime &micro_time);
 
-  ClockTime() { reset(); }
 
   static ClockTime from_seconds(u32 seconds) {
     return ClockTime().set_seconds(seconds);
@@ -96,7 +96,7 @@ private:
   void assign(u32 seconds, u32 nanoseconds);
   static ClockTime add(const ClockTime &a, const ClockTime &b);
   static ClockTime subtract(const ClockTime &a, const ClockTime &b);
-  struct timespec m_value = {0};
+  struct timespec m_value = {};
 };
 
 } // namespace chrono

@@ -120,8 +120,17 @@ var::StringView Cli::get_path() const {
   return var::StringView();
 }
 
-Cli &Cli::show_help(const ShowHelp &options) {
+const Cli &Cli::show_help(const ShowHelp &options) const {
+  if( options.publisher().is_empty() == false ){
+    printf("publisher: %s\n", var::PathString(options.publisher()).cstring());
+  }
+
+  if( options.version().is_empty() == false ){
+    printf("version: %s\n", var::PathString(options.version()).cstring());
+  }
+
   printf("%s options:\n", var::PathString(get_name()).cstring());
+
   for (const auto &help_item : m_help_list) {
     printf("- %s\n", help_item.cstring());
   }

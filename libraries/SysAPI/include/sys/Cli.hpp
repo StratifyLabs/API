@@ -49,8 +49,9 @@ public:
     API_AF(ShowHelp, var::StringView, version, "");
   };
 
-  Cli &show_help(const ShowHelp &options);
-  Cli &show_version(const ShowHelp &options);
+  const Cli& show_help(const ShowHelp &options) const;
+
+  const Cli &show_version(const ShowHelp &options) const;
 
 private:
   u16 m_argc;
