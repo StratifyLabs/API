@@ -239,7 +239,7 @@ MarkdownPrinter &MarkdownPrinter::close_code() {
     }
 
     if (level <= verbose_level()) {
-      interface_print_final("```\n");
+      interface_print_final("\n```\n");
     }
   }
   return *this;
