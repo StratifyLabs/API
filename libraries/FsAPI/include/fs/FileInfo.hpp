@@ -143,7 +143,7 @@ public:
     return a.m_permissions == m_permissions;
   }
 
-  int permissions() const { return static_cast<int>(m_permissions); }
+  int permissions() const { return static_cast<int>(m_permissions) & O_ACCMODE; }
 
 private:
   PermissionFlags m_permissions;
