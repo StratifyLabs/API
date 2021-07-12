@@ -6,6 +6,7 @@
 
 ## Bug Fixes
 
+- Permissions class now returns access permissions instead of full type with `permissions()` method
 - Add a newline when closing markdown code section
 
 # Version 1.0
