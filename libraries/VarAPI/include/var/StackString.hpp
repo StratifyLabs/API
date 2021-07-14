@@ -210,7 +210,13 @@ public:
 PathString operator&(const StringView lhs, const StringView rhs);
 PathString operator/(const StringView lhs, const StringView rhs);
 
-class GeneralString : public StackString<GeneralString, 256> {
+#if defined __link
+#define VAR_API_GENERAL_STRING_SIZE 4096
+#else
+#define VAR_API_GENERAL_STRING_SIZE 512
+#endif
+
+class GeneralString : public StackString<GeneralString, VAR_API_GENERAL_STRING_SIZE> {
 public:
   GeneralString() {}
   GeneralString(const StringView a) : StackString(a) {}
