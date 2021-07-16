@@ -3,6 +3,7 @@
 ## New Features
 
 - Add `API_OR_ENUM_CLASS` macro for adding flag operators to an enum class
+- Add `from_string` to `var::View`
 
 ## Bug Fixes
 
