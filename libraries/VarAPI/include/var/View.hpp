@@ -231,6 +231,17 @@ public:
   const void *data() const { return m_data; }
   void *data() { return m_data; }
 
+  View& from_string(StringView value) {
+    //bytes to process
+    const size_t bytes_to_process = value.length() / 2 > size() ? size() : value.length()/2;
+    for (u32 i = 0; i < bytes_to_process; i++) {
+      to_u8()[i]
+        = value(StringView::GetSubstring().set_position(i * 2).set_length(2))
+            .to_unsigned_long(String::Base::hexadecimal);
+    }
+    return *this;
+  }
+
 protected:
   void set_view(void *buffer, size_t size) {
     m_data = buffer;
