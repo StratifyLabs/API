@@ -76,3 +76,21 @@ View &View::copy(const View &source) {
   return *this;
 }
 
+size_t View::find(const View & view, size_t alignment){
+
+  if( view.size() > size() ){
+    return npos;
+  }
+
+  const size_t compare_size = view.size();
+  const size_t search_size = size() - view.size();
+
+  for(size_t offset = 0; offset < search_size; offset += alignment){
+    if( memcmp(to_const_u8() + offset, view.to_const_u8(), compare_size) == 0 ){
+      return offset;
+    }
+  }
+
+  return npos;
+}
+
