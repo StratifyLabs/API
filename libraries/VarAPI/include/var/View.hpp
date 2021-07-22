@@ -96,6 +96,9 @@ public:
     return count;
   }
 
+  constexpr static size_t npos = static_cast<size_t>(-1);
+  size_t find(const View & view, size_t alignment = 1);
+
   template <typename Type> size_t count() const { return size() / sizeof(Type); }
 
   enum class SwapBy { half_word, word };

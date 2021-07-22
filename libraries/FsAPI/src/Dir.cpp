@@ -114,8 +114,6 @@ int Dir::interface_readdir_r(struct dirent *result,
 #endif
 }
 
-int Dir::interface_closedir() const { return ::closedir(m_dirp); }
-
 int Dir::interface_telldir() const { return ::telldir(m_dirp); }
 
 void Dir::interface_seekdir(size_t location) const {

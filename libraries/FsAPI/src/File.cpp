@@ -110,7 +110,7 @@ const FileObject &FileObject::write(const FileObject &source_file,
 
 
   const size_t file_size = (options.size() == static_cast<size_t>(-1))
-                               ? source_file.size()
+                             ? (source_file.size() - source_file.location())
                                : options.size();
 
   if (file_size == 0) {
@@ -138,7 +138,7 @@ const FileObject &FileObject::write(const FileObject &source_file,
       options.terminator() != '\0' ? 1 : page_size_with_boundary;
 
   u8 file_read_buffer[read_buffer_size];
-  size_t size_processed = source_file.location();
+  size_t size_processed = 0;
 
   clock_timer.start();
   do {

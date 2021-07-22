@@ -85,7 +85,6 @@ protected:
   void set_path(const var::StringView path) { m_path = path; }
   virtual int interface_readdir_r(dirent *result, dirent **resultp) const = 0;
 
-  virtual int interface_closedir() const = 0;
   virtual int interface_telldir() const = 0;
   virtual void interface_seekdir(size_t location) const = 0;
   virtual void interface_rewinddir() const = 0;
@@ -131,7 +130,6 @@ protected:
   Dir &close();
 
   virtual int interface_readdir_r(dirent *result, dirent **resultp) const;
-  virtual int interface_closedir() const;
   virtual int interface_telldir() const;
   virtual void interface_seekdir(size_t location) const;
   virtual void interface_rewinddir() const;
