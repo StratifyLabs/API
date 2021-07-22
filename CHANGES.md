@@ -2,6 +2,7 @@
 
 ## New Features
 
+- Malloc chunk size reference is no longer tied to the target chunk size
 - Add `API_OR_ENUM_CLASS` macro for adding flag operators to an enum class
 - Add `from_string` to `var::View`
 

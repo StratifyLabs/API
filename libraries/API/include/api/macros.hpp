@@ -218,8 +218,9 @@ private:                                                                       \
 #define API_MALLOC_CHUNK_SIZE 1024
 #else
 #include <sos/arch.h>
-#define API_MALLOC_CHUNK_SIZE MALLOC_CHUNK_SIZE
-#define API_MINIMUM_CHUNK_SIZE (MALLOC_CHUNK_SIZE - 12)
+//this doesn't have to match the chunk size of the target
+#define API_MALLOC_CHUNK_SIZE 32
+#define API_MINIMUM_CHUNK_SIZE (128 - 12)
 #endif
 
 #define API_CONST_CAST_SELF(type_value, function_value, ...)                   \
