@@ -45,6 +45,15 @@ public:
     return 0;
   }
 
+
+  Derived operator*(u32 a) const {
+    Derived result;
+    for (u32 i = 0; i < a; i++) {
+      result.append(string_view());
+    }
+    return result;
+  }
+
   bool operator==(const StringView a) const { return string_view() == a; }
   bool operator!=(const StringView a) const { return string_view() != a; }
 
