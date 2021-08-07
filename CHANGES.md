@@ -10,6 +10,8 @@
 
 ## Bug Fixes
 
+- `Thread::Attributes` now inherits `api::ExecutionContext`
+- Fix bug in `Thread::Attributes::get_inherit_sched()` where the wrong call was made
 - `Thread::set_cancel_state()` and `Thread::set_cancel_type()` changed to static methods
 - Remove bugs with `interface_closedir()` and `interface_opendir()` to avoid virtual methods in constructor/deconstuctor
 - Permissions class now returns access permissions instead of full type with `permissions()` method

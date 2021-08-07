@@ -69,7 +69,7 @@ Thread::IsInherit Thread::Attributes::get_inherit_sched() const {
   API_RETURN_VALUE_IF_ERROR(IsInherit::yes);
   int inherit_sched = 0;
   API_SYSTEM_CALL("",
-                  pthread_attr_getdetachstate(&m_pthread_attr, &inherit_sched));
+                  pthread_attr_getinheritsched(&m_pthread_attr, &inherit_sched));
   return static_cast<IsInherit>(inherit_sched);
 }
 

@@ -31,7 +31,7 @@ public:
 
   typedef void *(*function_t)(void *);
 
-  class Attributes {
+  class Attributes : public api::ExecutionContext {
   public:
     Attributes();
     ~Attributes();
