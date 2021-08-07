@@ -2,6 +2,9 @@
 
 ## New Features
 
+- Add class `Thread::Mq` to support posix mqueue
+- Add optional stack size parameter when constructing `Thread::Attributes`
+- If `Thread::Attributes` changes policy or priority, policy inherit is disabled
 - Add `Mutex::unlock_with_error_check()` to check errors when unlocking a mutex
 - Malloc chunk size reference is no longer tied to the target chunk size
 - Add `Var::View::find()` to find a view within another view
@@ -10,6 +13,7 @@
 
 ## Bug Fixes
 
+- `Sem::wait_timed()` now adds the time argument to the system time and passes absolute time to `sem_timedwait()`
 - `Thread::Attributes` now inherits `api::ExecutionContext`
 - Fix bug in `Thread::Attributes::get_inherit_sched()` where the wrong call was made
 - `Thread::set_cancel_state()` and `Thread::set_cancel_type()` changed to static methods

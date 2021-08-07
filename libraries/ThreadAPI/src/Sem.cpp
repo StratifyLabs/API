@@ -7,9 +7,7 @@ using namespace thread;
 int SemaphoreObject::get_value() const {
 #if defined __macosx
   API_RETURN_VALUE_ASSIGN_ERROR(
-    -1,
-    "macosx doesn't supported unnamed semaphores",
-    ENOTSUP);
+      -1, "macosx doesn't supported unnamed semaphores", ENOTSUP);
 #else
   API_RETURN_VALUE_IF_ERROR(-1);
   int value = 0;
@@ -34,12 +32,15 @@ SemaphoreObject &SemaphoreObject::wait_timed(const chrono::ClockTime &timeout) {
 #if defined __macosx
   MCU_UNUSED_ARGUMENT(timeout);
   API_RETURN_VALUE_ASSIGN_ERROR(
-    *this,
-    "macosx doesn't supported timed_wait semaphores",
-    ENOTSUP);
+      *this, "macosx doesn't supported timed_wait semaphores", ENOTSUP);
 #else
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL("", sem_timedwait(m_handle, timeout.timespec()));
+  const auto calc_time = chrono::ClockTime::get_system_time() + timeout;
+
+  API_SYSTEM_CALL(
+      "", sem_timedwait(
+              m_handle,
+              calc_time.timespec()));
 #endif
   return *this;
 }
@@ -62,19 +63,16 @@ void Semaphore::unlink(var::StringView name) {
   API_SYSTEM_CALL(name_string.cstring(), sem_unlink(name_string.cstring()));
 }
 
-UnnamedSemaphore::UnnamedSemaphore(
-  ProcessShared process_shared,
-  unsigned int value) {
+UnnamedSemaphore::UnnamedSemaphore(ProcessShared process_shared,
+                                   unsigned int value) {
 #if defined __macosx
-  API_RETURN_ASSIGN_ERROR(
-    "macosx doesn't supported unnamed semaphores",
-    ENOTSUP);
+  API_RETURN_ASSIGN_ERROR("macosx doesn't supported unnamed semaphores",
+                          ENOTSUP);
 #else
   API_RETURN_IF_ERROR();
   m_handle = &m_sem;
-  API_SYSTEM_CALL(
-    "",
-    sem_init(&m_sem, static_cast<int>(process_shared), value));
+  API_SYSTEM_CALL("",
+                  sem_init(&m_sem, static_cast<int>(process_shared), value));
 #endif
 }
 
@@ -89,11 +87,8 @@ Semaphore::Semaphore(var::StringView name) {
   open(-1, name, 0, fs::Permissions(0666));
 }
 
-Semaphore::Semaphore(
-  int value,
-  IsExclusive is_exclusive,
-  var::StringView name,
-  fs::Permissions perms) {
+Semaphore::Semaphore(int value, IsExclusive is_exclusive, var::StringView name,
+                     fs::Permissions perms) {
   API_RETURN_IF_ERROR();
 
   int o_flags = O_CREAT;
@@ -112,24 +107,20 @@ Semaphore::~Semaphore() {
   }
 }
 
-void Semaphore::open(
-  int value,
-  var::StringView name,
-  int o_flags,
-  fs::Permissions perms) {
+void Semaphore::open(int value, var::StringView name, int o_flags,
+                     fs::Permissions perms) {
   API_RETURN_IF_ERROR();
   const var::KeyString name_string(name);
   if (value > 0) {
-    m_handle
-      = sem_open(name_string.cstring(), o_flags, perms.permissions(), value);
+    m_handle =
+        sem_open(name_string.cstring(), o_flags, perms.permissions(), value);
   } else {
-    m_handle = sem_open(
-      name_string.cstring(),
-       o_flags
-       #if defined __win32
-       , perms.permissions(), 0
-       #endif
-       );
+    m_handle = sem_open(name_string.cstring(), o_flags
+#if defined __win32
+                        ,
+                        perms.permissions(), 0
+#endif
+    );
   }
   if (m_handle == SEM_FAILED) {
     API_RETURN_ASSIGN_ERROR(name_string.cstring(), errno);

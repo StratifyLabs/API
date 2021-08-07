@@ -89,11 +89,18 @@ public:
 
   Semaphore(const Semaphore &value) = delete;
   Semaphore &operator=(const Semaphore &value) = delete;
-  Semaphore(Semaphore &&value) = default;
-  Semaphore &operator=(Semaphore &&value) = default;
+  Semaphore(Semaphore &&value){
+    m_name = value.m_name;
+  }
+  Semaphore &operator=(Semaphore &&value){
+    m_name = value.m_name;
+    return *this;
+  }
 
+  //get access to an existing named semaphore
   Semaphore(var::StringView name);
 
+  //create a named semaphore
   Semaphore(
     int value,
     IsExclusive is_exclusive,

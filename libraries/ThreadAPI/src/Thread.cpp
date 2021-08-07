@@ -95,6 +95,7 @@ Thread::Attributes &Thread::Attributes::set_sched_priority(int priority) {
   struct sched_param param = {0};
   param.sched_priority = priority;
   API_SYSTEM_CALL("", pthread_attr_setschedparam(&m_pthread_attr, &param));
+  set_inherit_sched(IsInherit::no);
   return *this;
 }
 
@@ -105,6 +106,7 @@ Thread::Attributes &Thread::Attributes::set_sched_policy(Sched::Policy value) {
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL("", pthread_attr_setschedpolicy(&m_pthread_attr,
                                                   static_cast<int>(value)));
+  set_inherit_sched(IsInherit::no);
   return *this;
 }
 

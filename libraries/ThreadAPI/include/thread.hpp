@@ -7,6 +7,7 @@ namespace thread {}
 
 #include "thread/Cond.hpp"
 #include "thread/Mutex.hpp"
+#include "thread/Mq.hpp"
 #include "thread/Sched.hpp"
 #include "thread/Sem.hpp"
 #include "thread/Signal.hpp"
