@@ -100,14 +100,14 @@ public:
    * also return false;
    *
    */
-  volatile bool is_valid() const;
+  bool is_valid() const;
 
   enum class CancelType {
     deferred = PTHREAD_CANCEL_DEFERRED,
     asynchronous = PTHREAD_CANCEL_ASYNCHRONOUS
   };
 
-  Thread &set_cancel_type(CancelType cancel_type);
+  static CancelType set_cancel_type(CancelType cancel_type);
   enum class CancelState {
     enable = PTHREAD_CANCEL_ENABLE,
     disable = PTHREAD_CANCEL_DISABLE
@@ -117,10 +117,7 @@ public:
   Sched::Policy get_sched_policy() const;
   int get_sched_priority() const;
 
-  const Thread &set_cancel_state(CancelState cancel_state) const;
-  Thread &set_cancel_state(CancelState cancel_state) {
-    return API_CONST_CAST_SELF(Thread, set_cancel_state, cancel_state);
-  }
+  static CancelState set_cancel_state(CancelState cancel_state);
 
   const Thread &cancel() const;
   Thread &cancel() { return API_CONST_CAST_SELF(Thread, cancel); }

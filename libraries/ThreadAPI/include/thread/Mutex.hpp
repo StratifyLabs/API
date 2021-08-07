@@ -106,6 +106,8 @@ public:
   API_NO_DISCARD bool try_lock();
   Mutex &unlock();
 
+  Mutex &unlock_with_error_check();
+
   class Guard {
   public:
     explicit Guard(Mutex *mutex) : m_mutex(mutex) {

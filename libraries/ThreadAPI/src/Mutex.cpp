@@ -130,7 +130,13 @@ bool Mutex::try_lock() {
 
 Mutex &Mutex::unlock() {
   // unlock even if there is an error in the context
-  api::ErrorGuard error_guard;
+  api::ErrorScope error_scope;
   pthread_mutex_unlock(&m_mutex);
   return *this;
 }
+
+Mutex &Mutex::unlock_with_error_check(){
+  API_SYSTEM_CALL("", pthread_mutex_unlock(&m_mutex));
+  return *this;
+}
+

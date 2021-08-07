@@ -229,7 +229,7 @@ int Thread::get_sched_parameters(int &policy, int &priority) const {
   return result;
 }
 
-volatile bool Thread::is_valid() const {
+bool Thread::is_valid() const {
   return (m_state == State::joinable) || (m_state == State::detached);
 }
 
@@ -249,20 +249,21 @@ bool Thread::is_running() const {
   return false;
 }
 
-Thread &Thread::set_cancel_type(CancelType cancel_type) {
-  API_RETURN_VALUE_IF_ERROR(*this);
-  int old = 0;
+
+Thread::CancelType Thread::set_cancel_type(CancelType cancel_type) {
+  API_RETURN_VALUE_IF_ERROR(CancelType::deferred);
+  int old = int(CancelType::deferred);
   API_SYSTEM_CALL("",
                   pthread_setcanceltype(static_cast<int>(cancel_type), &old));
-  return *this;
+  return CancelType(old);
 }
 
-const Thread &Thread::set_cancel_state(CancelState cancel_state) const {
-  API_RETURN_VALUE_IF_ERROR(*this);
+Thread::CancelState Thread::set_cancel_state(CancelState cancel_state){
+  API_RETURN_VALUE_IF_ERROR(CancelState::disable);
   int old = 0;
   API_SYSTEM_CALL("",
                   pthread_setcancelstate(static_cast<int>(cancel_state), &old));
-  return *this;
+  return CancelState(old);
 }
 
 Thread &Thread::join(void **value) {

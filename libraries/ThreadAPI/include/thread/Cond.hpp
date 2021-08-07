@@ -12,6 +12,9 @@ namespace thread {
 
 class Cond : public api::ExecutionContext {
 public:
+
+  using ProcessShared = Mutex::ProcessShared;
+
   class Attributes : public api::ExecutionContext {
   public:
     Attributes() {
@@ -22,8 +25,26 @@ public:
     ~Attributes() { pthread_condattr_destroy(&m_attributes); }
 
     Attributes &set_pshared(bool value = true) {
-      pthread_condattr_setpshared(&m_attributes, value);
+      const auto pshared = value ? ProcessShared::shared : ProcessShared::private_;
+      pthread_condattr_setpshared(&m_attributes, int(pshared));
       return *this;
+    }
+
+    Attributes &set_pshared(ProcessShared pshared) {
+      API_SYSTEM_CALL("", pthread_condattr_setpshared(&m_attributes, int(pshared)));
+      return *this;
+    }
+
+    bool get_is_pshared() const {
+      int pshared = 0;
+      pthread_condattr_getpshared(&m_attributes, &pshared);
+      return pshared == int(ProcessShared::shared);
+    }
+
+    ProcessShared get_pshared() const {
+      int pshared = 0;
+      pthread_condattr_getpshared(&m_attributes, &pshared);
+      return ProcessShared(pshared);
     }
 
   private:
