@@ -7,6 +7,7 @@ set(SOURCES
 	thread/Mutex.hpp
 	thread/Signal.hpp
 	thread/Sched.hpp
+	thread/Timer.hpp
 	thread/Sem.hpp
 	PARENT_SCOPE
 	)

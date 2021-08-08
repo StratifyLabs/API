@@ -12,6 +12,7 @@ namespace thread {}
 #include "thread/Sem.hpp"
 #include "thread/Signal.hpp"
 #include "thread/Thread.hpp"
+#include "thread/Timer.hpp"
 
 using namespace thread;
 

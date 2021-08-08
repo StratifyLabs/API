@@ -7,5 +7,6 @@ set(SOURCES
 	Sem.cpp
 	Mq.cpp
 	Sched.cpp
+	Timer.cpp
 	PARENT_SCOPE
 	)

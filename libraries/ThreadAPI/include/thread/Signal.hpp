@@ -46,7 +46,7 @@ union sigval {
 
 namespace thread {
 
-class SignalFlags {
+class SignalFlags : public api::ExecutionContext{
 public:
   enum class Number {
     null = 0,
@@ -88,7 +88,7 @@ public:
   };
 };
 
-class SignalHandler : public api::ExecutionContext, public SignalFlags {
+class SignalHandler : public SignalFlags {
 public:
   class Construct {
     API_AF(Construct, signal_function_callback_t, signal_function, nullptr);
@@ -105,7 +105,7 @@ public:
       m_sig_action.sa_handler = (_sig_func_ptr)options.signal_function();
 #endif
       m_sig_action.sa_flags = 0;
-      m_sig_action.sa_mask = {0};
+      m_sig_action.sa_mask = {};
     } else {
       m_sig_action.sa_sigaction = options.signal_action();
       m_sig_action.sa_flags = options.flags() | SIGNAL_SIGINFO_FLAG;
@@ -113,18 +113,78 @@ public:
     }
   }
 
+  explicit SignalHandler(signal_function_callback_t function){
+    m_sig_action.sa_handler = (_sig_func_ptr)function;
+  }
+
+  explicit SignalHandler(signal_action_callback_t action){
+    m_sig_action.sa_sigaction = action;
+    m_sig_action.sa_flags = SIGNAL_SIGINFO_FLAG;
+  }
+
   API_NO_DISCARD const struct sigaction *sigaction() const {
     return &m_sig_action;
   }
 
+  static SignalHandler default_(){
+    return SignalHandler(SignalHandler::Construct().set_signal_function((signal_function_callback_t)SIG_DFL));
+  }
+
+  static SignalHandler ignore(){
+    return SignalHandler(SignalHandler::Construct().set_signal_function((signal_function_callback_t)SIG_IGN));
+  }
+
 private:
-  struct sigaction m_sig_action;
+  struct sigaction m_sig_action = {};
 };
 
-class Signal : public api::ExecutionContext, public SignalFlags {
+class Signal : public SignalFlags {
 public:
 
 #if !defined __link
+  class Event {
+  public:
+    enum class Notify {
+        none = SIGEV_NONE,
+        signal = SIGEV_SIGNAL,
+        thread = SIGEV_THREAD
+    };
+
+    Event & set_notify(Notify value){
+      m_event.sigev_notify = int(value);
+      return *this;
+    }
+
+    Event & set_number(Number value){
+      m_event.sigev_signo = int(value);
+      return *this;
+    }
+
+    Event & set_value(int value){
+      m_event.sigev_value.sival_int = value;
+      return *this;
+    }
+
+    Event & set_value(void * value){
+      m_event.sigev_value.sival_ptr = value;
+      return *this;
+    }
+
+    Event & set_notify_function(void (*value)(sigval)){
+      m_event.sigev_notify_function = value;
+      return *this;
+    }
+
+    Event & set_notify_attributes(pthread_attr_t * value){
+      m_event.sigev_notify_attributes = value;
+      return *this;
+    }
+
+  private:
+    friend class Timer;
+    struct sigevent m_event = {};
+  };
+
   class Set {
   public:
     Set &add(Number signo) {
@@ -183,6 +243,7 @@ public:
   static Signal wait(const Set &set);
 #endif
 
+  Number number() const { return Number(m_signo); }
   API_NO_DISCARD int signo() const { return m_signo; }
   API_NO_DISCARD int sigvalue() const { return m_sigvalue.sival_int; }
   API_NO_DISCARD void *sigptr() const { return m_sigvalue.sival_ptr; }
