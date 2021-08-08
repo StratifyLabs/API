@@ -92,10 +92,26 @@ public:
   int minute() const { return m_tm.tm_min; }
   int hour() const { return m_tm.tm_hour; }
 
+  enum class Month {
+    null,
+    january,
+    february,
+    march,
+    april,
+    may,
+    june,
+    july,
+    august,
+    september,
+    october,
+    november,
+    december
+  };
+
   int day() const { return m_tm.tm_mday; }
   int weekday() const { return m_tm.tm_wday; }
   int yearday() const { return m_tm.tm_yday; }
-  int month() const { return m_tm.tm_mon + 1; }
+  Month month() const { return Month(m_tm.tm_mon + 1); }
   int year() const { return m_tm.tm_year + 1900; }
 
   const struct tm &get_tm() const { return m_tm; }

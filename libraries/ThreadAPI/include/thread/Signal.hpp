@@ -248,6 +248,18 @@ public:
   API_NO_DISCARD int sigvalue() const { return m_sigvalue.sival_int; }
   API_NO_DISCARD void *sigptr() const { return m_sigvalue.sival_ptr; }
 
+  class HandlerScope {
+  public:
+    HandlerScope(Signal & signal, const SignalHandler & handler) : m_signo(signal.number()){
+      signal.set_handler(handler);
+    }
+    ~HandlerScope(){
+      Signal(m_signo).set_handler(SignalHandler::default_());
+    }
+  private:
+    Number m_signo;
+  };
+
 private:
   int m_signo;
   union sigval m_sigvalue;

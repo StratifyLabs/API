@@ -70,70 +70,18 @@ public:
     API_AF(Initialize, printer::Printer *, printer, nullptr);
   };
 
-  /*! \details Initializes the test report.
-   *
-   * This must be called before any tests are even
-   * constructed.
-   *
-   */
   static void initialize(const Initialize &options);
-
-  /*! \details Finalizes the test report.
-   *
-   * This should be called after the last test
-   * has been deconstructed.
-   *
-   */
   static void finalize();
 
-  /*! \details Parse command line options for running test types.
-   *
-   * This method searches for the following options and returns
-   * a value that has which tests to execute.
-   *
-   * - -execute_all
-   * - -api
-   * - -performance
-   * - -stress
-   * - -additional
-   *
-   * \code
-   * #include <test.hpp>
-   * #include <sys.hpp>
-   *
-   * int main(int argc, char * argv[]){
-   *   Cli cli(argc, argv);
-   *   u32 o_execute_flags = Test::parse_options(cli);
-   *
-   *   Test::initialize(cli.name(), cli.version());
-   *
-   *   if( o_execute_flags ){
-   *     Test test("do nothing");
-   *     test.execute(o_execute_flags);
-   *   }
-   *
-   *   Test::finalize();
-   *
-   *   return 0;
-   * }
-   *
-   * \endcode
-   *
-   */
   static ExecuteFlags parse_execution_flags(const sys::Cli &cli);
-  static u32
-  parse_test(const sys::Cli &cli, var::StringView name, u32 test_flag);
+  static u32 parse_test(const sys::Cli &cli, var::StringView name,
+                        u32 test_flag);
 
   Test(var::StringView name);
   ~Test();
 
   void execute(const sys::Cli &cli);
 
-  /*! \details Executes the tests specified by \a o_flags.
-   *
-   * @param o_flags Bitmask of the tests to execute (e.g., Test::EXECUTE_API)
-   *
-   */
   void execute(ExecuteFlags execute_flags = ExecuteFlags::all) {
     if (execute_flags & ExecuteFlags::api) {
       execute_api_case();
@@ -146,59 +94,17 @@ public:
     }
   }
 
-  /*! \details Executes the API test case. */
   void execute_api_case();
-  /*! \details Executes the performance test case. */
   void execute_performance_case();
-  /*! \details Executes the stress test case. */
   void execute_stress_case();
 
-  /*! \details Executes the class api test.
-   *
-   * This method should be overridden by the inheriting
-   * class.
-   *
-   */
   virtual bool execute_class_api_case();
-
-  /*! \details Executes the class performance test.
-   *
-   * This method should be overridden by the inheriting
-   * class.
-   *
-   */
   virtual bool execute_class_performance_case();
-
-  /*! \details Executes the class stress test.
-   *
-   * This method should be overridden by the inheriting
-   * class.
-   *
-   */
   virtual bool execute_class_stress_case();
 
-  /*! \details Returns the results of the test.
-   *
-   * If any single test case has a false result,
-   * the result of the test is false.  Otherwise,
-   * the result is true.
-   *
-   */
   bool result() const { return m_test_result; }
-
-  /*! \details Returns the current value of the case result.
-   *
-   * When a case is opened, the case result is set to true (passing).
-   *
-   * Calling set_case_failed() or print_case_failed() will set
-   * the case result value to false.
-   *
-   * case_result() is the default return value of close_case().
-   *
-   */
   bool case_result() const { return m_case_result; }
 
-  /*! \details Sets the current case result to failed. */
   void set_case_failed() {
     m_case_result = false;
     m_test_result = false;
@@ -210,9 +116,8 @@ public:
       return true;
     }
 
-    printer().key(
-      var::String().format("expect%d", line),
-      var::String().format("%s failed", function));
+    printer().key(var::String().format("expect%d", line),
+                  var::String().format("%s failed", function));
 
     if (is_error()) {
       printer().object("errorContext", api::ExecutionContext::error());
@@ -224,6 +129,42 @@ public:
   }
 
   static bool final_result() { return m_final_result; }
+
+  class TimedScope {
+  public:
+    TimedScope(Test &test, const var::StringView name,
+               const chrono::MicroTime &minimum,
+               const chrono::MicroTime &maximum)
+        : m_test(test), m_name(name), m_start(test.case_timer().milliseconds()),
+          m_minimum(minimum.milliseconds()), m_maximum(maximum.milliseconds()) {
+      m_test.printer().open_object(name);
+      API_ASSERT(m_minimum < m_maximum);
+    }
+
+    ~TimedScope() {
+      const auto stop = m_test.case_timer().milliseconds();
+      const auto duration = stop - m_start;
+      m_test.printer()
+          .key("minimum (ms)", var::NumberString(m_minimum))
+          .key("maximum (ms)", var::NumberString(m_maximum))
+          .key("duration (ms)", var::NumberString(duration));
+      if (duration < m_minimum) {
+        m_test.printer().error("duration below minimum");
+        m_test.set_case_failed();
+      } else if( duration > m_maximum ){
+        m_test.printer().error("duration above maximum");
+        m_test.set_case_failed();
+      }
+      m_test.printer().close_object();
+    }
+
+  private:
+    Test &m_test;
+    var::StringView m_name;
+    u32 m_start;
+    u32 m_minimum;
+    u32 m_maximum;
+  };
 
 protected:
   const chrono::ClockTimer &case_timer() const { return m_case_timer; }

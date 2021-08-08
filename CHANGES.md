@@ -2,6 +2,9 @@
 
 ## New Features
 
+- Add `Signal::HandlerScope` to restore the default handler when the object goes out of scope
+- Add `Test::TimedScope` class to check for testing durations
+- Add enum class `chrono::Date::Month` for a list of months
 - Add class `Thread::Mq` to support posix mqueue
 - Add optional stack size parameter when constructing `Thread::Attributes`
 - If `Thread::Attributes` changes policy or priority, policy inherit is disabled
