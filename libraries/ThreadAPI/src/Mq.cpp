@@ -40,13 +40,13 @@ Mq::Info Mq::get_info() const {
 Mq& Mq::set_flags(fs::OpenMode open_mode){
   Attributes attributes;
   attributes.m_attr.mq_flags = int(open_mode.o_flags());
-  return set_attributes(attributes);
+  set_attributes(attributes);
+  return *this;
 }
 
-Mq &Mq::set_attributes(const Attributes &attributes){
-  API_RETURN_VALUE_IF_ERROR(*this);
+void Mq::set_attributes(const Attributes &attributes){
+  API_RETURN_IF_ERROR();
   API_SYSTEM_CALL("", mq_setattr(m_handle, &attributes.m_attr, nullptr));
-  return *this;
 }
 
 Mq &Mq::receive(var::View message) {

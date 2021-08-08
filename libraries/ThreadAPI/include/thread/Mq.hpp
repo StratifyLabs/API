@@ -32,11 +32,6 @@ public:
     long maximum_message_count() const { return m_attr.mq_maxmsg; }
     long message_size() const { return m_attr.mq_msgsize; }
 
-    long curmsgs() const { return m_attr.mq_curmsgs; }
-    long maxmsg() const { return m_attr.mq_maxmsg; }
-    long msgsize() const { return m_attr.mq_msgsize; }
-
-
     Attributes &set_maximum_message_count(long v) {
       m_attr.mq_maxmsg = v;
       return *this;
@@ -111,16 +106,7 @@ private:
   mqd_t m_handle;
   API_AF(Mq, unsigned, message_priority, 0);
 
-  int open(const var::String &name, int oflag,
-           const fs::Permissions &permissions = fs::Permissions(0666),
-           const struct mq_attr *attr = 0);
-  int close();
-
-  int create(const var::String &name, int oflag,
-             const fs::Permissions &permissions, long flags, long maxmsg,
-             long msgsize);
-
-  Mq &set_attributes(const Attributes &attributes);
+  void set_attributes(const Attributes &attributes);
 };
 
 } // namespace thread

@@ -54,10 +54,10 @@ public:
   const Cli &show_version(const ShowHelp &options) const;
 
 private:
-  u16 m_argc;
-  char **m_argv;
-  bool m_is_case_sensitive;
-  const char *m_app_git_hash;
+  u16 m_argc = 0;
+  char **m_argv = nullptr;
+  bool m_is_case_sensitive = true;
+  const char *m_app_git_hash = nullptr;
   mutable var::Vector<var::PathString> m_help_list;
 };
 
