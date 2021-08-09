@@ -1,5 +1,7 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
+#if !defined __link
+
 #include <mqueue.h>
 
 #include "chrono.hpp"
@@ -83,4 +85,6 @@ void Mq::unlink(const char *name){
   API_RETURN_IF_ERROR();
   API_SYSTEM_CALL("", mq_unlink(name));
 }
+
+#endif
 

@@ -3,6 +3,8 @@
 #ifndef THREADAPI_THREAD_TIMER_HPP
 #define THREADAPI_THREAD_TIMER_HPP
 
+#if !defined __link
+
 #include <signal.h>
 
 #include "Signal.hpp"
@@ -64,5 +66,7 @@ private:
 };
 
 } // namespace thread
+
+#endif
 
 #endif // THREADAPI_THREAD_TIMER_HPP

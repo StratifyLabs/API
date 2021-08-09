@@ -1,3 +1,5 @@
+#if !defined __link
+
 #include <unistd.h>
 
 #include "thread/Timer.hpp"
@@ -52,3 +54,5 @@ chrono::ClockTime Timer::alarm(const Alarm &options) {
                                options.interval().nanoseconds() / 1000UL));
   return chrono::ClockTime(return_value() * 1_microseconds);
 }
+
+#endif
