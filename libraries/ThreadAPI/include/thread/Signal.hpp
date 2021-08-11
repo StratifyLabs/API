@@ -5,9 +5,9 @@
 
 #include <signal.h>
 
-#include "api/api.hpp"
 #include "Sched.hpp"
 #include "Thread.hpp"
+#include "api/api.hpp"
 
 #if defined __link
 typedef void (*signal_function_callback_t)(int);
@@ -46,7 +46,7 @@ union sigval {
 
 namespace thread {
 
-class SignalFlags : public api::ExecutionContext{
+class SignalFlags : public api::ExecutionContext {
 public:
   enum class Number {
     null = 0,
@@ -113,11 +113,15 @@ public:
     }
   }
 
-  explicit SignalHandler(signal_function_callback_t function){
-		m_sig_action.sa_handler = (signal_function_callback_t)function;
+  explicit SignalHandler(signal_function_callback_t function) {
+#if defined __StratifyOS__
+    m_sig_action.sa_handler = (_sig_func_ptr)function;
+#else
+    m_sig_action.sa_handler = (signal_function_callback_t)function;
+#endif
   }
 
-  explicit SignalHandler(signal_action_callback_t action){
+  explicit SignalHandler(signal_action_callback_t action) {
     m_sig_action.sa_sigaction = action;
     m_sig_action.sa_flags = SIGNAL_SIGINFO_FLAG;
   }
@@ -126,12 +130,14 @@ public:
     return &m_sig_action;
   }
 
-  static SignalHandler default_(){
-    return SignalHandler(SignalHandler::Construct().set_signal_function((signal_function_callback_t)SIG_DFL));
+  static SignalHandler default_() {
+    return SignalHandler(SignalHandler::Construct().set_signal_function(
+        (signal_function_callback_t)SIG_DFL));
   }
 
-  static SignalHandler ignore(){
-    return SignalHandler(SignalHandler::Construct().set_signal_function((signal_function_callback_t)SIG_IGN));
+  static SignalHandler ignore() {
+    return SignalHandler(SignalHandler::Construct().set_signal_function(
+        (signal_function_callback_t)SIG_IGN));
   }
 
 private:
@@ -140,42 +146,38 @@ private:
 
 class Signal : public SignalFlags {
 public:
-
 #if !defined __link
   class Event {
   public:
-    enum class Notify {
-        none = SIGEV_NONE,
-        signal = SIGEV_SIGNAL,
-        thread = SIGEV_THREAD
-    };
+    enum class Notify{none = SIGEV_NONE, signal = SIGEV_SIGNAL,
+                      thread = SIGEV_THREAD};
 
-    Event & set_notify(Notify value){
+    Event &set_notify(Notify value) {
       m_event.sigev_notify = int(value);
       return *this;
     }
 
-    Event & set_number(Number value){
+    Event &set_number(Number value) {
       m_event.sigev_signo = int(value);
       return *this;
     }
 
-    Event & set_value(int value){
+    Event &set_value(int value) {
       m_event.sigev_value.sival_int = value;
       return *this;
     }
 
-    Event & set_value(void * value){
+    Event &set_value(void *value) {
       m_event.sigev_value.sival_ptr = value;
       return *this;
     }
 
-    Event & set_notify_function(void (*value)(sigval)){
+    Event &set_notify_function(void (*value)(sigval)) {
       m_event.sigev_notify_function = value;
       return *this;
     }
 
-    Event & set_notify_attributes(pthread_attr_t * value){
+    Event &set_notify_attributes(pthread_attr_t *value) {
       m_event.sigev_notify_attributes = value;
       return *this;
     }
@@ -250,12 +252,12 @@ public:
 
   class HandlerScope {
   public:
-    HandlerScope(Signal & signal, const SignalHandler & handler) : m_signo(signal.number()){
+    HandlerScope(Signal &signal, const SignalHandler &handler)
+        : m_signo(signal.number()) {
       signal.set_handler(handler);
     }
-    ~HandlerScope(){
-      Signal(m_signo).set_handler(SignalHandler::default_());
-    }
+    ~HandlerScope() { Signal(m_signo).set_handler(SignalHandler::default_()); }
+
   private:
     Number m_signo;
   };
