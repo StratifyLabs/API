@@ -25,6 +25,9 @@ typedef signal_function_callback_t _sig_func_ptr;
 typedef void (*signal_function_callback_t)(int);
 typedef void (*signal_action_callback_t)(int, siginfo_t *, void *);
 #define SIGNAL_SIGINFO_FLAG (1 << SA_SIGINFO)
+#define SIG_FUNC_PTR_CAST_TYPE _sig_func_ptr
+#else
+#define SIG_FUNC_PTR_CAST_TYPE signal_function_callback_t
 #endif
 
 #if defined __win32
@@ -113,8 +116,8 @@ public:
     }
   }
 
-  explicit SignalHandler(signal_function_callback_t function){
-		m_sig_action.sa_handler = (signal_function_callback_t)function;
+  explicit SignalHandler(signal_function_callback_t function) {
+    m_sig_action.sa_handler = (SIG_FUNC_PTR_CAST_TYPE)function;
   }
 
   explicit SignalHandler(signal_action_callback_t action){

@@ -1,4 +1,10 @@
-# Version 1.1
+# Version 1.1.1
+
+# Bug Fixes
+
+- Fix broken build in Stratify OS with casting `_sig_func_ptr`
+
+# Version 1.1.0
 
 ## New Features
 
@@ -24,6 +30,6 @@
 - Permissions class now returns access permissions instead of full type with `permissions()` method
 - Add a newline when closing markdown code section
 
-# Version 1.0
+# Version 1.0.0
 
 Initial stable release.
