@@ -114,7 +114,7 @@ public:
   }
 
   explicit SignalHandler(signal_function_callback_t function){
-    m_sig_action.sa_handler = (_sig_func_ptr)function;
+		m_sig_action.sa_handler = (signal_function_callback_t)function;
   }
 
   explicit SignalHandler(signal_action_callback_t action){
