@@ -24,9 +24,9 @@ printf(
 
 ## Error Handling
 
-The `*API` family of libraries are designed to have at most one error per thread. There is one key axiom to follow to ensure proper error management:
+The `*API` family of libraries is designed to have at most one error per thread. There is one key axiom to follow to ensure proper error management:
 
-> Any method that can change the error context or relies on error free state must abort if the thread has an error.
+> Any method that can change the error context or relies on an error-free state must abort if the thread has an error.
 
 The API library provides macros for error managing error handling. For system calls (that affect errno), use this sequence:
 
@@ -55,7 +55,7 @@ if( File().open("path").write(buffer, sizeof(buffer)).is_error() ){
 }
 ```
 
-When an error occurs, the `api::ExecutionContext` records the line number, a message and a backtrace. This allows the errors to be quickly found and fixed.
+When an error occurs, the `api::ExecutionContext` records the line number, a message, and a backtrace. You can use the error context to quickly find and fix errors.
 
 ### Ignoring Errors
 
@@ -74,7 +74,7 @@ File::~File(){
 
 ### Thread Safety
 
-The basic mechanism for handling errors is using `errno` which is built into POSIX systems (Linux, Windows, Mac, and Stratify OS). On all supported systems, `errno` is thread-safe. `&errno` provides a unique signature for any method to resolve to the appropriate error context.
+`errno` is the mechanism for handling errors. `errno` is part of POSIX systems (Linux, Windows, Mac, and Stratify OS). On all supported systems, `errno` is thread-safe. `&errno` provides a unique signature for any method to resolve to the appropriate error context.
 
 The API library automatically allocates an error context if an error context is requested in a new thread. Before the thread exits, it should call `api::free_context()`.
 If using the `thread::Thread` class for thread management, `api::free_context()` will be called automatically.

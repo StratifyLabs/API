@@ -23,7 +23,7 @@ including
 
 ## Design
 
-The API framework is a hard to mis-use, non-onerous C++ API acheived using the following principles
+The API framework is a hard to mis-use, non-onerous C++ API achieved using the following principles:
 
 - [Thread Local Error Context](#thread-local-error-context)
 - [Method Chaining](#method-chaining)
@@ -81,7 +81,7 @@ Error &PrivateExecutionContext::get_error() {
 
 ### Method Chaining
 
-Having a per thread error context, allows for very powerful (and concise) code using method chaining. This approach also helps to create strong arguments that are hard for application developers to use incorrectly.
+Having a per-thread error context allows for very powerful (and concise) code using method chaining. This approach also helps to create strong arguments that are hard for application developers to use incorrectly.
 
 ```c++
 class Point {
@@ -109,7 +109,7 @@ Point p = Point().set_x(50).set_y(100);
 
 ### Filesystem Inspired Abstraction
 
-Almost any data in the `API` framework can be treated a `FileObject`. This provides a unified way to move data around between memory, the filesystem, the internet, and devices.
+Almost any data in the `API` framework can be treated as a `FileObject`. This provides a unified way to move data around between memory, the filesystem, the internet, and devices.
 
 ```c++
 //defines interface for using file like objects
@@ -178,7 +178,7 @@ FileSystem()(Rename()
 
 > RAII = resource acquisition is initialization
 
-The constructor/deconstructor paradigm built into the C++ language is an excellent way to manage resources. If anything is "opened", it is done so in the constructor and then closed in the desctructor. This goes for lock/unlock, malloc/free, initialize/finalize and so on.
+The constructor/deconstructor paradigm built into the C++ language is an excellent way to manage resources. If anything is "opened", it is done so in the constructor and then closed in the destructor. This goes for lock/unlock, malloc/free, initialize/finalize, and so on.
 
 Here are a few examples:
 
@@ -305,7 +305,7 @@ if( t.is_valid() ){}
 
 ## Documentation
 
-The code and a few guides (README.md docs in the repo) are all the documentation that is available. For many years, I believed in doxygen style comments, but most of the documentation just ended up being redundant. In fact, this snippet was taken directly from the code before the comments were removed.
+The code and a few guides (README.md docs in the repo) are all the available documentation. For many years, I believed in Doxygen style comments, but most of the documentation just ended up being redundant. This snippet was taken directly from the code before the comments were removed.
 
 ```c++
 /*! \details Compares <= to another MicroTime object. */
@@ -314,4 +314,4 @@ bool operator<=(const MicroTime &a) const {
 }
 ```
 
-Comments in the code exists to explain why and give insights that are not obvious. They are not there to explain what. The API and code should do that on its own.
+Comments in the code exist to explain why and give insights that are not obvious. They are not there to explain what. The API and code should do that on their own.
