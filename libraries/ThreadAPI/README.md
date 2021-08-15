@@ -6,20 +6,20 @@ The `ThreadAPI` library has classes to manage threads and the associated synchro
 
 ## Threads
 
-Thread creation and destruction follows RAII principles throughout the `API` family of libraries. A thread starts executed when it is constructed and stops when it is destructed.
+Thread creation and destruction follow RAII principles. A thread starts executing when it is constructed and stops when it is destructed.
 
 ```c++
 #include <thread.hpp>
 
 //Construct, execute and join a do nothing thread
 Thread(
-  Thread::Construct().set_argument(nullptr).set_function([]()->void *{ return nullptr; }), 
-  Thread::Attributes().set_detach_state(Thread::DetachState::joinable)).join();
+  Thread::Attributes().set_detach_state(Thread::DetachState::joinable),
+  Thread::Construct().set_argument(nullptr).set_function([]()->void *{ return nullptr; })).join();
 ```
 
 ## Mutexes
 
-A mutex is ready to use once it has been constructed. The best way to lock/unlock mutexes is using the `MutexGuard` class which will lock/unlock on construction/deconstruction.
+A mutex is ready to use once it has been constructed. The best way to lock/unlock mutexes is using the `Mutex::Scope` class which will lock/unlock on construction/deconstruction.
 
 ```c++
 #include <thread.hpp>
@@ -27,10 +27,10 @@ A mutex is ready to use once it has been constructed. The best way to lock/unloc
 Mutex mutex;
 
 {
-  MutexGuard mutex_guard(mutex);
+  Mutex::Scope mutex_scope(mutex);
   // do some things with the shared resource
 
-} //~MutexGuard() unlocks the mutex
+} //~Mutex::Scope() unlocks the mutex
 ```
 
 ## Condition Variables
@@ -84,8 +84,7 @@ void interrupt_signal_handler(int a){
 }
 
 Signal(Signal::Number::interrupt)
-  .set_handler(SignalHandler(SignalHandler::Construct()
-      .set_function(interrupt_signal_handler)));
+  .set_handler(SignalHandler(interrupt_signal_handler));
 
 
 //send SIGINT to calling process
