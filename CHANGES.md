@@ -6,7 +6,7 @@
 
 ## Bug Fixes
 
-- None yet
+- Fixed broken build on StratifyOS with Signal casting to `_sig_func_ptr`
 
 # Version 1.1.0
 
@@ -34,6 +34,6 @@
 - Permissions class now returns access permissions instead of full type with `permissions()` method
 - Add a newline when closing markdown code section
 
-# Version 1.0
+# Version 1.0.0
 
 Initial stable release.
