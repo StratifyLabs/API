@@ -1,4 +1,14 @@
-# Version 1.1
+# Version 1.2.0
+
+## New Features
+
+- Added `DescriptorScope` to `File` to temporarily use a file descriptor
+
+## Bug Fixes
+
+- None yet
+
+# Version 1.1.0
 
 ## New Features
 
