@@ -37,11 +37,11 @@ if( timer.micro_time() < 50_milliseconds ){
 
 ## Calendar Time
 
-The `DateTime` class is basically a C++ wrapper for using C based `time` functions. The storage unit is `time_t`.
+The `DateTime` class is a C++ wrapper for using C based `time` functions. The storage unit is `time_t`.
 
 ## MicroTime
 
-The `MicroTime` class base unit of storage is a 32-bit value representing microseconds. It will overflow 71.5 minutes. So it is only useful for short durations.
+The `MicroTime` class base unit of storage is a 32-bit value representing microseconds. It will overflow in 71.5 minutes.
 
 The `MicroTime` class also provides operators for time conversion between `seconds`, `milliseconds`, `microseconds` and `nanoseconds`;
 

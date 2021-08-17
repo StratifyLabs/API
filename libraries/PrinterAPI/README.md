@@ -1,10 +1,10 @@
 # PrinterAPI
 
-The PrinterAPI enables application to print (or otherwise write) variables and classes in a structured manner.
+The PrinterAPI enables an application to print (or otherwise write) variables and classes in a structured manner.
 
 The default `Printer` class is yaml-like but not structured. The `JsonPrinter` class prints properly formed JSON. To support this, the `Printer` class makes use of structured data principles such as printing objects, arrays, and key-value pairs.
 
-The `print_final()` is virtual and can be overridden. By default, it writes to the standard output but could be modified to write to a file or websocket or anything.
+The `print_final()` is virtual and can be overridden. By default, it writes to the standard output but could be modified to write to a file or web socket or anything.
 
 The `Printer` class makes heavy usage of the `<<` operator. It provides operators for upstream types such as those defined in [VarAPI]().
 
@@ -51,10 +51,3 @@ This will give us:
     "nanoseconds": 5678
   }
 ```
-
-
-
-
-
-
-

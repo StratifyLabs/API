@@ -15,7 +15,7 @@ The `System` class has only `static` methods used for:
 
 ## Command Line Interface
 
-The `Cli` class is used for parsing command line arguments.
+The `Cli` class is used for parsing command-line arguments.
 
 ```c++
 #include <sys.hpp>
@@ -35,7 +35,7 @@ You can also use `const auto action = cli.get_option("action")` where if `--acti
 
 ## Version
 
-The `Version` class manages semantic version values. It can be used to convert between bcd versions and string versions as well as to compare versions.
+The `Version` class manages semantic version values. It converts between BCD versions and string versions as well as compares versions.
 
 ```c++
 #include <sys.hpp>

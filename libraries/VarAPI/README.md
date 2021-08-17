@@ -7,7 +7,7 @@ The `VarAPI` library manages data objects for the `API` framework.
 - [View](include/var/View.hpp): View of any data on the stack/heap/static
 - [Data](include/var/Data.hpp): Dynamic heap data
 
-A `View` can only refer to data that already exists. It doesn't allocate memory in any way. It will automatically figure out the size of the target. It can be implicitly constructed from `Data`, `String`, `StringView`, and `const char *` (c-style string). They can be explicitly constructed from fundamental types where the size is known at compile time. 
+A `View` can only refer to data that already exists. It doesn't allocate memory in any way. It infers the size of the target where possible. It can be implicitly constructed from `Data`, `String`, `StringView`, and `const char *` (c-style string). A `View` can be explicitly constructed from fundamental types where the size is known at compile time. 
 
 > A `View` is used when passing data to [file operations](../fsAPI/README.md)
 
@@ -48,7 +48,6 @@ int my_function(int size){
 
 The `Data` class uses the heap to dynamically allocate memory. Generally, it should be used sparingly if you are trying to maximize performance.
 
-
 ```c++
 #include <var.hpp>
 
@@ -81,7 +80,7 @@ Strings use one of three types:
 
 The `StringView` is just a view (pointer and length) of the string. The data must be held elsewhere. The length is a fixed maximum size at construction though you can narrow the view through other methods.
 
-VarAPI is designed to use `StringView` as the most basic string. Any and all string types (including `const char*`) are easily converted to `StringView`.
+VarAPI is designed to use `StringView` as the most basic string. All string types (including `const char*`) are implicitly converted to `StringView`.
 
 > All these guidelines also apply to `std::string_view`.
 
@@ -108,7 +107,7 @@ There are several standard `StackString` declarations for common usage:
 - `NumberString` for easily converting a number to a string (up to 64 bytes length)
   - Special constructor to immediately convert numbers to strings
 
-Here are the `StackString` basic examples:
+Here are the `StackString` examples:
 
 ```c++
 #include <fs.hpp>
