@@ -6,6 +6,7 @@
 #include <array>
 #include <cstdio>
 #include <iterator>
+#include <numeric>
 
 #include "api/api.hpp"
 
@@ -88,6 +89,10 @@ public:
   Array &fill(const T &value) {
     std::fill(begin(), end(), value);
     return *this;
+  }
+
+  API_NO_DISCARD T accumulate(T initial_value = T()) const {
+    return std::accumulate(m_array.begin(), m_array.end(), initial_value);
   }
 
   std::array<T, SizeValue> &array() { return m_array; }

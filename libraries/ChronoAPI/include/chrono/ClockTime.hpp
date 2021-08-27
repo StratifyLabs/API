@@ -83,6 +83,10 @@ public:
     return UniqueString().format("%ld.%09ld", seconds(), nanoseconds());
   }
 
+  template<class StringClass> StringClass to_string() const {
+    return StringClass().format("%ld.%09ld", seconds(), nanoseconds());
+  }
+
   struct timespec *timespec() {
     return &m_value;
   }

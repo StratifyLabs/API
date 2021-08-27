@@ -255,6 +255,10 @@ public:
     return (const void *)m_vector.data();
   }
 
+  API_NO_DISCARD T accumulate(T initial_value = T()) const {
+    return std::accumulate(begin(), end(), initial_value);
+  }
+
   API_NO_DISCARD T sum() const { return std::accumulate(begin(), end(), T()); }
   API_NO_DISCARD T mean() const { return sum() / count(); }
   API_NO_DISCARD T variance() const {

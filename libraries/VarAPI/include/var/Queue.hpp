@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <deque>
+#include <numeric>
 #include <new>
 
 #include "api/api.hpp"
@@ -99,6 +100,10 @@ public:
   Queue &clear() {
     m_deque.clear();
     return *this;
+  }
+
+  API_NO_DISCARD T accumulate(T initial_value = T()) const {
+    return std::accumulate(begin(), end(), initial_value);
   }
 
 private:

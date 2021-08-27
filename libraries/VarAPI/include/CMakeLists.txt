@@ -1,5 +1,6 @@
 
 set(SOURCES
+	var/ContainerObject.hpp
 	var/Data.hpp
 	var/Array.hpp
 	var/Base64.hpp

@@ -3,6 +3,8 @@
 ## New Features
 
 - Added `DescriptorScope` to `File` to temporarily use a file descriptor
+- Add templated `to_string<>()` method to `ClockTime`
+- Add `accumulate()` to container classes (work in progress)
 
 ## Bug Fixes
 
