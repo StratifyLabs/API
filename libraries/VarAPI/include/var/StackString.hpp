@@ -170,7 +170,7 @@ protected:
 
 class IdString : public StackString<IdString, 24> {
 public:
-  IdString() {}
+  IdString() = default;
   IdString(const StringView a) : StackString(a) {}
   IdString(const char *a) : StackString(a) {}
   // implicit conversion
@@ -179,7 +179,7 @@ public:
 
 class NameString : public StackString<NameString, NAME_MAX + 1> {
 public:
-  NameString() {}
+  NameString() = default;
   NameString(const StringView a) : StackString(a) {}
   NameString(const char *a) : StackString(a) {}
 
@@ -189,7 +189,7 @@ public:
 
 class KeyString : public StackString<KeyString, 48> {
 public:
-  KeyString() {}
+  KeyString() = default;
   KeyString(const StringView a) : StackString(a) {}
   KeyString(const char *a) : StackString(a) {}
   // implicit conversion
@@ -198,7 +198,7 @@ public:
 
 class PathString : public StackString<PathString, PATH_MAX + 1> {
 public:
-  PathString() {}
+  PathString() = default;
   PathString(const StringView a) : StackString(a) {}
   PathString(const char *a) : StackString(a) {}
 
@@ -227,7 +227,7 @@ PathString operator/(const StringView lhs, const StringView rhs);
 
 class GeneralString : public StackString<GeneralString, VAR_API_GENERAL_STRING_SIZE> {
 public:
-  GeneralString() {}
+  GeneralString() = default;
   GeneralString(const StringView a) : StackString(a) {}
   GeneralString(const char *a) : StackString(a) {}
   // implicit conversion

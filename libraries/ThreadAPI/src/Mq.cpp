@@ -86,5 +86,18 @@ void Mq::unlink(const char *name){
   API_SYSTEM_CALL("", mq_unlink(name));
 }
 
+int Mq::File::interface_read(void *buf, int nbyte) const {
+  return mq_receive(m_mq.m_handle, reinterpret_cast<char*>(buf), nbyte, nullptr);
+}
+
+int Mq::File::interface_write(const void *buf, int nbyte) const {
+  return mq_send(m_mq.m_handle, reinterpret_cast<const char*>(buf), nbyte, 0);
+}
+
+int Mq::File::interface_lseek(int offset, int whence) const {
+  fake_seek(m_location, m_size, offset, whence);
+  return m_location;
+}
+
 #endif
 

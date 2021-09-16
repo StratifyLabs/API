@@ -34,7 +34,7 @@ int LambdaFile::interface_write(const void *buf, int nbyte) const {
   if (result > 0) {
     m_location += result;
   }
-  if (m_size < m_location) {
+  if (m_size < size_t(m_location)) {
     m_size = m_location;
   }
 

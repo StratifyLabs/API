@@ -2,6 +2,9 @@
 
 ## New Features
 
+- minor improvements to `var::StackString` types
+- Add `Mq::File` to create a `FileObject` based on a message queue
+- Add `API_SINGLETON()` macro for creating singleton classes
 - Added `DescriptorScope` to `File` to temporarily use a file descriptor
 - Add templated `to_string<>()` method to `ClockTime`
 - Add `accumulate()` to container classes (work in progress)

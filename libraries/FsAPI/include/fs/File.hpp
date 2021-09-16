@@ -293,6 +293,9 @@ public:
   FileMemberAccess(const fs::FileObject &file)
       : m_file_member_reference_access(file) {}
 
+  //FileMemberAccess(const FileMemberAccess & a) = default;
+  //FileMemberAccess& operator =(const FileMemberAccess & a) = default;
+
   const Derived &read(void *buf, size_t size) const {
     m_file_member_reference_access.read(buf, size);
     return static_cast<const Derived &>(*this);

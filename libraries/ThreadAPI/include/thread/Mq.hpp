@@ -102,12 +102,37 @@ public:
 
   static void unlink(const char *name);
 
+  class File : public fs::FileAccess<File> {
+  public:
+
+    File(Mq & message_queue) : m_mq(message_queue){}
+
+    File &set_size(size_t size) {
+      m_size = size;
+      return *this;
+    }
+
+  private:
+    mutable int m_location = 0;
+    mutable size_t m_size = 0;
+    Mq & m_mq;
+
+    int interface_ioctl(int request, void *argument) const override {
+      return fake_ioctl(request, argument);
+    }
+    int interface_lseek(int offset, int whence) const override;
+    int interface_read(void *buf, int nbyte) const override;
+    int interface_write(const void *buf, int nbyte) const override;
+  };
+
 private:
+  friend File;
   mqd_t m_handle;
   API_AF(Mq, unsigned, message_priority, 0);
 
   void set_attributes(const Attributes &attributes);
 };
+
 
 } // namespace thread
 
