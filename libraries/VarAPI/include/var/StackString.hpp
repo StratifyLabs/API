@@ -45,7 +45,6 @@ public:
     return 0;
   }
 
-
   Derived operator*(u32 a) const {
     Derived result;
     for (u32 i = 0; i < a; i++) {
@@ -113,15 +112,18 @@ public:
     return static_cast<Derived &>(*this);
   }
 
-  Derived &pop_front(size_t count = 1){
+  Derived &pop_front(size_t count = 1) {
     const auto safe_count = count < capacity() ? count : capacity();
     for (size_t i = safe_count; i < capacity(); i++) {
-      m_buffer[i-safe_count] = m_buffer[i];
+      m_buffer[i - safe_count] = m_buffer[i];
+      if( m_buffer[i] == 0 ){
+        break;
+      }
     }
     return static_cast<Derived &>(*this);
   }
 
-  Derived &pop_back(size_t count = 1){
+  Derived &pop_back(size_t count = 1) {
     const auto end = length() > count ? length() - count : 0;
     m_buffer[end] = 0;
     return static_cast<Derived &>(*this);
@@ -145,7 +147,6 @@ public:
     return replace(options);
   }
 
-
 protected:
   StackString() { m_buffer[0] = 0; }
   StackString(const StringView a) {
@@ -157,13 +158,12 @@ protected:
 
   StackString(const char *a) {
     m_buffer[Size - 1] = 0;
-    if( a == nullptr ){
+    if (a == nullptr) {
       m_buffer[0] = 0;
     } else {
       strncpy(m_buffer, a, Size - 1);
     }
   }
-
 
   char m_buffer[Size];
 };
@@ -225,7 +225,8 @@ PathString operator/(const StringView lhs, const StringView rhs);
 #define VAR_API_GENERAL_STRING_SIZE 512
 #endif
 
-class GeneralString : public StackString<GeneralString, VAR_API_GENERAL_STRING_SIZE> {
+class GeneralString
+    : public StackString<GeneralString, VAR_API_GENERAL_STRING_SIZE> {
 public:
   GeneralString() = default;
   GeneralString(const StringView a) : StackString(a) {}
@@ -246,25 +247,22 @@ public:
   template <typename T> NumberString(T value) {
     // guarantee null termination
     m_buffer[capacity()] = 0;
-    constexpr const char *fmt
-      = (std::is_same<T, int>::value || std::is_same<T, signed int>::value
-         || std::is_same<T, short>::value
-         || std::is_same<T, signed short>::value || std::is_same<T, char>::value
-         || std::is_same<T, signed char>::value)
-          ? "%d"
-          : std::is_same<T, long>::value
-              ? "%ld"
-              : std::is_same<T, long long>::value
-                  ? "%lld"
-                  : (std::is_same<T, unsigned>::value
-                     || std::is_same<T, unsigned short>::value
-                     || std::is_same<T, unsigned char>::value)
-                      ? "%u"
-                      : std::is_same<T, unsigned long>::value
-                          ? "%lu"
-                          : std::is_same<T, unsigned long long>::value
-                              ? "%lld"
-                              : std::is_same<T, float>::value ? "%f" : nullptr;
+    constexpr const char *fmt =
+        (std::is_same<T, int>::value || std::is_same<T, signed int>::value ||
+         std::is_same<T, short>::value ||
+         std::is_same<T, signed short>::value || std::is_same<T, char>::value ||
+         std::is_same<T, signed char>::value)
+            ? "%d"
+        : std::is_same<T, long>::value      ? "%ld"
+        : std::is_same<T, long long>::value ? "%lld"
+        : (std::is_same<T, unsigned>::value ||
+           std::is_same<T, unsigned short>::value ||
+           std::is_same<T, unsigned char>::value)
+            ? "%u"
+        : std::is_same<T, unsigned long>::value      ? "%lu"
+        : std::is_same<T, unsigned long long>::value ? "%lld"
+        : std::is_same<T, float>::value              ? "%f"
+                                                     : nullptr;
     static_assert(fmt != nullptr, "NumberString can't handle type");
 
     snprintf(m_buffer, capacity(), fmt, value);
