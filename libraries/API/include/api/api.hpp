@@ -324,6 +324,17 @@ public:                                                                        \
   class_name(class_name &&) = delete;                                          \
   class_name &operator=(class_name &&) = delete
 
+#define API_SINGLETON_CUSTOM_CONSTRUCTOR(class_name)                           \
+public:                                                                        \
+  static class_name &instance() {                                              \
+    static class_name m_instance;                                              \
+    return m_instance;                                                         \
+  }                                                                            \
+  class_name(const class_name &) = delete;                                     \
+  class_name &operator=(const class_name &) = delete;                          \
+  class_name(class_name &&) = delete;                                          \
+  class_name &operator=(class_name &&) = delete
+
 /*! \brief ProgressCallback Class
  * \details The ProgressCallback class is used
  * by various methods to allow the application

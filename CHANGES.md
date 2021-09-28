@@ -2,6 +2,7 @@
 
 ## New Features
 
+- Add `API_SINGLETON_CUSTOM_CONSTRUCTOR()` macro for singletons that have logic in the constructor
 - minor improvements to `var::StackString` types
 - Add `Mq::File` to create a `FileObject` based on a message queue
 - Add `API_SINGLETON()` macro for creating singleton classes
