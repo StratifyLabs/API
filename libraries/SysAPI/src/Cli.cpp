@@ -8,20 +8,9 @@
 
 printer::Printer &
 printer::operator<<(printer::Printer &printer, const sys::Cli &a) {
-#if 0
-  printer.print_open_object(printer.verbose_level(), a.name().cstring());
-  {
-    printer.key("publisher", a.publisher());
-    printer.print_open_object(printer.verbose_level(), "arguments");
-    {
-      for (u32 i = 0; i < a.count(); i++) {
-        printer.key(0, "%s", a.at(i).cstring());
-      }
-      printer.print_close_object();
-    }
-    printer.print_close_object();
+  for(size_t i =0; i < a.count(); i++){
+    printer.key(var::NumberString(i, "[%d]"), a.at(i));
   }
-#endif
   return printer;
 }
 

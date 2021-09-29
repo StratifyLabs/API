@@ -2,6 +2,7 @@
 
 ## New Features
 
+- implement operator for sending `sys::Cli` to a `printer::Printer`
 - minor improvements to `var::StackString` types
 - Add `Mq::File` to create a `FileObject` based on a message queue
 - Add `API_SINGLETON()` macro for creating singleton classes
