@@ -20,7 +20,7 @@ public:
     m_location = 0;
   }
 
-  explicit DataFile(File &file_to_load);
+  explicit DataFile(const FileObject &file_to_load);
 
   DataFile &reserve(size_t size) {
     m_data.reserve(size);

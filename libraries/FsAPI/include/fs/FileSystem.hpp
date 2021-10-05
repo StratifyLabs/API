@@ -79,14 +79,6 @@ protected:
 private:
 };
 
-class TemporaryDirectory : public api::ExecutionContext {
-public:
-  explicit TemporaryDirectory(const var::StringView parent = "");
-  ~TemporaryDirectory();
-
-private:
-  API_AC(TemporaryDirectory, var::PathString, path);
-};
 
 } // namespace fs
 

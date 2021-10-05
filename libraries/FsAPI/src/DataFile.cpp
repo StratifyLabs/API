@@ -12,7 +12,7 @@
 
 using namespace fs;
 
-DataFile::DataFile(fs::File &file_to_load) {
+DataFile::DataFile(const FileObject& file_to_load) {
   m_location = 0;
   m_open_flags = OpenMode::append_read_write();
   API_RETURN_IF_ERROR();

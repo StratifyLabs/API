@@ -5,7 +5,6 @@
 #include "chrono/ClockTime.hpp"
 #include "fs/Dir.hpp"
 #include "printer/Printer.hpp"
-#include "sys/System.hpp"
 #include "var/StackString.hpp"
 #include "var/Tokenizer.hpp"
 
@@ -294,19 +293,4 @@ int FileSystem::interface_rename(const char *old_name,
                                  const char *new_name) const {
   int result = ::rename(old_name, new_name);
   return result;
-}
-
-TemporaryDirectory::TemporaryDirectory(const var::StringView parent)
-    : m_path((parent.is_empty() ? sys::System::user_data_path() : parent) /
-             chrono::ClockTime::get_system_time().to_unique_string()) {
-  FileSystem().create_directory(m_path);
-  if (is_error()) {
-    m_path.clear();
-  }
-}
-
-TemporaryDirectory::~TemporaryDirectory() {
-  if (m_path.is_empty() == false) {
-    FileSystem().remove_directory(m_path, FileSystem::IsRecursive::yes);
-  }
 }

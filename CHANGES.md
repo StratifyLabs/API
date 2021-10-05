@@ -2,6 +2,9 @@
 
 ## New Features
 
+> Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
+
+- Add `sys::Process` and `sys::Pipe` (only for desktop builds)
 - implement operator for sending `sys::Cli` to a `printer::Printer`
 - Add `API_SINGLETON_CUSTOM_CONSTRUCTOR()` macro for singletons that have logic in the constructor
 - minor improvements to `var::StackString` types
@@ -13,6 +16,8 @@
 
 ## Bug Fixes
 
+- Check for zero size when adding a null terminator to `var::Data`
+- Change `fs::File&` to `const fs::FileObject&` when constructing a `fs::DataFile` from another File
 - Fixed broken build on StratifyOS with Signal casting to `_sig_func_ptr`
 
 # Version 1.1.0

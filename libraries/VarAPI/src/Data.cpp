@@ -45,7 +45,7 @@ Data &Data::resize(size_t s) {
 }
 
 const char *Data::add_null_terminator() {
-  if (data_u8()[size() - 1] != 0) {
+  if (size() == 0 || (data_u8()[size() - 1] != 0)) {
     char c = 0;
     append(View(c));
   }
