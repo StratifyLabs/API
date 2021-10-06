@@ -49,7 +49,14 @@ Process::Environment& Process::Environment::set_working_directory(const var::Str
   return set("PWD", path);
 }
 
-var::PathString Process::Environment::which(const var::StringView executable){
+var::PathString Process::which(const var::StringView executable){
+  const char * pwd = getenv("PWD");
+  if( pwd ){
+    if( const auto path = var::StringView(pwd) / executable; fs::FileSystem().exists(path) ){
+      return path;
+    }
+  }
+
   const char * path = getenv("PATH");
   if( path == nullptr ){
     return var::PathString();

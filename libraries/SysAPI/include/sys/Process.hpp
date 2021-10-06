@@ -102,8 +102,10 @@ public:
     Environment &set(const var::StringView name, const var::StringView value);
     Environment &set_working_directory(const var::StringView path);
 
-    static var::PathString which(const var::StringView executable);
   };
+
+  static var::PathString which(const var::StringView executable);
+
 
   enum class IsDetached { no, yes };
 
