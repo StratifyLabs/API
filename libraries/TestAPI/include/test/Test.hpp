@@ -73,6 +73,12 @@ public:
   static void initialize(const Initialize &options);
   static void finalize();
 
+  class Scope {
+  public:
+    Scope(const Initialize &options){ initialize(options); }
+    ~Scope(){ finalize(); }
+  };
+
   static ExecuteFlags parse_execution_flags(const sys::Cli &cli);
   static u32 parse_test(const sys::Cli &cli, var::StringView name,
                         u32 test_flag);
