@@ -512,11 +512,12 @@ bool Printer::update_progress(int progress, int total) {
                         animation.at(m_progress_state % animation.length()),
                         progress);
           interface_print_final(output);
-          for (const auto c : output.string_view()) {
+          for (const auto c: output.string_view()) {
+            MCU_UNUSED_ARGUMENT(c);
             interface_print_final("\b"); // backspace
           }
         } else {
-          interface_print_final(var::NumberString(m_progress_state - 1));
+          interface_print_final("~");
         }
 
       } else {

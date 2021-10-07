@@ -5,6 +5,7 @@
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
 - Add `test::Test::Scope` for managing application level test initialization and finalization
+- Use `~` when printing simple indeterminate progress
 - Add `sys::Process` and `sys::Pipe` (only for desktop builds)
 - implement operator for sending `sys::Cli` to a `printer::Printer`
 - Add `API_SINGLETON_CUSTOM_CONSTRUCTOR()` macro for singletons that have logic in the constructor
