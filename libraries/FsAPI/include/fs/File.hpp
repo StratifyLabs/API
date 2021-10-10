@@ -141,6 +141,24 @@ public:
 
   var::GeneralString gets(char term = '\n') const;
 
+  template<class StringType> StringType get_line(char term = '\n') const {
+    char c = 0;
+    StringType result;
+    int bytes_received = 0;
+    while ((c != term) && is_success()) {
+      if (read(var::View(c)).return_value() == 1) {
+        result.append(c);
+        bytes_received++;
+        if (bytes_received == result.capacity()) {
+          c = term;
+        }
+      } else {
+        c = term;
+      }
+    }
+    return result;
+  }
+
   class Ioctl {
     API_ACCESS_FUNDAMENTAL(Ioctl, int, request, 0);
     API_ACCESS_FUNDAMENTAL(Ioctl, void *, argument, nullptr);

@@ -3,7 +3,10 @@
 ## New Features
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
+> Important! `fs::FileSystem::read_directory()` uses a new enum class `IsExclude` rather than a bool when returning whether or not an entry should be excluding. This breaks symantic versioning.
 
+- Return `IsExclude` when using `FileSystem::read_directory()`
+- Add `get_line()` to file object to read a line into an arbitrary string type
 - Add `test::Test::Scope` for managing application level test initialization and finalization
 - Use `~` when printing simple indeterminate progress
 - Add `sys::Process` and `sys::Pipe` (only for desktop builds)

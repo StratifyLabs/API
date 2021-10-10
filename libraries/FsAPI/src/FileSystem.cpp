@@ -65,7 +65,7 @@ bool FileSystem::exists(var::StringView path) const {
 FileInfo FileSystem::get_info(var::StringView path) const {
   API_RETURN_VALUE_IF_ERROR(FileInfo());
   const var::PathString path_string(path);
-  struct stat stat{};
+  struct stat stat {};
   API_SYSTEM_CALL(path_string.cstring(),
                   interface_stat(path_string.cstring(), &stat));
   return FileInfo(stat);
@@ -73,7 +73,7 @@ FileInfo FileSystem::get_info(var::StringView path) const {
 
 FileInfo FileSystem::get_info(const File &file) const {
   API_RETURN_VALUE_IF_ERROR(FileInfo());
-  struct stat stat{};
+  struct stat stat {};
   API_SYSTEM_CALL("", interface_fstat(file.fileno(), &stat));
   return FileInfo(stat);
 }
@@ -84,7 +84,7 @@ const FileSystem &FileSystem::remove_directory(var::StringView path,
   if (recursive == IsRecursive::yes) {
     Dir d(path);
 
-    const char * entry;
+    const char *entry;
     while ((entry = d.read()) != nullptr) {
       var::PathString entry_path = path / entry;
       FileInfo info = get_info(entry_path);
@@ -128,7 +128,7 @@ size_t FileSystem::get_entry_count(const var::StringView path,
       if (is_recursive == IsRecursive::yes) {
         const auto entry_path = path / entry;
         const auto info = get_info(entry_path);
-        if (info.is_directory() ) {
+        if (info.is_directory()) {
           result += get_entry_count(entry_path, IsRecursive::yes);
         }
       }
@@ -139,7 +139,8 @@ size_t FileSystem::get_entry_count(const var::StringView path,
 
 PathList
 FileSystem::read_directory(const var::StringView path, IsRecursive is_recursive,
-                           bool (*exclude)(const var::StringView, void*), void* context) const {
+                           IsExclude (*exclude)(const var::StringView, void *),
+                           void *context) const {
   PathList result;
   bool is_the_end = false;
 
@@ -157,7 +158,8 @@ FileSystem::read_directory(const var::StringView path, IsRecursive is_recursive,
       is_the_end = true;
     }
 
-    if ((exclude == nullptr || !exclude(entry.string_view(), context)) &&
+    if ((exclude == nullptr ||
+         (exclude(entry.string_view(), context) == IsExclude::no)) &&
         !entry.is_empty() && (entry.string_view() != ".") &&
         (entry.string_view() != "..")) {
 

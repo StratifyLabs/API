@@ -13,6 +13,9 @@ class FileSystem : public api::ExecutionContext {
 public:
   using IsOverwrite = File::IsOverwrite;
   using IsRecursive = Dir::IsRecursive;
+  enum class IsExclude {
+    no, yes
+  };
 
   FileSystem();
 
@@ -44,7 +47,7 @@ public:
   PathList
   read_directory(const var::StringView path,
                  IsRecursive is_recursive = IsRecursive::no,
-                 bool (*exclude)(const var::StringView, void * context) = nullptr,
+                 IsExclude (*exclude)(const var::StringView, void * context) = nullptr,
                  void * context = nullptr) const;
 
   class Rename {
