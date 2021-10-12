@@ -394,6 +394,132 @@ private:
   API_AF(ProgressCallback, void *, context, nullptr);
 };
 
+template <typename Type> class RangeIterator {
+public:
+  using TransformCallback = Type (*)(const Type &, const Type &);
+
+  RangeIterator(Type value, Type max, TransformCallback transform)
+      : m_value(value), m_max(max), m_transform(transform) {}
+
+  bool operator!=(RangeIterator const &a) const noexcept {
+    return m_value != a.m_value;
+  }
+
+  Type const operator*() const noexcept { return m_transform(m_value, m_max); }
+
+  RangeIterator &operator++() {
+    m_value++;
+    return *this;
+  }
+
+  RangeIterator &operator--() {
+    m_value--;
+    return *this;
+  }
+
+private:
+  Type m_value;
+  Type m_max;
+  TransformCallback m_transform;
+};
+
+template <typename Type = int> class Range {
+public:
+  static Type forward(const Type &a, const Type &) { return a; }
+  static Type reverse(const Type &a, const Type &b) { return b - a - 1; }
+
+  constexpr Range(
+      const Type &start,
+      const Type &finish,
+      typename RangeIterator<Type>::TransformCallback transform = nullptr)
+      : m_start(start < finish ? start : finish),
+        m_finish(start < finish ? finish : start),
+        m_transform(
+            transform == nullptr ? (start < finish ? forward : reverse)
+                                 : transform) {}
+
+  RangeIterator<Type> begin() const noexcept {
+    return RangeIterator(m_start, m_finish, m_transform);
+  }
+  RangeIterator<Type> begin() noexcept {
+    return RangeIterator(m_start, m_finish, m_transform);
+  }
+
+  RangeIterator<Type> end() const noexcept {
+    return RangeIterator(m_finish, m_finish, m_transform);
+  }
+  RangeIterator<Type> end() noexcept {
+    return RangeIterator(m_finish, m_finish, m_transform);
+  }
+
+  RangeIterator<Type> cbegin() const noexcept {
+    return RangeIterator(m_start, m_finish, m_transform);
+  }
+  RangeIterator<Type> cend() const noexcept {
+    return RangeIterator(m_finish, m_finish, m_transform);
+  }
+
+private:
+  const Type m_start = 0;
+  const Type m_finish = 0;
+  typename RangeIterator<Type>::TransformCallback m_transform;
+};
+
+template <typename Type> class IndexIterator {
+public:
+
+  IndexIterator(Type value)
+      : m_value(value){}
+
+  bool operator!=(IndexIterator const &a) const noexcept {
+    return m_value != a.m_value;
+  }
+
+  Type const operator*() const noexcept { return m_value; }
+
+  IndexIterator &operator++() {
+    m_value++;
+    return *this;
+  }
+
+  IndexIterator &operator--() {
+    m_value--;
+    return *this;
+  }
+
+private:
+  Type m_value;
+};
+
+template <typename Type = int> class Index {
+public:
+
+  constexpr Index(
+      const Type &start,
+      const Type &finish)
+      : m_start(start),
+        m_finish(finish){}
+
+  IndexIterator<Type> begin() const noexcept {
+    return IndexIterator(m_start);
+  }
+
+  IndexIterator<Type> end() const noexcept {
+    return IndexIterator(m_finish);
+  }
+
+  IndexIterator<Type> cbegin() const noexcept {
+    return IndexIterator(m_start);
+  }
+  IndexIterator<Type> cend() const noexcept {
+    return IndexIterator(m_finish);
+  }
+
+private:
+  const Type m_start = 0;
+  const Type m_finish = 0;
+};
+
 } // namespace api
 
 #endif // API_API_HPP_
