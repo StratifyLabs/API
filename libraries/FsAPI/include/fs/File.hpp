@@ -141,7 +141,7 @@ public:
 
   var::GeneralString gets(char term = '\n') const;
 
-  template<class StringType> StringType get_line(char term = '\n') const {
+  template <class StringType> StringType get_line(char term = '\n') const {
     char c = 0;
     StringType result;
     int bytes_received = 0;
@@ -311,8 +311,8 @@ public:
   FileMemberAccess(const fs::FileObject &file)
       : m_file_member_reference_access(file) {}
 
-  //FileMemberAccess(const FileMemberAccess & a) = default;
-  //FileMemberAccess& operator =(const FileMemberAccess & a) = default;
+  // FileMemberAccess(const FileMemberAccess & a) = default;
+  // FileMemberAccess& operator =(const FileMemberAccess & a) = default;
 
   const Derived &read(void *buf, size_t size) const {
     m_file_member_reference_access.read(buf, size);
@@ -433,9 +433,7 @@ public:
       file.set_fileno(file_descriptor);
     }
 
-    ~DescriptorScope(){
-      m_file.set_fileno(-1);
-    }
+    ~DescriptorScope() { m_file.set_fileno(-1); }
 
   private:
     File &m_file;
