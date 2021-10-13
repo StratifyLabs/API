@@ -6,7 +6,18 @@
 #include <unistd.h>
 
 #include <sys/types.h>
+#if !defined __win32
 #include <sys/wait.h>
+#else
+#define WEXITSTATUS(x) x
+#define WIFEXITED(x) x
+#define WTERMSIG(x) x
+#define WIFSTOPPED(x) x
+#define WIFSIGNALED(x) x
+#define WSTOPSIG(x) x
+#define WIFCONTINUED(x) x
+
+#endif
 
 #include "fs/FileSystem.hpp"
 #include "sys/Process.hpp"
@@ -97,7 +108,11 @@ bool Process::Status::is_continued() const {
 
 Process::Process(const Arguments &arguments, const Environment &environment) {
   API_RETURN_IF_ERROR();
+#if defined __win32
+
+#else
   m_pid = API_SYSTEM_CALL("fork()", fork());
+#endif
   if (m_pid == 0) {
 
     // this will run in the child process
@@ -128,11 +143,15 @@ Process &Process::wait() {
   }
 
   int status = 0;
+#if defined __win32
+
+#else
   auto result = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid, &status, 0));
   if( result == m_pid ){
     m_pid = -1;
     m_status = status;
   }
+#endif
 
   return *this;
 }
@@ -145,12 +164,16 @@ bool Process::is_running(){
 
   api::ErrorScope error_scope;
   int status = 0;
+#if defined __win32
+
+#else
   auto result = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid, &status, WNOHANG));
   if( result == m_pid ){
     m_status = status;
     m_pid = -1;
     return false;
   }
+#endif
 
   return true;
 }
