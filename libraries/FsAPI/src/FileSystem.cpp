@@ -139,7 +139,7 @@ size_t FileSystem::get_entry_count(const var::StringView path,
 
 PathList
 FileSystem::read_directory(const var::StringView path, IsRecursive is_recursive,
-                           IsExclude (*exclude)(const var::StringView, void *),
+                           ExcludeCallback exclude,
                            void *context) const {
   PathList result;
   bool is_the_end = false;

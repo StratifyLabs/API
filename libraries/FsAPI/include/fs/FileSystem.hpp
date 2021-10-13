@@ -17,6 +17,8 @@ public:
     no, yes
   };
 
+  using ExcludeCallback = IsExclude (*)(const var::StringView name, void *);
+
   FileSystem();
 
 #if !defined __link
@@ -47,8 +49,17 @@ public:
   PathList
   read_directory(const var::StringView path,
                  IsRecursive is_recursive = IsRecursive::no,
-                 IsExclude (*exclude)(const var::StringView, void * context) = nullptr,
+                 ExcludeCallback exclude = nullptr,
                  void * context = nullptr) const;
+
+  //for backwards compatibility
+  PathList
+  read_directory(const var::StringView path,
+                 IsRecursive is_recursive,
+                 bool (*exclude)(const var::StringView, void * context),
+                 void * context = nullptr) const {
+    return read_directory(path, is_recursive, reinterpret_cast<ExcludeCallback>(exclude), context);
+  }
 
   class Rename {
     API_AC(Rename, var::StringView, source);
