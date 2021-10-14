@@ -9,6 +9,8 @@
 #include <winsock2.h>
 
 #include <windows.h>
+
+#include <direct.h>
 #endif
 
 #include <sdk/types.h>

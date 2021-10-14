@@ -48,8 +48,8 @@ Process::Environment &Process::Environment::set(
   // check to see if the entry exists
   const auto starts_with = name | "=";
   for (size_t i = 0; i < m_arguments.count(); i++) {
-    char *value = m_arguments.at(i);
-    if (var::StringView(value).find(starts_with) == 0) {
+    char *current_value = m_arguments.at(i);
+    if (var::StringView(current_value).find(starts_with) == 0) {
       replace(i, format(name, value));
       return *this;
     }
@@ -127,12 +127,24 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   *m_process_information = PROCESS_INFORMATION{};
   STARTUPINFOA startup_info = {};
 
+  var::PathString cwd;
+  _getcwd(cwd.data(), cwd.capacity());
+  const var::PathString pwd = environment.find("PWD");
+
+  printf("chdir to PWD %s\n", pwd.cstring());
+
   int stdout_fd = dup(_fileno(stdout));
 
   //change stdout and stderr to specify spawned process stdout, stderr
   _dup2(m_pipe.write_file().fileno(), _fileno(stdout));
   _dup2(_fileno(stdout), _fileno(stderr));
   m_pipe.write_file() = fs::File();
+
+  if( pwd.is_empty() == false ){
+    _chdir(pwd.cstring());
+  }
+
+  //change working directory?
 
   m_process = HANDLE(_spawnvpe(
     P_NOWAIT,
@@ -143,6 +155,11 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   //restore stdout
   _dup2(stdout_fd, _fileno(stdout));
   _close(stdout_fd);
+
+
+  if( pwd.is_empty() == false ){
+    _chdir(cwd.cstring());
+  }
 
   if( m_process == nullptr ){
     m_process = INVALID_HANDLE_VALUE;
