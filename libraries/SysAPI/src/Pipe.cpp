@@ -21,6 +21,10 @@ Pipe::Pipe() {
   API_SYSTEM_CALL("pipe()", posix_pipe(fd));
   m_read_file = fs::File().set_fileno(fd[0]).move();
   m_write_file = fs::File().set_fileno(fd[1]).move();
+  fcntl(
+    m_read_file.fileno(),
+    F_SETFL,
+    fcntl(m_read_file.fileno(), F_GETFL, 0) | O_NONBLOCK);
 }
 
 #endif
