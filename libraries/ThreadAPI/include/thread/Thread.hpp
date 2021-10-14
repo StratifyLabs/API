@@ -88,6 +88,12 @@ public:
 
   Thread(const Construct &options);
   Thread(const Attributes &attributes, const Construct &options);
+  Thread(const Attributes &attributes, void * argument, function_t thread_function){
+    construct(attributes, Construct().set_argument(argument).set_function(thread_function));
+  }
+  Thread(void * argument, function_t thread_function){
+    construct(Attributes(), Construct().set_argument(argument).set_function(thread_function));
+  }
   ~Thread();
 
   /*! \details Gets the ID of the thread. */
@@ -157,6 +163,8 @@ private:
     std::swap(m_id, a.m_id);
     std::swap(m_state, a.m_state);
   }
+
+  void construct(const Attributes & attributes, const Construct & options);
 
   static void *handle_thread(void *args);
 

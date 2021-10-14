@@ -500,6 +500,11 @@ public:
       : m_start(start),
         m_finish(finish){}
 
+  constexpr Index(
+    const Type &finish)
+    : m_start(Type{}),
+      m_finish(finish){}
+
   IndexIterator<Type> begin() const noexcept {
     return IndexIterator(m_start);
   }

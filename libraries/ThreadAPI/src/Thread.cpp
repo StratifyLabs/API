@@ -119,7 +119,7 @@ Sched::Policy Thread::Attributes::get_sched_policy() const {
 
 int Thread::Attributes::get_sched_priority() const {
   API_RETURN_VALUE_IF_ERROR(-1);
-  struct sched_param param = {0};
+  struct sched_param param = {};
   API_SYSTEM_CALL("", pthread_attr_getschedparam(&m_pthread_attr, &param));
   return param.sched_priority;
 }
@@ -137,7 +137,7 @@ void *Thread::handle_thread(void *args) {
 
 Thread::Thread(const Attributes &attributes, const Construct &options) {
   API_RETURN_IF_ERROR();
-  API_ASSERT(options.function() != nullptr);
+  construct(attributes, options);
 
   m_function = options.function();
   m_argument = options.argument();
@@ -162,25 +162,28 @@ Thread::Thread(const Attributes &attributes, const Construct &options) {
 
 Thread::Thread(const Construct &options) {
   API_RETURN_IF_ERROR();
-  API_ASSERT(options.function() != nullptr);
-  Attributes attributes;
+  construct(Attributes(), options);
+}
 
+void Thread::construct(const Attributes &attributes, const Construct & options){
+  API_ASSERT(options.function() != nullptr);
   m_function = options.function();
   m_argument = options.argument();
 
   // First create the thread
   int result =
-      API_SYSTEM_CALL("", pthread_create(&m_id, &attributes.m_pthread_attr,
-                                         handle_thread, this));
+    API_SYSTEM_CALL("", pthread_create(&m_id, &attributes.m_pthread_attr,
+                                       handle_thread, this));
 
   if (result < 0) {
     m_state = State::error;
   } else {
     m_state = attributes.get_detach_state() == DetachState::joinable
-                  ? State::joinable
-                  : State::detached;
+                ? State::joinable
+                : State::detached;
   }
 }
+
 
 Thread::~Thread() {
   api::ErrorGuard error_guard;

@@ -4,7 +4,9 @@
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
+- Add more ways to construct a Thread (less cumbersome)
 - Add `api::Range` and `api::Index` for creating simple ranges for range based for loops
+  - `api::Index` can take one argument and count from zero to `end-1` and automatically infer the type
 - Return `IsExclude` when using `FileSystem::read_directory()` (added a method for backward compatibility too)
 - Add `get_line()` to file object to read a line into an arbitrary string type
 - Add `test::Test::Scope` for managing application level test initialization and finalization
