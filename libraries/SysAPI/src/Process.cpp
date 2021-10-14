@@ -37,49 +37,61 @@ Process::Environment::Environment(char **env) : Process::Arguments("") {
   } while (effective_env[i] != nullptr);
 }
 
-Process::Environment &Process::Environment::set(const var::StringView name,
-                 const var::StringView value) {
+Process::Environment &Process::Environment::set(
+  const var::StringView name,
+  const var::StringView value) {
 
-  auto format = [](const var::StringView name,
-                   const var::StringView value){
+  auto format = [](const var::StringView name, const var::StringView value) {
     return name | "=" | value;
   };
 
-  //check to see if the entry exists
+  // check to see if the entry exists
   const auto starts_with = name | "=";
-  for(size_t i=0; i < m_arguments.count(); i++){
-    char * value = m_arguments.at(i);
-    if( var::StringView(value).find(starts_with) == 0 ){
-      replace(i, format(name,value));
+  for (size_t i = 0; i < m_arguments.count(); i++) {
+    char *value = m_arguments.at(i);
+    if (var::StringView(value).find(starts_with) == 0) {
+      replace(i, format(name, value));
       return *this;
     }
   }
 
-  push(format(name,value));
+  push(format(name, value));
   return *this;
 }
 
-Process::Environment& Process::Environment::set_working_directory(const var::StringView path){
+Process::Environment &
+Process::Environment::set_working_directory(const var::StringView path) {
   return set("PWD", path);
 }
 
-var::PathString Process::which(const var::StringView executable){
-  const char * pwd = getenv("PWD");
-  if( pwd ){
-    if( const auto path = var::StringView(pwd) / executable; fs::FileSystem().exists(path) ){
+const char *Process::Environment::find(const var::StringView variable) const {
+  const auto check = var::NameString(variable).append("=");
+  for (const auto *value : variables()) {
+    if (value && var::StringView(value).find(check) == 0) {
+      return value + check.length();
+    }
+  }
+  return "";
+}
+
+var::PathString Process::which(const var::StringView executable) {
+  const char *pwd = getenv("PWD");
+  if (pwd) {
+    if (const auto path = var::StringView(pwd) / executable;
+        fs::FileSystem().exists(path)) {
       return path;
     }
   }
 
-  const char * path = getenv("PATH");
-  if( path == nullptr ){
+  const char *path = getenv("PATH");
+  if (path == nullptr) {
     return var::PathString();
   }
 
   const auto path_list = var::StringView(path).split(";:");
-  for(const auto & entry: path_list){
+  for (const auto &entry : path_list) {
     const auto path = entry / executable;
-    if( fs::FileSystem().exists(path) ){
+    if (fs::FileSystem().exists(path)) {
       return path;
     }
   }
@@ -89,7 +101,9 @@ var::PathString Process::which(const var::StringView executable){
 
 u8 Process::Status::exit_status() const { return WEXITSTATUS(m_status_value); }
 
-bool Process::Status::is_exited() const { return WIFEXITED(m_status_value) != 0; }
+bool Process::Status::is_exited() const {
+  return WIFEXITED(m_status_value) != 0;
+}
 bool Process::Status::is_terminated() const {
   return WIFSIGNALED(m_status_value) != 0;
 }
@@ -109,16 +123,39 @@ bool Process::Status::is_continued() const {
 Process::Process(const Arguments &arguments, const Environment &environment) {
   API_RETURN_IF_ERROR();
 #if defined __win32
+  m_process_information = new PROCESS_INFORMATION;
+  *m_process_information = PROCESS_INFORMATION{};
+  STARTUPINFOA startup_info = {};
+
+  int stdout_fd = dup(_fileno(stdout));
+
+  //change stdout and stderr to specify spawned process stdout, stderr
+  _dup2(m_pipe.write_file().fileno(), _fileno(stdout));
+  _dup2(_fileno(stdout), _fileno(stderr));
+  m_pipe.write_file() = fs::File();
+
+  m_process = HANDLE(_spawnvpe(
+    P_NOWAIT,
+    arguments.get_value(0),
+    arguments.m_arguments.data(),
+    environment.m_arguments.data()));
+
+  //restore stdout
+  _dup2(stdout_fd, _fileno(stdout));
+  _close(stdout_fd);
+
+  if( m_process == nullptr ){
+    m_process = INVALID_HANDLE_VALUE;
+    API_RETURN_ASSIGN_ERROR("failed to spawn", EINVAL);
+  }
 
 #else
   m_pid = API_SYSTEM_CALL("fork()", fork());
-#endif
   if (m_pid == 0) {
 
     // this will run in the child process
     Arguments args(arguments);
     Environment env(environment);
-
 
     dup2(m_pipe.write_file().fileno(), STDOUT_FILENO);
     // stdout will now write to the pipe -- this fileno isn't needed anymore
@@ -129,6 +166,7 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     perror("failed to launch\n");
     exit(1);
   }
+#endif
 }
 
 Process::~Process() {
@@ -138,16 +176,30 @@ Process::~Process() {
 
 Process &Process::wait() {
   API_RETURN_VALUE_IF_ERROR(*this);
+
+#if defined __win32
+  if( m_process == INVALID_HANDLE_VALUE || m_process == nullptr){
+    return *this;
+  }
+
+  DWORD code = 0;
+  WaitForSingleObject(m_process, INFINITE);
+  CloseHandle(m_process);
+
+  m_process = INVALID_HANDLE_VALUE;
+  m_status = int(code);
+
+  return *this;
+
+#else
   if (m_pid < 0) {
     return *this;
   }
 
   int status = 0;
-#if defined __win32
 
-#else
   auto result = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid, &status, 0));
-  if( result == m_pid ){
+  if (result == m_pid) {
     m_pid = -1;
     m_status = status;
   }
@@ -156,19 +208,35 @@ Process &Process::wait() {
   return *this;
 }
 
-bool Process::is_running(){
+bool Process::is_running() {
   API_RETURN_VALUE_IF_ERROR(false);
-  if( m_pid < 0 ){
+#if defined __win32
+  if( m_process == INVALID_HANDLE_VALUE || m_process == nullptr){
+    return false;
+  }
+
+  DWORD code = STILL_ACTIVE;
+  if( GetExitCodeProcess(m_process, &code) != 0 ){
+    m_process = INVALID_HANDLE_VALUE;
+    return false;
+  }
+
+  if( code == STILL_ACTIVE ){
+    return true;
+  }
+
+  m_status = int(code);
+  return false;
+#else
+  if (m_pid < 0) {
     return false;
   }
 
   api::ErrorScope error_scope;
   int status = 0;
-#if defined __win32
-
-#else
-  auto result = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid, &status, WNOHANG));
-  if( result == m_pid ){
+  auto result
+    = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid, &status, WNOHANG));
+  if (result == m_pid) {
     m_status = status;
     m_pid = -1;
     return false;

@@ -5,6 +5,12 @@
 
 #if defined __link
 
+#if defined __win32
+#include <winsock2.h>
+
+#include <windows.h>
+#endif
+
 #include <sdk/types.h>
 #include <type_traits>
 
@@ -68,6 +74,24 @@ public:
       return *this;
     }
 
+    char *get_value(size_t offset) {
+      if (offset < m_arguments.count()) {
+        return m_arguments.at(offset);
+      }
+      return nullptr;
+    }
+
+    const char *get_value(size_t offset) const {
+      if (offset < m_arguments.count()) {
+        return m_arguments.at(offset);
+      }
+      return nullptr;
+    }
+
+    var::Vector<char *> &arguments() { return m_arguments; }
+
+    const var::Vector<char *> &arguments() const { return m_arguments; }
+
   protected:
     friend Process;
     var::Vector<char *> m_arguments;
@@ -102,10 +126,17 @@ public:
     Environment &set(const var::StringView name, const var::StringView value);
     Environment &set_working_directory(const var::StringView path);
 
+    var::Vector<char *> &variables() { return arguments(); }
+
+    const var::Vector<char *> &variables() const { return arguments(); }
+
+    const char *find(const var::StringView variable) const;
+
+  private:
+    friend Process;
   };
 
   static var::PathString which(const var::StringView executable);
-
 
   enum class IsDetached { no, yes };
 
@@ -131,6 +162,11 @@ private:
   Pipe m_pipe;
   pid_t m_pid = -1;
   int m_status = 0;
+
+#if defined __win32
+  PROCESS_INFORMATION *m_process_information;
+  HANDLE m_process;
+#endif
 
   void swap(Process &a) {
     std::swap(m_pid, a.m_pid);
