@@ -131,8 +131,6 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   _getcwd(cwd.data(), cwd.capacity());
   const var::PathString pwd = environment.find("PWD");
 
-  printf("chdir to PWD %s\n", pwd.cstring());
-
   int stdout_fd = dup(_fileno(stdout));
 
   //change stdout and stderr to specify spawned process stdout, stderr
@@ -229,18 +227,24 @@ bool Process::is_running() {
   API_RETURN_VALUE_IF_ERROR(false);
 #if defined __win32
   if( m_process == INVALID_HANDLE_VALUE || m_process == nullptr){
+    API_PRINTF_TRACE_LINE();
     return false;
   }
 
   DWORD code = STILL_ACTIVE;
-  if( GetExitCodeProcess(m_process, &code) != 0 ){
+  if( GetExitCodeProcess(m_process, &code) == 0 ){
+    printf("error is %d\n", GetLastError());
+    API_PRINTF_TRACE_LINE();
     m_process = INVALID_HANDLE_VALUE;
     return false;
   }
 
   if( code == STILL_ACTIVE ){
+    API_PRINTF_TRACE_LINE();
+
     return true;
   }
+  API_PRINTF_TRACE_LINE();
 
   m_status = int(code);
   return false;
