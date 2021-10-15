@@ -172,6 +172,8 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     Arguments args(arguments);
     Environment env(environment);
 
+    chdir(env.find("PWD"));
+
     dup2(m_pipe.write_file().fileno(), STDOUT_FILENO);
     // stdout will now write to the pipe -- this fileno isn't needed anymore
     // but doesn't necessarily have to be closed
