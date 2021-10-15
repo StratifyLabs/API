@@ -7,23 +7,23 @@ using namespace fs;
 using namespace var;
 
 var::StringView Path::suffix(const StringView path) {
-  size_t pos = path.reverse_find(".");
+  const auto pos = path.reverse_find(".");
 
   if (pos == var::String::npos) {
     return var::StringView();
   }
 
-  return StringView(path.data() + pos + 1);
+  return StringView(path).pop_front(pos + 1);
 }
 
 var::StringView Path::name(const StringView path) {
-  size_t pos = path.reverse_find('/');
+  const auto pos = path.reverse_find('/');
 
   if (pos == var::String::npos) {
     return path;
   }
 
-  return StringView(path.data() + pos + 1);
+  return StringView(path).pop_front(pos + 1);
 }
 
 var::StringView Path::parent_directory(const StringView path, size_t depth) {

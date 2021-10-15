@@ -83,6 +83,10 @@ var::PathString Process::which(const var::StringView executable) {
     }
   }
 
+  if( fs::FileSystem().exists(executable) ){
+    return executable;
+  }
+
   const char *path = getenv("PATH");
   if (path == nullptr) {
     return var::PathString();
@@ -122,6 +126,15 @@ bool Process::Status::is_continued() const {
 
 Process::Process(const Arguments &arguments, const Environment &environment) {
   API_RETURN_IF_ERROR();
+
+  if( arguments.m_arguments.count() == 0 ){
+    API_RETURN_ASSIGN_ERROR("arguments are empty", EINVAL);
+  }
+
+  if( var::StringView(arguments.get_value(0)).is_empty() ){
+    API_RETURN_ASSIGN_ERROR("no executable was found", EINVAL);
+  }
+
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};

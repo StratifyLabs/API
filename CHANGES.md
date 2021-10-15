@@ -23,6 +23,7 @@
 
 ## Bug Fixes
 
+- fixed a bug in `fs::Path::suffix` and `fs::Path::name` when getting a suffix of a stringview that is part of a larger null terminated string
 - Check for zero size when adding a null terminator to `var::Data`
 - Change `fs::File&` to `const fs::FileObject&` when constructing a `fs::DataFile` from another File
 - Fixed broken build on StratifyOS with Signal casting to `_sig_func_ptr`
