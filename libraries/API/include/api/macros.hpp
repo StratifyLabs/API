@@ -66,6 +66,14 @@ private:                                                                       \
                                                                                \
   TYPE NAME = INITIAL_VALUE
 
+#define API_PUBLIC_BOOL(CLASS, NAME, INITIAL_VALUE)                            \
+  CLASS &set_##NAME(bool value_parameter = true) {                             \
+    is_##NAME = value_parameter;                                               \
+    return *this;                                                              \
+  }                                                                            \
+                                                                               \
+  bool is_##NAME = INITIAL_VALUE
+
 #define API_ACCESS_MEMBER_FUNDAMENTAL(c, t, p, v)                              \
 public:                                                                        \
   t v() const { return m_##p.v; }                                              \
