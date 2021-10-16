@@ -4,6 +4,7 @@
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
+- Add `API_PUBLIC_MEMBERS()` macros for declaring and accessing purely public members
 - Add more ways to construct a Thread (less cumbersome)
 - Add `api::Range` and `api::Index` for creating simple ranges for range based for loops
   - `api::Index` can take one argument and count from zero to `end-1` and automatically infer the type

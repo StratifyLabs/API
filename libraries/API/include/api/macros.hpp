@@ -58,6 +58,14 @@ private:                                                                       \
 
 #define API_AF(c, t, v, iv) API_ACCESS_FUNDAMENTAL(c, t, v, iv)
 
+#define API_PUBLIC_MEMBER(CLASS, TYPE, NAME, INITIAL_VALUE)                    \
+  CLASS &set_##NAME(TYPE value_parameter) {                                    \
+    NAME = value_parameter;                                                    \
+    return *this;                                                              \
+  }                                                                            \
+                                                                               \
+  TYPE NAME = INITIAL_VALUE
+
 #define API_ACCESS_MEMBER_FUNDAMENTAL(c, t, p, v)                              \
 public:                                                                        \
   t v() const { return m_##p.v; }                                              \
@@ -183,10 +191,11 @@ private:                                                                       \
   }
 
 #define API_OR_NAMED_FLAGS_OPERATOR(TYPE, FLAG_NAME)                           \
-  inline TYPE::FLAG_NAME operator|(const TYPE::FLAG_NAME a,                    \
-                                   const TYPE::FLAG_NAME b) {                  \
-    return static_cast<TYPE::FLAG_NAME>(static_cast<u32>(a) |                  \
-                                        static_cast<u32>(b));                  \
+  inline TYPE::FLAG_NAME operator|(                                            \
+    const TYPE::FLAG_NAME a,                                                   \
+    const TYPE::FLAG_NAME b) {                                                 \
+    return static_cast<TYPE::FLAG_NAME>(                                       \
+      static_cast<u32>(a) | static_cast<u32>(b));                              \
   }                                                                            \
   inline bool operator&(const TYPE::FLAG_NAME a, const TYPE::FLAG_NAME b) {    \
     return (static_cast<u32>(a) & static_cast<u32>(b)) != 0;                   \
@@ -194,14 +203,16 @@ private:                                                                       \
   inline TYPE::FLAG_NAME operator~(const TYPE::FLAG_NAME a) {                  \
     return static_cast<TYPE::FLAG_NAME>(~(static_cast<u32>(a)));               \
   }                                                                            \
-  inline TYPE::FLAG_NAME &operator|=(TYPE::FLAG_NAME &a,                       \
-                                     const TYPE::FLAG_NAME b) {                \
+  inline TYPE::FLAG_NAME &operator|=(                                          \
+    TYPE::FLAG_NAME &a,                                                        \
+    const TYPE::FLAG_NAME b) {                                                 \
     return a = a | b;                                                          \
   }                                                                            \
-  inline TYPE::FLAG_NAME &operator&=(TYPE::FLAG_NAME &a,                       \
-                                     const TYPE::FLAG_NAME b) {                \
-    return a = static_cast<TYPE::FLAG_NAME>(static_cast<u32>(a) &              \
-                                            static_cast<u32>(b));              \
+  inline TYPE::FLAG_NAME &operator&=(                                          \
+    TYPE::FLAG_NAME &a,                                                        \
+    const TYPE::FLAG_NAME b) {                                                 \
+    return a = static_cast<TYPE::FLAG_NAME>(                                   \
+             static_cast<u32>(a) & static_cast<u32>(b));                       \
   }
 
 #define API_OR_FLAGS_OPERATOR(TYPE) API_OR_NAMED_FLAGS_OPERATOR(TYPE, flags)
@@ -218,14 +229,14 @@ private:                                                                       \
 #define API_MALLOC_CHUNK_SIZE 1024
 #else
 #include <sos/arch.h>
-//this doesn't have to match the chunk size of the target
+// this doesn't have to match the chunk size of the target
 #define API_MALLOC_CHUNK_SIZE 32
 #define API_MINIMUM_CHUNK_SIZE (128 - 12)
 #endif
 
 #define API_CONST_CAST_SELF(type_value, function_value, ...)                   \
   const_cast<type_value &>(                                                    \
-      const_cast<const type_value *>(this)->function_value(__VA_ARGS__))
+    const_cast<const type_value *>(this)->function_value(__VA_ARGS__))
 
 #define API_CONST_CAST(type_value, function_value, ...)                        \
   const_cast<const type_value *>(this)->function_value(__VA_ARGS__);
@@ -241,7 +252,10 @@ private:                                                                       \
   }
 
 #define API_PRINTF_TRACE_LINE()                                                \
-  printf("%s():%d error? %d\n", __FUNCTION__, __LINE__,                        \
-         api::ExecutionContext::is_error())
+  printf(                                                                      \
+    "%s():%d error? %d\n",                                                     \
+    __FUNCTION__,                                                              \
+    __LINE__,                                                                  \
+    api::ExecutionContext::is_error())
 
 #endif // API_API_MACROS_HPP_
