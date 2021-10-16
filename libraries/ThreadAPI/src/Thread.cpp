@@ -138,26 +138,6 @@ void *Thread::handle_thread(void *args) {
 Thread::Thread(const Attributes &attributes, const Construct &options) {
   API_RETURN_IF_ERROR();
   construct(attributes, options);
-
-  m_function = options.function();
-  m_argument = options.argument();
-
-  // First create the thread
-  int result =
-      API_SYSTEM_CALL("", pthread_create(&m_id, &attributes.m_pthread_attr,
-                                         handle_thread, this));
-
-  if (result < 0) {
-    m_state = State::error;
-  } else {
-    m_state = attributes.get_detach_state() == DetachState::joinable
-                  ? State::joinable
-                  : State::detached;
-
-    while (m_function != nullptr) {
-      chrono::wait(1_milliseconds);
-    }
-  }
 }
 
 Thread::Thread(const Construct &options) {
