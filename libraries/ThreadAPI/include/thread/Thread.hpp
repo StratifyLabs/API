@@ -147,21 +147,21 @@ public:
 private:
   enum class State { null = 0, completed, error, joinable, detached };
 
-  volatile function_t m_function = nullptr;
-  void *m_argument = nullptr;
   const api::Error *m_execution_context_error = nullptr;
   volatile State m_state = State::null;
 
   pthread_t m_id =
 #if defined __link
-      {0};
+      {};
 #else
       0;
 #endif
 
+
   void swap(Thread &&a) {
     std::swap(m_id, a.m_id);
     std::swap(m_state, a.m_state);
+    std::swap(m_execution_context_error, a.m_execution_context_error);
   }
 
   void construct(const Attributes & attributes, const Construct & options);

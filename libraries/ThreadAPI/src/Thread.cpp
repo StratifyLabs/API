@@ -2,6 +2,8 @@
 
 #include "thread/Thread.hpp"
 #include "chrono.hpp"
+#include "thread/Mutex.hpp"
+#include "thread/Cond.hpp"
 
 #include <cstdio>
 #include <errno.h>
@@ -124,17 +126,6 @@ int Thread::Attributes::get_sched_priority() const {
   return param.sched_priority;
 }
 
-void *Thread::handle_thread(void *args) {
-  Thread *self = reinterpret_cast<Thread *>(args);
-  self->m_execution_context_error = &error();
-  function_t function = self->m_function;
-  void *argument = self->m_argument;
-  self->m_function = nullptr;
-  void *result = function(argument);
-  free_context();
-  return result;
-}
-
 Thread::Thread(const Attributes &attributes, const Construct &options) {
   API_RETURN_IF_ERROR();
   construct(attributes, options);
@@ -145,15 +136,24 @@ Thread::Thread(const Construct &options) {
   construct(Attributes(), options);
 }
 
+struct StartUp {
+  volatile Thread::function_t function = nullptr;
+  void *argument = nullptr;
+  Thread * self;
+  Cond * cond;
+  Mutex * mutex;
+};
+
 void Thread::construct(const Attributes &attributes, const Construct & options){
   API_ASSERT(options.function() != nullptr);
-  m_function = options.function();
-  m_argument = options.argument();
+
+  Mutex mutex;
+  StartUp startup{ .function = options.function(), .argument = options.argument(), .self = this, .mutex=&mutex };
 
   // First create the thread
   int result =
     API_SYSTEM_CALL("", pthread_create(&m_id, &attributes.m_pthread_attr,
-                                       handle_thread, this));
+                                       handle_thread, &startup));
 
   if (result < 0) {
     m_state = State::error;
@@ -162,6 +162,28 @@ void Thread::construct(const Attributes &attributes, const Construct & options){
                 ? State::joinable
                 : State::detached;
   }
+
+  //wait for m_function to be nullptr
+  bool is_waiting = true;
+  do {
+    Mutex::Scope mutex_scope(mutex);
+    is_waiting = startup.self == this;
+    chrono::wait(100_microseconds);
+  } while( is_waiting );
+}
+
+void *Thread::handle_thread(void *args) {
+  auto *startup = reinterpret_cast<StartUp *>(args);
+  startup->self->m_execution_context_error = &error();
+  function_t function = startup->function;
+  void *argument = startup->argument;
+  {
+    Mutex::Scope mutex_scope(startup->mutex);
+    startup->self = nullptr;
+  }
+  void *result = function(argument);
+  free_context();
+  return result;
 }
 
 
@@ -172,12 +194,6 @@ Thread::~Thread() {
     cancel();
     API_RESET_ERROR();
     join();
-  } else if( m_state == State::detached ){
-    // for detached threads, the function must be allowed to start before
-    // destroying the object
-    while (m_function != nullptr) {
-      Sched().yield();
-    }
   }
 }
 

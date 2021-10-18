@@ -52,6 +52,7 @@
 
 ## Bug Fixes
 
+- Fixed a bug when starting new threads that are immediately moved
 - `Sem::wait_timed()` now adds the time argument to the system time and passes absolute time to `sem_timedwait()`
 - `Thread::Attributes` now inherits `api::ExecutionContext`
 - Fix bug in `Thread::Attributes::get_inherit_sched()` where the wrong call was made
