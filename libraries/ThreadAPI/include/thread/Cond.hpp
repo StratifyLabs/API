@@ -76,6 +76,7 @@ public:
 private:
   Mutex &m_mutex;
   pthread_cond_t m_cond;
+  API_AB(Cond, asserted, false);
 };
 
 } // namespace thread

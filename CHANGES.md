@@ -4,6 +4,8 @@
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
+- Increased the size of `var::PathString` on Windows from `262` to `4096`
+- Added a bool member to `thread::Cond` that can be used for thread synchronization
 - Make printer progress keys unique on multiple calls
 - Add `API_PUBLIC_MEMBER_AZ()` and its shortcut `API_PMAZ()` for adding public members that are written in such a way to be easily sorted alphabetically by IDE tools
 - Add `API_PUBLIC_BOOL()` for public boolean members

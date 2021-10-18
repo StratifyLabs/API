@@ -196,7 +196,15 @@ public:
   operator const char *() const { return m_buffer; }
 };
 
-class PathString : public StackString<PathString, PATH_MAX + 1> {
+#if defined __win32
+//on windows PATH_MAX is too small (261 chars)
+#define PATH_STRING_LENGTH 4096
+#else
+#define PATH_STRING_LENGTH PATH_MAX + 1
+#endif
+
+
+class PathString : public StackString<PathString, PATH_STRING_LENGTH> {
 public:
   PathString() = default;
   PathString(const StringView a) : StackString(a) {}
