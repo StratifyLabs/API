@@ -4,6 +4,7 @@
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
+- Make printer progress keys unique on multiple calls
 - Add `API_PUBLIC_BOOL()` for public boolean members
 - Add `API_PUBLIC_MEMBERS()` macros for declaring and accessing purely public members
 - Add more ways to construct a Thread (less cumbersome)

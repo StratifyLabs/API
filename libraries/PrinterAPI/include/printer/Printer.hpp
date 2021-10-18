@@ -216,6 +216,7 @@ public:
 
   Printer &set_progress_key(var::StringView progress_key) {
     m_progress_state = 0;
+    m_progress_key_state = 0;
     m_progress_key = progress_key;
     return *this;
   }
@@ -343,8 +344,9 @@ private:
 #endif
 
   api::ProgressCallback m_progress_callback;
-  u16 m_progress_width;
-  u16 m_progress_state;
+  u16 m_progress_width = 0;
+  u16 m_progress_state = 0;
+  u16 m_progress_key_state = 0;
   u16 m_indent;
   u16 m_indent_size = 2;
   Flags m_print_flags = Flags::null;
