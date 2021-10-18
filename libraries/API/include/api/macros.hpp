@@ -66,6 +66,17 @@ private:                                                                       \
                                                                                \
   TYPE NAME = INITIAL_VALUE
 
+#define API_PUBLIC_MEMBER_AZ(NAME, CLASS, TYPE, INITIAL_VALUE)                 \
+  CLASS &set_##NAME(TYPE value_parameter) {                                    \
+    NAME = value_parameter;                                                    \
+    return *this;                                                              \
+  }                                                                            \
+                                                                               \
+  TYPE NAME = INITIAL_VALUE
+
+#define API_PMAZ(NAME, CLASS, TYPE, INITIAL_VALUE)                             \
+  API_PUBLIC_MEMBER_AZ(NAME, CLASS, TYPE, INITIAL_VALUE)
+
 #define API_PUBLIC_BOOL(CLASS, NAME, INITIAL_VALUE)                            \
   CLASS &set_##NAME(bool value_parameter = true) {                             \
     is_##NAME = value_parameter;                                               \
