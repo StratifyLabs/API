@@ -4,6 +4,7 @@
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
+- Add `thread::Cond::wait_until_asserted()` to wait for a condition to be asserted
 - Increased the size of `var::PathString` on Windows from `262` to `4096`
 - Added a bool member to `thread::Cond` that can be used for thread synchronization
 - Make printer progress keys unique on multiple calls

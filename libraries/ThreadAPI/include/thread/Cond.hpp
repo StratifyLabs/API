@@ -55,7 +55,7 @@ public:
   Cond(Mutex &mutex);
   Cond(Mutex &mutex, const Attributes &attr);
   Cond(const Cond & Cond) = delete;
-  Cond& operator=(const Cond&mutex) = delete;
+  Cond& operator=(const Cond&) = delete;
   Cond(Cond && a) : m_mutex(a.m_mutex){
     std::swap(m_cond, a.m_cond);
   }
@@ -73,9 +73,19 @@ public:
   Cond &signal();
   Cond &broadcast();
 
+  Cond & wait_until_asserted(const chrono::ClockTime& timeout = chrono::ClockTime());
+
+  Mutex & mutex(){
+    return *m_mutex;
+  }
+
+  const Mutex & mutex() const {
+    return *m_mutex;
+  }
+
 private:
-  Mutex &m_mutex;
-  pthread_cond_t m_cond;
+  Mutex * m_mutex = nullptr;
+  pthread_cond_t m_cond = {};
   API_AB(Cond, asserted, false);
 };
 
