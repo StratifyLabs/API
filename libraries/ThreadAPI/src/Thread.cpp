@@ -94,7 +94,7 @@ Thread::Attributes &Thread::Attributes::set_sched_priority(int priority) {
   return *this;
 #endif
   API_RETURN_VALUE_IF_ERROR(*this);
-  struct sched_param param = {0};
+  struct sched_param param = {};
   param.sched_priority = priority;
   API_SYSTEM_CALL("", pthread_attr_setschedparam(&m_pthread_attr, &param));
   set_inherit_sched(IsInherit::no);
@@ -139,49 +139,36 @@ Thread::Thread(const Construct &options) {
 struct StartUp {
   volatile Thread::function_t function = nullptr;
   void *argument = nullptr;
-  Thread * self;
-  Cond * cond;
-  Mutex * mutex;
 };
 
 void Thread::construct(const Attributes &attributes, const Construct & options){
   API_ASSERT(options.function() != nullptr);
 
-  Mutex mutex;
-  StartUp startup{ .function = options.function(), .argument = options.argument(), .self = this, .mutex=&mutex };
+  auto * startup = new StartUp{ .function = options.function(), .argument = options.argument() };
 
   // First create the thread
   int result =
     API_SYSTEM_CALL("", pthread_create(&m_id, &attributes.m_pthread_attr,
-                                       handle_thread, &startup));
+                                       handle_thread, startup));
 
   if (result < 0) {
     m_state = State::error;
+    delete startup;
   } else {
     m_state = attributes.get_detach_state() == DetachState::joinable
                 ? State::joinable
                 : State::detached;
   }
 
-  //wait for m_function to be nullptr
-  bool is_waiting = true;
-  do {
-    Mutex::Scope mutex_scope(mutex);
-    is_waiting = startup.self == this;
-    chrono::wait(100_microseconds);
-  } while( is_waiting );
 }
 
 void *Thread::handle_thread(void *args) {
   auto *startup = reinterpret_cast<StartUp *>(args);
-  startup->self->m_execution_context_error = &error();
+
   function_t function = startup->function;
   void *argument = startup->argument;
-  {
-    Mutex::Scope mutex_scope(startup->mutex);
-    startup->self = nullptr;
-  }
   void *result = function(argument);
+  delete startup;
   free_context();
   return result;
 }
@@ -199,7 +186,7 @@ Thread::~Thread() {
 
 Thread &Thread::set_sched_parameters(Sched::Policy policy, int priority) {
   API_RETURN_VALUE_IF_ERROR(*this);
-  struct sched_param param = {0};
+  struct sched_param param = {};
   param.sched_priority = priority;
   API_SYSTEM_CALL(
       "", pthread_setschedparam(id(), static_cast<int>(policy), &param));
@@ -223,7 +210,7 @@ int Thread::get_sched_priority() const {
 int Thread::get_sched_parameters(int &policy, int &priority) const {
   API_RETURN_VALUE_IF_ERROR(-1);
   API_ASSERT(is_valid());
-  struct sched_param param = {0};
+  struct sched_param param = {};
   int result =
       API_SYSTEM_CALL("", pthread_getschedparam(id(), &policy, &param));
   priority = param.sched_priority;

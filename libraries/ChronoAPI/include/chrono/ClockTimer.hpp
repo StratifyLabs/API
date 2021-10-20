@@ -105,18 +105,18 @@ inline bool operator>=(const MicroTime &lhs, const ClockTimer &rhs) {
   return lhs >= rhs.micro_time();
 }
 
-class PerformanceContext {
+class PerformanceScope {
 public:
-  PerformanceContext(const var::StringView name, const ClockTimer &timer, printer::Printer &printer);
-  ~PerformanceContext();
+  PerformanceScope(const var::StringView name, const ClockTimer &timer, printer::Printer &printer);
+  ~PerformanceScope();
 
 private:
-  const ClockTimer &m_timer;
-  printer::Printer &m_printer;
-  u32 m_start;
+  const ClockTimer * m_timer = nullptr;
+  printer::Printer * m_printer = nullptr;
+  u32 m_start = 0;
 };
 
-using PerformanceScope = PerformanceContext;
+using PerformanceContext = PerformanceScope;
 
 } // namespace chrono
 

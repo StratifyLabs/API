@@ -86,15 +86,15 @@ ClockTimer &ClockTimer::stop() {
   return *this;
 }
 
-PerformanceContext::PerformanceContext(const var::StringView name,
+PerformanceScope::PerformanceScope(const var::StringView name,
                                        const ClockTimer &timer,
                                        printer::Printer &printer)
-    : m_timer(timer), m_printer(printer) {
+    : m_timer(&timer), m_printer(&printer) {
   printer.open_object("start ->" | name);
-  m_start = m_timer.microseconds();
+  m_start = m_timer->microseconds();
 }
 
-PerformanceContext::~PerformanceContext() {
-  const auto stop = m_timer.microseconds();
-  m_printer.key("stop", var::NumberString(stop - m_start)).close_object();
+PerformanceScope::~PerformanceScope() {
+  const auto stop = m_timer->microseconds();
+  m_printer->key("stop", var::NumberString(stop - m_start)).close_object();
 }

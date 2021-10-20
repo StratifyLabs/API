@@ -140,9 +140,9 @@ public:
   Thread &join(void **value = nullptr);
 
   API_NO_DISCARD bool is_joinable() const { return m_state == State::joinable; }
-  API_NO_DISCARD const api::Error *execution_context_error() const {
-    return m_execution_context_error;
-  }
+  //API_NO_DISCARD const api::Error *execution_context_error() const {
+  //  return m_execution_context_error;
+  //}
 
 private:
   enum class State { null = 0, completed, error, joinable, detached };
