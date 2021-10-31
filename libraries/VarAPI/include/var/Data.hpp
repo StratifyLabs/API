@@ -21,15 +21,15 @@ class StringView;
 
 class DataInfo {
 public:
-  DataInfo() : m_info(mallinfo()) {}
 
 #if !defined __link
+  DataInfo() : m_info{mallinfo()} {}
   API_NO_DISCARD u32 arena() const { return m_info.arena; }
   API_NO_DISCARD u32 free_block_count() const { return m_info.ordblks; }
   API_NO_DISCARD u32 free_size() const { return m_info.fordblks; }
   API_NO_DISCARD u32 used_size() const { return m_info.uordblks; }
 #else
-  void refresh() {}
+  DataInfo() = default;
   u32 arena() const { return 0; }
   u32 free_block_count() const { return 0; }
   u32 free_size() const { return 0; }
