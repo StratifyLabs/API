@@ -16,7 +16,7 @@ TemporaryDirectory::TemporaryDirectory(const var::StringView parent)
 }
 
 TemporaryDirectory::~TemporaryDirectory() {
-  if (m_path.is_empty() == false) {
+  if (!m_path.is_empty()) {
     fs::FileSystem().remove_directory(m_path, fs::FileSystem::IsRecursive::yes);
   }
 }

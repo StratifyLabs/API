@@ -12,7 +12,6 @@ namespace thread {
 
 class Cond : public api::ExecutionContext {
 public:
-
   using ProcessShared = Mutex::ProcessShared;
 
   class Attributes : public api::ExecutionContext {
@@ -25,23 +24,25 @@ public:
     ~Attributes() { pthread_condattr_destroy(&m_attributes); }
 
     Attributes &set_pshared(bool value = true) {
-      const auto pshared = value ? ProcessShared::shared : ProcessShared::private_;
+      const auto pshared =
+          value ? ProcessShared::shared : ProcessShared::private_;
       pthread_condattr_setpshared(&m_attributes, int(pshared));
       return *this;
     }
 
     Attributes &set_pshared(ProcessShared pshared) {
-      API_SYSTEM_CALL("", pthread_condattr_setpshared(&m_attributes, int(pshared)));
+      API_SYSTEM_CALL("",
+                      pthread_condattr_setpshared(&m_attributes, int(pshared)));
       return *this;
     }
 
-    bool get_is_pshared() const {
+    API_NO_DISCARD bool get_is_pshared() const {
       int pshared = 0;
       pthread_condattr_getpshared(&m_attributes, &pshared);
       return pshared == int(ProcessShared::shared);
     }
 
-    ProcessShared get_pshared() const {
+    API_NO_DISCARD ProcessShared get_pshared() const {
       int pshared = 0;
       pthread_condattr_getpshared(&m_attributes, &pshared);
       return ProcessShared(pshared);
@@ -49,17 +50,15 @@ public:
 
   private:
     friend class Cond;
-    pthread_condattr_t m_attributes;
+    pthread_condattr_t m_attributes{};
   };
 
-  Cond(Mutex &mutex);
+  explicit Cond(Mutex &mutex);
   Cond(Mutex &mutex, const Attributes &attr);
-  Cond(const Cond & Cond) = delete;
-  Cond& operator=(const Cond&) = delete;
-  Cond(Cond && a) : m_mutex(a.m_mutex){
-    std::swap(m_cond, a.m_cond);
-  }
-  Cond& operator=(Cond&&a){
+  Cond(const Cond &Cond) = delete;
+  Cond &operator=(const Cond &) = delete;
+  Cond(Cond &&a) noexcept : m_mutex(a.m_mutex) { std::swap(m_cond, a.m_cond); }
+  Cond &operator=(Cond &&a) noexcept {
     std::swap(m_cond, a.m_cond);
     std::swap(m_mutex, a.m_mutex);
     return *this;
@@ -73,18 +72,15 @@ public:
   Cond &signal();
   Cond &broadcast();
 
-  Cond & wait_until_asserted(const chrono::ClockTime& timeout = chrono::ClockTime());
+  Cond &
+  wait_until_asserted(const chrono::ClockTime &timeout = chrono::ClockTime());
 
-  Mutex & mutex(){
-    return *m_mutex;
-  }
+  Mutex &mutex() { return *m_mutex; }
 
-  const Mutex & mutex() const {
-    return *m_mutex;
-  }
+  API_NO_DISCARD const Mutex &mutex() const { return *m_mutex; }
 
 private:
-  Mutex * m_mutex = nullptr;
+  Mutex *m_mutex = nullptr;
   pthread_cond_t m_cond = {};
   API_AB(Cond, asserted, false);
 };

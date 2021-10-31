@@ -9,14 +9,13 @@ namespace sys {
 class Version {
 public:
   Version() = default;
-  Version(const var::StringView value) : m_version(value) {}
+  explicit Version(const var::StringView value) : m_version(value) {}
 
-  u32 to_bcd() const;
+  API_NO_DISCARD u32 to_bcd() const;
+  API_NO_DISCARD u16 to_bcd16() const { return to_bcd() >> 8; }
 
-  u16 to_bcd16() const { return to_bcd() >> 8; }
-
-  static Version from_triple(u16 major, u8 minor, u8 patch);
-  static Version from_u16(u16 major_minor);
+  API_NO_DISCARD static Version from_triple(u16 major, u8 minor, u8 patch);
+  API_NO_DISCARD static Version from_u16(u16 major_minor);
 
   bool operator==(const Version &a) const { return compare(*this, a) == 0; }
   bool operator>(const Version &a) const { return compare(*this, a) > 0; }
@@ -24,9 +23,9 @@ public:
   bool operator<=(const Version &a) const { return compare(*this, a) <= 0; }
   bool operator>=(const Version &a) const { return compare(*this, a) >= 0; }
 
-  const var::StringView string_view() const { return m_version.string_view(); }
-  const char *cstring() const { return m_version.cstring(); }
-  static int compare(const Version &a, const Version &b);
+  API_NO_DISCARD var::StringView string_view() const { return m_version.string_view(); }
+  API_NO_DISCARD const char *cstring() const { return m_version.cstring(); }
+  API_NO_DISCARD static int compare(const Version &a, const Version &b);
 
 private:
   var::KeyString m_version;

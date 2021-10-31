@@ -8,7 +8,7 @@ namespace sys {
 
 class TemporaryDirectory : public api::ExecutionContext {
 public:
-  explicit TemporaryDirectory(const var::StringView parent = "");
+  explicit TemporaryDirectory(var::StringView parent = "");
   ~TemporaryDirectory();
 
 private:

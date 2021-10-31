@@ -1,6 +1,5 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#include <cstdio>
 #include <cstring>
 #include <fcntl.h>
 
@@ -31,8 +30,6 @@
 #include "fs/File.hpp"
 #include "var/StackString.hpp"
 
-#include "local.h"
-
 using namespace fs;
 
 size_t FileObject::size() const {
@@ -40,7 +37,7 @@ size_t FileObject::size() const {
   API_RETURN_VALUE_IF_ERROR(0);
   const int loc = location();
   seek(0, Whence::end);
-  const size_t seek_size = static_cast<size_t>(location());
+  const auto seek_size = static_cast<size_t>(location());
   seek(loc, Whence::set);
   API_RETURN_VALUE_IF_ERROR(0);
   return seek_size;
@@ -69,7 +66,6 @@ const FileObject &FileObject::sync() const {
   API_SYSTEM_CALL("", interface_fsync());
   return *this;
 }
-
 
 int FileObject::location() const {
   return seek(0, Whence::current).return_value();
@@ -108,9 +104,8 @@ const FileObject &FileObject::write(const FileObject &source_file,
     seek(options.location(), Whence::set);
   }
 
-
   const size_t file_size = (options.size() == static_cast<size_t>(-1))
-                             ? (source_file.size() - source_file.location())
+                               ? (source_file.size() - source_file.location())
                                : options.size();
 
   if (file_size == 0) {
@@ -200,8 +195,7 @@ const FileObject &FileObject::write(const FileObject &source_file,
     if (options.progress_callback()) {
       // abort the transaction
       if (options.progress_callback()->update(static_cast<int>(size_processed),
-                                              static_cast<int>(file_size)) ==
-          true) {
+                                              static_cast<int>(file_size))) {
         options.progress_callback()->update(0, 0);
         API_SYSTEM_CALL("aborted", size_processed);
         return *this;
@@ -232,7 +226,7 @@ bool FileObject::verify(const FileObject &source_file,
 
   if (this == &source_file) {
     if (options.progress_callback()) {
-      options.progress_callback()->update(0,0);
+      options.progress_callback()->update(0, 0);
     }
     return true;
   }
@@ -241,8 +235,7 @@ bool FileObject::verify(const FileObject &source_file,
       options.size() != static_cast<size_t>(-1) ? options.size() : size();
 
   if (options.progress_callback()) {
-    options.progress_callback()->update(0,
-                                        static_cast<int>(verify_size));
+    options.progress_callback()->update(0, static_cast<int>(verify_size));
   }
 
   char source_file_buffer[options.page_size()];
@@ -261,14 +254,14 @@ bool FileObject::verify(const FileObject &source_file,
 
     if (source_result != this_result) {
       if (options.progress_callback()) {
-        options.progress_callback()->update(0,0);
+        options.progress_callback()->update(0, 0);
       }
       return false;
     }
 
     if (source_file_view != this_file_view) {
       if (options.progress_callback()) {
-        options.progress_callback()->update(0,0);
+        options.progress_callback()->update(0, 0);
       }
       return false;
     }
@@ -278,8 +271,7 @@ bool FileObject::verify(const FileObject &source_file,
     if (options.progress_callback()) {
       // abort the transaction
       if (options.progress_callback()->update(static_cast<int>(size_processed),
-                                              static_cast<int>(verify_size)) ==
-          true) {
+                                              static_cast<int>(verify_size))) {
         options.progress_callback()->update(0, 0);
         API_SYSTEM_CALL("aborted", size_processed);
         return false;
@@ -289,7 +281,7 @@ bool FileObject::verify(const FileObject &source_file,
   } while (size_processed < verify_size);
 
   if (options.progress_callback()) {
-    options.progress_callback()->update(0,0);
+    options.progress_callback()->update(0, 0);
   }
 
   return true;
@@ -332,8 +324,6 @@ File::~File() {
 
 int File::fileno() const { return m_fd; }
 
-
-
 int File::flags() const {
   API_RETURN_VALUE_IF_ERROR(-1);
 #if defined __link
@@ -347,7 +337,7 @@ int File::flags() const {
 #endif
 }
 
-int File::fstat(struct stat *st) {
+int File::fstat(struct stat *st) const {
   API_RETURN_VALUE_IF_ERROR(-1);
   return API_SYSTEM_CALL("", ::fstat(m_fd, st));
 }
@@ -359,7 +349,7 @@ void File::close() {
   }
 }
 
-int File::internal_open(const char *path, int flags, int mode) const {
+int File::internal_open(const char *path, int flags, int mode) {
   return ::posix_open(path, flags, mode);
 }
 
@@ -380,7 +370,7 @@ int File::interface_ioctl(int request, void *argument) const {
 #endif
 }
 
-int File::internal_close(int fd) const { return ::posix_close(fd); }
+void File::internal_close(int fd) { ::posix_close(fd); }
 
 int File::interface_fsync() const {
 #if defined __link

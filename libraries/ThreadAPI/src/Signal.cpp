@@ -1,7 +1,5 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#include <signal.h>
-
 #include "thread/Signal.hpp"
 using namespace thread;
 
@@ -13,10 +11,10 @@ Signal &Signal::set_handler(const SignalHandler &handler) {
   if (handler.sigaction()->sa_flags & SIGNAL_SIGINFO_FLAG) {
     API_SYSTEM_CALL(
       "",
-      ::sigaction(m_signo, handler.sigaction(), 0));
+      ::sigaction(m_signo, handler.sigaction(), nullptr));
 
   } else {
-    _sig_func_ptr ptr = (_sig_func_ptr)handler.sigaction()->sa_handler;
+    auto ptr = (_sig_func_ptr)handler.sigaction()->sa_handler;
     ::signal(m_signo, ptr);
   }
 #endif
@@ -60,9 +58,8 @@ const Signal &Signal::send(const Thread &t) const {
 Signal Signal::wait(const Set &set) {
   API_RETURN_VALUE_IF_ERROR(Signal(Number::null));
   int signal_number = 0;
-  int result = 0;
   sigset_t sigset = set.m_sigset;
-  result = sigwait(&sigset, &signal_number);
+  int result = sigwait(&sigset, &signal_number);
   if (result > 0) {
     errno = result;
     handle_system_call_result(__LINE__, "", -1);

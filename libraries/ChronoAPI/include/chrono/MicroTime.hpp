@@ -4,7 +4,7 @@
 #define CHRONO_API_CHRONO_MICRO_TIME_HPP_
 
 #include <sdk/types.h>
-#include <time.h>
+#include <ctime>
 
 #include "api/macros.hpp"
 
@@ -20,7 +20,7 @@ public:
 
   static MicroTime invalid() { return MicroTime(static_cast<u32>(-1)); }
 
-  bool is_valid() const { return *this != invalid(); }
+  API_NO_DISCARD bool is_valid() const { return *this != invalid(); }
 
   MicroTime &operator+=(const MicroTime &a) {
     m_value_microseconds += a.microseconds();
@@ -79,9 +79,9 @@ public:
     return microseconds() <= a.microseconds();
   }
 
-  u32 seconds() const { return microseconds() / 1000000UL; }
-  micro_time_t microseconds() const { return m_value_microseconds; }
-  u32 milliseconds() const { return microseconds() / 1000UL; }
+  API_NO_DISCARD u32 seconds() const { return microseconds() / 1000000UL; }
+  API_NO_DISCARD micro_time_t microseconds() const { return m_value_microseconds; }
+  API_NO_DISCARD u32 milliseconds() const { return microseconds() / 1000UL; }
   const MicroTime &wait() const;
   MicroTime& wait(){
     return API_CONST_CAST_SELF(MicroTime, wait);

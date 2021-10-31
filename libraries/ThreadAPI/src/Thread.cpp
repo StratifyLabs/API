@@ -2,11 +2,8 @@
 
 #include "thread/Thread.hpp"
 #include "chrono.hpp"
-#include "thread/Mutex.hpp"
-#include "thread/Cond.hpp"
 
 #include <cstdio>
-#include <errno.h>
 using namespace thread;
 
 Thread::Attributes::Attributes() {

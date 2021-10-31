@@ -36,25 +36,25 @@ class DirObject : public api::ExecutionContext {
 public:
   enum class IsRecursive { no, yes };
 
-  DirObject() {}
+  DirObject() = default;
 
   DirObject(const DirObject &dir) = delete;
   DirObject &operator=(const DirObject &dir) = delete;
   DirObject(DirObject &&dir) = default;
   DirObject &operator=(DirObject &&dir) = default;
 
-  static const var::PathString filter_hidden(const var::PathString &entry) {
+  static var::PathString filter_hidden(const var::PathString &entry) {
     if (!entry.is_empty() && entry.string_view().front() == '.') {
-      return var::PathString();
+      return {};
     }
     return entry;
   }
 
   const char *read() const;
-  var::PathString get_entry() const;
-  const char *entry_name() const { return m_entry.d_name; }
-  int ino() { return m_entry.d_ino; }
-  int count() const;
+  API_NO_DISCARD var::PathString get_entry() const;
+  API_NO_DISCARD const char *entry_name() const { return m_entry.d_name; }
+  API_NO_DISCARD int ino() const { return m_entry.d_ino; }
+  API_NO_DISCARD int count() const;
 
   const DirObject &rewind() const {
     API_RETURN_VALUE_IF_ERROR(*this);
@@ -113,10 +113,10 @@ public:
 
 class Dir : public DirAccess<Dir> {
 public:
-  Dir(var::StringView path);
+  explicit Dir(var::StringView path);
   Dir(const Dir &dir) = delete;
   Dir &operator=(const Dir &dir) = delete;
-  Dir(Dir &&dir) { std::swap(m_dirp, dir.m_dirp); }
+  Dir(Dir &&dir)  noexcept { std::swap(m_dirp, dir.m_dirp); }
   Dir &operator=(Dir &&dir) {
     std::swap(m_dirp, dir.m_dirp);
     return *this;
@@ -129,14 +129,14 @@ protected:
   Dir &open(var::StringView path);
   Dir &close();
 
-  virtual int interface_readdir_r(dirent *result, dirent **resultp) const;
-  virtual int interface_telldir() const;
-  virtual void interface_seekdir(size_t location) const;
-  virtual void interface_rewinddir() const;
+  int interface_readdir_r(dirent *result, dirent **resultp) const override;
+  int interface_telldir() const override;
+  void interface_seekdir(size_t location) const override;
+  void interface_rewinddir() const override;
 
 private:
   DIR *m_dirp = nullptr;
-  DIR *interface_opendir(const char *path) const;
+  static DIR *internal_opendir(const char *path) ;
 };
 
 } // namespace fs

@@ -77,7 +77,7 @@ public:
 #else
 #endif
     }
-    pthread_mutexattr_t m_item;
+    pthread_mutexattr_t m_item{};
 #if defined __link
     bool m_is_valid;
 #endif
@@ -87,10 +87,10 @@ public:
   explicit Mutex(const Attributes &attr);
   Mutex(const Mutex & mutex) = delete;
   Mutex& operator=(const Mutex&mutex) = delete;
-  Mutex(Mutex && a){
+  Mutex(Mutex && a) noexcept {
     std::swap(m_mutex, a.m_mutex);
   }
-  Mutex& operator=(Mutex&&a){
+  Mutex& operator=(Mutex&&a) noexcept {
     std::swap(m_mutex, a.m_mutex);
     return *this;
   }
@@ -117,7 +117,7 @@ public:
     }
     explicit Guard(Mutex &mutex) : m_mutex(&mutex) { mutex.lock(); }
 
-    Guard(Mutex &mutex, void *context, void (*execute)(void *context))
+    Guard(Mutex &mutex, void *context, void (*execute)(void *))
         : m_mutex(&mutex) {
       mutex.lock();
       execute(context);
@@ -137,7 +137,7 @@ public:
 
 private:
   friend class Cond;
-  pthread_mutex_t m_mutex;
+  pthread_mutex_t m_mutex{};
 
   Mutex &set_attributes(const Attributes &attr);
 };

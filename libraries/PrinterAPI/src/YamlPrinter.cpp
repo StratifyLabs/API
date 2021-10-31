@@ -42,7 +42,7 @@ void YamlPrinter::print_open_object(Level level, var::StringView key) {
     if (o_flags() & Flags::bold_objects) {
       set_format_code(FormatType::bold);
     }
-    print(level, key, " ");
+    print(level, key, " ", IsNewline::yes);
     if (o_flags() & Flags::bold_objects) {
       clear_format_code(FormatType::bold);
     }
@@ -56,7 +56,7 @@ void YamlPrinter::print_open_array(Level level, var::StringView key) {
     if (o_flags() & Flags::bold_objects) {
       set_format_code(FormatType::bold);
     }
-    print(level, key, " ");
+    print(level, key, " ", IsNewline::yes);
     if (o_flags() & Flags::bold_objects) {
       clear_format_code(FormatType::bold);
     }

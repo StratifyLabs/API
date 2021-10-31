@@ -2,9 +2,6 @@
              // LICENSE.md for rights.
 // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc
 
-#include <cstdio>
-#include <cstring>
-#include <stdint.h>
 
 #include "var/Base64.hpp"
 #include "var/Data.hpp"

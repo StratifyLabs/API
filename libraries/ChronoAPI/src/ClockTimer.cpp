@@ -1,9 +1,5 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#include <stdio.h>
-#include <time.h>
-#include <unistd.h>
-
 #include "printer/Printer.hpp"
 
 #include "chrono/ClockTime.hpp"
@@ -36,7 +32,7 @@ ClockTimer &ClockTimer::restart() {
 }
 
 ClockTimer &ClockTimer::start() {
-  if (is_running() == false) {
+  if (!is_running()) {
     restart();
   }
   return *this;

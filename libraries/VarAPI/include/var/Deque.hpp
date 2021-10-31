@@ -62,8 +62,8 @@ public:
     return *this;
   }
 
-  bool is_empty() const { return m_deque.empty(); }
-  u32 count() const { return m_deque.size(); }
+  API_NO_DISCARD bool is_empty() const { return m_deque.empty(); }
+  API_NO_DISCARD u32 count() const { return m_deque.size(); }
 
   Deque &clear() {
     // deconstruct objects in the list using pop

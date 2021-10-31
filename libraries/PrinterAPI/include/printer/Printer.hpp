@@ -87,7 +87,7 @@ struct PrinterFlags {
 
 API_OR_NAMED_FLAGS_OPERATOR(PrinterFlags, Flags)
 
-#define PRINTER_TRACE(printer, msg) (printer.trace(__FUNCTION__, __LINE__, msg))
+#define PRINTER_TRACE(printer, msg) ((printer).trace(__FUNCTION__, __LINE__, (msg)))
 #define PRINTER_TRACE_ERROR(printer, x)                                        \
   int printer_result = x;                                                      \
   if (printer_result < 0)                                                      \
@@ -130,8 +130,8 @@ public:
   Printer &operator<<(u8 a);
   Printer &operator<<(float a);
   Printer &operator<<(void *a);
-  Printer &operator<<(const var::StringView a);
-  Printer &operator<<(const var::View a);
+  Printer &operator<<(var::StringView a);
+  Printer &operator<<(var::View a);
   Printer &operator<<(const var::String &a);
   Printer &operator<<(const var::StringList &a);
   Printer &operator<<(const var::StringViewList &a);
@@ -150,15 +150,15 @@ public:
   Level verbose_level() const { return m_verbose_level; }
 
   Printer &trace(const char *function, int line, var::StringView message);
-  Printer &debug(const var::StringView a);
-  Printer &message(const var::StringView a);
-  Printer &info(const var::StringView a);
-  Printer &warning(const var::StringView a);
-  Printer &error(const var::StringView a);
-  Printer &fatal(const var::StringView a);
+  Printer &debug(var::StringView a);
+  Printer &message(var::StringView a);
+  Printer &info(var::StringView a);
+  Printer &warning(var::StringView a);
+  Printer &error(var::StringView a);
+  Printer &fatal(var::StringView a);
   Printer &newline();
 
-  Printer &error(const api::PrivateExecutionContext result, u32 line_number);
+  Printer &error(api::PrivateExecutionContext result, u32 line_number);
 
   Printer &enable_flags(Flags value) {
     m_print_flags |= value;
@@ -175,33 +175,33 @@ public:
     return *this;
   }
 
-  class FlagGuard {
+  class FlagScope {
   public:
-    FlagGuard(Printer &printer)
+    explicit FlagScope(Printer &printer)
         : m_printer(printer), m_flags(printer.flags()) {}
 
-    ~FlagGuard() { m_printer.set_flags(m_flags); }
+    ~FlagScope() { m_printer.set_flags(m_flags); }
 
   private:
     Flags m_flags;
     Printer &m_printer;
   };
 
-  using FlagScope = FlagGuard;
+  using FlagGuard = FlagScope;
 
-  class LevelGuard {
+  class LevelScope {
   public:
-    LevelGuard(Printer &printer)
+    explicit LevelScope(Printer &printer)
         : m_printer(printer), m_level(printer.verbose_level()) {}
 
-    ~LevelGuard() { m_printer.set_verbose_level(m_level); }
+    ~LevelScope() { m_printer.set_verbose_level(m_level); }
 
   private:
     Level m_level;
     Printer &m_printer;
   };
 
-  using LevelScope = LevelGuard;
+  using LevelGuard = LevelScope;
 
   API_NO_DISCARD const api::ProgressCallback *progress_callback() const {
     return &m_progress_callback;
@@ -247,9 +247,9 @@ public:
 
   API_NO_DISCARD Flags o_flags() const { return m_print_flags; }
 
-  Printer &key_bool(const var::StringView key, bool value);
-  Printer &key(const var::StringView key, var::StringView a);
-  Printer &key(const var::StringView key, const var::String &a);
+  Printer &key_bool(var::StringView key, bool value);
+  Printer &key(var::StringView key, var::StringView a);
+  Printer &key(var::StringView key, const var::String &a);
 
   template <class T>
   Printer &object(var::StringView key, const T &value,
@@ -269,9 +269,9 @@ public:
     return *this;
   }
 
-  Printer &open_object(const var::StringView key, Level level = Level::fatal);
+  Printer &open_object(var::StringView key, Level level = Level::fatal);
   Printer &close_object();
-  Printer &open_array(const var::StringView key, Level level = Level::fatal);
+  Printer &open_array(var::StringView key, Level level = Level::fatal);
   Printer &close_array();
 
   var::StringView terminal_color_code(ColorCode code);
@@ -284,9 +284,9 @@ public:
   virtual void print_open_array(Level verbose_level, var::StringView key);
   virtual void print_close_array();
 
-  virtual void print(Level level, const var::StringView key,
-                     const var::StringView value,
-                     IsNewline is_newline = IsNewline::yes);
+  virtual void print(Level level, var::StringView key,
+                     var::StringView value,
+                     IsNewline is_newline);
 
   class Object {
   public:
@@ -320,10 +320,10 @@ protected:
     ContainerAccess(Level verbose_level, T type)
         : m_type(type), m_count(1), m_verbose_level(verbose_level) {}
 
-    Level verbose_level() const { return m_verbose_level; }
+    API_NO_DISCARD Level verbose_level() const { return m_verbose_level; }
     void set_verbose_level(Level level) { m_verbose_level = level; }
 
-    const u32 &count() const { return m_count; }
+    API_NO_DISCARD const u32 &count() const { return m_count; }
     u32 &count() { return m_count; }
 
     T type() const { return m_type; }
@@ -334,9 +334,9 @@ protected:
     Level m_verbose_level;
   };
 
-  virtual void interface_print_final(const var::StringView view);
+  virtual void interface_print_final(var::StringView view);
 
-  void write_fileno(int fd, const var::StringView view) const;
+  void write_fileno(int fd, var::StringView view) const;
 
 private:
 #if defined __win32

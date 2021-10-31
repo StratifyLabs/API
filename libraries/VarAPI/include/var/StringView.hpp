@@ -82,13 +82,13 @@ public:
     API_AF(GetSubstring, size_t, length, npos);
   };
 
-  StringView get_substring(const GetSubstring &options) const;
-  StringView operator()(const GetSubstring &options) const {
+  API_NO_DISCARD StringView get_substring(const GetSubstring &options) const;
+  API_NO_DISCARD StringView operator()(const GetSubstring &options) const {
     return get_substring(options);
   }
 
-  StringView get_substring_at_position(size_t position) const;
-  StringView get_substring_with_length(size_t length) const;
+  API_NO_DISCARD StringView get_substring_at_position(size_t position) const;
+  API_NO_DISCARD StringView get_substring_with_length(size_t length) const;
 
   API_NO_DISCARD var::Vector<StringView> split(StringView delimeters) const;
 
@@ -98,27 +98,27 @@ public:
   using const_reverse_iterator =
     typename std::string_view::const_reverse_iterator;
 
-  const_iterator begin() const noexcept { return m_string_view.begin(); }
-  iterator begin() noexcept { return m_string_view.begin(); }
+  API_NO_DISCARD const_iterator begin() const noexcept { return m_string_view.begin(); }
+  API_NO_DISCARD iterator begin() noexcept { return m_string_view.begin(); }
 
-  const_iterator end() const noexcept { return m_string_view.end(); }
-  iterator end() noexcept { return m_string_view.end(); }
+  API_NO_DISCARD const_iterator end() const noexcept { return m_string_view.end(); }
+  API_NO_DISCARD iterator end() noexcept { return m_string_view.end(); }
 
-  const_iterator cbegin() const noexcept { return m_string_view.cbegin(); }
-  const_iterator cend() const noexcept { return m_string_view.cend(); }
+  API_NO_DISCARD const_iterator cbegin() const noexcept { return m_string_view.cbegin(); }
+  API_NO_DISCARD const_iterator cend() const noexcept { return m_string_view.cend(); }
 
-  const_reverse_iterator rbegin() const noexcept {
+  API_NO_DISCARD const_reverse_iterator rbegin() const noexcept {
     return m_string_view.rbegin();
   }
-  reverse_iterator rbegin() noexcept { return m_string_view.rbegin(); }
+  API_NO_DISCARD reverse_iterator rbegin() noexcept { return m_string_view.rbegin(); }
 
-  const_reverse_iterator rend() const noexcept { return m_string_view.rend(); }
-  reverse_iterator rend() noexcept { return m_string_view.rend(); }
+  API_NO_DISCARD const_reverse_iterator rend() const noexcept { return m_string_view.rend(); }
+  API_NO_DISCARD reverse_iterator rend() noexcept { return m_string_view.rend(); }
 
-  const_reverse_iterator crbegin() const noexcept {
+  API_NO_DISCARD const_reverse_iterator crbegin() const noexcept {
     return m_string_view.crbegin();
   }
-  const_reverse_iterator crend() const noexcept {
+  API_NO_DISCARD const_reverse_iterator crend() const noexcept {
     return m_string_view.crend();
   }
 
@@ -205,7 +205,7 @@ private:
 
   StringView(const std::string_view string_view) : m_string_view(string_view) {}
 
-  Base get_base(Base input) const;
+  API_NO_DISCARD Base get_base(Base input) const;
 
 };
 

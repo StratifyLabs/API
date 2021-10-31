@@ -75,15 +75,15 @@ public:
 
   class Scope {
   public:
-    Scope(const Initialize &options){ initialize(options); }
-    ~Scope(){ finalize(); }
+    explicit Scope(const Initialize &options) { initialize(options); }
+    ~Scope() { finalize(); }
   };
 
   static ExecuteFlags parse_execution_flags(const sys::Cli &cli);
   static u32 parse_test(const sys::Cli &cli, var::StringView name,
                         u32 test_flag);
 
-  Test(var::StringView name);
+  explicit Test(var::StringView name);
   ~Test();
 
   void execute(const sys::Cli &cli);
@@ -108,8 +108,8 @@ public:
   virtual bool execute_class_performance_case();
   virtual bool execute_class_stress_case();
 
-  bool result() const { return m_test_result; }
-  bool case_result() const { return m_case_result; }
+  API_NO_DISCARD bool result() const { return m_test_result; }
+  API_NO_DISCARD bool case_result() const { return m_case_result; }
 
   void set_case_failed() {
     m_case_result = false;
@@ -117,7 +117,7 @@ public:
     m_final_result = false;
   }
 
-  bool expect(const char *function, unsigned int line, bool value) {
+  API_NO_DISCARD bool expect(const char *function, unsigned int line, bool value) {
     if (value) {
       return true;
     }
@@ -134,7 +134,7 @@ public:
     return false;
   }
 
-  static bool final_result() { return m_final_result; }
+  API_NO_DISCARD static bool final_result() { return m_final_result; }
 
   class TimedScope {
   public:
@@ -157,7 +157,7 @@ public:
       if (duration < m_minimum) {
         m_test.printer().error("duration below minimum");
         m_test.set_case_failed();
-      } else if( duration > m_maximum ){
+      } else if (duration > m_maximum) {
         m_test.printer().error("duration above maximum");
         m_test.set_case_failed();
       }
@@ -173,7 +173,7 @@ public:
   };
 
 protected:
-  const chrono::ClockTimer &case_timer() const { return m_case_timer; }
+  API_NO_DISCARD const chrono::ClockTimer &case_timer() const { return m_case_timer; }
   chrono::ClockTimer &case_timer() { return m_case_timer; }
 
   static u32 get_score(u32 microseconds);

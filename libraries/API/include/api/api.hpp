@@ -3,9 +3,9 @@
 #ifndef API_API_HPP_
 #define API_API_HPP_
 
+#include <cerrno>
+#include <climits>
 #include <cstring>
-#include <errno.h>
-#include <limits.h>
 
 #include <vector>
 
@@ -15,8 +15,10 @@
 #if !defined __win32
 #include <execinfo.h>
 #endif
+#define API_BACKTRACE_SIZE 512
 #else
 extern "C" int sos_trace_stack(u32 count);
+#define API_BACKTRACE_SIZE 32
 #endif
 
 namespace api {
@@ -72,7 +74,7 @@ class Error {
 public:
   class Backtrace {
   public:
-    Backtrace(const Error &context) {
+    explicit Backtrace(const Error &context) {
 #if defined __link
 #if !defined __win32
       m_entry_count = context.m_backtrace_count;
@@ -98,43 +100,37 @@ public:
     }
 
   private:
-    char **m_symbol_pointer;
+    char **m_symbol_pointer{};
     API_RAF(Backtrace, size_t, entry_count, 0);
   };
 
-  const char *message() const { return m_message; }
-  int error_number() const { return m_error_number; }
-  int line_number() const { return m_line_number; }
+  API_NO_DISCARD const char *message() const { return m_message; }
+  API_NO_DISCARD int error_number() const { return m_error_number; }
+  API_NO_DISCARD int line_number() const { return m_line_number; }
 
-  void *signature() const { return m_signature; }
+  API_NO_DISCARD void *signature() const { return m_signature; }
 
   constexpr static size_t backtrace_buffer_size() {
     return m_backtrace_buffer_size;
   }
 
-  bool is_error() const { return line_number() > 0; }
+  API_NO_DISCARD bool is_error() const { return line_number() > 0; }
   void reset() { m_line_number = 0; }
-  bool is_guarded() const { return m_is_guarded; }
+  API_NO_DISCARD bool is_guarded() const { return m_is_guarded; }
   void set_guarded(bool value = true) { m_is_guarded = value; }
 
 private:
-  Error(void *signature) : m_signature(signature) {}
+  explicit Error(void *signature) : m_signature(signature) {}
   friend class PrivateExecutionContext;
   friend class BacktraceSymbols;
   static constexpr size_t m_message_size = PATH_MAX;
-  static constexpr size_t m_backtrace_buffer_size =
-#if defined __link
-      512
-#else
-      32
-#endif
-      ;
+  static constexpr size_t m_backtrace_buffer_size = API_BACKTRACE_SIZE;
 
-  void *m_signature;
+  void *m_signature{};
   int m_error_number = 0;
   int m_line_number = 0;
-  char m_message[m_message_size + 1];
-  void *m_backtrace_buffer[m_backtrace_buffer_size];
+  char m_message[m_message_size + 1]{};
+  void *m_backtrace_buffer[m_backtrace_buffer_size]{};
   size_t m_backtrace_count = 0;
   bool m_is_guarded = false;
 
@@ -157,9 +153,9 @@ protected:
   friend class ExecutionContext;
   inline bool is_error() const { return value() < 0; }
   inline bool is_success() const { return value() >= 0; }
-  inline int value() const { return errno; }
+  API_NO_DISCARD inline int value() const { return errno; }
 
-  size_t context_count() const {
+  API_NO_DISCARD size_t context_count() const {
     if (m_error_list) {
       return m_error_list->size() + 1;
     }
@@ -270,18 +266,22 @@ private:
 #define API_THREAD_EXECUTION_CONTEXT()                                         \
   api::ThreadExecutionContext api_thread_execution_context;
 
-#define API_ASSERT(a) api::api_assert(a, __PRETTY_FUNCTION__, __LINE__);
+#define API_ASSERT(a) api::api_assert(a, __PRETTY_FUNCTION__, __LINE__)
 void api_assert(bool value, const char *function, int line);
 
 #define API_RETURN_VALUE_IF_ERROR(return_value)                                \
-  if (api::ExecutionContext::is_error()) {                                     \
-    return return_value;                                                       \
-  }
+  do {                                                                         \
+    if (api::ExecutionContext::is_error()) {                                   \
+      return return_value;                                                     \
+    }                                                                          \
+  } while (0)
 
 #define API_RETURN_IF_ERROR()                                                  \
-  if (api::ExecutionContext::is_error()) {                                     \
-    return;                                                                    \
-  }
+  do {                                                                         \
+    if (api::ExecutionContext::is_error()) {                                   \
+      return;                                                                  \
+    }                                                                          \
+  } while (0)
 
 #define API_SYSTEM_CALL(message_value, return_value)                           \
   api::ExecutionContext::handle_system_call_result(__LINE__, message_value,    \
@@ -405,7 +405,7 @@ public:
     return m_value != a.m_value;
   }
 
-  Type const operator*() const noexcept { return m_transform(m_value, m_max); }
+  Type operator*() const noexcept { return m_transform(m_value, m_max); }
 
   RangeIterator &operator++() {
     m_value++;
@@ -429,14 +429,12 @@ public:
   static Type reverse(const Type &a, const Type &b) { return b - a - 1; }
 
   constexpr Range(
-      const Type &start,
-      const Type &finish,
+      const Type &start, const Type &finish,
       typename RangeIterator<Type>::TransformCallback transform = nullptr)
       : m_start(start < finish ? start : finish),
         m_finish(start < finish ? finish : start),
-        m_transform(
-            transform == nullptr ? (start < finish ? forward : reverse)
-                                 : transform) {}
+        m_transform(transform == nullptr ? (start < finish ? forward : reverse)
+                                         : transform) {}
 
   RangeIterator<Type> begin() const noexcept {
     return RangeIterator(m_start, m_finish, m_transform);
@@ -467,15 +465,13 @@ private:
 
 template <typename Type> class IndexIterator {
 public:
-
-  IndexIterator(Type value)
-      : m_value(value){}
+  explicit IndexIterator(Type value) : m_value(value) {}
 
   bool operator!=(IndexIterator const &a) const noexcept {
     return m_value != a.m_value;
   }
 
-  Type const operator*() const noexcept { return m_value; }
+  Type operator*() const noexcept { return m_value; }
 
   IndexIterator &operator++() {
     m_value++;
@@ -493,32 +489,18 @@ private:
 
 template <typename Type = int> class Index {
 public:
+  constexpr Index(const Type &start, const Type &finish)
+      : m_start(start), m_finish(finish) {}
 
-  constexpr Index(
-      const Type &start,
-      const Type &finish)
-      : m_start(start),
-        m_finish(finish){}
+  constexpr explicit Index(const Type &finish)
+      : m_start(Type{}), m_finish(finish) {}
 
-  constexpr Index(
-    const Type &finish)
-    : m_start(Type{}),
-      m_finish(finish){}
+  IndexIterator<Type> begin() const noexcept { return IndexIterator(m_start); }
 
-  IndexIterator<Type> begin() const noexcept {
-    return IndexIterator(m_start);
-  }
+  IndexIterator<Type> end() const noexcept { return IndexIterator(m_finish); }
 
-  IndexIterator<Type> end() const noexcept {
-    return IndexIterator(m_finish);
-  }
-
-  IndexIterator<Type> cbegin() const noexcept {
-    return IndexIterator(m_start);
-  }
-  IndexIterator<Type> cend() const noexcept {
-    return IndexIterator(m_finish);
-  }
+  IndexIterator<Type> cbegin() const noexcept { return IndexIterator(m_start); }
+  IndexIterator<Type> cend() const noexcept { return IndexIterator(m_finish); }
 
 private:
   const Type m_start = 0;

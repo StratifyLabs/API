@@ -97,11 +97,10 @@ public:
   }
 
   constexpr static size_t npos = static_cast<size_t>(-1);
-  size_t find(const View & view, size_t alignment = 1);
+  size_t find(const View & view, size_t alignment = 1) const;
 
   template <typename Type> size_t count() const { return size() / sizeof(Type); }
 
-  enum class SwapBy { half_word, word };
 
   template <typename Type> bool verify_zero_sum() const {
     Type sum = 0;
@@ -112,10 +111,11 @@ public:
     return sum == 0;
   }
 
+  enum class SwapBy { half_word, word };
   View &swap_byte_order(SwapBy order);
 
   bool operator==(const View &a) const {
-    return a.size() == size() ? memcmp(data(), a.data(), size()) == 0 : false;
+    return a.size() == size() && memcmp(data(), a.data(), size()) == 0;
   }
 
   bool operator!=(const View &a) const { return !(*this == a); }
@@ -144,7 +144,7 @@ public:
     return *this;
   }
 
-  ssize_t size_signed() const { return static_cast<ssize_t>(size()); }
+  API_NO_DISCARD ssize_t size_signed() const { return static_cast<ssize_t>(size()); }
 
   View &copy(const View &source);
 
@@ -154,38 +154,38 @@ public:
 
   template <typename T> T *to() { return static_cast<T *>(data()); }
 
-  const char *to_const_char() const { return to<char>(); }
-  char *to_char() { return to<char>(); }
+  API_NO_DISCARD const char *to_const_char() const { return to<char>(); }
+  API_NO_DISCARD char *to_char() { return to<char>(); }
 
-  const void *to_const_void() const { return to<const void>(); }
-  void *to_void() { return to<void>(); }
+  API_NO_DISCARD const void *to_const_void() const { return to<const void>(); }
+  API_NO_DISCARD void *to_void() { return to<void>(); }
 
-  const u8 *to_const_u8() const { return to<const u8>(); }
-  u8 *to_u8() { return to<u8>(); }
+  API_NO_DISCARD const u8 *to_const_u8() const { return to<const u8>(); }
+  API_NO_DISCARD u8 *to_u8() { return to<u8>(); }
 
-  const u16 *to_const_u16() const { return to<const u16>(); }
-  u16 *to_u16() { return to<u16>(); }
+  API_NO_DISCARD const u16 *to_const_u16() const { return to<const u16>(); }
+  API_NO_DISCARD u16 *to_u16() { return to<u16>(); }
 
-  const u32 *to_const_u32() const { return to<const u32>(); }
-  u32 *to_u32() { return to<u32>(); }
+  API_NO_DISCARD const u32 *to_const_u32() const { return to<const u32>(); }
+  API_NO_DISCARD u32 *to_u32() { return to<u32>(); }
 
-  const u64 *to_const_u64() const { return to<const u64>(); }
-  u64 *to_u64() { return to<u64>(); }
+  API_NO_DISCARD const u64 *to_const_u64() const { return to<const u64>(); }
+  API_NO_DISCARD u64 *to_u64() { return to<u64>(); }
 
-  const s8 *to_const_s8() const { return to<const s8>(); }
-  s8 *to_s8() { return to<s8>(); }
+  API_NO_DISCARD const s8 *to_const_s8() const { return to<const s8>(); }
+  API_NO_DISCARD s8 *to_s8() { return to<s8>(); }
 
-  const s16 *to_const_s16() const { return to<const s16>(); }
-  s16 *to_s16() { return to<s16>(); }
+  API_NO_DISCARD const s16 *to_const_s16() const { return to<const s16>(); }
+  API_NO_DISCARD s16 *to_s16() { return to<s16>(); }
 
-  const s32 *to_const_s32() const { return to<const s32>(); }
-  s32 *to_s32() { return to<s32>(); }
+  API_NO_DISCARD const s32 *to_const_s32() const { return to<const s32>(); }
+  API_NO_DISCARD s32 *to_s32() { return to<s32>(); }
 
-  const s64 *to_const_s64() const { return to<const s64>(); }
-  s64 *to_s64() { return to<s64>(); }
+  API_NO_DISCARD const s64 *to_const_s64() const { return to<const s64>(); }
+  API_NO_DISCARD s64 *to_s64() { return to<s64>(); }
 
-  const float *to_const_float() const { return to<const float>(); }
-  float *to_float() { return to<float>(); }
+  API_NO_DISCARD const float *to_const_float() const { return to<const float>(); }
+  API_NO_DISCARD float *to_float() { return to<float>(); }
 
   template <typename T> T &at(size_t position) {
     u32 local_count = size() / sizeof(T);
@@ -199,40 +199,40 @@ public:
     return to<T>()[position];
   }
 
-  char at_const_char(size_t position) const { return at<const char>(position); }
-  char &at_char(size_t position) { return at<char>(position); }
+  API_NO_DISCARD char at_const_char(size_t position) const { return at<const char>(position); }
+  API_NO_DISCARD char &at_char(size_t position) { return at<char>(position); }
 
-  u8 at_const_u8(size_t position) const { return at<const u8>(position); }
-  u8 &at_u8(size_t position) { return at<u8>(position); }
+  API_NO_DISCARD u8 at_const_u8(size_t position) const { return at<const u8>(position); }
+  API_NO_DISCARD u8 &at_u8(size_t position) { return at<u8>(position); }
 
-  u16 at_const_u16(size_t position) const { return at<const u16>(position); }
-  u16 &at_u16(size_t position) { return at<u16>(position); }
+  API_NO_DISCARD u16 at_const_u16(size_t position) const { return at<const u16>(position); }
+  API_NO_DISCARD u16 &at_u16(size_t position) { return at<u16>(position); }
 
-  u32 at_const_u32(size_t position) const { return at<const u32>(position); }
-  u32 &at_u32(size_t position) { return at<u32>(position); }
+  API_NO_DISCARD u32 at_const_u32(size_t position) const { return at<const u32>(position); }
+  API_NO_DISCARD u32 &at_u32(size_t position) { return at<u32>(position); }
 
-  u64 at_const_u64(size_t position) const { return at<const u64>(position); }
-  u64 &at_u64(size_t position) { return at<u64>(position); }
+  API_NO_DISCARD u64 at_const_u64(size_t position) const { return at<const u64>(position); }
+  API_NO_DISCARD u64 &at_u64(size_t position) { return at<u64>(position); }
 
-  s8 at_const_s8(size_t position) const { return at<const s8>(position); }
-  s8 &at_s8(size_t position) { return at<s8>(position); }
+  API_NO_DISCARD s8 at_const_s8(size_t position) const { return at<const s8>(position); }
+  API_NO_DISCARD s8 &at_s8(size_t position) { return at<s8>(position); }
 
-  s16 at_const_s16(size_t position) const { return at<const s16>(position); }
-  s16 &at_s16(size_t position) { return at<s16>(position); }
+  API_NO_DISCARD s16 at_const_s16(size_t position) const { return at<const s16>(position); }
+  API_NO_DISCARD s16 &at_s16(size_t position) { return at<s16>(position); }
 
-  s32 at_const_s32(size_t position) const { return at<const s32>(position); }
-  s32 &at_s32(size_t position) { return at<s32>(position); }
+  API_NO_DISCARD s32 at_const_s32(size_t position) const { return at<const s32>(position); }
+  API_NO_DISCARD s32 &at_s32(size_t position) { return at<s32>(position); }
 
-  s64 at_const_s64(size_t position) const { return at<const s64>(position); }
-  s64 &at_s64(size_t position) { return at<s64>(position); }
+  API_NO_DISCARD s64 at_const_s64(size_t position) const { return at<const s64>(position); }
+  API_NO_DISCARD s64 &at_s64(size_t position) { return at<s64>(position); }
 
-  float at_const_float(size_t position) const {
+  API_NO_DISCARD float at_const_float(size_t position) const {
     return at<const float>(position);
   }
-  float &at_float(size_t position) { return at<float>(position); }
+  API_NO_DISCARD float &at_float(size_t position) { return at<float>(position); }
 
-  const void *data() const { return m_data; }
-  void *data() { return m_data; }
+  API_NO_DISCARD const void *data() const { return m_data; }
+  API_NO_DISCARD void *data() { return m_data; }
 
   View& from_string(StringView value) {
     //bytes to process
@@ -270,9 +270,9 @@ public:
     API_AC(Transform, var::View, output);
   };
 
-  virtual int transform(const Transform &options) const = 0;
-  virtual size_t get_output_size(size_t nbyte) const { return nbyte; }
-  virtual size_t page_size_boundary() const { return 1; }
+  API_NO_DISCARD virtual int transform(const Transform &options) const = 0;
+  API_NO_DISCARD virtual size_t get_output_size(size_t nbyte) const { return nbyte; }
+  API_NO_DISCARD virtual size_t page_size_boundary() const { return 1; }
 
 protected:
 };

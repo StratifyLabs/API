@@ -3,8 +3,6 @@
 
 using namespace var;
 
-u32 m_stack_string_unused = 0;
-
 int NumberString::to_integer() const { return ::atoi(cstring()); }
 float NumberString::to_float() const { return ::atof(cstring()); }
 

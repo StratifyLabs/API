@@ -22,10 +22,10 @@ public:
   FileSystem();
 
 #if !defined __link
-  Access access(const var::StringView path);
+  API_NO_DISCARD Access access(var::StringView path);
 #endif
 
-  bool exists(var::StringView path) const;
+  API_NO_DISCARD bool exists(var::StringView path) const;
 
   const FileSystem &remove(var::StringView path) const;
   const FileSystem &remove_directory(var::StringView path) const;
@@ -44,19 +44,19 @@ public:
     IsRecursive is_recursive,
     const Permissions &permissions = Permissions(0)) const;
 
-  size_t get_entry_count(const var::StringView path, IsRecursive is_recursive = IsRecursive::no) const;
+  API_NO_DISCARD size_t get_entry_count(var::StringView path, IsRecursive is_recursive = IsRecursive::no) const;
 
-  PathList
-  read_directory(const var::StringView path,
+  API_NO_DISCARD PathList
+  read_directory(var::StringView path,
                  IsRecursive is_recursive = IsRecursive::no,
                  ExcludeCallback exclude = nullptr,
                  void * context = nullptr) const;
 
   //for backwards compatibility
-  PathList
+  API_NO_DISCARD PathList
   read_directory(const var::StringView path,
                  IsRecursive is_recursive,
-                 bool (*exclude)(const var::StringView, void * context),
+                 bool (*exclude)(const var::StringView, void *),
                  void * context = nullptr) const {
     return read_directory(path, is_recursive, reinterpret_cast<ExcludeCallback>(exclude), context);
   }
@@ -73,22 +73,22 @@ public:
 
   const FileSystem &touch(var::StringView path) const;
 
-  FileInfo get_info(var::StringView path) const;
-  FileInfo get_info(const File &file) const;
+  API_NO_DISCARD FileInfo get_info(var::StringView path) const;
+  API_NO_DISCARD FileInfo get_info(const File &file) const;
 
 #if !defined __link
   int access(var::StringView path, const Access &access);
 #endif
 
 protected:
-  Permissions get_permissions(var::StringView path) const;
+  API_NO_DISCARD Permissions get_permissions(var::StringView path) const;
 
-  int interface_mkdir(const char *path, int mode) const;
-  int interface_rmdir(const char *path) const;
-  int interface_unlink(const char *path) const;
-  int interface_stat(const char *path, struct stat *stat) const;
-  int interface_fstat(int fd, struct stat *stat) const;
-  int interface_rename(const char *old_name, const char *new_name) const;
+  API_NO_DISCARD int interface_mkdir(const char *path, int mode) const;
+  API_NO_DISCARD int interface_rmdir(const char *path) const;
+  API_NO_DISCARD int interface_unlink(const char *path) const;
+  API_NO_DISCARD int interface_stat(const char *path, struct stat *stat) const;
+  API_NO_DISCARD int interface_fstat(int fd, struct stat *stat) const;
+  API_NO_DISCARD int interface_rename(const char *old_name, const char *new_name) const;
 
 private:
 };

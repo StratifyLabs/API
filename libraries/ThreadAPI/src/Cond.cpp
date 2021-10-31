@@ -28,18 +28,18 @@ Cond &Cond::unlock() {
 }
 
 Cond & Cond::wait_until_asserted(const chrono::ClockTime &timeout){
-  bool is_ready = false;
+  bool is_ready;
   do {
     Mutex::Scope ms(mutex());
     is_ready = is_asserted();
-    if( is_ready == false ){
+    if(!is_ready){
       if( timeout != chrono::ClockTime() ){
         wait_timed(timeout);
       } else {
         wait();
       }
     }
-  } while( is_ready == false);
+  } while(!is_ready);
   return *this;
 }
 

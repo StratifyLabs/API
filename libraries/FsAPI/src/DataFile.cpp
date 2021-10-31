@@ -1,14 +1,9 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#include <cstdio>
 #include <cstring>
-#include <fcntl.h>
 
-#include "chrono/ClockTimer.hpp"
 #include "fs/DataFile.hpp"
 #include "var/StackString.hpp"
-
-#include "local.h"
 
 using namespace fs;
 

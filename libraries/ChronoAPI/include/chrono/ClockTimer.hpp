@@ -20,7 +20,7 @@ public:
   };
 
   ClockTimer();
-  ClockTimer(IsRunning is_running);
+  explicit ClockTimer(IsRunning is_running);
 
   // start if not started
   ClockTimer &start();
@@ -33,28 +33,28 @@ public:
   // stop and reset the state to initial values
   ClockTimer &reset();
 
-  bool is_running() const { return !is_stopped(); }
-  bool is_started() const {
+  API_NO_DISCARD bool is_running() const { return !is_stopped(); }
+  API_NO_DISCARD bool is_started() const {
     return (m_start.nanoseconds() + m_start.seconds()) != 0;
   }
-  bool is_stopped() const {
+  API_NO_DISCARD bool is_stopped() const {
     return (m_stop.seconds() != -1) || (m_stop.seconds() == 0);
   }
 
-  bool is_reset() const { return m_stop.seconds() == 0; }
+  API_NO_DISCARD bool is_reset() const { return m_stop.seconds() == 0; }
 
-  u32 milliseconds() const { return calc_value().milliseconds(); }
-  u32 microseconds() const { return calc_value().microseconds(); }
-  u32 seconds() const { return calc_value().seconds(); }
+  API_NO_DISCARD u32 milliseconds() const { return calc_value().milliseconds(); }
+  API_NO_DISCARD u32 microseconds() const { return calc_value().microseconds(); }
+  API_NO_DISCARD u32 seconds() const { return calc_value().seconds(); }
 
-  ClockTime clock_time() const;
-  MicroTime micro_time() const { return calc_value(); }
+  API_NO_DISCARD ClockTime clock_time() const;
+  API_NO_DISCARD MicroTime micro_time() const { return calc_value(); }
 
 private:
   ClockTime m_start;
   ClockTime m_stop;
 
-  MicroTime calc_value() const;
+  API_NO_DISCARD MicroTime calc_value() const;
 };
 
 inline bool operator==(const ClockTimer &lhs, const MicroTime &rhs) {
@@ -107,7 +107,7 @@ inline bool operator>=(const MicroTime &lhs, const ClockTimer &rhs) {
 
 class PerformanceScope {
 public:
-  PerformanceScope(const var::StringView name, const ClockTimer &timer, printer::Printer &printer);
+  PerformanceScope(var::StringView name, const ClockTimer &timer, printer::Printer &printer);
   ~PerformanceScope();
 
 private:

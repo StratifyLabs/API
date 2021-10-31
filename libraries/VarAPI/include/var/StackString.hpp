@@ -1,7 +1,7 @@
 #ifndef VARAPI_VAR_STACKSTRING_HPP
 #define VARAPI_VAR_STACKSTRING_HPP
 
-#include <limits.h>
+#include <climits>
 
 #include "String.hpp"
 #include "StringView.hpp"
@@ -17,7 +17,7 @@ public:
     return static_cast<Derived &>(*this);
   }
 
-  bool is_empty() const { return m_buffer[0] == 0; }
+  API_NO_DISCARD bool is_empty() const { return m_buffer[0] == 0; }
 
   Derived &append(const char a) {
     const size_t len = strnlen(m_buffer, Size - 1);
@@ -36,8 +36,8 @@ public:
     return static_cast<Derived &>(*this);
   }
 
-  size_t length() const { return strnlen(m_buffer, Size - 1); }
-  char back() const {
+  API_NO_DISCARD size_t length() const { return strnlen(m_buffer, Size - 1); }
+  API_NO_DISCARD char back() const {
     const size_t len = length();
     if (len) {
       return m_buffer[length() - 1];
@@ -200,7 +200,7 @@ public:
 //on windows PATH_MAX is too small (261 chars)
 #define PATH_STRING_LENGTH 4096
 #else
-#define PATH_STRING_LENGTH PATH_MAX + 1
+#define PATH_STRING_LENGTH (PATH_MAX + 1)
 #endif
 
 
@@ -248,7 +248,7 @@ public:
   }
 };
 
-GeneralString operator|(const StringView lhs, const StringView rhs);
+GeneralString operator|(StringView lhs, StringView rhs);
 
 class NumberString : public StackString<NumberString, 64> {
 public:
@@ -285,10 +285,10 @@ public:
   NumberString(const StringView a) : StackString(a) {}
   NumberString(const char *a) : StackString(a) {}
 
-  int to_integer() const;
-  float to_float() const;
-  long to_long(Base base = Base::decimal) const;
-  unsigned long to_unsigned_long(Base base = Base::decimal) const;
+  API_NO_DISCARD int to_integer() const;
+  API_NO_DISCARD float to_float() const;
+  API_NO_DISCARD long to_long(Base base = Base::decimal) const;
+  API_NO_DISCARD unsigned long to_unsigned_long(Base base = Base::decimal) const;
 
   // implicit conversion
   operator const char *() const { return m_buffer; }

@@ -9,14 +9,13 @@ namespace fs {
 
 class Path {
 public:
-  static var::StringView suffix(const var::StringView path);
-  static var::StringView name(const var::StringView path);
-  static var::StringView
-  parent_directory(const var::StringView path, size_t depth = 1);
-  static var::StringView base_name(const var::StringView path);
-  static var::StringView no_suffix(const var::StringView path);
-
-  static bool is_hidden(const var::StringView path);
+  API_NO_DISCARD static var::StringView suffix(var::StringView path);
+  API_NO_DISCARD static var::StringView name(var::StringView path);
+  API_NO_DISCARD static var::StringView
+  parent_directory(var::StringView path, size_t depth = 1);
+  API_NO_DISCARD static var::StringView base_name(var::StringView path);
+  API_NO_DISCARD static var::StringView no_suffix(var::StringView path);
+  API_NO_DISCARD static bool is_hidden(var::StringView path);
 
 private:
   var::StringView m_path;

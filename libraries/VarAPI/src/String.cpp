@@ -2,8 +2,6 @@
              // LICENSE.md for rights.
 // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc
 
-#include <errno.h>
-
 #include "var/Data.hpp"
 #include "var/String.hpp"
 #include "var/Tokenizer.hpp"

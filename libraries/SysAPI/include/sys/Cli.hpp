@@ -29,29 +29,28 @@ public:
   }
 
 
-  const char *app_git_hash() const { return m_app_git_hash; }
+  API_NO_DISCARD API_MAYBE_UNUSED const char *app_git_hash() const { return m_app_git_hash; }
 
-  var::GeneralString to_general_string() const;
-  var::StringView at(u16 value) const;
+  API_NO_DISCARD var::GeneralString to_general_string() const;
+  API_NO_DISCARD var::StringView at(u16 value) const;
 
-  var::StringView get_option(
+  API_NO_DISCARD var::StringView get_option(
     var::StringView name,
     var::StringView help = var::StringView()) const;
 
-  u32 count() const { return m_argc; }
-  u32 size() const { return m_argc; }
+  API_NO_DISCARD u32 count() const { return m_argc; }
+  API_NO_DISCARD u32 size() const { return m_argc; }
 
-  var::StringView get_name() const;
-  var::StringView get_path() const;
+  API_NO_DISCARD var::StringView get_name() const;
+  API_NO_DISCARD var::StringView get_path() const;
 
   class ShowHelp {
     API_AF(ShowHelp, var::StringView, publisher, "");
     API_AF(ShowHelp, var::StringView, version, "");
   };
 
-  const Cli& show_help(const ShowHelp &options) const;
-
-  const Cli &show_version(const ShowHelp &options) const;
+  API_MAYBE_UNUSED const Cli& show_help(const ShowHelp &options) const;
+  API_MAYBE_UNUSED const Cli &show_version(const ShowHelp &options) const;
 
 private:
   u16 m_argc = 0;

@@ -158,7 +158,7 @@ bool MarkdownPrinter::close_type(ContainerType type) {
 
 MarkdownPrinter &MarkdownPrinter::horizontal_line() {
   print(verbose_level(), StringView().set_null(),
-        "-------------------------------\n");
+        "-------------------------------\n", IsNewline::yes);
   return *this;
 }
 
@@ -190,7 +190,7 @@ MarkdownPrinter &MarkdownPrinter::open_header(var::StringView header,
   }
   header_output += " " + header;
 
-  print(level, StringView().set_null(), header_output.string_view());
+  print(level, StringView().set_null(), header_output.string_view(), IsNewline::yes);
   return *this;
 }
 
@@ -224,7 +224,7 @@ MarkdownPrinter &MarkdownPrinter::open_code(const var::StringView language,
   m_is_last_close = false;
   container_list().push_back(Container(level, ContainerType::code));
   print(level, StringView().set_null(),
-        (var::String() + "```" + language).string_view());
+        (var::String() + "```" + language).string_view(), IsNewline::yes);
   return *this;
 }
 MarkdownPrinter &MarkdownPrinter::close_code() {

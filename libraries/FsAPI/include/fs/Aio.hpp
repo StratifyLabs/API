@@ -7,7 +7,6 @@
 
 #include <aio.h>
 #include <cstring>
-#include <errno.h>
 
 #include "chrono/MicroTime.hpp"
 #include "var/View.hpp"
@@ -67,9 +66,9 @@ class Aio : public api::ExecutionContext {
 
 public:
   /*! \details Constructs an empy AIO object. */
-  Aio() { m_aio_var = {0}; }
+  Aio() = default;
 
-  explicit Aio(var::View view, size_t location = 0) {
+  explicit Aio(var::View view, off_t location = 0) {
     m_aio_var.aio_buf = view.to_void();
     m_aio_var.aio_nbytes = view.size();
     m_aio_var.aio_offset = location;
@@ -88,12 +87,11 @@ public:
    *
    *
    */
-  static int suspend(
-    const AiocbList &list,
-    const chrono::MicroTime &timeout = chrono::MicroTime(0)) {
-    struct timespec ts;
-    ts.tv_sec = timeout.microseconds() / 1000000;
-    ts.tv_nsec = (timeout.microseconds() % 1000000) * 1000;
+  static int suspend(const AiocbList &list,
+                     const chrono::MicroTime &timeout = chrono::MicroTime(0)) {
+    struct timespec ts = {.tv_sec = time_t(timeout.microseconds() / 1000000),
+                          .tv_nsec =
+                              long((timeout.microseconds() % 1000000) * 1000)};
     if (timeout.microseconds() == 0) {
       return aio_suspend(list.data(), list.count(), nullptr);
     } else {
@@ -109,14 +107,12 @@ public:
    */
   Aio &suspend(const chrono::MicroTime &timeout = chrono::MicroTime(0)) {
 
-    API_SYSTEM_CALL(
-      "",
-      suspend(AiocbList().push_back(&m_aio_var), timeout));
+    API_SYSTEM_CALL("", suspend(AiocbList().push_back(&m_aio_var), timeout));
     return *this;
   }
 
   /*! \details Returns the buffer pointer. */
-  volatile void *buffer() const { return m_aio_var.aio_buf; }
+  API_NO_DISCARD volatile void *buffer() const { return m_aio_var.aio_buf; }
 
   /*! \details Sets the buffer pointer.
    *
@@ -131,10 +127,10 @@ public:
   }
 
   /*! \details Returns the number of bytes to transfer. */
-  int nbytes() const { return m_aio_var.aio_nbytes; }
+  API_NO_DISCARD int nbytes() const { return m_aio_var.aio_nbytes; }
 
   /*! \details Returns the offset (or channel for Dac, Adc, Pwm, etc). */
-  int offset() const { return m_aio_var.aio_offset; }
+  API_NO_DISCARD int offset() const { return m_aio_var.aio_offset; }
 
   /*! \details Sets the offset (or channcel for Dac, Adc, Pwm, etc). */
   Aio &set_offset(int offset) {
@@ -143,16 +139,16 @@ public:
   }
 
   /*! \details Returns the return value of the operation. */
-  int ret() { return aio_return(&m_aio_var); }
+  API_NO_DISCARD int ret() { return aio_return(&m_aio_var); }
 
   /*! \details Returns the error number of the operation. */
-  int error() { return aio_error(&m_aio_var); }
+  API_NO_DISCARD int error() { return aio_error(&m_aio_var); }
 
   /*! \details Returns true if operation is complete. */
-  bool is_done() const { return !(aio_error(&m_aio_var) == EINPROGRESS); }
+  API_NO_DISCARD bool is_done() const { return aio_error(&m_aio_var) != EINPROGRESS; }
 
   /*! \details Returns true if operation is still in progress. */
-  bool is_busy() const { return (aio_error(&m_aio_var) == EINPROGRESS); }
+  API_NO_DISCARD bool is_busy() const { return aio_error(&m_aio_var) == EINPROGRESS; }
 
   /*! \details Causes the calling thread to receive a signal when the operation
    * completes.
@@ -195,7 +191,7 @@ public:
   }
 
 private:
-  struct aiocb m_aio_var;
+  struct aiocb m_aio_var {};
 };
 
 } // namespace fs

@@ -1,12 +1,9 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#include <cstdio>
-
 #include "printer/Printer.hpp"
 #include "sys/System.hpp"
 #include "test/Case.hpp"
 #include "test/Test.hpp"
-#include "var/String.hpp"
 
 using namespace var;
 using namespace test;

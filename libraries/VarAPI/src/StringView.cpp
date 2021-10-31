@@ -23,22 +23,21 @@ StringView::StringView(const GeneralString &value)
 
 StringView StringView::get_substring(const GetSubstring &options) const {
   if (options.length() != StringView::npos) {
-    return StringView(
-        m_string_view.substr(options.position(), options.length()));
+    return {m_string_view.substr(options.position(), options.length())};
   }
-  return StringView(m_string_view.substr(options.position()));
+  return {m_string_view.substr(options.position())};
 }
 
 StringView StringView::get_substring_at_position(size_t position) const {
   if (position < length()) {
-    return StringView(m_string_view.substr(position));
+    return {m_string_view.substr(position)};
   }
 
-  return StringView();
+  return {};
 }
 
 StringView StringView::get_substring_with_length(size_t length) const {
-  return StringView(m_string_view.substr(0, length));
+  return {m_string_view.substr(0, length)};
 }
 
 StringViewList StringView::split(StringView delimeters) const {
@@ -51,19 +50,19 @@ float StringView::to_float() const {
 }
 
 StringView::Base StringView::get_base(Base input) const {
-  if( input != Base::auto_ ){
+  if (input != Base::auto_) {
     return input;
   }
 
-  if( m_string_view.find("0x") == 0 ){
+  if (m_string_view.find("0x") == 0) {
     return Base::hexadecimal;
   }
 
-  if( m_string_view.find("0X") == 0 ){
+  if (m_string_view.find("0X") == 0) {
     return Base::hexadecimal;
   }
 
-  if( m_string_view.find("0") == 0 ){
+  if (m_string_view.find('0') == 0) {
     return Base::octal;
   }
 
@@ -84,7 +83,7 @@ int StringView::to_integer() const {
   return ::atoi(NumberString(*this).cstring());
 }
 
-String StringView::to_string() const { return String(data(), length()); }
+String StringView::to_string() const { return {data(), length()}; }
 
 String StringView::to_string(const StringView &a) { return a.to_string(); }
 

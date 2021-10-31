@@ -2,7 +2,6 @@
 
 #include <sys/stat.h>
 
-#include "chrono/ClockTime.hpp"
 #include "fs/Dir.hpp"
 #include "printer/Printer.hpp"
 #include "var/StackString.hpp"
@@ -10,7 +9,6 @@
 
 #include "fs/FileSystem.hpp"
 #include "fs/Path.hpp"
-#include "local.h"
 
 printer::Printer &printer::operator<<(printer::Printer &printer,
                                       const fs::PathList &a) {
@@ -23,7 +21,7 @@ printer::Printer &printer::operator<<(printer::Printer &printer,
 
 using namespace fs;
 
-FileSystem::FileSystem() {}
+FileSystem::FileSystem() = default;
 
 const FileSystem &FileSystem::remove(var::StringView path) const {
   API_RETURN_VALUE_IF_ERROR(*this);
@@ -56,8 +54,8 @@ const FileSystem &FileSystem::rename(const Rename &options) const {
 
 bool FileSystem::exists(var::StringView path) const {
   API_RETURN_VALUE_IF_ERROR(false);
-  get_info(path);
-  bool result = is_success();
+  const auto info = get_info(path);
+  bool result = info.is_valid() && is_success();
   reset_error();
   return result;
 }

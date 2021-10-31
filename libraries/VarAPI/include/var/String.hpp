@@ -26,23 +26,23 @@ public:
   using reverse_iterator = typename std::string::reverse_iterator;
   using const_reverse_iterator = typename std::string::const_reverse_iterator;
 
-  const_iterator begin() const noexcept { return m_string.begin(); }
-  iterator begin() noexcept { return m_string.begin(); }
+  API_NO_DISCARD const_iterator begin() const noexcept { return m_string.begin(); }
+  API_NO_DISCARD iterator begin() noexcept { return m_string.begin(); }
 
-  const_iterator end() const noexcept { return m_string.end(); }
-  iterator end() noexcept { return m_string.end(); }
+  API_NO_DISCARD const_iterator end() const noexcept { return m_string.end(); }
+  API_NO_DISCARD iterator end() noexcept { return m_string.end(); }
 
-  const_iterator cbegin() const noexcept { return m_string.cbegin(); }
-  const_iterator cend() const noexcept { return m_string.cend(); }
+  API_NO_DISCARD  const_iterator cbegin() const noexcept { return m_string.cbegin(); }
+  API_NO_DISCARD const_iterator cend() const noexcept { return m_string.cend(); }
 
-  const_reverse_iterator rbegin() const noexcept { return m_string.rbegin(); }
-  reverse_iterator rbegin() noexcept { return m_string.rbegin(); }
+  API_NO_DISCARD const_reverse_iterator rbegin() const noexcept { return m_string.rbegin(); }
+  API_NO_DISCARD reverse_iterator rbegin() noexcept { return m_string.rbegin(); }
 
-  const_reverse_iterator rend() const noexcept { return m_string.rend(); }
-  reverse_iterator rend() noexcept { return m_string.rend(); }
+  API_NO_DISCARD const_reverse_iterator rend() const noexcept { return m_string.rend(); }
+  API_NO_DISCARD reverse_iterator rend() noexcept { return m_string.rend(); }
 
-  const_reverse_iterator crbegin() const noexcept { return m_string.crbegin(); }
-  const_reverse_iterator crend() const noexcept { return m_string.crend(); }
+  API_NO_DISCARD const_reverse_iterator crbegin() const noexcept { return m_string.crbegin(); }
+  API_NO_DISCARD const_reverse_iterator crend() const noexcept { return m_string.crend(); }
 
   class Erase {
     API_AF(Erase, size_t, position, 0);
@@ -289,7 +289,7 @@ public:
   API_NO_DISCARD StringViewList split(StringView delimiter) const;
 
   API_NO_DISCARD StringView string_view() const {
-    return StringView(cstring(), length());
+    return {cstring(), length()};
   }
 
   API_NO_DISCARD static const String &empty_string() { return m_empty_string; }

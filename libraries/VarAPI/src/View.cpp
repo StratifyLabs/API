@@ -2,11 +2,6 @@
              // LICENSE.md for rights.
 // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc
 
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <errno.h>
-
 #include "var/Data.hpp"
 #include "var/String.hpp"
 
@@ -14,7 +9,6 @@
 #include <reent.h>
 #endif
 
-#include "var/StackString.hpp"
 #include "var/View.hpp"
 
 using namespace var;
@@ -57,8 +51,7 @@ View &View::swap_byte_order(SwapBy swap) {
       if (p == nullptr) {
         API_RETURN_VALUE_ASSIGN_ERROR(*this, "read only data", EINVAL);
       }
-      u16 i;
-      for (i = 0; i < this->size() / 2; i++) {
+      for (size_t i = 0; i < this->size() / 2; i++) {
 #if !defined __link
         p[i] = __REV16(p[i]);
 #else
@@ -76,7 +69,7 @@ View &View::copy(const View &source) {
   return *this;
 }
 
-size_t View::find(const View & view, size_t alignment){
+size_t View::find(const View & view, size_t alignment) const{
 
   if( view.size() > size() ){
     return npos;

@@ -5,8 +5,6 @@
 
 #if !defined __link
 
-#include <signal.h>
-
 #include "Signal.hpp"
 #include "chrono/ClockTime.hpp"
 
@@ -15,20 +13,20 @@ namespace thread {
 class Timer : public api::ExecutionContext {
 public:
   using ClockId = chrono::ClockTime::ClockId;
-  Timer(Signal::Event &signal_event, ClockId clock_id = ClockId::realtime);
+  explicit Timer(Signal::Event &signal_event, ClockId clock_id = ClockId::realtime);
   ~Timer();
 
   Timer(const Timer &a) = delete;
   Timer &operator=(const Timer &a) = delete;
 
-  Timer(Timer &&a) { std::swap(m_timer, a.m_timer); }
+  Timer(Timer &&a)  noexcept { std::swap(m_timer, a.m_timer); }
 
-  Timer &operator=(Timer &&a) {
+  Timer &operator=(Timer &&a)  noexcept {
     std::swap(m_timer, a.m_timer);
     return *this;
   }
 
-  bool is_valid() const { return m_timer != timer_t(-1); }
+  API_NO_DISCARD bool is_valid() const { return m_timer != timer_t(-1); }
 
   enum class Flags { null = 0, absolute_time = TIMER_ABSTIME };
 
@@ -46,7 +44,7 @@ public:
     friend class Timer;
   };
 
-  Info get_info() const;
+  API_NO_DISCARD Info get_info() const;
 
   class Alarm {
   public:

@@ -36,10 +36,10 @@ Timer::Info Timer::get_info() const {
   API_RETURN_VALUE_IF_ERROR(Info());
 
   Info result;
-  struct itimerspec value;
+  struct itimerspec value{};
   API_SYSTEM_CALL("", timer_gettime(m_timer, &value));
-  result.m_interval = value.it_interval;
-  result.m_value = value.it_value;
+  result.m_interval = chrono::ClockTime(value.it_interval);
+  result.m_value = chrono::ClockTime(value.it_value);
   return result;
 }
 

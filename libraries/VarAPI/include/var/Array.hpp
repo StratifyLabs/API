@@ -112,7 +112,7 @@ private:
 
 template <typename T> class Pair : public Array<T, 2> {
 public:
-  Pair() {}
+  Pair() = default;
   Pair(const T &k, const T &v) {
     key() = k;
     value() = v;
