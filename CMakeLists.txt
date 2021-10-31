@@ -31,7 +31,9 @@ add_subdirectory(libraries/ThreadAPI ThreadAPI)
 add_subdirectory(libraries/SysAPI SysAPI)
 add_subdirectory(libraries/TestAPI TestAPI)
 
-if(SOS_IS_TEST)
+option(API_IS_TEST OFF "Enable test builds")
+
+if(API_IS_TEST)
 	add_subdirectory(tests tests)
 endif()
 
