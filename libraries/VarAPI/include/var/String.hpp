@@ -26,23 +26,39 @@ public:
   using reverse_iterator = typename std::string::reverse_iterator;
   using const_reverse_iterator = typename std::string::const_reverse_iterator;
 
-  API_NO_DISCARD const_iterator begin() const noexcept { return m_string.begin(); }
+  API_NO_DISCARD const_iterator begin() const noexcept {
+    return m_string.begin();
+  }
   API_NO_DISCARD iterator begin() noexcept { return m_string.begin(); }
 
   API_NO_DISCARD const_iterator end() const noexcept { return m_string.end(); }
   API_NO_DISCARD iterator end() noexcept { return m_string.end(); }
 
-  API_NO_DISCARD  const_iterator cbegin() const noexcept { return m_string.cbegin(); }
-  API_NO_DISCARD const_iterator cend() const noexcept { return m_string.cend(); }
+  API_NO_DISCARD const_iterator cbegin() const noexcept {
+    return m_string.cbegin();
+  }
+  API_NO_DISCARD const_iterator cend() const noexcept {
+    return m_string.cend();
+  }
 
-  API_NO_DISCARD const_reverse_iterator rbegin() const noexcept { return m_string.rbegin(); }
-  API_NO_DISCARD reverse_iterator rbegin() noexcept { return m_string.rbegin(); }
+  API_NO_DISCARD const_reverse_iterator rbegin() const noexcept {
+    return m_string.rbegin();
+  }
+  API_NO_DISCARD reverse_iterator rbegin() noexcept {
+    return m_string.rbegin();
+  }
 
-  API_NO_DISCARD const_reverse_iterator rend() const noexcept { return m_string.rend(); }
+  API_NO_DISCARD const_reverse_iterator rend() const noexcept {
+    return m_string.rend();
+  }
   API_NO_DISCARD reverse_iterator rend() noexcept { return m_string.rend(); }
 
-  API_NO_DISCARD const_reverse_iterator crbegin() const noexcept { return m_string.crbegin(); }
-  API_NO_DISCARD const_reverse_iterator crend() const noexcept { return m_string.crend(); }
+  API_NO_DISCARD const_reverse_iterator crbegin() const noexcept {
+    return m_string.crbegin();
+  }
+  API_NO_DISCARD const_reverse_iterator crend() const noexcept {
+    return m_string.crend();
+  }
 
   class Erase {
     API_AF(Erase, size_t, position, 0);
@@ -115,7 +131,7 @@ public:
     return *this;
   }
 
-  String & append(const StringView &a){
+  String &append(const StringView &a) {
     m_string.append(a.m_string_view);
     return *this;
   }
@@ -158,8 +174,11 @@ public:
     if (options.sub_position() == npos) {
       m_string.insert(options.position(), string_to_insert.m_string_view);
     } else {
-      m_string.insert(options.position(), string_to_insert.m_string_view,
-                      options.sub_position(), options.sub_length());
+      m_string.insert(
+        options.position(),
+        string_to_insert.m_string_view,
+        options.sub_position(),
+        options.sub_length());
     }
     return *this;
   }
@@ -172,7 +191,6 @@ public:
     m_string.erase(options.position(), options.length());
     return *this;
   }
-
 
   String &erase(StringView string_to_erase, size_t position = 0);
   String &operator()(const Erase &options) { return erase(options); }
@@ -247,8 +265,8 @@ public:
     return m_string.compare(string_to_compare.m_string);
   }
 
-  API_NO_DISCARD int compare(const String &string_to_compare,
-                             const Compare &options) const {
+  API_NO_DISCARD int
+  compare(const String &string_to_compare, const Compare &options) const {
     return m_string.compare(
       options.position(),
       options.length(),

@@ -21,7 +21,7 @@ class StringView;
 
 class DataInfo {
 public:
-  DataInfo() : m_info(mallinfo()){}
+  DataInfo() : m_info(mallinfo()) {}
 
 #if !defined __link
   API_NO_DISCARD u32 arena() const { return m_info.arena; }
@@ -36,11 +36,13 @@ public:
   u32 used_size() const { return 0; }
 #endif
 
-  bool operator==(const DataInfo &a) const { return used_size() == a.used_size(); }
+  bool operator==(const DataInfo &a) const {
+    return used_size() == a.used_size();
+  }
 
 private:
 #if !defined __link
-  struct mallinfo m_info{};
+  struct mallinfo m_info {};
 #endif
 };
 

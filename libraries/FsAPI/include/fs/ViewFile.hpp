@@ -16,8 +16,7 @@ public:
   ViewFile(ViewFile &&view_file) = default;
   ViewFile &operator=(ViewFile &&view_file) = default;
 
-  explicit ViewFile(var::View view)
-    : m_open_flags(OpenMode::read_write()) {
+  explicit ViewFile(var::View view) : m_open_flags(OpenMode::read_write()) {
     m_view = view;
   }
 

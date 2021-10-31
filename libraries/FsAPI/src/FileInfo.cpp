@@ -9,8 +9,8 @@
 #include "var/StackString.hpp"
 #include "var/String.hpp"
 
-printer::Printer &printer::operator<<(printer::Printer &printer,
-                                      const fs::FileInfo &a) {
+printer::Printer &
+printer::operator<<(printer::Printer &printer, const fs::FileInfo &a) {
   var::IdString type;
   if (a.is_directory()) {
     type = "directory";
@@ -34,9 +34,10 @@ printer::Printer &printer::operator<<(printer::Printer &printer,
   if (a.is_file()) {
     printer.key("size", var::NumberString(a.size()).string_view());
   }
-  printer.key("mode",
-              var::NumberString(a.permissions().permissions() & 0777, "0%o")
-                  .string_view());
+  printer.key(
+    "mode",
+    var::NumberString(a.permissions().permissions() & 0777, "0%o")
+      .string_view());
 
   return printer;
 }

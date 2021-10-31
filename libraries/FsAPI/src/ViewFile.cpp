@@ -48,7 +48,7 @@ int ViewFile::interface_write(const void *buf, int nbyte) const {
   }
 
   if (size_ready < 0) {
-    //EOF should return 0 bytes written
+    // EOF should return 0 bytes written
     errno = ENOSPC;
     return -1;
   }

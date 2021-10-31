@@ -23,7 +23,9 @@ public:
   bool operator<=(const Version &a) const { return compare(*this, a) <= 0; }
   bool operator>=(const Version &a) const { return compare(*this, a) >= 0; }
 
-  API_NO_DISCARD var::StringView string_view() const { return m_version.string_view(); }
+  API_NO_DISCARD var::StringView string_view() const {
+    return m_version.string_view();
+  }
   API_NO_DISCARD const char *cstring() const { return m_version.cstring(); }
   API_NO_DISCARD static int compare(const Version &a, const Version &b);
 

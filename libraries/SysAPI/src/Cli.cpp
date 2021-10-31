@@ -8,7 +8,7 @@
 
 printer::Printer &
 printer::operator<<(printer::Printer &printer, const sys::Cli &a) {
-  for(size_t i =0; i < a.count(); i++){
+  for (size_t i = 0; i < a.count(); i++) {
     printer.key(var::NumberString(i, "[%d]"), a.at(i));
   }
   return printer;
@@ -29,11 +29,11 @@ const Cli &Cli::handle_version(const HandleVersion &options) const {
 #if !defined __link
   if (!get_option("--version").is_empty()) {
     var::GeneralString output = var::GeneralString()
-                                   .append(get_name())
-                                   .append("version: ")
-                                   .append(options.version())
-                                   .append(" by ")
-                                   .append(options.publisher());
+                                  .append(get_name())
+                                  .append("version: ")
+                                  .append(options.version())
+                                  .append(" by ")
+                                  .append(options.publisher());
 
     printf("%s\n", output.cstring());
     exit(0);
@@ -110,11 +110,11 @@ var::StringView Cli::get_path() const {
 }
 
 const Cli &Cli::show_help(const ShowHelp &options) const {
-  if(!options.publisher().is_empty()){
+  if (!options.publisher().is_empty()) {
     printf("publisher: %s\n", var::PathString(options.publisher()).cstring());
   }
 
-  if(!options.version().is_empty()){
+  if (!options.version().is_empty()) {
     printf("version: %s\n", var::PathString(options.version()).cstring());
   }
 

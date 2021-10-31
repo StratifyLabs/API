@@ -28,8 +28,9 @@ public:
     return *this;
   }
 
-
-  API_NO_DISCARD API_MAYBE_UNUSED const char *app_git_hash() const { return m_app_git_hash; }
+  API_NO_DISCARD API_MAYBE_UNUSED const char *app_git_hash() const {
+    return m_app_git_hash;
+  }
 
   API_NO_DISCARD var::GeneralString to_general_string() const;
   API_NO_DISCARD var::StringView at(u16 value) const;
@@ -49,7 +50,7 @@ public:
     API_AF(ShowHelp, var::StringView, version, "");
   };
 
-  API_MAYBE_UNUSED const Cli& show_help(const ShowHelp &options) const;
+  API_MAYBE_UNUSED const Cli &show_help(const ShowHelp &options) const;
   API_MAYBE_UNUSED const Cli &show_version(const ShowHelp &options) const;
 
 private:

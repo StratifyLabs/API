@@ -18,14 +18,13 @@ namespace var {
 
 template <typename T, size_t item_count> class Ring {
 public:
-
   using Buffer = Array<T, item_count>;
 
   Ring() = default;
 
   ~Ring() {
     while (is_empty() == false) {
-      //this will ensure the destructor gets called
+      // this will ensure the destructor gets called
       pop();
     }
   }

@@ -78,8 +78,8 @@ public:
 #if defined __link
 #if !defined __win32
       m_entry_count = context.m_backtrace_count;
-      m_symbol_pointer =
-          backtrace_symbols(context.m_backtrace_buffer, m_entry_count);
+      m_symbol_pointer
+        = backtrace_symbols(context.m_backtrace_buffer, m_entry_count);
 #endif
 #else
 
@@ -138,8 +138,8 @@ private:
     if (!is_guarded()) {
 #if defined __link
 #if !defined __win32
-      m_backtrace_count =
-          backtrace(m_backtrace_buffer, m_backtrace_buffer_size);
+      m_backtrace_count
+        = backtrace(m_backtrace_buffer, m_backtrace_buffer_size);
 #endif
 #else
       sos_trace_stack(32);
@@ -176,8 +176,8 @@ private:
 
 class ExecutionContext {
 public:
-  static int handle_system_call_result(int line, const char *message,
-                                       int value) {
+  static int
+  handle_system_call_result(int line, const char *message, int value) {
     if (value >= 0) {
       errno = value;
     } else {
@@ -187,8 +187,8 @@ public:
   }
 
   template <typename T>
-  static T *handle_system_call_null_result(int line, const char *message,
-                                           T *value) {
+  static T *
+  handle_system_call_null_result(int line, const char *message, T *value) {
     if (value == nullptr) {
       m_private_context.update_error_context(-1, line, message);
     }
@@ -218,8 +218,8 @@ private:
 class ErrorGuard {
 public:
   ErrorGuard()
-      : m_error(ExecutionContext::m_private_context.m_error),
-        m_error_number(errno) {
+    : m_error(ExecutionContext::m_private_context.m_error),
+      m_error_number(errno) {
     m_is_guarded = ExecutionContext::m_private_context.m_error.is_guarded();
     ExecutionContext::reset_error();
   }
@@ -284,29 +284,39 @@ void api_assert(bool value, const char *function, int line);
   } while (0)
 
 #define API_SYSTEM_CALL(message_value, return_value)                           \
-  api::ExecutionContext::handle_system_call_result(__LINE__, message_value,    \
-                                                   return_value)
+  api::ExecutionContext::handle_system_call_result(                            \
+    __LINE__,                                                                  \
+    message_value,                                                             \
+    return_value)
 
 #define API_SYSTEM_CALL_NULL(message_value, return_value)                      \
   api::ExecutionContext::handle_system_call_null_result(                       \
-      __LINE__, message_value, return_value)
+    __LINE__,                                                                  \
+    message_value,                                                             \
+    return_value)
 
 #define API_RESET_ERROR() api::ExecutionContext::reset_error()
 
-#define API_RETURN_VALUE_ASSIGN_ERROR(return_value, message_value,             \
-                                      error_number_value)                      \
+#define API_RETURN_VALUE_ASSIGN_ERROR(                                         \
+  return_value,                                                                \
+  message_value,                                                               \
+  error_number_value)                                                          \
   do {                                                                         \
     errno = error_number_value;                                                \
-    api::ExecutionContext::handle_system_call_result(__LINE__, message_value,  \
-                                                     -1);                      \
+    api::ExecutionContext::handle_system_call_result(                          \
+      __LINE__,                                                                \
+      message_value,                                                           \
+      -1);                                                                     \
     return return_value;                                                       \
   } while (0)
 
 #define API_RETURN_ASSIGN_ERROR(message_value, error_number_value)             \
   do {                                                                         \
     errno = error_number_value;                                                \
-    api::ExecutionContext::handle_system_call_result(__LINE__, message_value,  \
-                                                     -1);                      \
+    api::ExecutionContext::handle_system_call_result(                          \
+      __LINE__,                                                                \
+      message_value,                                                           \
+      -1);                                                                     \
     return;                                                                    \
   } while (0)
 
@@ -399,7 +409,7 @@ public:
   using TransformCallback = Type (*)(const Type &, const Type &);
 
   RangeIterator(Type value, Type max, TransformCallback transform)
-      : m_value(value), m_max(max), m_transform(transform) {}
+    : m_value(value), m_max(max), m_transform(transform) {}
 
   bool operator!=(RangeIterator const &a) const noexcept {
     return m_value != a.m_value;
@@ -429,12 +439,14 @@ public:
   static Type reverse(const Type &a, const Type &b) { return b - a - 1; }
 
   constexpr Range(
-      const Type &start, const Type &finish,
-      typename RangeIterator<Type>::TransformCallback transform = nullptr)
-      : m_start(start < finish ? start : finish),
-        m_finish(start < finish ? finish : start),
-        m_transform(transform == nullptr ? (start < finish ? forward : reverse)
-                                         : transform) {}
+    const Type &start,
+    const Type &finish,
+    typename RangeIterator<Type>::TransformCallback transform = nullptr)
+    : m_start(start < finish ? start : finish),
+      m_finish(start < finish ? finish : start),
+      m_transform(
+        transform == nullptr ? (start < finish ? forward : reverse)
+                             : transform) {}
 
   RangeIterator<Type> begin() const noexcept {
     return RangeIterator(m_start, m_finish, m_transform);
@@ -490,10 +502,10 @@ private:
 template <typename Type = int> class Index {
 public:
   constexpr Index(const Type &start, const Type &finish)
-      : m_start(start), m_finish(finish) {}
+    : m_start(start), m_finish(finish) {}
 
   constexpr explicit Index(const Type &finish)
-      : m_start(Type{}), m_finish(finish) {}
+    : m_start(Type{}), m_finish(finish) {}
 
   IndexIterator<Type> begin() const noexcept { return IndexIterator(m_start); }
 

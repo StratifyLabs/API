@@ -5,8 +5,8 @@
 
 #ifdef __link
 #if defined __win32
-#include <winsock2.h>
 #include <windows.h>
+#include <winsock2.h>
 #if !defined FALSE
 #define FALSE 0
 #endif
@@ -116,7 +116,7 @@ public:
   explicit Dir(var::StringView path);
   Dir(const Dir &dir) = delete;
   Dir &operator=(const Dir &dir) = delete;
-  Dir(Dir &&dir)  noexcept { std::swap(m_dirp, dir.m_dirp); }
+  Dir(Dir &&dir) noexcept { std::swap(m_dirp, dir.m_dirp); }
   Dir &operator=(Dir &&dir) {
     std::swap(m_dirp, dir.m_dirp);
     return *this;
@@ -136,7 +136,7 @@ protected:
 
 private:
   DIR *m_dirp = nullptr;
-  static DIR *internal_opendir(const char *path) ;
+  static DIR *internal_opendir(const char *path);
 };
 
 } // namespace fs

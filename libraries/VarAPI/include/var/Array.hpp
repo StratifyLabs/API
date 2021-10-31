@@ -76,9 +76,7 @@ public:
 
   bool operator==(const Array &a) const { return m_array == a.m_array; }
 
-  T &front() {
-    return m_array.front();
-  }
+  T &front() { return m_array.front(); }
   T &back() { return m_array.back(); }
   const T &front() const { return m_array.front(); }
   const T &back() const { return m_array.back(); }

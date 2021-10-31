@@ -7,8 +7,8 @@
 #include <string>
 #include <string_view>
 
-#include "api/api.hpp"
 #include "Vector.hpp"
+#include "api/api.hpp"
 
 #if defined __link
 #define atoff atof
@@ -98,22 +98,36 @@ public:
   using const_reverse_iterator =
     typename std::string_view::const_reverse_iterator;
 
-  API_NO_DISCARD const_iterator begin() const noexcept { return m_string_view.begin(); }
+  API_NO_DISCARD const_iterator begin() const noexcept {
+    return m_string_view.begin();
+  }
   API_NO_DISCARD iterator begin() noexcept { return m_string_view.begin(); }
 
-  API_NO_DISCARD const_iterator end() const noexcept { return m_string_view.end(); }
+  API_NO_DISCARD const_iterator end() const noexcept {
+    return m_string_view.end();
+  }
   API_NO_DISCARD iterator end() noexcept { return m_string_view.end(); }
 
-  API_NO_DISCARD const_iterator cbegin() const noexcept { return m_string_view.cbegin(); }
-  API_NO_DISCARD const_iterator cend() const noexcept { return m_string_view.cend(); }
+  API_NO_DISCARD const_iterator cbegin() const noexcept {
+    return m_string_view.cbegin();
+  }
+  API_NO_DISCARD const_iterator cend() const noexcept {
+    return m_string_view.cend();
+  }
 
   API_NO_DISCARD const_reverse_iterator rbegin() const noexcept {
     return m_string_view.rbegin();
   }
-  API_NO_DISCARD reverse_iterator rbegin() noexcept { return m_string_view.rbegin(); }
+  API_NO_DISCARD reverse_iterator rbegin() noexcept {
+    return m_string_view.rbegin();
+  }
 
-  API_NO_DISCARD const_reverse_iterator rend() const noexcept { return m_string_view.rend(); }
-  API_NO_DISCARD reverse_iterator rend() noexcept { return m_string_view.rend(); }
+  API_NO_DISCARD const_reverse_iterator rend() const noexcept {
+    return m_string_view.rend();
+  }
+  API_NO_DISCARD reverse_iterator rend() noexcept {
+    return m_string_view.rend();
+  }
 
   API_NO_DISCARD const_reverse_iterator crbegin() const noexcept {
     return m_string_view.crbegin();
@@ -134,13 +148,13 @@ public:
     return m_string_view.find_first_of(a.m_string_view, position);
   }
 
-  API_NO_DISCARD size_t find_first_not_of(StringView a,
-                                          size_t position = 0) const {
+  API_NO_DISCARD size_t
+  find_first_not_of(StringView a, size_t position = 0) const {
     return m_string_view.find_first_not_of(a.m_string_view, position);
   }
 
-  API_NO_DISCARD size_t reverse_find(StringView a,
-                                     size_t position = npos) const {
+  API_NO_DISCARD size_t
+  reverse_find(StringView a, size_t position = npos) const {
     return m_string_view.rfind(a.m_string_view, position);
   }
 
@@ -152,8 +166,8 @@ public:
     return m_string_view.find_last_of(a.m_string_view, position);
   }
 
-  API_NO_DISCARD size_t find_last_not_of(StringView a,
-                                         size_t position = 0) const {
+  API_NO_DISCARD size_t
+  find_last_not_of(StringView a, size_t position = 0) const {
     return m_string_view.find_last_not_of(a.m_string_view, position);
   }
 
@@ -187,7 +201,6 @@ public:
     return m_string_view <= a.m_string_view;
   }
 
-
   API_NO_DISCARD long to_long(Base base = Base::decimal) const;
   API_NO_DISCARD float to_float() const;
   API_NO_DISCARD unsigned long
@@ -206,7 +219,6 @@ private:
   StringView(const std::string_view string_view) : m_string_view(string_view) {}
 
   API_NO_DISCARD Base get_base(Base input) const;
-
 };
 
 inline bool operator==(const char *lhs, StringView rhs) { return rhs == lhs; }
@@ -214,6 +226,5 @@ inline bool operator==(const char *lhs, StringView rhs) { return rhs == lhs; }
 using StringViewList = Vector<StringView>;
 
 } // namespace var
-
 
 #endif // VAR_API_STRING_VIEW_HPP

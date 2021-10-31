@@ -65,8 +65,8 @@ public:
   class Write {
   public:
     Write()
-        : m_location(-1), m_page_size(FSAPI_LINK_DEFAULT_PAGE_SIZE),
-          m_size(static_cast<size_t>(-1)) {}
+      : m_location(-1), m_page_size(FSAPI_LINK_DEFAULT_PAGE_SIZE),
+        m_size(static_cast<size_t>(-1)) {}
 
   private:
     API_ACCESS_FUNDAMENTAL(Write, int, location, -1);
@@ -74,33 +74,48 @@ public:
     API_ACCESS_FUNDAMENTAL(Write, size_t, size, static_cast<size_t>(-1));
     API_ACCESS_FUNDAMENTAL(Write, char, terminator, 0);
     API_ACCESS_FUNDAMENTAL(Write, chrono::MicroTime, timeout, 0_microseconds);
-    API_ACCESS_FUNDAMENTAL(Write, chrono::MicroTime, retry_delay,
-                           10_milliseconds);
-    API_ACCESS_FUNDAMENTAL(Write, const var::Transformer *, transformer,
-                           nullptr);
-    API_ACCESS_FUNDAMENTAL(Write, const api::ProgressCallback *,
-                           progress_callback, nullptr);
+    API_ACCESS_FUNDAMENTAL(
+      Write,
+      chrono::MicroTime,
+      retry_delay,
+      10_milliseconds);
+    API_ACCESS_FUNDAMENTAL(
+      Write,
+      const var::Transformer *,
+      transformer,
+      nullptr);
+    API_ACCESS_FUNDAMENTAL(
+      Write,
+      const api::ProgressCallback *,
+      progress_callback,
+      nullptr);
   };
 
-  const FileObject &write(const FileObject &source_file,
-                          const Write &options = Write()) const;
+  const FileObject &
+  write(const FileObject &source_file, const Write &options = Write()) const;
 
   class Verify {
   public:
     Verify()
-        : m_page_size(FSAPI_LINK_DEFAULT_PAGE_SIZE),
-          m_size(static_cast<size_t>(-1)) {}
+      : m_page_size(FSAPI_LINK_DEFAULT_PAGE_SIZE),
+        m_size(static_cast<size_t>(-1)) {}
 
   private:
-    API_ACCESS_FUNDAMENTAL(Verify, u32, page_size,
-                           FSAPI_LINK_DEFAULT_PAGE_SIZE);
+    API_ACCESS_FUNDAMENTAL(
+      Verify,
+      u32,
+      page_size,
+      FSAPI_LINK_DEFAULT_PAGE_SIZE);
     API_ACCESS_FUNDAMENTAL(Verify, size_t, size, static_cast<size_t>(-1));
-    API_ACCESS_FUNDAMENTAL(Verify, const api::ProgressCallback *,
-                           progress_callback, nullptr);
+    API_ACCESS_FUNDAMENTAL(
+      Verify,
+      const api::ProgressCallback *,
+      progress_callback,
+      nullptr);
   };
 
-  bool verify(const FileObject &source_file,
-              const Verify &options = Verify()) const;
+  bool
+  verify(const FileObject &source_file, const Verify &options = Verify()) const;
 
   class LocationGuard {
   public:
@@ -117,22 +132,28 @@ public:
 
   using LocationScope = LocationGuard;
 
-  FileObject &write(const FileObject &source_file,
-                    const Write &options = Write()) {
+  FileObject &
+  write(const FileObject &source_file, const Write &options = Write()) {
     return API_CONST_CAST_SELF(FileObject, write, source_file, options);
   }
 
-  const FileObject &write(const FileObject &source_file,
-                          const var::Transformer &transformer,
-                          const Write &options = Write()) const {
+  const FileObject &write(
+    const FileObject &source_file,
+    const var::Transformer &transformer,
+    const Write &options = Write()) const {
     return write(source_file, Write(options).set_transformer(&transformer));
   }
 
-  FileObject &write(const FileObject &source_file,
-                    const var::Transformer &transformer,
-                    const Write &options = Write()) {
-    return API_CONST_CAST_SELF(FileObject, write, source_file, transformer,
-                               options);
+  FileObject &write(
+    const FileObject &source_file,
+    const var::Transformer &transformer,
+    const Write &options = Write()) {
+    return API_CONST_CAST_SELF(
+      FileObject,
+      write,
+      source_file,
+      transformer,
+      options);
   }
 
   const FileObject &seek(int location, Whence whence = Whence::set) const;
@@ -245,29 +266,31 @@ public:
 
   Derived &sync() { return static_cast<Derived &>(FileObject::sync()); }
 
-  const Derived &write(const FileObject &source_file,
-                       const Write &options = Write()) const {
+  const Derived &
+  write(const FileObject &source_file, const Write &options = Write()) const {
     return static_cast<const Derived &>(
-        FileObject::write(source_file, options));
+      FileObject::write(source_file, options));
   }
 
-  Derived &write(const FileObject &source_file,
-                 const Write &options = Write()) {
+  Derived &
+  write(const FileObject &source_file, const Write &options = Write()) {
     return static_cast<Derived &>(FileObject::write(source_file, options));
   }
 
-  const Derived &write(const FileObject &source_file,
-                       const var::Transformer &transformer,
-                       const Write &options = Write()) const {
+  const Derived &write(
+    const FileObject &source_file,
+    const var::Transformer &transformer,
+    const Write &options = Write()) const {
     return static_cast<const Derived &>(
-        FileObject::write(source_file, transformer, options));
+      FileObject::write(source_file, transformer, options));
   }
 
-  Derived &write(const FileObject &source_file,
-                 const var::Transformer &transformer,
-                 const Write &options = Write()) {
+  Derived &write(
+    const FileObject &source_file,
+    const var::Transformer &transformer,
+    const Write &options = Write()) {
     return static_cast<Derived &>(
-        FileObject::write(source_file, transformer, options));
+      FileObject::write(source_file, transformer, options));
   }
 
   const Derived &seek(int location, Whence whence = Whence::set) const {
@@ -309,7 +332,7 @@ public:
   using Ioctl = fs::FileObject::Ioctl;
 
   FileMemberAccess(const fs::FileObject &file)
-      : m_file_member_reference_access(file) {}
+    : m_file_member_reference_access(file) {}
 
   // FileMemberAccess(const FileMemberAccess & a) = default;
   // FileMemberAccess& operator =(const FileMemberAccess & a) = default;
@@ -346,25 +369,28 @@ public:
     m_file_member_reference_access.write(view);
     return static_cast<Derived &>(*this);
   }
-  const Derived &write(const fs::FileObject &source_file,
-                       const Write &options = Write()) const {
+  const Derived &write(
+    const fs::FileObject &source_file,
+    const Write &options = Write()) const {
     m_file_member_reference_access.write(source_file, options);
     return static_cast<const Derived &>(*this);
   }
-  Derived &write(const fs::FileObject &source_file,
-                 const Write &options = Write()) {
+  Derived &
+  write(const fs::FileObject &source_file, const Write &options = Write()) {
     m_file_member_reference_access.write(source_file, options);
     return static_cast<Derived &>(*this);
   }
-  const Derived &write(const fs::FileObject &source_file,
-                       const var::Transformer &transformer,
-                       const Write &options = Write()) const {
+  const Derived &write(
+    const fs::FileObject &source_file,
+    const var::Transformer &transformer,
+    const Write &options = Write()) const {
     m_file_member_reference_access.write(source_file, transformer, options);
     return static_cast<const Derived &>(*this);
   }
-  Derived &write(const fs::FileObject &source_file,
-                 const var::Transformer &transformer,
-                 const Write &options = Write()) {
+  Derived &write(
+    const fs::FileObject &source_file,
+    const var::Transformer &transformer,
+    const Write &options = Write()) {
     m_file_member_reference_access.write(source_file, transformer, options);
     return static_cast<Derived &>(*this);
   }
@@ -403,9 +429,11 @@ public:
 
   explicit File(var::StringView name, OpenMode flags = OpenMode::read_only());
 
-  File(IsOverwrite is_overwrite, var::StringView path,
-       OpenMode flags = OpenMode::read_write(),
-       Permissions perms = Permissions(0666));
+  File(
+    IsOverwrite is_overwrite,
+    var::StringView path,
+    OpenMode flags = OpenMode::read_write(),
+    Permissions perms = Permissions(0666));
 
   File(const File &file) = delete;
   File &operator=(const File &file) = delete;
@@ -443,8 +471,8 @@ protected:
   API_NO_DISCARD int interface_lseek(int offset, int whence) const override;
   API_NO_DISCARD int interface_read(void *buf, int nbyte) const override;
   API_NO_DISCARD int interface_write(const void *buf, int nbyte) const override;
-  API_NO_DISCARD int interface_ioctl(int request,
-                                     void *argument) const override;
+  API_NO_DISCARD int
+  interface_ioctl(int request, void *argument) const override;
 
   API_NO_DISCARD int interface_fsync() const override;
 
@@ -453,16 +481,22 @@ private:
 
   API_NO_DISCARD int fstat(struct stat *st) const;
 
-  void internal_create(IsOverwrite is_overwrite, var::StringView path,
-                       OpenMode open_mode, Permissions perms);
+  void internal_create(
+    IsOverwrite is_overwrite,
+    var::StringView path,
+    OpenMode open_mode,
+    Permissions perms);
 
-  void open(var::StringView name, OpenMode flags = OpenMode::read_write(),
-            Permissions perms = Permissions(0666));
+  void open(
+    var::StringView name,
+    OpenMode flags = OpenMode::read_write(),
+    Permissions perms = Permissions(0666));
 
   // open/close are part of construction/deconstruction and can't be virtual
   void close();
-  static void internal_close(int fd) ;
-  API_NO_DISCARD static int internal_open(const char *path, int flags, int mode) ;
+  static void internal_close(int fd);
+  API_NO_DISCARD static int
+  internal_open(const char *path, int flags, int mode);
 };
 
 class NullFile : public FileAccess<NullFile> {
@@ -482,7 +516,8 @@ private:
   API_NO_DISCARD int interface_write(const void *buf, int nbyte) const override;
   API_NO_DISCARD int interface_lseek(int offset, int whence) const override;
 
-  API_NO_DISCARD int interface_ioctl(int request, void *argument) const override {
+  API_NO_DISCARD int
+  interface_ioctl(int request, void *argument) const override {
     return fake_ioctl(request, argument);
   }
 };

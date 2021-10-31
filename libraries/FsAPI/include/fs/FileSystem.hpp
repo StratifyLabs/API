@@ -13,9 +13,7 @@ class FileSystem : public api::ExecutionContext {
 public:
   using IsOverwrite = File::IsOverwrite;
   using IsRecursive = Dir::IsRecursive;
-  enum class IsExclude {
-    no, yes
-  };
+  enum class IsExclude { no, yes };
 
   using ExcludeCallback = IsExclude (*)(const var::StringView name, void *);
 
@@ -44,21 +42,27 @@ public:
     IsRecursive is_recursive,
     const Permissions &permissions = Permissions(0)) const;
 
-  API_NO_DISCARD size_t get_entry_count(var::StringView path, IsRecursive is_recursive = IsRecursive::no) const;
+  API_NO_DISCARD size_t get_entry_count(
+    var::StringView path,
+    IsRecursive is_recursive = IsRecursive::no) const;
 
-  API_NO_DISCARD PathList
-  read_directory(var::StringView path,
-                 IsRecursive is_recursive = IsRecursive::no,
-                 ExcludeCallback exclude = nullptr,
-                 void * context = nullptr) const;
+  API_NO_DISCARD PathList read_directory(
+    var::StringView path,
+    IsRecursive is_recursive = IsRecursive::no,
+    ExcludeCallback exclude = nullptr,
+    void *context = nullptr) const;
 
-  //for backwards compatibility
-  API_NO_DISCARD PathList
-  read_directory(const var::StringView path,
-                 IsRecursive is_recursive,
-                 bool (*exclude)(const var::StringView, void *),
-                 void * context = nullptr) const {
-    return read_directory(path, is_recursive, reinterpret_cast<ExcludeCallback>(exclude), context);
+  // for backwards compatibility
+  API_NO_DISCARD PathList read_directory(
+    const var::StringView path,
+    IsRecursive is_recursive,
+    bool (*exclude)(const var::StringView, void *),
+    void *context = nullptr) const {
+    return read_directory(
+      path,
+      is_recursive,
+      reinterpret_cast<ExcludeCallback>(exclude),
+      context);
   }
 
   class Rename {
@@ -88,11 +92,11 @@ protected:
   API_NO_DISCARD int interface_unlink(const char *path) const;
   API_NO_DISCARD int interface_stat(const char *path, struct stat *stat) const;
   API_NO_DISCARD int interface_fstat(int fd, struct stat *stat) const;
-  API_NO_DISCARD int interface_rename(const char *old_name, const char *new_name) const;
+  API_NO_DISCARD int
+  interface_rename(const char *old_name, const char *new_name) const;
 
 private:
 };
-
 
 } // namespace fs
 

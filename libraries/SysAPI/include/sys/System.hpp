@@ -8,8 +8,7 @@
 
 namespace sys {
 
-class System
-{
+class System {
 public:
   API_NO_DISCARD static var::StringView operating_system_name();
   API_NO_DISCARD static var::StringView processor();

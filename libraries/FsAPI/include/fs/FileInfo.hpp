@@ -15,7 +15,6 @@
 #endif
 #endif
 
-
 #include "var/StringView.hpp"
 
 #include "macros.hpp"
@@ -48,7 +47,7 @@ public:
     read_write /*! Open as read-write */ = O_RDWR,
     non_block /*! Open as non-blocking */ = O_NONBLOCK,
     no_delay /*! Open as non-blocking */ = O_NONBLOCK,
-		binary = O_BINARY,
+    binary = O_BINARY,
     access_mode /*! Access mode mask */ = O_ACCMODE
   };
 
@@ -63,19 +62,19 @@ public:
   enum class TypeFlags {
     null = 0,
     mask /*! Mode format mask */ = S_IFMT,
-    #if defined S_IFSOCK
+#if defined S_IFSOCK
     file_socket /*! Mode Socket mask */ = S_IFSOCK,
-    #endif
+#endif
     regular /*! Mode regular file value */ = S_IFREG,
-    #if defined S_IFBLK
+#if defined S_IFBLK
     block /*! Mode block device value */ = S_IFBLK,
-    #endif
+#endif
     character /*! Mode character device value */ = S_IFCHR,
     directory /*! Mode directory value */ = S_IFDIR,
     fifo /*! Mode FIFO value */ = S_IFDIR,
-    #if defined S_IFLNK
+#if defined S_IFLNK
     symbolic_link /*! Mode symbolic link value */ = S_IFLNK
-    #endif
+#endif
   };
 };
 
@@ -90,9 +89,15 @@ public:
     m_permissions = static_cast<PermissionFlags>(mode);
   }
 
-  API_NO_DISCARD API_MAYBE_UNUSED static Permissions all_access() { return Permissions(0777); }
-  API_NO_DISCARD API_MAYBE_UNUSED static Permissions read_only() { return Permissions(0444); }
-  API_NO_DISCARD API_MAYBE_UNUSED static Permissions write_only() { return Permissions(0222); }
+  API_NO_DISCARD API_MAYBE_UNUSED static Permissions all_access() {
+    return Permissions(0777);
+  }
+  API_NO_DISCARD API_MAYBE_UNUSED static Permissions read_only() {
+    return Permissions(0444);
+  }
+  API_NO_DISCARD API_MAYBE_UNUSED static Permissions write_only() {
+    return Permissions(0222);
+  }
 
   API_NO_DISCARD API_MAYBE_UNUSED bool is_owner_read() const {
     return m_permissions & PermissionFlags::owner_read;
@@ -143,7 +148,9 @@ public:
     return a.m_permissions == m_permissions;
   }
 
-  API_NO_DISCARD int permissions() const { return static_cast<int>(m_permissions) & 0777; }
+  API_NO_DISCARD int permissions() const {
+    return static_cast<int>(m_permissions) & 0777;
+  }
 
 private:
   PermissionFlags m_permissions;
@@ -153,7 +160,7 @@ class OpenMode : public FileInfoFlags {
 public:
   OpenMode() { m_flags = OpenFlags::null; }
   explicit OpenMode(OpenFlags flags) {
-		m_flags = static_cast<OpenFlags>(flags) | OpenFlags::binary;
+    m_flags = static_cast<OpenFlags>(flags) | OpenFlags::binary;
   }
 
   static OpenMode create() {
@@ -180,19 +187,31 @@ public:
     return OpenMode(OpenFlags::write_only | OpenFlags::append);
   }
 
-  API_NO_DISCARD bool is_read_only() const { return access() == OpenFlags::read_only; }
-  API_NO_DISCARD bool is_write_only() const { return access() == OpenFlags::write_only; }
-  API_NO_DISCARD bool is_read_write() const { return access() == OpenFlags::read_write; }
+  API_NO_DISCARD bool is_read_only() const {
+    return access() == OpenFlags::read_only;
+  }
+  API_NO_DISCARD bool is_write_only() const {
+    return access() == OpenFlags::write_only;
+  }
+  API_NO_DISCARD bool is_read_write() const {
+    return access() == OpenFlags::read_write;
+  }
   API_NO_DISCARD OpenFlags access() const {
     OpenFlags result = m_flags;
     return result &= OpenFlags::access_mode;
   }
 
   API_NO_DISCARD bool is_create() const { return m_flags & OpenFlags::create; }
-  API_NO_DISCARD bool is_exclusive() const { return m_flags & OpenFlags::exclusive; }
-  API_NO_DISCARD bool is_truncate() const { return m_flags & OpenFlags::truncate; }
+  API_NO_DISCARD bool is_exclusive() const {
+    return m_flags & OpenFlags::exclusive;
+  }
+  API_NO_DISCARD bool is_truncate() const {
+    return m_flags & OpenFlags::truncate;
+  }
   API_NO_DISCARD bool is_append() const { return m_flags & OpenFlags::append; }
-  API_NO_DISCARD bool is_non_blocking() const { return m_flags & OpenFlags::non_block; }
+  API_NO_DISCARD bool is_non_blocking() const {
+    return m_flags & OpenFlags::non_block;
+  }
 
   OpenMode &set_read_only() {
     clear_access();
@@ -246,10 +265,18 @@ public:
     m_access = access;
   }
 
-  API_NO_DISCARD bool is_read_ok() const { return (m_access & AccessFlags::read_ok); }
-  API_NO_DISCARD bool is_write_ok() const { return (m_access & AccessFlags::write_ok); }
-  API_NO_DISCARD bool is_file_ok() const { return (m_access & AccessFlags::file_ok); }
-  API_NO_DISCARD bool is_execute_ok() const { return (m_access & AccessFlags::execute_ok); }
+  API_NO_DISCARD bool is_read_ok() const {
+    return (m_access & AccessFlags::read_ok);
+  }
+  API_NO_DISCARD bool is_write_ok() const {
+    return (m_access & AccessFlags::write_ok);
+  }
+  API_NO_DISCARD bool is_file_ok() const {
+    return (m_access & AccessFlags::file_ok);
+  }
+  API_NO_DISCARD bool is_execute_ok() const {
+    return (m_access & AccessFlags::execute_ok);
+  }
 
   Access &set_read_ok() {
     m_access |= AccessFlags::read_ok;
@@ -277,7 +304,8 @@ private:
 class FileInfo : public OpenMode {
 public:
   FileInfo();
-  explicit FileInfo(const struct stat &st) // cppcheck-suppress[noExplicitConstructor]
+  explicit FileInfo(
+    const struct stat &st) // cppcheck-suppress[noExplicitConstructor]
     : m_stat(st) {}
 
   API_NO_DISCARD bool is_valid() const { return m_stat.st_mode != 0; }
@@ -290,7 +318,9 @@ public:
   API_NO_DISCARD bool is_fifo() const;
   API_NO_DISCARD u32 size() const;
 
-  API_NO_DISCARD Permissions permissions() const { return Permissions(m_stat.st_mode); }
+  API_NO_DISCARD Permissions permissions() const {
+    return Permissions(m_stat.st_mode);
+  }
 
   API_NO_DISCARD int owner() const { return m_stat.st_uid; }
   API_NO_DISCARD int group() const { return m_stat.st_gid; }

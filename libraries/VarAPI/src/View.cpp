@@ -20,14 +20,9 @@ const int View::m_zero_value MCU_ALIGN(4) = 0;
 // this value corresponds to the malloc chunk size used in Stratify OS
 // this may be something that could be determined through a system call
 
+View::View(const Data &data) { set_view(data.data(), data.size()); }
 
-View::View(const Data &data) {
-  set_view(data.data(), data.size());
-}
-
-View::View(Data &data) {
-  set_view(data.data(), data.size());
-}
+View::View(Data &data) { set_view(data.data(), data.size()); }
 
 View &View::swap_byte_order(SwapBy swap) {
   API_RETURN_VALUE_IF_ERROR(*this);
@@ -69,21 +64,20 @@ View &View::copy(const View &source) {
   return *this;
 }
 
-size_t View::find(const View & view, size_t alignment) const{
+size_t View::find(const View &view, size_t alignment) const {
 
-  if( view.size() > size() ){
+  if (view.size() > size()) {
     return npos;
   }
 
   const size_t compare_size = view.size();
   const size_t search_size = size() - view.size();
 
-  for(size_t offset = 0; offset < search_size; offset += alignment){
-    if( memcmp(to_const_u8() + offset, view.to_const_u8(), compare_size) == 0 ){
+  for (size_t offset = 0; offset < search_size; offset += alignment) {
+    if (memcmp(to_const_u8() + offset, view.to_const_u8(), compare_size) == 0) {
       return offset;
     }
   }
 
   return npos;
 }
-

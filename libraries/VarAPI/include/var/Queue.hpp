@@ -7,8 +7,8 @@
 
 #include <algorithm>
 #include <deque>
-#include <numeric>
 #include <new>
+#include <numeric>
 
 #include "api/api.hpp"
 

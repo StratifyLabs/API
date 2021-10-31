@@ -83,7 +83,7 @@ var::PathString Process::which(const var::StringView executable) {
     }
   }
 
-  if( fs::FileSystem().exists(executable) ){
+  if (fs::FileSystem().exists(executable)) {
     return executable;
   }
 
@@ -127,11 +127,11 @@ bool Process::Status::is_continued() const {
 Process::Process(const Arguments &arguments, const Environment &environment) {
   API_RETURN_IF_ERROR();
 
-  if( arguments.m_arguments.count() == 0 ){
+  if (arguments.m_arguments.count() == 0) {
     API_RETURN_ASSIGN_ERROR("arguments are empty", EINVAL);
   }
 
-  if( var::StringView(arguments.get_value(0)).is_empty() ){
+  if (var::StringView(arguments.get_value(0)).is_empty()) {
     API_RETURN_ASSIGN_ERROR("no executable was found", EINVAL);
   }
 
@@ -146,16 +146,16 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 
   int stdout_fd = dup(_fileno(stdout));
 
-  //change stdout and stderr to specify spawned process stdout, stderr
+  // change stdout and stderr to specify spawned process stdout, stderr
   _dup2(m_pipe.write_file().fileno(), _fileno(stdout));
   _dup2(_fileno(stdout), _fileno(stderr));
   m_pipe.write_file() = fs::File();
 
-  if( pwd.is_empty() == false ){
+  if (pwd.is_empty() == false) {
     _chdir(pwd.cstring());
   }
 
-  //change working directory?
+  // change working directory?
 
   m_process = HANDLE(_spawnvpe(
     P_NOWAIT,
@@ -163,16 +163,15 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     arguments.m_arguments.data(),
     environment.m_arguments.data()));
 
-  //restore stdout
+  // restore stdout
   _dup2(stdout_fd, _fileno(stdout));
   _close(stdout_fd);
 
-
-  if( pwd.is_empty() == false ){
+  if (pwd.is_empty() == false) {
     _chdir(cwd.cstring());
   }
 
-  if( m_process == nullptr ){
+  if (m_process == nullptr) {
     m_process = INVALID_HANDLE_VALUE;
     API_RETURN_ASSIGN_ERROR("failed to spawn", EINVAL);
   }
@@ -208,7 +207,7 @@ Process &Process::wait() {
   API_RETURN_VALUE_IF_ERROR(*this);
 
 #if defined __win32
-  if( m_process == INVALID_HANDLE_VALUE || m_process == nullptr){
+  if (m_process == INVALID_HANDLE_VALUE || m_process == nullptr) {
     return *this;
   }
 
@@ -241,20 +240,20 @@ Process &Process::wait() {
 bool Process::is_running() {
   API_RETURN_VALUE_IF_ERROR(false);
 #if defined __win32
-  if( m_process == INVALID_HANDLE_VALUE || m_process == nullptr){
+  if (m_process == INVALID_HANDLE_VALUE || m_process == nullptr) {
     API_PRINTF_TRACE_LINE();
     return false;
   }
 
   DWORD code = STILL_ACTIVE;
-  if( GetExitCodeProcess(m_process, &code) == 0 ){
+  if (GetExitCodeProcess(m_process, &code) == 0) {
     printf("error is %d\n", GetLastError());
     API_PRINTF_TRACE_LINE();
     m_process = INVALID_HANDLE_VALUE;
     return false;
   }
 
-  if( code == STILL_ACTIVE ){
+  if (code == STILL_ACTIVE) {
     API_PRINTF_TRACE_LINE();
 
     return true;

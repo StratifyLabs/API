@@ -39,8 +39,8 @@ public:
 
   bool data_file_api_case() {
     Printer::Object po(printer(), __FUNCTION__);
-    const StringView contents =
-        "0123456789012345678901234567890123456789012345678901234567890123456789"
+    const StringView contents
+      = "0123456789012345678901234567890123456789012345678901234567890123456789"
         "0123456789";
 
     TEST_ASSERT(DataFile().write(contents).return_value() == contents.length());
@@ -55,8 +55,9 @@ public:
       buffer.resize(7);
       while (df.read(buffer).return_value() > 0) {
         int result = return_value();
-        printer().key("read",
-                      NumberString().format("%d of %d", result, df.size()));
+        printer().key(
+          "read",
+          NumberString().format("%d of %d", result, df.size()));
       }
     }
 
@@ -67,14 +68,14 @@ public:
   bool view_file_api_case() {
     Printer::Object po(printer(), __FUNCTION__);
 
-    const StringView contents =
-        "0123456789012345678901234567890123456789012345678901234567890123456789"
+    const StringView contents
+      = "0123456789012345678901234567890123456789012345678901234567890123456789"
         "0123456789";
 
     u32 value;
 
-    TEST_ASSERT(ViewFile(View(value)).write(contents).return_value() ==
-                sizeof(u32));
+    TEST_ASSERT(
+      ViewFile(View(value)).write(contents).return_value() == sizeof(u32));
 
     printer().key("complete", __FUNCTION__);
     return true;
@@ -91,10 +92,12 @@ public:
       const StringView new_test_contents = "new test file";
 
       temp_path = td.path();
-      TEST_ASSERT(F(F::IsOverwrite::yes, td.path() + "/test.txt",
-                    OpenMode::read_write(), Permissions(0664))
-                      .write(new_test_contents)
-                      .is_success());
+      TEST_ASSERT(F(F::IsOverwrite::yes,
+                    td.path() + "/test.txt",
+                    OpenMode::read_write(),
+                    Permissions(0664))
+                    .write(new_test_contents)
+                    .is_success());
 
       TEST_ASSERT(FS().get_info(td.path()).is_directory());
       TEST_ASSERT(FS().get_info(td.path()).is_file() == false);
@@ -119,8 +122,9 @@ public:
 
       printer().object("file", file_info);
 
-      TEST_ASSERT(FS().get_info(td.path() + "/test.txt").size() ==
-                  new_test_contents.length());
+      TEST_ASSERT(
+        FS().get_info(td.path() + "/test.txt").size()
+        == new_test_contents.length());
     }
 
     TEST_ASSERT(FS().directory_exists(temp_path) == false);
@@ -140,30 +144,30 @@ public:
 
     TEST_ASSERT(FS().create_directory(HOME_FOLDER "/tmp").is_success());
     TEST_ASSERT(F(F::IsOverwrite::yes, HOME_FOLDER "/tmp/test0.txt")
-                    .write("test0\n")
-                    .is_success());
+                  .write("test0\n")
+                  .is_success());
     TEST_ASSERT(F(F::IsOverwrite::yes, HOME_FOLDER "/tmp/test1.txt")
-                    .write("test1\n")
-                    .is_success());
+                  .write("test1\n")
+                  .is_success());
     TEST_ASSERT(F(F::IsOverwrite::yes, HOME_FOLDER "/tmp/test2.txt")
-                    .write("test2\n")
-                    .is_success());
+                  .write("test2\n")
+                  .is_success());
     TEST_ASSERT(FS().create_directory(HOME_FOLDER "/tmp2").is_success());
     TEST_ASSERT(F(F::IsOverwrite::yes, HOME_FOLDER "/tmp2/test0.txt")
-                    .write("test0\n")
-                    .is_success());
+                  .write("test0\n")
+                  .is_success());
     TEST_ASSERT(F(F::IsOverwrite::yes, HOME_FOLDER "/tmp2/filesystem.txt")
-                    .write("test1\n")
-                    .is_success());
+                  .write("test1\n")
+                  .is_success());
     TEST_ASSERT(F(F::IsOverwrite::yes, HOME_FOLDER "/tmp2/test2.txt")
-                    .write("test2\n")
-                    .is_success());
+                  .write("test2\n")
+                  .is_success());
 
     TEST_ASSERT(D(HOME_FOLDER "/tmp").is_success());
 
     {
-      Vector<var::PathString> dir_list =
-          FS().read_directory(HOME_FOLDER "/tmp");
+      Vector<var::PathString> dir_list
+        = FS().read_directory(HOME_FOLDER "/tmp");
       printer().object("list", dir_list);
       TEST_ASSERT(dir_list.count() == 3);
     }
@@ -202,8 +206,8 @@ public:
 
     {
       TEST_ASSERT(FS().directory_exists(HOME_FOLDER "/tmp"));
-      PathList list =
-          FS().read_directory(HOME_FOLDER "/tmp", FS::IsRecursive::yes);
+      PathList list
+        = FS().read_directory(HOME_FOLDER "/tmp", FS::IsRecursive::yes);
       printer().object("files", list);
 
       TEST_ASSERT(list.find("test0.txt") == "test0.txt");
@@ -214,10 +218,11 @@ public:
     {
       TEST_ASSERT(FS().directory_exists(HOME_FOLDER "/tmp2"));
       PathList list = FS().read_directory(
-          HOME_FOLDER "/tmp2", FS::IsRecursive::yes,
-          [](StringView entry, void * context) -> bool {
-            return entry.find("filesystem") != StringView::npos;
-          });
+        HOME_FOLDER "/tmp2",
+        FS::IsRecursive::yes,
+        [](StringView entry, void *context) -> bool {
+          return entry.find("filesystem") != StringView::npos;
+        });
       printer().object("files", list);
       TEST_ASSERT(list.find("test0.txt") == "test0.txt");
       TEST_ASSERT(list.find("filesystem.txt") == "");
@@ -225,20 +230,24 @@ public:
     }
 
     {
-      PathList list =
-          FS().read_directory(HOME_FOLDER "/tmp", FS::IsRecursive::no);
+      PathList list
+        = FS().read_directory(HOME_FOLDER "/tmp", FS::IsRecursive::no);
       printer().object("files", list);
-      TEST_ASSERT(list.find(var::PathString("test0.txt")) ==
-                  var::PathString("test0.txt"));
-      TEST_ASSERT(list.find(var::PathString("test1.txt")) ==
-                  var::PathString("test1.txt"));
-      TEST_ASSERT(list.find(var::PathString("test2.txt")) ==
-                  var::PathString("test2.txt"));
+      TEST_ASSERT(
+        list.find(var::PathString("test0.txt"))
+        == var::PathString("test0.txt"));
+      TEST_ASSERT(
+        list.find(var::PathString("test1.txt"))
+        == var::PathString("test1.txt"));
+      TEST_ASSERT(
+        list.find(var::PathString("test2.txt"))
+        == var::PathString("test2.txt"));
     }
 
-    TEST_ASSERT(FS().remove_directory(HOME_FOLDER "/tmp", FS::IsRecursive::yes)
-                    .remove_directory(HOME_FOLDER "/tmp2", FS::IsRecursive::yes)
-                    .is_success());
+    TEST_ASSERT(FS()
+                  .remove_directory(HOME_FOLDER "/tmp", FS::IsRecursive::yes)
+                  .remove_directory(HOME_FOLDER "/tmp2", FS::IsRecursive::yes)
+                  .is_success());
 
     printer().key("complete", __FUNCTION__);
     return true;
@@ -257,8 +266,9 @@ public:
 
       // cleanup
       reset_error();
-      FS().remove_directory(HOME_FOLDER "/tmpdir/tmp/dir",
-                            FS::IsRecursive::yes);
+      FS().remove_directory(
+        HOME_FOLDER "/tmpdir/tmp/dir",
+        FS::IsRecursive::yes);
       reset_error();
       FS().remove_directory(HOME_FOLDER "/tmpdir/tmp", FS::IsRecursive::yes);
       reset_error();
@@ -268,8 +278,8 @@ public:
       TEST_ASSERT(is_success());
 
       TEST_ASSERT(F(F::IsOverwrite::yes, file_name)
-                      .write("Filesystem file")
-                      .is_success());
+                    .write("Filesystem file")
+                    .is_success());
 
       TEST_ASSERT(FS().exists(file_name));
 
@@ -282,7 +292,7 @@ public:
       TEST_ASSERT(!FS().exists(file_name) && is_success());
 
       TEST_ASSERT(
-          F(F::IsOverwrite::yes, file_name).write(file_name2).is_success());
+        F(F::IsOverwrite::yes, file_name).write(file_name2).is_success());
 
       TEST_ASSERT(FS().get_info(file_name).size() == file_name2.length());
 
@@ -290,7 +300,7 @@ public:
       TEST_ASSERT(FS().remove_directory(dir_name).is_success());
 
       TEST_ASSERT(
-          FS().create_directory(dir_name, FS::IsRecursive::no).is_success());
+        FS().create_directory(dir_name, FS::IsRecursive::no).is_success());
 
       TEST_ASSERT(FS().directory_exists(dir_name));
 
@@ -304,56 +314,63 @@ public:
 
       reset_error();
 
-      TEST_ASSERT(
-          FS().create_directory(dir_name_recursive, FS::IsRecursive::yes)
-              .is_success());
+      TEST_ASSERT(FS()
+                    .create_directory(dir_name_recursive, FS::IsRecursive::yes)
+                    .is_success());
 
       TEST_ASSERT(F(F::IsOverwrite::yes, dir_name_recursive + "/tmp.txt")
-                      .write("Hello")
-                      .is_success);
+                    .write("Hello")
+                    .is_success);
 
       TEST_ASSERT(
-          DF().write(F(dir_name_recursive + "/tmp.txt", OpenMode::read_only()))
-              .data()
-              .add_null_terminator() == StringView("Hello"));
+        DF()
+          .write(F(dir_name_recursive + "/tmp.txt", OpenMode::read_only()))
+          .data()
+          .add_null_terminator()
+        == StringView("Hello"));
 
       TEST_ASSERT(F(F::IsOverwrite::yes,
                     fs::Path::parent_directory(dir_name_recursive) + "/tmp.txt")
-                      .write("Hello2")
-                      .is_success);
-
-      TEST_ASSERT(DF().write(F(fs::Path::parent_directory(dir_name_recursive) +
-                                   "/tmp.txt",
-                               OpenMode::read_only()))
-                      .data()
-                      .add_null_terminator() == StringView("Hello2"));
+                    .write("Hello2")
+                    .is_success);
 
       TEST_ASSERT(
-          F(F::IsOverwrite::yes,
-            fs::Path::parent_directory(dir_name_recursive, 2) + "/tmp.txt")
-              .write("Hello3")
-              .is_success);
+        DF()
+          .write(
+            F(fs::Path::parent_directory(dir_name_recursive) + "/tmp.txt",
+              OpenMode::read_only()))
+          .data()
+          .add_null_terminator()
+        == StringView("Hello2"));
 
       TEST_ASSERT(
-          DF().write(F(fs::Path::parent_directory(dir_name_recursive, 2) +
-                           "/tmp.txt",
-                       OpenMode::read_only()))
-              .data()
-              .add_null_terminator() == StringView("Hello3"));
+        F(F::IsOverwrite::yes,
+          fs::Path::parent_directory(dir_name_recursive, 2) + "/tmp.txt")
+          .write("Hello3")
+          .is_success);
+
+      TEST_ASSERT(
+        DF()
+          .write(
+            F(fs::Path::parent_directory(dir_name_recursive, 2) + "/tmp.txt",
+              OpenMode::read_only()))
+          .data()
+          .add_null_terminator()
+        == StringView("Hello3"));
 
       TEST_ASSERT(FS().exists(dir_name_recursive) == true);
 
-      TEST_ASSERT(FS().exists(fs::Path::parent_directory(dir_name_recursive)) ==
-                  true);
-
-      TEST_ASSERT(FS().exists(fs::Path::parent_directory(dir_name_recursive,
-                                                         2)) == true);
+      TEST_ASSERT(
+        FS().exists(fs::Path::parent_directory(dir_name_recursive)) == true);
 
       TEST_ASSERT(
-          FS().remove_directory(dir_name, FS::IsRecursive::yes).is_success());
+        FS().exists(fs::Path::parent_directory(dir_name_recursive, 2)) == true);
 
       TEST_ASSERT(
-          FS().remove_directory(dir_name, FS::IsRecursive::yes).is_error());
+        FS().remove_directory(dir_name, FS::IsRecursive::yes).is_success());
+
+      TEST_ASSERT(
+        FS().remove_directory(dir_name, FS::IsRecursive::yes).is_error());
 
       TEST_ASSERT(error().message() == dir_name);
 
@@ -388,15 +405,19 @@ public:
       F(F::IsOverwrite::yes, old_name).write("Hello");
 
       TEST_ASSERT(FS().exists(old_name));
-      TEST_ASSERT(FS().rename(FS::Rename().set_source(old_name).set_destination(
-                                  new_name))
-                      .is_success());
+      TEST_ASSERT(
+        FS()
+          .rename(FS::Rename().set_source(old_name).set_destination(new_name))
+          .is_success());
       TEST_ASSERT(FS().exists(new_name));
       TEST_ASSERT(!FS().exists(old_name));
 
-      TEST_ASSERT(DF().write(F(new_name, OpenMode::read_only()))
-                      .data()
-                      .add_null_terminator() == StringView("Hello"));
+      TEST_ASSERT(
+        DF()
+          .write(F(new_name, OpenMode::read_only()))
+          .data()
+          .add_null_terminator()
+        == StringView("Hello"));
     }
 
     printer().key("complete", __FUNCTION__);
@@ -412,8 +433,11 @@ public:
     constexpr const char *file_name = HOME_FOLDER "/tmp.txt";
 
     const std::array<StringView, 5> test_strings = {
-        "Testing String 0\n", "-Testing String 1-\n", "Testing String 2\n",
-        "Testing String 3\n", "Testing String 4\n"};
+      "Testing String 0\n",
+      "-Testing String 1-\n",
+      "Testing String 2\n",
+      "Testing String 3\n",
+      "Testing String 4\n"};
 
     reset_error();
 
@@ -436,9 +460,10 @@ public:
       TEST_ASSERT(data1_file.seek(0).verify(data1_file.seek(0)));
       printer().set_progress_key("verify");
       TEST_ASSERT(
-          F(file1_name)
-              .verify(data1_file.seek(0), F::Verify().set_progress_callback(
-                                              printer().progress_callback())));
+        F(file1_name)
+          .verify(
+            data1_file.seek(0),
+            F::Verify().set_progress_callback(printer().progress_callback())));
 
       FS().remove(file1_name).remove(file2_name);
     }
@@ -459,33 +484,32 @@ public:
     TEST_ASSERT(f.gets() == test_strings.at(3));
     TEST_ASSERT(f.gets() == test_strings.at(4));
 
-    TEST_ASSERT(F(F::IsOverwrite::yes, file_name)
-                    .write(test_strings.at(0))
-                    .is_success());
+    TEST_ASSERT(
+      F(F::IsOverwrite::yes, file_name).write(test_strings.at(0)).is_success());
 
     TEST_ASSERT(
-        F(F::IsOverwrite::no, file_name).write(test_strings.at(0)).is_error());
+      F(F::IsOverwrite::no, file_name).write(test_strings.at(0)).is_error());
 
     TEST_ASSERT(var::StringView(error().message()) == file_name);
 
     reset_error();
 
     TEST_ASSERT(
-        String(DF().write(F(file_name, OpenMode::read_only())).data()) ==
-        test_strings.at(0));
+      String(DF().write(F(file_name, OpenMode::read_only())).data())
+      == test_strings.at(0));
 
     TEST_ASSERT(return_value() == StringView(test_strings.at(0)).length());
 
     TEST_ASSERT(F(F::IsOverwrite::yes, file_name)
-                    .write(test_strings.at(0))
-                    .write(test_strings.at(1))
-                    .write(test_strings.at(2))
-                    .write(test_strings.at(3))
-                    .write(test_strings.at(4))
-                    .is_success());
+                  .write(test_strings.at(0))
+                  .write(test_strings.at(1))
+                  .write(test_strings.at(2))
+                  .write(test_strings.at(3))
+                  .write(test_strings.at(4))
+                  .is_success());
 
     TEST_ASSERT(
-        F(HOME_FOLDER "/does_not_exist.txt", OpenMode::read_only()).is_error());
+      F(HOME_FOLDER "/does_not_exist.txt", OpenMode::read_only()).is_error());
     TEST_ASSERT(F(file_name, OpenMode::read_only()).is_error());
 
     reset_error();
@@ -496,69 +520,81 @@ public:
 
       TEST_ASSERT(FS().get_info(tmp).is_file());
 
-      TEST_ASSERT(DataFile()
-                      .reserve(256)
-                      .write(tmp, F::Write().set_terminator('\n'))
-                      .data()
-                      .add_null_terminator() == test_strings.at(0));
-
-      TEST_ASSERT(DataFile()
-                      .reserve(256)
-                      .write(tmp, F::Write().set_terminator('\n'))
-                      .data()
-                      .add_null_terminator() == test_strings.at(1));
-
-      TEST_ASSERT(DataFile()
-                      .reserve(256)
-                      .write(tmp, F::Write().set_terminator('\n'))
-                      .data()
-                      .add_null_terminator() == test_strings.at(2));
-
-      TEST_ASSERT(DataFile()
-                      .reserve(256)
-                      .write(tmp, F::Write().set_terminator('\n'))
-                      .data()
-                      .add_null_terminator() == test_strings.at(3));
-
-      TEST_ASSERT(DataFile()
-                      .reserve(256)
-                      .write(tmp, F::Write().set_terminator('\n'))
-                      .data()
-                      .add_null_terminator() == test_strings.at(4));
+      TEST_ASSERT(
+        DataFile()
+          .reserve(256)
+          .write(tmp, F::Write().set_terminator('\n'))
+          .data()
+          .add_null_terminator()
+        == test_strings.at(0));
 
       TEST_ASSERT(
-          DataFile()
-              .reserve(256)
-              .write(tmp.seek(var::StringView(test_strings.at(0)).length()),
-                     F::Write().set_terminator('\n'))
-              .data()
-              .add_null_terminator() == test_strings.at(1));
+        DataFile()
+          .reserve(256)
+          .write(tmp, F::Write().set_terminator('\n'))
+          .data()
+          .add_null_terminator()
+        == test_strings.at(1));
+
+      TEST_ASSERT(
+        DataFile()
+          .reserve(256)
+          .write(tmp, F::Write().set_terminator('\n'))
+          .data()
+          .add_null_terminator()
+        == test_strings.at(2));
+
+      TEST_ASSERT(
+        DataFile()
+          .reserve(256)
+          .write(tmp, F::Write().set_terminator('\n'))
+          .data()
+          .add_null_terminator()
+        == test_strings.at(3));
+
+      TEST_ASSERT(
+        DataFile()
+          .reserve(256)
+          .write(tmp, F::Write().set_terminator('\n'))
+          .data()
+          .add_null_terminator()
+        == test_strings.at(4));
+
+      TEST_ASSERT(
+        DataFile()
+          .reserve(256)
+          .write(
+            tmp.seek(var::StringView(test_strings.at(0)).length()),
+            F::Write().set_terminator('\n'))
+          .data()
+          .add_null_terminator()
+        == test_strings.at(1));
     }
 
     {
       Printer::Object po(printer(), "lambdaFile");
       Data lambda_file_data;
       printer().key("fileData", NumberString(&lambda_file_data, "%p"));
-      LambdaFile f =
-          LambdaFile()
-              .set_read_callback(
-                  [](void *context, int location, var::View view) -> int {
-                    Data *data = reinterpret_cast<Data *>(context);
-                    View data_at_location = View(*data).pop_front(location);
-                    const size_t size = data_at_location.size() > view.size()
-                                            ? view.size()
-                                            : data_at_location.size();
-                    view.copy(View(*data).pop_front(location));
-                    return size;
-                  })
-              .set_write_callback(
-                  [](void *context, int location, const var::View view) -> int {
-                    Data *data = reinterpret_cast<Data *>(context);
-                    data->append(view);
-                    return view.size();
-                  })
-              .set_context(&lambda_file_data)
-              .move();
+      LambdaFile f
+        = LambdaFile()
+            .set_read_callback(
+              [](void *context, int location, var::View view) -> int {
+                Data *data = reinterpret_cast<Data *>(context);
+                View data_at_location = View(*data).pop_front(location);
+                const size_t size = data_at_location.size() > view.size()
+                                      ? view.size()
+                                      : data_at_location.size();
+                view.copy(View(*data).pop_front(location));
+                return size;
+              })
+            .set_write_callback(
+              [](void *context, int location, const var::View view) -> int {
+                Data *data = reinterpret_cast<Data *>(context);
+                data->append(view);
+                return view.size();
+              })
+            .set_context(&lambda_file_data)
+            .move();
 
       const StringView hello = "hello";
       DataFile incoming;
@@ -567,8 +603,8 @@ public:
       TEST_ASSERT(incoming.write(f.seek(0)).is_success());
       PRINTER_TRACE(printer(), "");
       printer().key(
-          "incoming",
-          StringView(View(incoming.data()).to_const_char(), incoming.size()));
+        "incoming",
+        StringView(View(incoming.data()).to_const_char(), incoming.size()));
       TEST_ASSERT(incoming.size() == hello.length());
       TEST_ASSERT(f.size() == hello.length());
 

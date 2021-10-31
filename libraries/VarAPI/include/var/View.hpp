@@ -11,8 +11,8 @@
 #include "api/api.hpp"
 
 #include "Array.hpp"
-#include "String.hpp"
 #include "StackString.hpp"
+#include "String.hpp"
 #include "Vector.hpp"
 
 #if !defined __link
@@ -34,10 +34,10 @@ public:
   View(StringView str) { set_view(str.data(), str.length()); }
   View(const String &str) { set_view(str.cstring(), str.length()); }
   View(String &str) { set_view(str.to_char(), str.length()); }
-  View(const void *buffer, size_t size){ set_view(buffer, size); }
+  View(const void *buffer, size_t size) { set_view(buffer, size); }
   View(void *buffer, size_t size) { set_view(buffer, size); }
 
-  template<class StringType> StringType to_string() const {
+  template <class StringType> StringType to_string() const {
     StringType result;
     for (u32 i = 0; i < size(); i++) {
       result.append(NumberString(to_const_u8()[i], "%02X").string_view());
@@ -65,12 +65,13 @@ public:
   template <typename T> explicit View(T &item) {
     // catch all
     static_assert(
-        std::is_trivial<T>::value && std::is_standard_layout<T>::value,
-        "Cannot construct reference from non-trivial non-standard-layout "
-        "types");
+      std::is_trivial<T>::value && std::is_standard_layout<T>::value,
+      "Cannot construct reference from non-trivial non-standard-layout "
+      "types");
 
-    static_assert(!std::is_same<T, const char *>::value,
-                  "Cannot view a `const char *`");
+    static_assert(
+      !std::is_same<T, const char *>::value,
+      "Cannot view a `const char *`");
     static_assert(!std::is_same<T, char *>::value, "Cannot view a `char *`");
 
     set_view(&item, sizeof(T));
@@ -97,15 +98,16 @@ public:
   }
 
   constexpr static size_t npos = static_cast<size_t>(-1);
-  size_t find(const View & view, size_t alignment = 1) const;
+  size_t find(const View &view, size_t alignment = 1) const;
 
-  template <typename Type> size_t count() const { return size() / sizeof(Type); }
-
+  template <typename Type> size_t count() const {
+    return size() / sizeof(Type);
+  }
 
   template <typename Type> bool verify_zero_sum() const {
     Type sum = 0;
     const auto count = size() / sizeof(Type);
-    for(size_t i = 0; i < count; i++){
+    for (size_t i = 0; i < count; i++) {
       sum += to<Type>()[i];
     }
     return sum == 0;
@@ -144,7 +146,9 @@ public:
     return *this;
   }
 
-  API_NO_DISCARD ssize_t size_signed() const { return static_cast<ssize_t>(size()); }
+  API_NO_DISCARD ssize_t size_signed() const {
+    return static_cast<ssize_t>(size());
+  }
 
   View &copy(const View &source);
 
@@ -184,7 +188,9 @@ public:
   API_NO_DISCARD const s64 *to_const_s64() const { return to<const s64>(); }
   API_NO_DISCARD s64 *to_s64() { return to<s64>(); }
 
-  API_NO_DISCARD const float *to_const_float() const { return to<const float>(); }
+  API_NO_DISCARD const float *to_const_float() const {
+    return to<const float>();
+  }
   API_NO_DISCARD float *to_float() { return to<float>(); }
 
   template <typename T> T &at(size_t position) {
@@ -199,44 +205,65 @@ public:
     return to<T>()[position];
   }
 
-  API_NO_DISCARD char at_const_char(size_t position) const { return at<const char>(position); }
+  API_NO_DISCARD char at_const_char(size_t position) const {
+    return at<const char>(position);
+  }
   API_NO_DISCARD char &at_char(size_t position) { return at<char>(position); }
 
-  API_NO_DISCARD u8 at_const_u8(size_t position) const { return at<const u8>(position); }
+  API_NO_DISCARD u8 at_const_u8(size_t position) const {
+    return at<const u8>(position);
+  }
   API_NO_DISCARD u8 &at_u8(size_t position) { return at<u8>(position); }
 
-  API_NO_DISCARD u16 at_const_u16(size_t position) const { return at<const u16>(position); }
+  API_NO_DISCARD u16 at_const_u16(size_t position) const {
+    return at<const u16>(position);
+  }
   API_NO_DISCARD u16 &at_u16(size_t position) { return at<u16>(position); }
 
-  API_NO_DISCARD u32 at_const_u32(size_t position) const { return at<const u32>(position); }
+  API_NO_DISCARD u32 at_const_u32(size_t position) const {
+    return at<const u32>(position);
+  }
   API_NO_DISCARD u32 &at_u32(size_t position) { return at<u32>(position); }
 
-  API_NO_DISCARD u64 at_const_u64(size_t position) const { return at<const u64>(position); }
+  API_NO_DISCARD u64 at_const_u64(size_t position) const {
+    return at<const u64>(position);
+  }
   API_NO_DISCARD u64 &at_u64(size_t position) { return at<u64>(position); }
 
-  API_NO_DISCARD s8 at_const_s8(size_t position) const { return at<const s8>(position); }
+  API_NO_DISCARD s8 at_const_s8(size_t position) const {
+    return at<const s8>(position);
+  }
   API_NO_DISCARD s8 &at_s8(size_t position) { return at<s8>(position); }
 
-  API_NO_DISCARD s16 at_const_s16(size_t position) const { return at<const s16>(position); }
+  API_NO_DISCARD s16 at_const_s16(size_t position) const {
+    return at<const s16>(position);
+  }
   API_NO_DISCARD s16 &at_s16(size_t position) { return at<s16>(position); }
 
-  API_NO_DISCARD s32 at_const_s32(size_t position) const { return at<const s32>(position); }
+  API_NO_DISCARD s32 at_const_s32(size_t position) const {
+    return at<const s32>(position);
+  }
   API_NO_DISCARD s32 &at_s32(size_t position) { return at<s32>(position); }
 
-  API_NO_DISCARD s64 at_const_s64(size_t position) const { return at<const s64>(position); }
+  API_NO_DISCARD s64 at_const_s64(size_t position) const {
+    return at<const s64>(position);
+  }
   API_NO_DISCARD s64 &at_s64(size_t position) { return at<s64>(position); }
 
   API_NO_DISCARD float at_const_float(size_t position) const {
     return at<const float>(position);
   }
-  API_NO_DISCARD float &at_float(size_t position) { return at<float>(position); }
+  API_NO_DISCARD float &at_float(size_t position) {
+    return at<float>(position);
+  }
 
   API_NO_DISCARD const void *data() const { return m_data; }
   API_NO_DISCARD void *data() { return m_data; }
 
-  View& from_string(StringView value) {
-    //bytes to process
-    const size_t bytes_to_process = value.length() / 2 > size() ? size() : value.length()/2;
+  View &from_string(StringView value) {
+    // bytes to process
+    const size_t bytes_to_process
+      = value.length() / 2 > size() ? size() : value.length() / 2;
     for (u32 i = 0; i < bytes_to_process; i++) {
       to_u8()[i]
         = value(StringView::GetSubstring().set_position(i * 2).set_length(2))
@@ -271,7 +298,9 @@ public:
   };
 
   API_NO_DISCARD virtual int transform(const Transform &options) const = 0;
-  API_NO_DISCARD virtual size_t get_output_size(size_t nbyte) const { return nbyte; }
+  API_NO_DISCARD virtual size_t get_output_size(size_t nbyte) const {
+    return nbyte;
+  }
   API_NO_DISCARD virtual size_t page_size_boundary() const { return 1; }
 
 protected:

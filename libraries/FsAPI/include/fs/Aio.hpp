@@ -87,11 +87,12 @@ public:
    *
    *
    */
-  static int suspend(const AiocbList &list,
-                     const chrono::MicroTime &timeout = chrono::MicroTime(0)) {
-    struct timespec ts = {.tv_sec = time_t(timeout.microseconds() / 1000000),
-                          .tv_nsec =
-                              long((timeout.microseconds() % 1000000) * 1000)};
+  static int suspend(
+    const AiocbList &list,
+    const chrono::MicroTime &timeout = chrono::MicroTime(0)) {
+    struct timespec ts = {
+      .tv_sec = time_t(timeout.microseconds() / 1000000),
+      .tv_nsec = long((timeout.microseconds() % 1000000) * 1000)};
     if (timeout.microseconds() == 0) {
       return aio_suspend(list.data(), list.count(), nullptr);
     } else {
@@ -145,10 +146,14 @@ public:
   API_NO_DISCARD int error() { return aio_error(&m_aio_var); }
 
   /*! \details Returns true if operation is complete. */
-  API_NO_DISCARD bool is_done() const { return aio_error(&m_aio_var) != EINPROGRESS; }
+  API_NO_DISCARD bool is_done() const {
+    return aio_error(&m_aio_var) != EINPROGRESS;
+  }
 
   /*! \details Returns true if operation is still in progress. */
-  API_NO_DISCARD bool is_busy() const { return aio_error(&m_aio_var) == EINPROGRESS; }
+  API_NO_DISCARD bool is_busy() const {
+    return aio_error(&m_aio_var) == EINPROGRESS;
+  }
 
   /*! \details Causes the calling thread to receive a signal when the operation
    * completes.

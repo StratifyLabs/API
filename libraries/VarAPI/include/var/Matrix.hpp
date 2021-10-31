@@ -65,7 +65,8 @@ private:
 };
 
 template <typename T>
-printer::Printer &operator<<(printer::Printer &printer, const Matrix<T> &matrix) {
+printer::Printer &
+operator<<(printer::Printer &printer, const Matrix<T> &matrix) {
   u32 i = 0;
   for (const auto &row : matrix) {
     printer::PrinterArray(

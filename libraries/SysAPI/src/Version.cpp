@@ -27,13 +27,13 @@ u32 Version::to_bcd() const {
   }
 
   if (tokens.count() == 2) {
-    return (tokens.at(0).to_unsigned_long() << 16) |
-           (tokens.at(1).to_unsigned_long() << 8);
+    return (tokens.at(0).to_unsigned_long() << 16)
+           | (tokens.at(1).to_unsigned_long() << 8);
   }
 
-  return (tokens.at(0).to_unsigned_long() << 16) |
-         (tokens.at(1).to_unsigned_long() << 8) |
-         (tokens.at(2).to_unsigned_long());
+  return (tokens.at(0).to_unsigned_long() << 16)
+         | (tokens.at(1).to_unsigned_long() << 8)
+         | (tokens.at(2).to_unsigned_long());
 }
 
 int Version::compare(const Version &a, const Version &b) {

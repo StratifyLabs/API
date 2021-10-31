@@ -210,10 +210,11 @@ private:                                                                       \
   }
 
 #define API_OR_NAMED_FLAGS_OPERATOR(TYPE, FLAG_NAME)                           \
-  inline TYPE::FLAG_NAME operator|(const TYPE::FLAG_NAME a,                    \
-                                   const TYPE::FLAG_NAME b) {                  \
-    return static_cast<TYPE::FLAG_NAME>(static_cast<u32>(a) |                  \
-                                        static_cast<u32>(b));                  \
+  inline TYPE::FLAG_NAME operator|(                                            \
+    const TYPE::FLAG_NAME a,                                                   \
+    const TYPE::FLAG_NAME b) {                                                 \
+    return static_cast<TYPE::FLAG_NAME>(                                       \
+      static_cast<u32>(a) | static_cast<u32>(b));                              \
   }                                                                            \
   inline bool operator&(const TYPE::FLAG_NAME a, const TYPE::FLAG_NAME b) {    \
     return (static_cast<u32>(a) & static_cast<u32>(b)) != 0;                   \
@@ -221,14 +222,16 @@ private:                                                                       \
   inline TYPE::FLAG_NAME operator~(const TYPE::FLAG_NAME a) {                  \
     return static_cast<TYPE::FLAG_NAME>(~(static_cast<u32>(a)));               \
   }                                                                            \
-  inline TYPE::FLAG_NAME &operator|=(TYPE::FLAG_NAME &a,                       \
-                                     const TYPE::FLAG_NAME b) {                \
+  inline TYPE::FLAG_NAME &operator|=(                                          \
+    TYPE::FLAG_NAME &a,                                                        \
+    const TYPE::FLAG_NAME b) {                                                 \
     return a = a | b;                                                          \
   }                                                                            \
-  inline TYPE::FLAG_NAME &operator&=(TYPE::FLAG_NAME &a,                       \
-                                     const TYPE::FLAG_NAME b) {                \
-    return a = static_cast<TYPE::FLAG_NAME>(static_cast<u32>(a) &              \
-                                            static_cast<u32>(b));              \
+  inline TYPE::FLAG_NAME &operator&=(                                          \
+    TYPE::FLAG_NAME &a,                                                        \
+    const TYPE::FLAG_NAME b) {                                                 \
+    return a = static_cast<TYPE::FLAG_NAME>(                                   \
+             static_cast<u32>(a) & static_cast<u32>(b));                       \
   }
 
 #define API_OR_FLAGS_OPERATOR(TYPE) API_OR_NAMED_FLAGS_OPERATOR(TYPE, flags)
@@ -252,7 +255,7 @@ private:                                                                       \
 
 #define API_CONST_CAST_SELF(type_value, function_value, ...)                   \
   const_cast<type_value &>(                                                    \
-      const_cast<const type_value *>(this)->function_value(__VA_ARGS__))
+    const_cast<const type_value *>(this)->function_value(__VA_ARGS__))
 
 #define API_CONST_CAST(type_value, function_value, ...)                        \
   const_cast<const type_value *>(this)->function_value(__VA_ARGS__);
@@ -268,7 +271,10 @@ private:                                                                       \
   }
 
 #define API_PRINTF_TRACE_LINE()                                                \
-  printf("%s():%d error? %d\n", __FUNCTION__, __LINE__,                        \
-         api::ExecutionContext::is_error())
+  printf(                                                                      \
+    "%s():%d error? %d\n",                                                     \
+    __FUNCTION__,                                                              \
+    __LINE__,                                                                  \
+    api::ExecutionContext::is_error())
 
 #endif // API_API_MACROS_HPP_

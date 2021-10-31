@@ -1,8 +1,8 @@
 #ifndef TEMPORARYDIRECTORY_HPP
 #define TEMPORARYDIRECTORY_HPP
 
-#include "var/StringView.hpp"
 #include "var/StackString.hpp"
+#include "var/StringView.hpp"
 
 namespace sys {
 

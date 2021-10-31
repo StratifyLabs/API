@@ -13,8 +13,8 @@ public:
   API_NO_DISCARD var::String encode(var::View input) const;
   API_NO_DISCARD var::Data decode(var::StringView input) const;
 
-  const Base64& encode(var::View input, var::String & output) const;
-  const Base64& decode(var::StringView input, var::Data & output) const;
+  const Base64 &encode(var::View input, var::String &output) const;
+  const Base64 &decode(var::StringView input, var::Data &output) const;
 
   static constexpr size_t get_decoded_size(size_t nbyte) {
     // adds three bytes to padding, actual is returned by decode method

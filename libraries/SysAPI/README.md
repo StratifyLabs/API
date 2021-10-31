@@ -4,7 +4,6 @@
 
 The `SysAPI` library has a few classes used for system integration.
 
-
 ## System
 
 The `System` class has only `static` methods used for:
@@ -29,13 +28,17 @@ int main(int argc, char * argv[]){
 }
 ```
 
-The `Cli` class expects arguments to be of the form `--<switch>[=<value>]`. If just `--<switch>` is used then `cli.get_option("<switch">) == "true"` is true. If the `<switch>` is not present, `cli.get_option("<switch>").is_empty()` is true.
+The `Cli` class expects arguments to be of the form `--<switch>[=<value>]`. If just `--<switch>` is used
+then `cli.get_option("<switch">) == "true"` is true. If the `<switch>` is not
+present, `cli.get_option("<switch>").is_empty()` is true.
 
-You can also use `const auto action = cli.get_option("action")` where if `--action=program` is passed as a command line argument, `action == "program"` is true.
+You can also use `const auto action = cli.get_option("action")` where if `--action=program` is passed as a command line
+argument, `action == "program"` is true.
 
 ## Version
 
-The `Version` class manages semantic version values. It converts between BCD versions and string versions as well as compares versions.
+The `Version` class manages semantic version values. It converts between BCD versions and string versions as well as
+compares versions.
 
 ```c++
 #include <sys.hpp>

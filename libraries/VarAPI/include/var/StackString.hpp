@@ -116,7 +116,7 @@ public:
     const auto safe_count = count < capacity() ? count : capacity();
     for (size_t i = safe_count; i < capacity(); i++) {
       m_buffer[i - safe_count] = m_buffer[i];
-      if( m_buffer[i] == 0 ){
+      if (m_buffer[i] == 0) {
         break;
       }
     }
@@ -197,12 +197,11 @@ public:
 };
 
 #if defined __win32
-//on windows PATH_MAX is too small (261 chars)
+// on windows PATH_MAX is too small (261 chars)
 #define PATH_STRING_LENGTH 4096
 #else
 #define PATH_STRING_LENGTH (PATH_MAX + 1)
 #endif
-
 
 class PathString : public StackString<PathString, PATH_STRING_LENGTH> {
 public:
@@ -234,7 +233,7 @@ PathString operator/(const StringView lhs, const StringView rhs);
 #endif
 
 class GeneralString
-    : public StackString<GeneralString, VAR_API_GENERAL_STRING_SIZE> {
+  : public StackString<GeneralString, VAR_API_GENERAL_STRING_SIZE> {
 public:
   GeneralString() = default;
   GeneralString(const StringView a) : StackString(a) {}
@@ -255,18 +254,18 @@ public:
   template <typename T> NumberString(T value) {
     // guarantee null termination
     m_buffer[capacity()] = 0;
-    constexpr const char *fmt =
-        (std::is_same<T, int>::value || std::is_same<T, signed int>::value ||
-         std::is_same<T, short>::value ||
-         std::is_same<T, signed short>::value || std::is_same<T, char>::value ||
-         std::is_same<T, signed char>::value)
-            ? "%d"
+    constexpr const char *fmt
+      = (std::is_same<T, int>::value || std::is_same<T, signed int>::value
+         || std::is_same<T, short>::value
+         || std::is_same<T, signed short>::value || std::is_same<T, char>::value
+         || std::is_same<T, signed char>::value)
+          ? "%d"
         : std::is_same<T, long>::value      ? "%ld"
         : std::is_same<T, long long>::value ? "%lld"
-        : (std::is_same<T, unsigned>::value ||
-           std::is_same<T, unsigned short>::value ||
-           std::is_same<T, unsigned char>::value)
-            ? "%u"
+        : (std::is_same<T, unsigned>::value
+           || std::is_same<T, unsigned short>::value
+           || std::is_same<T, unsigned char>::value)
+          ? "%u"
         : std::is_same<T, unsigned long>::value      ? "%lu"
         : std::is_same<T, unsigned long long>::value ? "%lld"
         : std::is_same<T, float>::value              ? "%f"
@@ -288,7 +287,8 @@ public:
   API_NO_DISCARD int to_integer() const;
   API_NO_DISCARD float to_float() const;
   API_NO_DISCARD long to_long(Base base = Base::decimal) const;
-  API_NO_DISCARD unsigned long to_unsigned_long(Base base = Base::decimal) const;
+  API_NO_DISCARD unsigned long
+  to_unsigned_long(Base base = Base::decimal) const;
 
   // implicit conversion
   operator const char *() const { return m_buffer; }

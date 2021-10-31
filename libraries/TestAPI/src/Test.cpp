@@ -1,9 +1,9 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
+#include "test/Test.hpp"
 #include "printer/Printer.hpp"
 #include "sys/System.hpp"
 #include "test/Case.hpp"
-#include "test/Test.hpp"
 
 using namespace var;
 using namespace test;
@@ -79,14 +79,15 @@ void Test::close_case() {
     printer::Printer::Object po(printer(), "caseResult");
     m_test_duration_microseconds += m_case_timer.micro_time().microseconds();
     printer()
-        .key_bool("result", m_case_result)
-        .key("score",
-             NumberString(get_score(m_case_timer.micro_time().microseconds()))
-                 .string_view())
-        .key("microseconds",
-             NumberString(m_case_timer.micro_time().microseconds())
-                 .string_view())
-        .key_bool("memoryLeak", m_case_data_info == var::DataInfo());
+      .key_bool("result", m_case_result)
+      .key(
+        "score",
+        NumberString(get_score(m_case_timer.micro_time().microseconds()))
+          .string_view())
+      .key(
+        "microseconds",
+        NumberString(m_case_timer.micro_time().microseconds()).string_view())
+      .key_bool("memoryLeak", m_case_data_info == var::DataInfo());
   }
   printer().close_object();
   m_case_result = true;
@@ -120,17 +121,20 @@ Test::ExecuteFlags Test::parse_execution_flags(const sys::Cli &cli) {
 
   bool is_all = false;
 
-  if (cli.get_option("all",
-                     "execute all tests and types (if no type "
-                     "(api|stress|performance|additional) is specified") ==
-      "true") {
+  if (
+    cli.get_option(
+      "all",
+      "execute all tests and types (if no type "
+      "(api|stress|performance|additional) is specified")
+    == "true") {
     is_all = true;
   }
 
-  if (cli.get_option(
-          "allTypes",
-          "execute all test types (api|stress|performance|additional)") ==
-      "true") {
+  if (
+    cli.get_option(
+      "allTypes",
+      "execute all test types (api|stress|performance|additional)")
+    == "true") {
     o_execute_flags |= ExecuteFlags::all_types;
   }
 
@@ -170,15 +174,17 @@ u32 Test::parse_test(const sys::Cli &cli, var::StringView name, u32 test_flag) {
 void Test::finalize() {
   Printer::Object pg(printer(), "finalResult");
   printer().key_bool("result", m_final_result);
-  printer().key("finalResult", m_final_result
-                                   ? StringView("___finalResultPass___")
-                                   : StringView("___finalResultFail___"));
-  printer().key("microseconds",
-                NumberString(m_final_duration_microseconds).string_view());
+  printer().key(
+    "finalResult",
+    m_final_result ? StringView("___finalResultPass___")
+                   : StringView("___finalResultFail___"));
+  printer().key(
+    "microseconds",
+    NumberString(m_final_duration_microseconds).string_view());
   printer().key_bool("memoryLeak", m_final_data_info == var::DataInfo());
   printer().key(
-      "score",
-      NumberString(get_score(m_final_duration_microseconds)).string_view());
+    "score",
+    NumberString(get_score(m_final_duration_microseconds)).string_view());
 }
 
 void Test::execute_api_case() {

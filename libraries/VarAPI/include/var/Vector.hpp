@@ -24,7 +24,6 @@ public:
     return *this;
   }
 
-
   Vector<T> &operator<<(const T &a) { return push_back(a); }
 
   using iterator = typename std::vector<T>::iterator;
@@ -149,8 +148,8 @@ public:
       bsearch(&a, std::vector<T>::data(), count(), sizeof(T), ascending));
   }
 
-  API_NO_DISCARD T *search(const T &a,
-                           int (*compare)(const void *, const void *)) {
+  API_NO_DISCARD T *
+  search(const T &a, int (*compare)(const void *, const void *)) {
     return reinterpret_cast<T *>(
       bsearch(&a, std::vector<T>::data(), count(), sizeof(T), compare));
   }
