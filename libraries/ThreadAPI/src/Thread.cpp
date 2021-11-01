@@ -175,7 +175,7 @@ void *Thread::handle_thread(void *args) {
 
 
 Thread::~Thread() {
-  api::ErrorGuard error_guard;
+  api::ErrorScope error_scope;
   if (is_joinable()) {
     API_RESET_ERROR();
     cancel();
