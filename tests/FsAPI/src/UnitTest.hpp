@@ -23,9 +23,9 @@ public:
   using D = Dir;
   using DF = fs::DataFile;
 
-  UnitTest(var::StringView name) : test::Test(name) {}
+  explicit UnitTest(var::StringView name) : test::Test(name) {}
 
-  bool execute_class_api_case() {
+  bool execute_class_api_case() override {
 
     TEST_ASSERT_RESULT(file_api_case());
     TEST_ASSERT_RESULT(file_system_api_case());
@@ -176,7 +176,7 @@ public:
       D d(HOME_FOLDER "/tmp");
       int count = 0;
       var::PathString e;
-      while ((e = d.get_entry()).is_empty() == false) {
+      while (!(e = d.get_entry()).is_empty()) {
         printer().key("tell", NumberString(d.tell()).string_view());
         printer().key(NumberString(count), StringView(e.cstring()));
         count++;
@@ -197,7 +197,7 @@ public:
 #endif
 
       TEST_ASSERT(d.rewind().is_success());
-      if (System().is_macosx() == false) {
+      if (!System().is_macosx()) {
         printer().key("tell", NumberString(d.tell()).string_view());
         TEST_ASSERT(d.tell() == 0);
       }
@@ -253,7 +253,7 @@ public:
   }
 
   bool file_system_api_case() {
-    Printer::Object po(printer(), __FUNCTION__);
+    Printer::Object fs_po(printer(), __FUNCTION__);
 
     {
       printer::Printer::Object po(printer(), "create/remove directories");
@@ -424,11 +424,7 @@ public:
   }
 
   bool file_api_case() {
-    Printer::Object po(printer(), __FUNCTION__);
-    using F = fs::File;
-    using DF = fs::DataFile;
-    using FS = fs::FileSystem;
-
+    Printer::Object file_po(printer(), __FUNCTION__);
     constexpr const char *file_name = HOME_FOLDER "/tmp.txt";
 
     const std::array<StringView, 5> test_strings = {
@@ -574,7 +570,7 @@ public:
       Printer::Object po(printer(), "lambdaFile");
       Data lambda_file_data;
       printer().key("fileData", NumberString(&lambda_file_data, "%p"));
-      LambdaFile f
+      LambdaFile lambda_file
         = LambdaFile()
             .set_read_callback(
               [](void *context, int location, var::View view) -> int {
@@ -597,15 +593,15 @@ public:
 
       const StringView hello = "hello";
       DataFile incoming;
-      TEST_ASSERT(f.write(hello).is_success());
+      TEST_ASSERT(lambda_file.write(hello).is_success());
 
-      TEST_ASSERT(incoming.write(f.seek(0)).is_success());
+      TEST_ASSERT(incoming.write(lambda_file.seek(0)).is_success());
       PRINTER_TRACE(printer(), "");
       printer().key(
         "incoming",
         StringView(View(incoming.data()).to_const_char(), incoming.size()));
       TEST_ASSERT(incoming.size() == hello.length());
-      TEST_ASSERT(f.size() == hello.length());
+      TEST_ASSERT(lambda_file.size() == hello.length());
 
       TEST_ASSERT(incoming.data().add_null_terminator() == hello);
       TEST_ASSERT(lambda_file_data.add_null_terminator() == hello);
