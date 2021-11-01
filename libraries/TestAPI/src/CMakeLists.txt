@@ -1,5 +1,5 @@
 
 set(SOURCES
   Case.cpp
-	Test.cpp
-	PARENT_SCOPE)
+  Test.cpp
+  PARENT_SCOPE)

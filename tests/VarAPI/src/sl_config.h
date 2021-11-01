@@ -17,4 +17,3 @@
 #define SL_CONFIG_HARDWARE_ID_STRING ""
 
 #endif
-

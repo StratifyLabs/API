@@ -4,8 +4,6 @@
 
 #include "var/Tokenizer.hpp"
 #include "var/View.hpp"
-#include <cstdio>
-#include <cstring>
 
 using namespace var;
 
@@ -55,9 +53,8 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
 StringView Tokenizer::at(u32 n) const {
   if (n < m_token_list.count()) {
     return m_token_list.at(n);
-  } else {
-    return StringView();
   }
+  return {};
 }
 
 Tokenizer &Tokenizer::sort(SortBy sort_option) {

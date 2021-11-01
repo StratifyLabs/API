@@ -21,27 +21,28 @@ class StringView;
 
 class DataInfo {
 public:
-  DataInfo() { refresh(); }
 
 #if !defined __link
-  void refresh() { m_info = mallinfo(); }
-  u32 arena() const { return m_info.arena; }
-  u32 free_block_count() const { return m_info.ordblks; }
-  u32 free_size() const { return m_info.fordblks; }
-  u32 used_size() const { return m_info.uordblks; }
+  DataInfo() : m_info{mallinfo()} {}
+  API_NO_DISCARD u32 arena() const { return m_info.arena; }
+  API_NO_DISCARD u32 free_block_count() const { return m_info.ordblks; }
+  API_NO_DISCARD u32 free_size() const { return m_info.fordblks; }
+  API_NO_DISCARD u32 used_size() const { return m_info.uordblks; }
 #else
-  void refresh() {}
+  DataInfo() = default;
   u32 arena() const { return 0; }
   u32 free_block_count() const { return 0; }
   u32 free_size() const { return 0; }
   u32 used_size() const { return 0; }
 #endif
 
-  bool operator==(const DataInfo &a) { return used_size() == a.used_size(); }
+  bool operator==(const DataInfo &a) const {
+    return used_size() == a.used_size();
+  }
 
 private:
 #if !defined __link
-  struct mallinfo m_info;
+  struct mallinfo m_info {};
 #endif
 };
 
@@ -49,7 +50,7 @@ class Data : public api::ExecutionContext {
 public:
   Data() = default;
 
-  explicit Data(std::initializer_list<u8> il) : m_data(il) {}
+  Data(std::initializer_list<u8> il) : m_data(il) {}
   explicit Data(size_t size);
 
   API_NO_DISCARD static Data from_string(var::StringView value);
@@ -73,8 +74,8 @@ public:
     Copy() : m_destination_position(0), m_size(static_cast<size_t>(-1)) {}
   };
 
-  Data &copy(const View a, const Copy &options = Copy());
-  Data &append(const View view);
+  Data &copy(View a, const Copy &options = Copy());
+  Data &append(View view);
 
   class Erase {
     API_AF(Erase, size_t, position, 0);
@@ -112,19 +113,15 @@ public:
   API_NO_DISCARD u8 *data_u8() { return (m_data.data()); }
   API_NO_DISCARD const u8 *data_u8() const { return (m_data.data()); }
 
-  API_NO_DISCARD View view() { return View(*this); }
-  API_NO_DISCARD const View view() const { return View(*this); }
+  API_NO_DISCARD View view() { return {*this}; }
+  API_NO_DISCARD View view() const { return {*this}; }
 
   API_NO_DISCARD size_t size() const { return m_data.size(); }
   API_NO_DISCARD ssize_t size_signed() const {
     return static_cast<ssize_t>(m_data.size());
   }
 
-  API_NO_DISCARD const StringView string_view() const;
-
-protected:
-  void copy_object(const Data &a);
-  void move_object(Data &a);
+  API_NO_DISCARD StringView string_view() const;
 
 private:
   std::vector<u8> m_data;

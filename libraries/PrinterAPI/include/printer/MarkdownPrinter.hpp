@@ -98,18 +98,18 @@ public:
   MarkdownPrinter &append_pretty_table_row(const var::StringList &row);
   MarkdownPrinter &close_pretty_table(Level level = Level::info);
 
-  bool is_pretty_table_valid() const {
+  API_NO_DISCARD bool is_pretty_table_valid() const {
     return m_pretty_table.count() && m_pretty_table.front().count();
   }
 
-  const var::Vector<var::Vector<var::String>> &pretty_table() const {
+  API_NO_DISCARD const var::Vector<var::Vector<var::String>> &pretty_table() const {
     return m_pretty_table;
   }
 
-  MarkdownPrinter &hyperlink(const var::StringView text,
-                             const var::StringView link);
-  MarkdownPrinter &image(const var::StringView text,
-                         const var::StringView link);
+  MarkdownPrinter &hyperlink(var::StringView text,
+                             var::StringView link);
+  MarkdownPrinter &image(var::StringView text,
+                         var::StringView link);
 
   class Header {
   public:
@@ -232,22 +232,22 @@ private:
   var::Vector<var::Vector<var::String>> m_pretty_table;
 
   var::Vector<Container> &container_list() { return m_container_list; }
-  const var::Vector<Container> &container_list() const {
+  API_NO_DISCARD const var::Vector<Container> &container_list() const {
     return m_container_list;
   }
 
   // re-implemented virtual functions from Printer
-  void print_open_object(Level level, const var::StringView key) override;
+  void print_open_object(Level level, var::StringView key) override;
   void print_close_object() override;
   void print(
     Level level,
     var::StringView key,
     var::StringView value,
-    IsNewline is_newline = IsNewline::yes) override;
+    IsNewline is_newline) override;
 
   Container &container() { return m_container_list.back(); }
 
-  const Container &container() const { return m_container_list.back(); }
+  API_NO_DISCARD const Container &container() const { return m_container_list.back(); }
 
   bool pop_container(ContainerType type) {
     bool has_type = false;
@@ -269,7 +269,7 @@ private:
     return true;
   }
 
-  u16 calculate_nesting() const {
+  API_NO_DISCARD u16 calculate_nesting() const {
     u16 nesting = 0;
     ContainerType type = container().type();
     for (auto const &c : m_container_list) {

@@ -9,8 +9,8 @@
 #include "var/StackString.hpp"
 #include "var/String.hpp"
 
-printer::Printer &printer::operator<<(printer::Printer &printer,
-                                      const fs::FileInfo &a) {
+printer::Printer &
+printer::operator<<(printer::Printer &printer, const fs::FileInfo &a) {
   var::IdString type;
   if (a.is_directory()) {
     type = "directory";
@@ -34,9 +34,10 @@ printer::Printer &printer::operator<<(printer::Printer &printer,
   if (a.is_file()) {
     printer.key("size", var::NumberString(a.size()).string_view());
   }
-  printer.key("mode",
-              var::NumberString(a.permissions().permissions() & 0777, "0%o")
-                  .string_view());
+  printer.key(
+    "mode",
+    var::NumberString(a.permissions().permissions() & 0777, "0%o")
+      .string_view());
 
   return printer;
 }
@@ -46,13 +47,13 @@ using namespace fs;
 FileInfo::FileInfo() : m_stat{} {}
 
 bool FileInfo::is_directory() const {
-  TypeFlags masked = static_cast<TypeFlags>(m_stat.st_mode);
+  auto masked = static_cast<TypeFlags>(m_stat.st_mode);
   masked &= TypeFlags::mask;
   return masked == TypeFlags::directory;
 }
 
 bool FileInfo::is_file() const {
-  TypeFlags masked = static_cast<TypeFlags>(m_stat.st_mode);
+  auto masked = static_cast<TypeFlags>(m_stat.st_mode);
   masked &= TypeFlags::mask;
   return masked == TypeFlags::regular;
 }
@@ -62,20 +63,20 @@ bool FileInfo::is_device() const {
 }
 
 bool FileInfo::is_block_device() const {
-  TypeFlags masked = static_cast<TypeFlags>(m_stat.st_mode);
+  auto masked = static_cast<TypeFlags>(m_stat.st_mode);
   masked &= TypeFlags::mask;
   return masked == TypeFlags::block;
 }
 
 bool FileInfo::is_character_device() const {
-  TypeFlags masked = static_cast<TypeFlags>(m_stat.st_mode);
+  auto masked = static_cast<TypeFlags>(m_stat.st_mode);
   masked &= TypeFlags::mask;
   return masked == TypeFlags::character;
 }
 
 bool FileInfo::is_socket() const {
 #if defined S_IFSOCK
-  TypeFlags masked = static_cast<TypeFlags>(m_stat.st_mode);
+  auto masked = static_cast<TypeFlags>(m_stat.st_mode);
   masked &= TypeFlags::mask;
   return masked == TypeFlags::file_socket;
 #else

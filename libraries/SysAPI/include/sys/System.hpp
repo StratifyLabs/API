@@ -8,20 +8,19 @@
 
 namespace sys {
 
-class System
-{
+class System {
 public:
-  static var::StringView operating_system_name();
-  static var::StringView processor();
-  static bool is_processor_i386();
-  static bool is_processor_x86_64();
-  static bool is_processor_arm32();
-  static bool is_processor_arm64();
-  static bool is_windows();
-  static bool is_macosx();
-  static bool is_linux();
-  static bool is_stratify_os();
-  static var::StringView user_data_path();
+  API_NO_DISCARD static var::StringView operating_system_name();
+  API_NO_DISCARD static var::StringView processor();
+  API_NO_DISCARD static bool is_processor_i386();
+  API_NO_DISCARD static bool is_processor_x86_64();
+  API_NO_DISCARD static bool is_processor_arm32();
+  API_NO_DISCARD static bool is_processor_arm64();
+  API_NO_DISCARD static bool is_windows();
+  API_NO_DISCARD static bool is_macosx();
+  API_NO_DISCARD static bool is_linux();
+  API_NO_DISCARD static bool is_stratify_os();
+  API_NO_DISCARD static var::StringView user_data_path();
 };
 
 } // namespace sys

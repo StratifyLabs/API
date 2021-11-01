@@ -1,6 +1,6 @@
 name: Build
 
-on: [push]
+on: [ push ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -15,36 +15,36 @@ jobs:
     runs-on: macOS-latest
 
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v2
-      
-    - name: Checkout SDK
-      uses: actions/checkout@v2
-      with: 
-        repository: StratifyLabs/CMakeSDK
-        path: CMakeSDK
+      - name: Checkout Repo
+        uses: actions/checkout@v2
 
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{runner.workspace}}/API/cmake_link
-      
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{runner.workspace}}/API/cmake_link
-      run: cmake ..
-      env:
-        SOS_SDK_PATH: ${{runner.workspace}}/API/CMakeSDK 
+      - name: Checkout SDK
+        uses: actions/checkout@v2
+        with:
+          repository: StratifyLabs/CMakeSDK
+          path: CMakeSDK
 
-    - name: Build
-      working-directory: ${{runner.workspace}}/API/cmake_link
-      shell: bash
-      run: make -j12   
-      env:
-        SOS_SDK_PATH: ${{runner.workspace}}/API/CMakeSDK          
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{runner.workspace}}/API/cmake_link
 
-    - name: Test
-      working-directory: ${{runner.workspace}}/API/cmake_link
-      shell: bash
-      run: make test
-      env:
-        SOS_SDK_PATH: ${{runner.workspace}}/API/CMakeSDK
-        CTEST_OUTPUT_ON_FAILURE: 1
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{runner.workspace}}/API/cmake_link
+        run: cmake ..
+        env:
+          SOS_SDK_PATH: ${{runner.workspace}}/API/CMakeSDK
+
+      - name: Build
+        working-directory: ${{runner.workspace}}/API/cmake_link
+        shell: bash
+        run: make -j12
+        env:
+          SOS_SDK_PATH: ${{runner.workspace}}/API/CMakeSDK
+
+      - name: Test
+        working-directory: ${{runner.workspace}}/API/cmake_link
+        shell: bash
+        run: make test
+        env:
+          SOS_SDK_PATH: ${{runner.workspace}}/API/CMakeSDK
+          CTEST_OUTPUT_ON_FAILURE: 1

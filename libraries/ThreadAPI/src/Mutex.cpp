@@ -3,8 +3,6 @@
 #include "thread/Mutex.hpp"
 #include "chrono.hpp"
 
-#include <time.h>
-
 using namespace thread;
 
 Mutex::Attributes::Attributes() {

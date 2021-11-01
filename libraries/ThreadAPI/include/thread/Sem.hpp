@@ -15,7 +15,11 @@ namespace thread {
 
 class SemaphoreObject : public api::ExecutionContext {
 public:
-  int get_value() const;
+
+  SemaphoreObject(const SemaphoreObject & a) = delete;
+  SemaphoreObject& operator=(const SemaphoreObject & a) = delete;
+
+  API_NO_DISCARD int get_value() const;
 
   SemaphoreObject &post();
   SemaphoreObject &wait_timed(const chrono::ClockTime &clock_time);
@@ -28,12 +32,11 @@ public:
 
 protected:
   SemaphoreObject() = default;
-  SemaphoreObject(const SemaphoreObject & a) = delete;
-  SemaphoreObject& operator=(const SemaphoreObject & a) = delete;
-  SemaphoreObject(SemaphoreObject && a){
+
+  SemaphoreObject(SemaphoreObject && a) noexcept {
     std::swap(m_handle, a.m_handle);
   }
-  SemaphoreObject& operator=(SemaphoreObject && a){
+  SemaphoreObject& operator=(SemaphoreObject && a) noexcept {
     std::swap(m_handle, a.m_handle);
     return *this;
   }
@@ -70,17 +73,17 @@ public:
   UnnamedSemaphore(ProcessShared process_shared, unsigned int value);
   UnnamedSemaphore(const UnnamedSemaphore & a) = delete;
   UnnamedSemaphore& operator=(const UnnamedSemaphore & a) = delete;
-  UnnamedSemaphore(UnnamedSemaphore && a){
+  UnnamedSemaphore(UnnamedSemaphore && a) noexcept {
     std::swap(m_sem, a.m_sem);
   }
-  UnnamedSemaphore& operator=(UnnamedSemaphore && a){
+  UnnamedSemaphore& operator=(UnnamedSemaphore && a) noexcept {
     std::swap(m_sem, a.m_sem);
     return *this;
   }
   ~UnnamedSemaphore();
 
 private:
-  sem_t m_sem;
+  sem_t m_sem{};
 };
 
 class Semaphore : public SemAccess<Semaphore> {
@@ -89,16 +92,16 @@ public:
 
   Semaphore(const Semaphore &value) = delete;
   Semaphore &operator=(const Semaphore &value) = delete;
-  Semaphore(Semaphore &&value){
+  Semaphore(Semaphore &&value) noexcept {
     m_name = value.m_name;
   }
-  Semaphore &operator=(Semaphore &&value){
+  Semaphore &operator=(Semaphore &&value) noexcept {
     m_name = value.m_name;
     return *this;
   }
 
   //get access to an existing named semaphore
-  Semaphore(var::StringView name);
+  explicit Semaphore(var::StringView name);
 
   //create a named semaphore
   Semaphore(
@@ -118,7 +121,6 @@ private:
 
   void
   open(int value, var::StringView name, int o_flags, fs::Permissions perms);
-  void close();
 };
 
 } // namespace thread

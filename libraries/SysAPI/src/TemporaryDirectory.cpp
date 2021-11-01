@@ -7,8 +7,9 @@
 using namespace sys;
 
 TemporaryDirectory::TemporaryDirectory(const var::StringView parent)
-    : m_path((parent.is_empty() ? System::user_data_path() : parent) /
-             chrono::ClockTime::get_system_time().to_unique_string()) {
+  : m_path(
+    (parent.is_empty() ? System::user_data_path() : parent)
+    / chrono::ClockTime::get_system_time().to_unique_string()) {
   fs::FileSystem().create_directory(m_path);
   if (is_error()) {
     m_path.clear();
@@ -16,7 +17,7 @@ TemporaryDirectory::TemporaryDirectory(const var::StringView parent)
 }
 
 TemporaryDirectory::~TemporaryDirectory() {
-  if (m_path.is_empty() == false) {
+  if (!m_path.is_empty()) {
     fs::FileSystem().remove_directory(m_path, fs::FileSystem::IsRecursive::yes);
   }
 }

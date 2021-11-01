@@ -2,10 +2,6 @@
              // LICENSE.md for rights.
 // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc
 
-#include <cstdio>
-#include <cstring>
-#include <stdint.h>
-
 #include "var/Base64.hpp"
 #include "var/Data.hpp"
 
@@ -17,7 +13,7 @@ int Base64Encoder::transform(const Transform &options) const {
   }
 
   return Base64::encode(
-      View(options.output()).to_char(),
+    View(options.output()).to_char(),
     options.input().to_const_void(),
     options.input().size());
 }
@@ -29,9 +25,9 @@ int Base64Decoder::transform(const Transform &options) const {
 
   const size_t decoded_size = Base64::get_decoded_size(options.input().size());
 
-  return decoded_size -
-         Base64::decode(
-               View(options.output()).to_void(),
+  return decoded_size
+         - Base64::decode(
+           View(options.output()).to_void(),
            options.input().to_const_char(),
            options.input().size());
 }
@@ -54,14 +50,14 @@ Data Base64::decode(StringView input) const {
   return result;
 }
 
-const Base64& Base64::encode(var::View input, var::String & output) const {
+const Base64 &Base64::encode(var::View input, var::String &output) const {
   API_RETURN_VALUE_IF_ERROR(*this);
   output.resize(get_encoded_size(input.size()));
   encode(output.to_char(), input.to_const_void(), input.size());
   return *this;
 }
 
-const Base64& Base64::decode(var::StringView input, var::Data & output) const {
+const Base64 &Base64::decode(var::StringView input, var::Data &output) const {
   API_RETURN_VALUE_IF_ERROR(*this);
   size_t len = get_decoded_size(input.length());
   output.resize(len);
@@ -123,7 +119,6 @@ int Base64::encode(char *dest, const void *src, int nbyte) {
   return strlen(dest);
 }
 
-
 int Base64::decode(void *dest, const char *src, int nbyte) {
   char *data = (char *)dest;
   int i;
@@ -152,8 +147,6 @@ int Base64::decode(void *dest, const char *src, int nbyte) {
 
   return padding;
 }
-
-
 
 // This is a helper function to convert a six-bit value to base64
 char Base64::encode_six(u8 six_bit_value) {

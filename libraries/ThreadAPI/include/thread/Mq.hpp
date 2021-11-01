@@ -25,12 +25,12 @@ public:
   class Attributes {
 
   public:
-    Attributes() : m_attr{} {}
+    Attributes() = default;
 
-    long flags() const { return m_attr.mq_flags; }
-    long current_message_count() const { return m_attr.mq_curmsgs; }
-    long maximum_message_count() const { return m_attr.mq_maxmsg; }
-    long message_size() const { return m_attr.mq_msgsize; }
+    API_NO_DISCARD long flags() const { return m_attr.mq_flags; }
+    API_NO_DISCARD long current_message_count() const { return m_attr.mq_curmsgs; }
+    API_NO_DISCARD long maximum_message_count() const { return m_attr.mq_maxmsg; }
+    API_NO_DISCARD long message_size() const { return m_attr.mq_msgsize; }
 
     Attributes &set_maximum_message_count(long v) {
       m_attr.mq_maxmsg = v;
@@ -48,19 +48,19 @@ public:
 
   private:
     friend class Mq;
-    struct mq_attr m_attr;
+    struct mq_attr m_attr{};
   };
 
   class Info {
   public:
     Info() : m_attr{} {}
-    OpenMode::OpenFlags flags() const {
+    API_NO_DISCARD OpenMode::OpenFlags flags() const {
       return OpenMode::OpenFlags(m_attr.mq_flags);
     }
-    long o_flags() const { return m_attr.mq_flags; }
-    long current_message_count() const { return m_attr.mq_curmsgs; }
-    long maximum_message_count() const { return m_attr.mq_maxmsg; }
-    long message_size() const { return m_attr.mq_msgsize; }
+    API_NO_DISCARD long o_flags() const { return m_attr.mq_flags; }
+    API_NO_DISCARD long current_message_count() const { return m_attr.mq_curmsgs; }
+    API_NO_DISCARD long maximum_message_count() const { return m_attr.mq_maxmsg; }
+    API_NO_DISCARD long message_size() const { return m_attr.mq_msgsize; }
 
   private:
     friend class Mq;
@@ -71,13 +71,13 @@ public:
   Mq(const Mq &a) = delete;
   Mq &operator=(const Mq &a) = delete;
 
-  Mq(Mq &&a) { std::swap(m_handle, a.m_handle); }
-  Mq &operator=(Mq &&a) {
+  Mq(Mq &&a)  noexcept { std::swap(m_handle, a.m_handle); }
+  Mq &operator=(Mq &&a)  noexcept {
     std::swap(m_handle, a.m_handle);
     return *this;
   }
 
-  explicit Mq(const var::StringView name,
+  explicit Mq(var::StringView name,
               const fs::OpenMode &open_mode = fs::OpenMode::read_write());
 
   // create a named Mq
@@ -88,9 +88,9 @@ public:
 
   ~Mq();
 
-  bool is_valid() const { return m_handle != -1; }
+  API_NO_DISCARD bool is_valid() const { return m_handle != -1; }
 
-  Info get_info() const;
+  API_NO_DISCARD Info get_info() const;
   Mq &set_flags(OpenMode open_mode);
 
   Mq &receive(var::View message);
@@ -105,7 +105,7 @@ public:
   class File : public fs::FileAccess<File> {
   public:
 
-    File(Mq & message_queue) : m_mq(message_queue){}
+    explicit File(Mq & message_queue) : m_mq(message_queue){}
 
     File &set_size(size_t size) {
       m_size = size;
@@ -127,10 +127,10 @@ public:
 
 private:
   friend File;
-  mqd_t m_handle;
+  mqd_t m_handle = -1;
   API_AF(Mq, unsigned, message_priority, 0);
 
-  void set_attributes(const Attributes &attributes);
+  void set_attributes(const Attributes &attributes) const;
 };
 
 

@@ -4,6 +4,9 @@
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
+- Better test integration with super projects (`api_tests` target)
+- Add `API_IS_TEST` cmake option for enabling tests
+- Add `.clang-format`
 - Add `thread::Cond::wait_until_asserted()` to wait for a condition to be asserted
 - Increased the size of `var::PathString` on Windows from `262` to `4096`
 - Added a bool member to `thread::Cond` that can be used for thread synchronization
@@ -30,6 +33,7 @@
 
 ## Bug Fixes
 
+- Tidy (with clang-tidy)
 - fixed a bug in `fs::Path::suffix` and `fs::Path::name` when getting a suffix of a stringview that is part of a larger null terminated string
 - Check for zero size when adding a null terminator to `var::Data`
 - Change `fs::File&` to `const fs::FileObject&` when constructing a `fs::DataFile` from another File
@@ -58,7 +62,7 @@
 - `Thread::Attributes` now inherits `api::ExecutionContext`
 - Fix bug in `Thread::Attributes::get_inherit_sched()` where the wrong call was made
 - `Thread::set_cancel_state()` and `Thread::set_cancel_type()` changed to static methods
-- Remove bugs with `interface_closedir()` and `interface_opendir()` to avoid virtual methods in constructor/deconstuctor
+- Remove bugs with `interface_closedir()` and `internal_opendir()` to avoid virtual methods in constructor/deconstuctor
 - Permissions class now returns access permissions instead of full type with `permissions()` method
 - Add a newline when closing markdown code section
 

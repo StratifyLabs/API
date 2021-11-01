@@ -27,8 +27,8 @@ public:
   API_NO_DISCARD u32 count() const { return m_token_list.count(); }
   API_NO_DISCARD StringView at(u32 n) const;
 
-  const StringViewList &list() const { return m_token_list; }
-  String join(StringView delimeter) const;
+  API_NO_DISCARD const StringViewList &list() const { return m_token_list; }
+  API_NO_DISCARD String join(StringView delimeter) const;
 
 protected:
 private:

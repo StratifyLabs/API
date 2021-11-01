@@ -2,11 +2,6 @@
              // LICENSE.md for rights.
 // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc
 
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <errno.h>
-
 #include "var/Data.hpp"
 #include "var/StringView.hpp"
 #include "var/View.hpp"
@@ -75,6 +70,6 @@ Data &Data::append(const View view) {
   return copy(view, Copy().set_destination_position(size()));
 }
 
-const StringView Data::string_view() const {
-  return StringView(reinterpret_cast<const char *>(data_u8()), size());
+StringView Data::string_view() const {
+  return {reinterpret_cast<const char *>(data_u8()), size()};
 }

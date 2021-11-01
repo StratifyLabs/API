@@ -13,8 +13,8 @@ public:
   API_NO_DISCARD var::String encode(var::View input) const;
   API_NO_DISCARD var::Data decode(var::StringView input) const;
 
-  const Base64& encode(var::View input, var::String & output) const;
-  const Base64& decode(var::StringView input, var::Data & output) const;
+  const Base64 &encode(var::View input, var::String &output) const;
+  const Base64 &decode(var::StringView input, var::Data &output) const;
 
   static constexpr size_t get_decoded_size(size_t nbyte) {
     // adds three bytes to padding, actual is returned by decode method
@@ -38,21 +38,21 @@ private:
 
 class Base64Encoder : public Transformer {
 public:
-  int transform(const Transform &options) const override;
-  size_t get_output_size(size_t nbyte) const override {
+  API_NO_DISCARD int transform(const Transform &options) const override;
+  API_NO_DISCARD size_t get_output_size(size_t nbyte) const override {
     return Base64::get_encoded_size(nbyte);
   }
 
-  size_t page_size_boundary() const override { return 3; }
+  API_NO_DISCARD size_t page_size_boundary() const override { return 3; }
 };
 
 class Base64Decoder : public Transformer {
 public:
-  int transform(const Transform &options) const override;
-  size_t get_output_size(size_t nbyte) const override {
+  API_NO_DISCARD int transform(const Transform &options) const override;
+  API_NO_DISCARD size_t get_output_size(size_t nbyte) const override {
     return Base64::get_decoded_size(nbyte);
   }
-  size_t page_size_boundary() const override { return 4; }
+  API_NO_DISCARD size_t page_size_boundary() const override { return 4; }
 };
 
 } // namespace var

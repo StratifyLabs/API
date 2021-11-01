@@ -10,7 +10,7 @@
 #include "var.hpp"
 
 #if defined __link
-#define BIG_BUFFER_SIZE 10*1024*1024
+#define BIG_BUFFER_SIZE 10 * 1024 * 1024
 #else
 #define BIG_BUFFER_SIZE 1024
 #endif
@@ -47,8 +47,8 @@ public:
 
   bool vector_api_case() {
     {
-      Vector<StringView> list =
-          Vector<StringView>().push_back("hello").push_back("world");
+      Vector<StringView> list
+        = Vector<StringView>().push_back("hello").push_back("world");
 
       TEST_ASSERT(list.find("hello", StringView()) == "hello");
       TEST_ASSERT(list.find("world", "") == "world");
@@ -82,7 +82,7 @@ public:
     printer().key("blockSize", NumberString(Data::minimum_capacity()));
 
     const Array<u32, 4> value_list(
-        std::array<u32, 4>({0x11223344, 0x22334411, 0x33441122, 0x44332211}));
+      std::array<u32, 4>({0x11223344, 0x22334411, 0x33441122, 0x44332211}));
 
     Data data_list = Data().copy(View(value_list));
 
@@ -119,8 +119,9 @@ public:
 
     const char test[] = "test1234567890\n";
     View view_test(test);
-    printer().key("view test size",
-                  NumberString(view_test.size()).string_view());
+    printer().key(
+      "view test size",
+      NumberString(view_test.size()).string_view());
     printer().key("test size", NumberString(sizeof(test)).string_view());
     TEST_ASSERT(view_test.size() == sizeof(test) - 1);
     TEST_ASSERT(view_test.to_char() == test);
@@ -221,7 +222,7 @@ public:
 
     {
       const Array<u32, 4> value_list(
-          std::array<u32, 4>({0x11223344, 0x22334411, 0x33441122, 0x44332211}));
+        std::array<u32, 4>({0x11223344, 0x22334411, 0x33441122, 0x44332211}));
 
       u32 buffer[4];
 
@@ -268,24 +269,27 @@ public:
     }
 
     {
-      T t("0,'1,2'",
-          T::Construct().set_delimeters(",").set_ignore_between("'"));
+      T t(
+        "0,'1,2'",
+        T::Construct().set_delimeters(",").set_ignore_between("'"));
       TEST_ASSERT(t.count() == 2);
       TEST_EXPECT(t.at(0) == "0");
       TEST_EXPECT(t.at(1) == "'1,2'");
     }
 
     {
-      T t("0,\"1,2\"",
-          T::Construct().set_delimeters(",").set_ignore_between("\""));
+      T t(
+        "0,\"1,2\"",
+        T::Construct().set_delimeters(",").set_ignore_between("\""));
       TEST_ASSERT(t.count() == 2);
       TEST_EXPECT(t.at(0) == "0");
       TEST_EXPECT(t.at(1) == "\"1,2\"");
     }
 
     {
-      T t("0,1,2,3,4,5",
-          T::Construct().set_delimeters(",").set_maximum_delimeter_count(2));
+      T t(
+        "0,1,2,3,4,5",
+        T::Construct().set_delimeters(",").set_maximum_delimeter_count(2));
       TEST_EXPECT(t.count() == 3);
       TEST_EXPECT(t.at(0) == "0");
       TEST_EXPECT(t.at(1) == "1");
@@ -293,10 +297,12 @@ public:
     }
 
     {
-      T t("0,'1,2,3',4,5", T::Construct()
-                               .set_delimeters(",")
-                               .set_maximum_delimeter_count(2)
-                               .set_ignore_between("'"));
+      T t(
+        "0,'1,2,3',4,5",
+        T::Construct()
+          .set_delimeters(",")
+          .set_maximum_delimeter_count(2)
+          .set_ignore_between("'"));
       TEST_EXPECT(t.count() == 3);
       TEST_EXPECT(t.at(0) == "0");
       TEST_EXPECT(t.at(1) == "'1,2,3'");
@@ -314,8 +320,9 @@ public:
     }
 
     {
-      T t("0,1,Testing'123'Testing,2",
-          T::Construct().set_delimeters(",").set_ignore_between("'"));
+      T t(
+        "0,1,Testing'123'Testing,2",
+        T::Construct().set_delimeters(",").set_ignore_between("'"));
       TEST_EXPECT(t.count() == 4);
       TEST_EXPECT(t.at(0) == "0");
       TEST_EXPECT(t.at(1) == "1");
@@ -324,8 +331,9 @@ public:
     }
 
     {
-      T t("'0,1',Testing'123'Testing,2",
-          T::Construct().set_delimeters(",").set_ignore_between("'"));
+      T t(
+        "'0,1',Testing'123'Testing,2",
+        T::Construct().set_delimeters(",").set_ignore_between("'"));
       TEST_EXPECT(t.count() == 3);
       TEST_EXPECT(t.at(0) == "'0,1'");
       TEST_EXPECT(t.at(1) == "Testing'123'Testing");
@@ -341,11 +349,11 @@ public:
       TEST_ASSERT(token.at(8) == "");
       TEST_ASSERT(token.at(100) == "");
 
-      TEST_ASSERT(token.sort(T::SortBy::ascending).join(";") ==
-                  "0;1;2;3;4;5;7");
+      TEST_ASSERT(
+        token.sort(T::SortBy::ascending).join(";") == "0;1;2;3;4;5;7");
 
-      TEST_ASSERT(token.sort(T::SortBy::descending).join(".") ==
-                  "7.5.4.3.2.1.0");
+      TEST_ASSERT(
+        token.sort(T::SortBy::descending).join(".") == "7.5.4.3.2.1.0");
     }
 
     printer().key("complete", __FUNCTION__);
@@ -355,10 +363,10 @@ public:
   bool base64_api_case() {
     Printer::Object po(printer(), "Base64");
 
-    bool (*encode_test)(const char *, const char *) = [](const char *input,
-                                                         const char *output) {
-      return (Base64().encode(SV(input)) == S(output));
-    };
+    bool (*encode_test)(const char *, const char *)
+      = [](const char *input, const char *output) {
+          return (Base64().encode(SV(input)) == S(output));
+        };
 
     TEST_EXPECT(encode_test("1", "MQ=="));
     TEST_ASSERT(encode_test(".", "Lg=="));
@@ -370,10 +378,10 @@ public:
     TEST_EXPECT(encode_test("KLMNOPQ", "S0xNTk9QUQ=="));
     TEST_EXPECT(encode_test("rstuvwxy", "cnN0dXZ3eHk="));
 
-    bool (*decode_test)(StringView, StringView) = [](StringView output,
-                                                     StringView input) {
-      return (V(Base64().decode(input)) == V(output));
-    };
+    bool (*decode_test)(StringView, StringView)
+      = [](StringView output, StringView input) {
+          return (V(Base64().decode(input)) == V(output));
+        };
 
     TEST_EXPECT(decode_test("1", "MQ=="));
     TEST_EXPECT(decode_test("ab", "YWI="));
@@ -384,8 +392,8 @@ public:
     TEST_EXPECT(decode_test("KLMNOPQ", "S0xNTk9QUQ=="));
     TEST_EXPECT(decode_test("rstuvwxy", "cnN0dXZ3eHk="));
 
-    const StringView test_input =
-        "In computer science, Base64 is a group of binary-to-text encoding "
+    const StringView test_input
+      = "In computer science, Base64 is a group of binary-to-text encoding "
         "schemes that represent binary data in an ASCII string format by "
         "translating it into a radix-64 representation. The term Base64 "
         "originates from a specific MIME content transfer encoding. Each "
@@ -402,8 +410,8 @@ public:
         "encoding causes an overhead of 33–36% (33% by the encoding itself, up "
         "to 3% more by the inserted line breaks).";
 
-    const StringView test_output =
-        "SW4gY29tcHV0ZXIgc2NpZW5jZSwgQmFzZTY0IGlzIGEgZ3JvdXAgb2YgYmluYXJ5LXRvLX"
+    const StringView test_output
+      = "SW4gY29tcHV0ZXIgc2NpZW5jZSwgQmFzZTY0IGlzIGEgZ3JvdXAgb2YgYmluYXJ5LXRvLX"
         "RleHQgZW5jb2Rpbmcgc2NoZW1lcyB0aGF0IHJlcHJlc2VudCBiaW5hcnkgZGF0YSBpbiBh"
         "biBBU0NJSSBzdHJpbmcgZm9ybWF0IGJ5IHRyYW5zbGF0aW5nIGl0IGludG8gYSByYWRpeC"
         "02NCByZXByZXNlbnRhdGlvbi4gVGhlIHRlcm0gQmFzZTY0IG9yaWdpbmF0ZXMgZnJvbSBh"
@@ -429,63 +437,101 @@ public:
 
     {
 
-      TEST_ASSERT(DataFile()
-                      .write(ViewFile(V(test_output)), Base64Decoder(),
-                             DataFile::Write().set_page_size(32))
-                      .data()
-                      .add_null_terminator() == test_input);
+      TEST_ASSERT(
+        DataFile()
+          .write(
+            ViewFile(V(test_output)),
+            Base64Decoder(),
+            DataFile::Write().set_page_size(32))
+          .data()
+          .add_null_terminator()
+        == test_input);
 
-      TEST_ASSERT(DataFile()
-                      .write(ViewFile(V(test_output)), Base64Decoder(),
-                             DataFile::Write().set_page_size(10))
-                      .data()
-                      .add_null_terminator() == test_input);
+      TEST_ASSERT(
+        DataFile()
+          .write(
+            ViewFile(V(test_output)),
+            Base64Decoder(),
+            DataFile::Write().set_page_size(10))
+          .data()
+          .add_null_terminator()
+        == test_input);
 
-      TEST_ASSERT(DataFile()
-                      .write(ViewFile(V(test_output)), Base64Decoder(),
-                             DataFile::Write().set_page_size(20))
-                      .data()
-                      .add_null_terminator() == test_input);
+      TEST_ASSERT(
+        DataFile()
+          .write(
+            ViewFile(V(test_output)),
+            Base64Decoder(),
+            DataFile::Write().set_page_size(20))
+          .data()
+          .add_null_terminator()
+        == test_input);
 
-      TEST_ASSERT(DataFile()
-                      .write(ViewFile(V(test_output)), Base64Decoder(),
-                             DataFile::Write().set_page_size(30))
-                      .data()
-                      .add_null_terminator() == test_input);
+      TEST_ASSERT(
+        DataFile()
+          .write(
+            ViewFile(V(test_output)),
+            Base64Decoder(),
+            DataFile::Write().set_page_size(30))
+          .data()
+          .add_null_terminator()
+        == test_input);
 
-      TEST_ASSERT(DataFile()
-                      .write(ViewFile(V(test_output)), Base64Decoder(),
-                             DataFile::Write().set_page_size(40))
-                      .data()
-                      .add_null_terminator() == test_input);
+      TEST_ASSERT(
+        DataFile()
+          .write(
+            ViewFile(V(test_output)),
+            Base64Decoder(),
+            DataFile::Write().set_page_size(40))
+          .data()
+          .add_null_terminator()
+        == test_input);
 
       DataFile df;
-      df.write(ViewFile(V(test_input)), Base64Encoder(),
-               DataFile::Write().set_page_size(12));
+      df.write(
+        ViewFile(V(test_input)),
+        Base64Encoder(),
+        DataFile::Write().set_page_size(12));
 
-      TEST_ASSERT(DataFile()
-                      .write(ViewFile(V(test_input)), Base64Encoder(),
-                             DataFile::Write().set_page_size(12))
-                      .data()
-                      .add_null_terminator() == test_output);
+      TEST_ASSERT(
+        DataFile()
+          .write(
+            ViewFile(V(test_input)),
+            Base64Encoder(),
+            DataFile::Write().set_page_size(12))
+          .data()
+          .add_null_terminator()
+        == test_output);
 
-      TEST_ASSERT(DataFile()
-                      .write(ViewFile(V(test_input)), Base64Encoder(),
-                             DataFile::Write().set_page_size(30))
-                      .data()
-                      .add_null_terminator() == test_output);
+      TEST_ASSERT(
+        DataFile()
+          .write(
+            ViewFile(V(test_input)),
+            Base64Encoder(),
+            DataFile::Write().set_page_size(30))
+          .data()
+          .add_null_terminator()
+        == test_output);
 
-      TEST_ASSERT(DataFile()
-                      .write(ViewFile(V(test_input)), Base64Encoder(),
-                             DataFile::Write().set_page_size(50))
-                      .data()
-                      .add_null_terminator() == test_output);
+      TEST_ASSERT(
+        DataFile()
+          .write(
+            ViewFile(V(test_input)),
+            Base64Encoder(),
+            DataFile::Write().set_page_size(50))
+          .data()
+          .add_null_terminator()
+        == test_output);
 
-      TEST_ASSERT(DataFile()
-                      .write(ViewFile(V(test_input)), Base64Encoder(),
-                             DataFile::Write().set_page_size(60))
-                      .data()
-                      .add_null_terminator() == test_output);
+      TEST_ASSERT(
+        DataFile()
+          .write(
+            ViewFile(V(test_input)),
+            Base64Encoder(),
+            DataFile::Write().set_page_size(60))
+          .data()
+          .add_null_terminator()
+        == test_output);
     }
 
     printer().key("complete", __FUNCTION__);
@@ -530,17 +576,17 @@ public:
 
       TEST_EXPECT(sv.get_substring_at_position(2) == "sting");
       TEST_EXPECT(sv.get_substring_with_length(4) == "test");
-      TEST_EXPECT(sv.get_substring_with_length(4).is_null_terminated() ==
-                  false);
+      TEST_EXPECT(
+        sv.get_substring_with_length(4).is_null_terminated() == false);
 
       {
         const StringView s0("test0");
-        TEST_ASSERT(s0.get_substring(
-                        SV::GetSubstring().set_position(0).set_length(2)) ==
-                    "te");
+        TEST_ASSERT(
+          s0.get_substring(SV::GetSubstring().set_position(0).set_length(2))
+          == "te");
 
-        TEST_ASSERT(s0(SV::GetSubstring().set_position(0).set_length(2)) ==
-                    "te");
+        TEST_ASSERT(
+          s0(SV::GetSubstring().set_position(0).set_length(2)) == "te");
 
         TEST_ASSERT(s0.get_substring_at_position(2) == "st0");
         TEST_ASSERT(s0.get_substring_at_position(100) == "");
@@ -569,8 +615,8 @@ public:
 #endif
 
       TEST_EXPECT(
-          sv.get_substring(SV::GetSubstring().set_position(2).set_length(3)) ==
-          "sti");
+        sv.get_substring(SV::GetSubstring().set_position(2).set_length(3))
+        == "sti");
 
       size_t i = 0;
       for (auto c : sv) {
@@ -579,10 +625,11 @@ public:
 
       TEST_EXPECT(sv.to_long() == 0);
 
-      TEST_EXPECT(StringView("0x08000000").to_unsigned_long(SV::Base::auto_) ==
-                  0x08000000);
-      TEST_EXPECT(StringView("8000000").to_unsigned_long(SV::Base::auto_) ==
-                  8000000);
+      TEST_EXPECT(
+        StringView("0x08000000").to_unsigned_long(SV::Base::auto_)
+        == 0x08000000);
+      TEST_EXPECT(
+        StringView("8000000").to_unsigned_long(SV::Base::auto_) == 8000000);
       TEST_EXPECT(StringView("0777").to_unsigned_long(SV::Base::auto_) == 0777);
 
       TEST_EXPECT(sv.pop_front(4) == "ing");
@@ -694,47 +741,50 @@ public:
 
       TEST_EXPECT(var::String().format("%c.%c", buffer[0], buffer[1]) == "a.a");
       TEST_EXPECT(
-          var::String().format("%s", String(View(data_buffer)).cstring()) ==
-          String(View(data_buffer)));
+        var::String().format("%s", String(View(data_buffer)).cstring())
+        == String(View(data_buffer)));
     }
     {
       S s("1,2,3,4,5");
       TEST_ASSERT(s.erase(S::Erase().set_length(1)) == ",2,3,4,5");
-      TEST_ASSERT(s.erase(S::Erase().set_position(1).set_length(1)) ==
-                  ",,3,4,5");
+      TEST_ASSERT(
+        s.erase(S::Erase().set_position(1).set_length(1)) == ",,3,4,5");
       S all("all");
       TEST_ASSERT(all.erase(S::Erase().set_length(500)).is_empty());
     }
 
     {
       S s("testing,1,2,3,4");
-      TEST_ASSERT(s.replace(S::Replace().set_old_string(",").set_new_string(
-                      ";")) == "testing;1;2;3;4");
+      TEST_ASSERT(
+        s.replace(S::Replace().set_old_string(",").set_new_string(";"))
+        == "testing;1;2;3;4");
     }
 
     {
       S s("testing,1,2,3,4");
       TEST_ASSERT(
-          s.replace(
-              S::Replace().set_old_string(",").set_new_string(";").set_count(
-                  1)) == "testing;1,2,3,4");
+        s.replace(
+          S::Replace().set_old_string(",").set_new_string(";").set_count(1))
+        == "testing;1,2,3,4");
     }
 
     {
       S s("testing,1,2,3,4");
       TEST_ASSERT(
-          s.replace(
-              S::Replace().set_old_string(",").set_new_string(";").set_position(
-                  8)) == "testing,1;2;3;4");
+        s.replace(
+          S::Replace().set_old_string(",").set_new_string(";").set_position(8))
+        == "testing,1;2;3;4");
     }
 
     {
       S s("testing,1,2,3,4");
-      TEST_ASSERT(s.replace(S::Replace()
-                                .set_old_string(",")
-                                .set_new_string(";")
-                                .set_position(8)
-                                .set_count(2)) == "testing,1;2;3,4");
+      TEST_ASSERT(
+        s.replace(S::Replace()
+                    .set_old_string(",")
+                    .set_new_string(";")
+                    .set_position(8)
+                    .set_count(2))
+        == "testing,1;2;3,4");
     }
 
     {

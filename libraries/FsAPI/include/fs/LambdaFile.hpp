@@ -13,7 +13,7 @@ public:
   using write_callback_t
     = int (*)(void *context, int location, const var::View view);
 
-  LambdaFile() {}
+  LambdaFile() = default;
 
   LambdaFile(const LambdaFile &) = delete;
   LambdaFile &operator=(const LambdaFile &) = delete;

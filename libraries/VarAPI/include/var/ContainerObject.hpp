@@ -12,22 +12,18 @@
 
 namespace var {
 
-template<class Derived, typename Container, typename T> class ContainerObject : public api::ExecutionContext {
+template <class Derived, typename Container, typename T>
+class ContainerObject : public api::ExecutionContext {
 public:
-
   typename Container::const_iterator begin() const noexcept {
     return m_container.begin();
   }
-  typename Container::iterator begin() noexcept {
-    return m_container.begin();
-  }
+  typename Container::iterator begin() noexcept { return m_container.begin(); }
 
   typename Container::const_iterator end() const noexcept {
     return m_container.end();
   }
-  typename Container::iterator end() noexcept {
-    return m_container.end();
-  }
+  typename Container::iterator end() noexcept { return m_container.end(); }
 
   typename Container::const_iterator cbegin() const noexcept {
     return m_container.cbegin();
@@ -36,29 +32,25 @@ public:
     return m_container.cend();
   }
 
-  typename Container::const_reverse_iterator
-  rbegin() const noexcept {
+  typename Container::const_reverse_iterator rbegin() const noexcept {
     return m_container.rbegin();
   }
   typename Container::reverse_iterator rbegin() noexcept {
     return m_container.rbegin();
   }
 
-  typename Container::const_reverse_iterator
-  rend() const noexcept {
+  typename Container::const_reverse_iterator rend() const noexcept {
     return m_container.rend();
   }
   typename Container::reverse_iterator rend() noexcept {
     return m_container.rend();
   }
 
-  typename Container::const_reverse_iterator
-  crbegin() const noexcept {
+  typename Container::const_reverse_iterator crbegin() const noexcept {
     return m_container.crbegin();
   }
 
-  typename Container::const_reverse_iterator
-  crend() const noexcept {
+  typename Container::const_reverse_iterator crend() const noexcept {
     return m_container.crend();
   }
 
@@ -68,9 +60,8 @@ public:
 
 protected:
   Container m_container;
-
 };
 
-}
+} // namespace var
 
 #endif // VAR_API_CONTAINER_OBJECT_HPP_

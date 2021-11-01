@@ -3,7 +3,7 @@
 #ifndef THREADAPI_THREAD_SIGNAL_HPP_
 #define THREADAPI_THREAD_SIGNAL_HPP_
 
-#include <signal.h>
+#include <csignal>
 
 #include "Sched.hpp"
 #include "Thread.hpp"
@@ -219,15 +219,9 @@ public:
   };
 #endif
 
-  explicit Signal(Number signo, int signal_value = 0) {
-    m_signo = static_cast<int>(signo);
-    m_sigvalue.sival_int = signal_value;
-  }
+  explicit Signal(Number signo, int signal_value = 0) : m_signo{int(signo)}, m_sigvalue{signal_value}{}
 
-  Signal(Number signo, void *signal_pointer) {
-    m_signo = static_cast<int>(signo);
-    m_sigvalue.sival_ptr = signal_pointer;
-  }
+  Signal(Number signo, void *signal_pointer) : m_signo{int(signo)}, m_sigvalue{ .sival_ptr = signal_pointer} {}
 
   const Signal &send(pid_t pid) const;
   Signal &send(pid_t pid) { return API_CONST_CAST_SELF(Signal, send, pid); }

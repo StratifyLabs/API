@@ -7,13 +7,13 @@ using namespace sys;
 Version Version::from_triple(u16 major, u8 minor, u8 patch) {
   Version result;
   result.m_version.format("%d.%d.%d", major, minor, patch);
-	return result;
+  return result;
 }
 
 Version Version::from_u16(u16 major_minor) {
   Version result;
   result.m_version.format("%d.%d", major_minor >> 8, major_minor & 0xff);
-	return result;
+  return result;
 }
 
 u32 Version::to_bcd() const {

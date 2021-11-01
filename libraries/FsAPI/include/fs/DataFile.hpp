@@ -15,7 +15,7 @@ public:
   DataFile(DataFile &&file) = default;
   DataFile &operator=(DataFile &&file) = default;
 
-  DataFile(const OpenMode &flags = OpenMode::append_read_write())
+  explicit DataFile(const OpenMode &flags = OpenMode::append_read_write())
     : m_open_flags(flags) {
     m_location = 0;
   }
