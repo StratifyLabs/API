@@ -8,6 +8,8 @@ set(CMAKE_MODULE_PATH ${SOS_SDK_PATH}/cmake)
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_MODULE_PATH}/sos-toolchain.cmake)
 include(sos-sdk)
 
+add_custom_target(api_tests)
+
 add_subdirectory(API testsAPI)
 add_subdirectory(ChronoAPI testsChronoAPI)
 add_subdirectory(FsAPI testsFsAPI)

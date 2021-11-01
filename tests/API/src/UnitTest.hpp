@@ -14,9 +14,7 @@ public:
   UnitTest(var::StringView name) : test::Test(name) {}
 
   bool execute_class_api_case() {
-
     TEST_ASSERT_RESULT(markdown_printer_test());
-
     return true;
   }
 

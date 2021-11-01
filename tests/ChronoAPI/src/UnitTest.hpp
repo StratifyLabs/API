@@ -41,8 +41,8 @@ public:
       TEST_ASSERT(t != t_copy);
       t -= 10_minutes;
       TEST_ASSERT(t == t_copy);
-      t = t_copy - 10_seconds;
-      TEST_ASSERT(t_copy - t == 10_seconds);
+      t = t_copy - DT(10_seconds);
+      TEST_ASSERT(t_copy - t == DT(10_seconds));
     }
 
     {
@@ -58,7 +58,7 @@ public:
       printer().key("date", d.to_string());
 
       TEST_ASSERT(d.year() == 2020);
-      TEST_EXPECT(d.month() == 10);
+      TEST_EXPECT(d.month() == Date::Month(10));
       // TEST_EXPECT(d.day() == 12);
       // TEST_EXPECT(d.to_string() == "2020-10-12 03:30:31");
     }

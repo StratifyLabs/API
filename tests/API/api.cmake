@@ -1,9 +1,9 @@
 
 macro(api_test_executable NAME DIRECTORIES)
-
-
   sos_sdk_app_target(RELEASE ${NAME} "unittest" release ${SOS_ARCH})
   add_executable(${RELEASE_TARGET})
+  add_dependencies(api_tests ${RELEASE_TARGET})
+
   target_sources(${RELEASE_TARGET}
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../common/main.cpp
@@ -54,10 +54,8 @@ macro(api_test_executable NAME DIRECTORIES)
     )
 
   if (SOS_IS_LINK)
-
     sos_sdk_add_test(${NAME} "unittest" release)
     #sos_sdk_add_test(${NAME} "unittest" coverage)
-
   endif ()
 
 endmacro()

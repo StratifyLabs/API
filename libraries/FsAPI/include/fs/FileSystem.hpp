@@ -52,19 +52,6 @@ public:
     ExcludeCallback exclude = nullptr,
     void *context = nullptr) const;
 
-  // for backwards compatibility
-  API_NO_DISCARD PathList read_directory(
-    const var::StringView path,
-    IsRecursive is_recursive,
-    bool (*exclude)(const var::StringView, void *),
-    void *context = nullptr) const {
-    return read_directory(
-      path,
-      is_recursive,
-      reinterpret_cast<ExcludeCallback>(exclude),
-      context);
-  }
-
   class Rename {
     API_AC(Rename, var::StringView, source);
     API_AC(Rename, var::StringView, destination);

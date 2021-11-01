@@ -206,9 +206,9 @@ public:
 
     {
       TEST_ASSERT(FS().directory_exists(HOME_FOLDER "/tmp"));
-      PathList list
+      const auto list
         = FS().read_directory(HOME_FOLDER "/tmp", FS::IsRecursive::yes);
-      printer().object("files", list);
+      printer().object("tmpFiles", list);
 
       TEST_ASSERT(list.find("test0.txt") == "test0.txt");
       TEST_ASSERT(list.find("test1.txt") == "test1.txt");
@@ -217,13 +217,12 @@ public:
 
     {
       TEST_ASSERT(FS().directory_exists(HOME_FOLDER "/tmp2"));
-      PathList list = FS().read_directory(
+      const auto list = FS().read_directory(
         HOME_FOLDER "/tmp2",
         FS::IsRecursive::yes,
-        [](StringView entry, void *context) -> bool {
-          return entry.find("filesystem") != StringView::npos;
+        [](StringView entry, void *context) {
+          return FS::IsExclude(entry.find("filesystem") != StringView::npos);
         });
-      printer().object("files", list);
       TEST_ASSERT(list.find("test0.txt") == "test0.txt");
       TEST_ASSERT(list.find("filesystem.txt") == "");
       TEST_ASSERT(list.find("test2.txt") == "test2.txt");

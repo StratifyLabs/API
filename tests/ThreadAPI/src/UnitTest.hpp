@@ -491,12 +491,10 @@ public:
             return nullptr;
           }));
 
-      TEST_ASSERT(t.set_cancel_state(T::CancelState::enable)
-                    .set_cancel_type(T::CancelType::deferred)
-                    .cancel()
-                    .join()
-                    .is_success());
+      const auto old_state = t.set_cancel_state(T::CancelState::enable);
+      const auto old_type = t.set_cancel_type(T::CancelType::deferred);
 
+      TEST_ASSERT(t.cancel().join().is_success());
       TEST_ASSERT(m_did_execute == IS_CANCEL_OK);
     }
 

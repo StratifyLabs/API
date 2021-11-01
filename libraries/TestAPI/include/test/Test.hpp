@@ -117,7 +117,7 @@ public:
     m_final_result = false;
   }
 
-  API_NO_DISCARD bool expect(const char *function, unsigned int line, bool value) {
+  bool expect(const char *function, unsigned int line, bool value) {
     if (value) {
       return true;
     }

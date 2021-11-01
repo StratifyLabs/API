@@ -131,12 +131,11 @@ public:
   API_NO_DISCARD T &operator[](size_t offset) { return m_vector[offset]; }
 
   API_NO_DISCARD size_t find_offset(const T &a) const {
-    size_t offset = std::find(begin(), end(), a) - begin();
-    return offset;
+    return std::find(begin(), end(), a) - begin();
   }
 
   API_NO_DISCARD const T &find(const T &a, const T &not_found = T()) const {
-    size_t offset = find_offset(a);
+    const size_t offset = find_offset(a);
     if (offset == count()) {
       return not_found;
     }

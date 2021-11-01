@@ -4,6 +4,7 @@
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
+- Better test integration with super projects (`api_tests` target)
 - Add `API_IS_TEST` cmake option for enabling tests
 - Add `.clang-format`
 - Add `thread::Cond::wait_until_asserted()` to wait for a condition to be asserted
