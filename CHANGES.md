@@ -4,6 +4,9 @@
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
+
+- Improved performance of `File::get_line()`
+- Add `StrackString<>::truncate()` method
 - Better test integration with super projects (`api_tests` target)
 - Add `API_IS_TEST` cmake option for enabling tests
 - Add `.clang-format`
@@ -33,6 +36,7 @@
 
 ## Bug Fixes
 
+- Fixed some bugs when configuring threads in Windows
 - Tidy (with clang-tidy)
 - fixed a bug in `fs::Path::suffix` and `fs::Path::name` when getting a suffix of a stringview that is part of a larger null terminated string
 - Check for zero size when adding a null terminator to `var::Data`

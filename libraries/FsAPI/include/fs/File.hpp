@@ -164,19 +164,18 @@ public:
   var::GeneralString gets(char term = '\n') const;
 
   template <class StringType> StringType get_line(char term = '\n') const {
-    char c = 0;
     StringType result;
-    int bytes_received = 0;
-    while ((c != term) && is_success()) {
-      if (read(var::View(c)).return_value() == 1) {
-        result.append(c);
-        bytes_received++;
-        if (bytes_received == result.capacity()) {
-          c = term;
-        }
-      } else {
-        c = term;
+    const auto file_location = location();
+    read(var::View(result.data(), result.capacity()));
+    size_t offset = 0;
+    for(auto c: var::StringView(result)){
+      if( c == term ){
+        const auto new_length = offset+1;
+        seek(file_location + new_length);
+        result.truncate(new_length);
+        return result;
       }
+      ++offset;
     }
     return result;
   }

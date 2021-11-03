@@ -129,6 +129,13 @@ public:
     return static_cast<Derived &>(*this);
   }
 
+  Derived &truncate(size_t new_length){
+    const auto current_length = length();
+    const auto end = current_length > new_length ? new_length : current_length;
+    m_buffer[new_length] = 0;
+    return static_cast<Derived &>(*this);
+  }
+
   class Replace {
     API_AF(Replace, char, old_character, 0);
     API_AF(Replace, char, new_character, 0);
