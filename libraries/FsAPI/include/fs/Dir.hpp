@@ -5,8 +5,9 @@
 
 #ifdef __link
 #if defined __win32
-#include <windows.h>
 #include <winsock2.h>
+// keep this space so the formatter doesn't put windows.h before winsock2.h
+#include <windows.h>
 #if !defined FALSE
 #define FALSE 0
 #endif
