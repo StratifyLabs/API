@@ -98,7 +98,7 @@ int Dir::interface_readdir_r(struct dirent *result, struct dirent **resultp)
 #if defined __link
   struct dirent *result_dirent = readdir(m_dirp);
   if (result_dirent) {
-    memcpy(result, result_dirent, sizeof(struct dirent));
+    *result = *result_dirent;
     if (resultp != nullptr) {
       *resultp = result;
       return 0;
