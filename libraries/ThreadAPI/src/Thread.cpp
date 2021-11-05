@@ -21,9 +21,7 @@ Thread::Attributes::Attributes() {
   set_sched_policy(Sched::Policy::other);
 #if !__win32
   const auto minimum_priority = Sched::get_priority_min(Sched::Policy::other);
-  API_PRINTF_TRACE_LINE();
   set_sched_priority(minimum_priority);
-  API_PRINTF_TRACE_LINE();
 #endif
 }
 
