@@ -66,7 +66,7 @@ public:
       volatile bool ready = false;
     };
 
-    auto set_ready = [](ConditionContext & context) -> void * {
+    auto set_ready = [](ConditionContext &context) -> void * {
       Mutex::Guard mg(context.mutex);
       context.ready = true;
       context.cond.signal();
@@ -76,7 +76,7 @@ public:
     auto wait_for_ready = [](void *args) -> void * {
       ConditionContext *context = reinterpret_cast<ConditionContext *>(args);
       Mutex::Guard mg(context->mutex);
-      while( context->ready == false ){
+      while (context->ready == false) {
         context->cond.wait();
       }
       return nullptr;
@@ -86,10 +86,11 @@ public:
 
     {
       ConditionContext context;
-      Thread t = Thread(Thread::Attributes().set_joinable(),
-                        Thread::Construct().set_argument(&context).set_function(
-                            wait_for_ready))
-                     .move();
+      Thread t = Thread(
+                   Thread::Attributes().set_joinable(),
+                   Thread::Construct().set_argument(&context).set_function(
+                     wait_for_ready))
+                   .move();
       printer().key("wait", "ready");
       set_ready(context);
       printer().key("cond", "signal");
@@ -100,10 +101,11 @@ public:
 
     {
       ConditionContext context;
-      Thread t = Thread(Thread::Attributes().set_joinable(),
-                        Thread::Construct().set_argument(&context).set_function(
-                            wait_for_ready))
-                     .move();
+      Thread t = Thread(
+                   Thread::Attributes().set_joinable(),
+                   Thread::Construct().set_argument(&context).set_function(
+                     wait_for_ready))
+                   .move();
       printer().key("set", "ready");
       set_ready(context);
       printer().key("cond", "broadcast");
@@ -122,10 +124,11 @@ public:
 
     {
       ConditionContext context;
-      Thread t = Thread(Thread::Attributes().set_joinable(),
-                        Thread::Construct().set_argument(&context).set_function(
-                            wait_timed_for_condition))
-                     .move();
+      Thread t = Thread(
+                   Thread::Attributes().set_joinable(),
+                   Thread::Construct().set_argument(&context).set_function(
+                     wait_timed_for_condition))
+                   .move();
       printer().key("wait", "timed");
       t.join();
     }
@@ -139,16 +142,16 @@ public:
     printer::Printer::Object po(printer(), "signal_api_case()");
     {
       m_signal_number_io = 0;
-      SignalHandler handler =
-          SignalHandler(SignalHandler::Construct().set_signal_function(
-              [](int a) { m_signal_number_io = 1; }));
+      SignalHandler handler
+        = SignalHandler(SignalHandler::Construct().set_signal_function(
+          [](int a) { m_signal_number_io = 1; }));
 
 #if !defined __win32
-      SignalHandler action_handler =
-          SignalHandler(SignalHandler::Construct().set_signal_action(
-              [](int signo, siginfo_t *sig_info, void *context) {
-                m_signal_number_io = sig_info->si_value.sival_int;
-              }));
+      SignalHandler action_handler
+        = SignalHandler(SignalHandler::Construct().set_signal_action(
+          [](int signo, siginfo_t *sig_info, void *context) {
+            m_signal_number_io = sig_info->si_value.sival_int;
+          }));
 
       S s = S(S::Number::terminate).set_handler(handler);
       S sa = S(S::Number::user1, 100).set_handler(action_handler);
@@ -180,14 +183,14 @@ public:
 
       PRINTER_TRACE(printer(), "not exclusive");
       TEST_ASSERT(Sem(5, Sem::IsExclusive::no, "sem")
-                      .wait()
-                      .wait()
-                      .wait()
-                      .post()
-                      .post()
-                      .post()
-                      .unlink()
-                      .is_success());
+                    .wait()
+                    .wait()
+                    .wait()
+                    .post()
+                    .post()
+                    .post()
+                    .unlink()
+                    .is_success());
     }
 
     {
@@ -202,18 +205,19 @@ public:
 
       m_did_execute = false;
 
-      T t = T(T::Attributes().set_detach_state(T::DetachState::joinable),
-              T::Construct().set_argument(this).set_function(
-                  [](void *args) -> void * {
-                    UnitTest *self = reinterpret_cast<UnitTest *>(args);
-                    PRINTER_TRACE(self->printer(), "wait sem in thread");
-                    Sem sem = std::move(Sem("semT").wait());
-                    self->m_did_execute = true;
-                    PRINTER_TRACE(self->printer(), "done");
-                    sem.post();
-                    printer().key_bool("error", is_error());
-                    return nullptr;
-                  }));
+      T t = T(
+        T::Attributes().set_detach_state(T::DetachState::joinable),
+        T::Construct().set_argument(this).set_function(
+          [](void *args) -> void * {
+            UnitTest *self = reinterpret_cast<UnitTest *>(args);
+            PRINTER_TRACE(self->printer(), "wait sem in thread");
+            Sem sem = std::move(Sem("semT").wait());
+            self->m_did_execute = true;
+            PRINTER_TRACE(self->printer(), "done");
+            sem.post();
+            printer().key_bool("error", is_error());
+            return nullptr;
+          }));
 
       TEST_ASSERT(m_did_execute == false);
       wait(250_milliseconds);
@@ -246,15 +250,16 @@ public:
 
       TEST_ASSERT(m.lock().lock().lock().is_success());
 
-      T t = T(T::Attributes().set_detach_state(T::DetachState::joinable),
-              T::Construct().set_argument(this).set_function(
-                  [](void *args) -> void * {
-                    UnitTest *self = reinterpret_cast<UnitTest *>(args);
-                    self->m_mutex_pointer->lock().lock();
-                    self->m_did_execute = true;
-                    self->m_mutex_pointer->unlock().unlock();
-                    return nullptr;
-                  }));
+      T t = T(
+        T::Attributes().set_detach_state(T::DetachState::joinable),
+        T::Construct().set_argument(this).set_function(
+          [](void *args) -> void * {
+            UnitTest *self = reinterpret_cast<UnitTest *>(args);
+            self->m_mutex_pointer->lock().lock();
+            self->m_did_execute = true;
+            self->m_mutex_pointer->unlock().unlock();
+            return nullptr;
+          }));
 
       TEST_ASSERT(m.unlock().unlock().unlock().is_success());
       // TEST_ASSERT(t.wait().is_success());
@@ -267,48 +272,52 @@ public:
     {
 
       printer::Printer::Object po(printer(), "Mutex::Attributes");
-      printer().key_bool("protocolNoneOk",
-                         M::Attributes()
-                                 .set_protocol(M::Protocol::priority_none)
-                                 .get_protocol() == M::Protocol::priority_none);
-
-      printer().key_bool("protocolInheritOk",
-                         M::Attributes()
-                                 .set_protocol(M::Protocol::priority_inherit)
-                                 .get_protocol() ==
-                             M::Protocol::priority_inherit);
-
-      printer().key_bool("protocolProtectOk",
-                         M::Attributes()
-                                 .set_protocol(M::Protocol::priority_protect)
-                                 .get_protocol() ==
-                             M::Protocol::priority_protect);
-
-      printer().key_bool("processSharedPrivateOk",
-                         M::Attributes()
-                                 .set_process_shared(M::ProcessShared::private_)
-                                 .get_process_shared() ==
-                             M::ProcessShared::private_);
-
-      printer().key_bool("processSharedOk",
-                         M::Attributes()
-                                 .set_process_shared(M::ProcessShared::shared)
-                                 .get_process_shared() ==
-                             M::ProcessShared::shared);
+      printer().key_bool(
+        "protocolNoneOk",
+        M::Attributes().set_protocol(M::Protocol::priority_none).get_protocol()
+          == M::Protocol::priority_none);
 
       printer().key_bool(
-          "recursiveOk",
-          M::Attributes().set_type(M::Type::recursive).get_type() ==
-              M::Type::recursive);
-
-      printer().key_bool("normalOK",
-                         M::Attributes().set_type(M::Type::normal).get_type() ==
-                             M::Type::normal);
+        "protocolInheritOk",
+        M::Attributes()
+            .set_protocol(M::Protocol::priority_inherit)
+            .get_protocol()
+          == M::Protocol::priority_inherit);
 
       printer().key_bool(
-          "priority10Ok",
-          M::Attributes().set_priority_ceiling(10).get_priority_ceiling() ==
-              10);
+        "protocolProtectOk",
+        M::Attributes()
+            .set_protocol(M::Protocol::priority_protect)
+            .get_protocol()
+          == M::Protocol::priority_protect);
+
+      printer().key_bool(
+        "processSharedPrivateOk",
+        M::Attributes()
+            .set_process_shared(M::ProcessShared::private_)
+            .get_process_shared()
+          == M::ProcessShared::private_);
+
+      printer().key_bool(
+        "processSharedOk",
+        M::Attributes()
+            .set_process_shared(M::ProcessShared::shared)
+            .get_process_shared()
+          == M::ProcessShared::shared);
+
+      printer().key_bool(
+        "recursiveOk",
+        M::Attributes().set_type(M::Type::recursive).get_type()
+          == M::Type::recursive);
+
+      printer().key_bool(
+        "normalOK",
+        M::Attributes().set_type(M::Type::normal).get_type()
+          == M::Type::normal);
+
+      printer().key_bool(
+        "priority10Ok",
+        M::Attributes().set_priority_ceiling(10).get_priority_ceiling() == 10);
     }
 
     return true;
@@ -320,25 +329,27 @@ public:
 #if !defined __win32
     {
 
-      TEST_ASSERT(T::Attributes().set_stack_size(4096).get_stack_size() >=
-                  4096);
+      TEST_ASSERT(
+        T::Attributes().set_stack_size(4096).get_stack_size() >= 4096);
 
-      bool (*test_policy)(UnitTest * self, const Sched::Policy policy) =
-          [](UnitTest *self, const Sched::Policy policy) -> bool {
+      bool (*test_policy)(UnitTest * self, const Sched::Policy policy)
+        = [](UnitTest *self, const Sched::Policy policy) -> bool {
         const int min_priority = Sched::get_priority_min(policy);
         const int max_priority = Sched::get_priority_max(policy);
         TEST_SELF_ASSERT(min_priority <= max_priority);
         TEST_SELF_ASSERT(is_success());
 
         TEST_SELF_ASSERT(
-            T::Attributes().set_sched_policy(policy).get_sched_policy() ==
-            policy);
+          T::Attributes().set_sched_policy(policy).get_sched_policy()
+          == policy);
 
         for (int i = min_priority; i <= max_priority; i++) {
-          TEST_SELF_ASSERT(T::Attributes()
-                               .set_sched_policy(policy)
-                               .set_sched_priority(i)
-                               .get_sched_priority() == i);
+          TEST_SELF_ASSERT(
+            T::Attributes()
+              .set_sched_policy(policy)
+              .set_sched_priority(i)
+              .get_sched_priority()
+            == i);
         }
         return true;
       };
@@ -350,8 +361,8 @@ public:
 
     {
       printer::Printer::Object po(printer(), "Thread::Attributes");
-      T::Attributes attributes =
-          T::Attributes().set_scope(T::ContentionScope::process);
+      T::Attributes attributes
+        = T::Attributes().set_scope(T::ContentionScope::process);
 #if defined __StratifyOS__
       TEST_ASSERT(is_error());
       TEST_ASSERT(api::ExecutionContext::error().error_number() == EINVAL);
@@ -360,36 +371,42 @@ public:
       TEST_ASSERT(is_success());
 #endif
 
-      printer().key_bool("scopeProcessOk",
-                         attributes.get_scope() == T::ContentionScope::process);
+      printer().key_bool(
+        "scopeProcessOk",
+        attributes.get_scope() == T::ContentionScope::process);
       TEST_ASSERT(is_success());
 
       attributes.set_scope(T::ContentionScope::system);
       TEST_ASSERT(is_success());
 
-      printer().key_bool("scopeSystemOk",
-                         attributes.get_scope() == T::ContentionScope::system);
+      printer().key_bool(
+        "scopeSystemOk",
+        attributes.get_scope() == T::ContentionScope::system);
       TEST_ASSERT(is_success());
 
       attributes = T::Attributes().set_inherit_sched(T::IsInherit::yes);
 
       TEST_ASSERT(is_success());
-      printer().key_bool("inheritOk",
-                         attributes.get_inherit_sched() == T::IsInherit::yes);
+      printer().key_bool(
+        "inheritOk",
+        attributes.get_inherit_sched() == T::IsInherit::yes);
 
 #if !defined __StratifyOS__
-      TEST_ASSERT(attributes.get_inherit_sched() == T::IsInherit::yes ||
-                  attributes.get_inherit_sched() == T::IsInherit::no);
+      TEST_ASSERT(
+        attributes.get_inherit_sched() == T::IsInherit::yes
+        || attributes.get_inherit_sched() == T::IsInherit::no);
 
       TEST_ASSERT(is_success());
 
       attributes.set_inherit_sched(T::IsInherit::no);
 
-      printer().key_bool("explicitOk",
-                         attributes.get_inherit_sched() == T::IsInherit::no);
+      printer().key_bool(
+        "explicitOk",
+        attributes.get_inherit_sched() == T::IsInherit::no);
 
-      TEST_ASSERT(attributes.get_inherit_sched() == T::IsInherit::yes ||
-                  attributes.get_inherit_sched() == T::IsInherit::no);
+      TEST_ASSERT(
+        attributes.get_inherit_sched() == T::IsInherit::yes
+        || attributes.get_inherit_sched() == T::IsInherit::no);
 
       TEST_ASSERT(is_success());
 #else
@@ -400,24 +417,28 @@ public:
 
     {
       m_did_execute = false;
-      T t(T::Attributes().set_detach_state(T::DetachState::joinable),
-          T::Construct().set_argument(this).set_function(
-              [](void *args) -> void * {
-                UnitTest *self = reinterpret_cast<UnitTest *>(args);
-                self->m_did_execute = true;
-                return nullptr;
-              }));
+      T t(
+        T::Attributes().set_detach_state(T::DetachState::joinable),
+        T::Construct().set_argument(this).set_function(
+          [](void *args) -> void * {
+            UnitTest *self = reinterpret_cast<UnitTest *>(args);
+            self->m_did_execute = true;
+            return nullptr;
+          }));
 
       TEST_ASSERT(is_success());
 
 #if !defined __link
       const int priority = Sched::get_priority_min(Sched::Policy::fifo);
 
-      TEST_ASSERT(t.set_sched_parameters(Sched::Policy::fifo, priority)
-                      .get_sched_priority() == priority);
+      TEST_ASSERT(
+        t.set_sched_parameters(Sched::Policy::fifo, priority)
+          .get_sched_priority()
+        == priority);
 
-      printer().key("policy",
-                    NumberString(static_cast<int>(t.get_sched_policy())));
+      printer().key(
+        "policy",
+        NumberString(static_cast<int>(t.get_sched_policy())));
       TEST_ASSERT(t.get_sched_policy() == Sched::Policy::fifo);
 
 #endif
@@ -429,12 +450,12 @@ public:
       m_did_execute = false;
       T(T::Attributes().set_detach_state(T::DetachState::joinable),
         T::Construct().set_argument(this).set_function(
-            [](void *args) -> void * {
-              UnitTest *self = reinterpret_cast<UnitTest *>(args);
-              self->m_did_execute = true;
-              return nullptr;
-            }))
-          .join();
+          [](void *args) -> void * {
+            UnitTest *self = reinterpret_cast<UnitTest *>(args);
+            self->m_did_execute = true;
+            return nullptr;
+          }))
+        .join();
 
       wait(2_seconds);
       TEST_ASSERT(is_success());
@@ -443,11 +464,11 @@ public:
       m_did_execute = false;
       T(T::Attributes().set_detach_state(T::DetachState::detached),
         T::Construct().set_argument(this).set_function(
-            [](void *args) -> void * {
-              UnitTest *self = reinterpret_cast<UnitTest *>(args);
-              self->m_did_execute = true;
-              return nullptr;
-            }));
+          [](void *args) -> void * {
+            UnitTest *self = reinterpret_cast<UnitTest *>(args);
+            self->m_did_execute = true;
+            return nullptr;
+          }));
 
       wait(50_milliseconds);
       TEST_ASSERT(is_success());
@@ -457,38 +478,37 @@ public:
     {
 
       m_did_execute = true;
-      T t = T(T::Attributes().set_detach_state(T::DetachState::joinable),
-              T::Construct().set_argument(this).set_function(
-                  [](void *args) -> void * {
-                    UnitTest *self = reinterpret_cast<UnitTest *>(args);
+      T t = T(
+        T::Attributes().set_detach_state(T::DetachState::joinable),
+        T::Construct().set_argument(this).set_function(
+          [](void *args) -> void * {
+            UnitTest *self = reinterpret_cast<UnitTest *>(args);
 
-                    while (IS_CANCEL_OK) {
-                      wait(10_milliseconds);
-                    }
-                    self->m_did_execute = false;
-                    return nullptr;
-                  }));
+            while (IS_CANCEL_OK) {
+              wait(10_milliseconds);
+            }
+            self->m_did_execute = false;
+            return nullptr;
+          }));
 
-      TEST_ASSERT(t.set_cancel_state(T::CancelState::enable)
-                      .set_cancel_type(T::CancelType::deferred)
-                      .cancel()
-                      .join()
-                      .is_success());
+      const auto old_state = t.set_cancel_state(T::CancelState::enable);
+      const auto old_type = t.set_cancel_type(T::CancelType::deferred);
 
+      TEST_ASSERT(t.cancel().join().is_success());
       TEST_ASSERT(m_did_execute == IS_CANCEL_OK);
     }
 
     {
       m_did_execute = false;
       T(T::Attributes()
-            .set_detach_state(T::DetachState::joinable)
-            .set_stack_size(8192),
+          .set_detach_state(T::DetachState::joinable)
+          .set_stack_size(8192),
         T::Construct().set_argument(this).set_function(
-            [](void *args) -> void * {
-              reinterpret_cast<UnitTest *>(args)->m_did_execute = true;
-              return nullptr;
-            }))
-          .join();
+          [](void *args) -> void * {
+            reinterpret_cast<UnitTest *>(args)->m_did_execute = true;
+            return nullptr;
+          }))
+        .join();
 
       TEST_ASSERT(m_did_execute);
     }
@@ -498,17 +518,18 @@ public:
       TEST_ASSERT(Thread::self() == Thread::self());
 
       m_did_execute = false;
-      T t = T(T::Attributes().set_detach_state(T::DetachState::joinable),
-              T::Construct().set_argument(this).set_function(
-                  [](void *args) -> void * {
-                    UnitTest *self = reinterpret_cast<UnitTest *>(args);
-                    Mutex::Guard mg(self->m_mutex);
-                    Mutex::Guard t_mg(self->m_thread_mutex);
-                    self->printer().info("wait 250ms");
-                    wait(250_milliseconds);
-                    self->m_did_execute = true;
-                    return nullptr;
-                  }));
+      T t = T(
+        T::Attributes().set_detach_state(T::DetachState::joinable),
+        T::Construct().set_argument(this).set_function(
+          [](void *args) -> void * {
+            UnitTest *self = reinterpret_cast<UnitTest *>(args);
+            Mutex::Guard mg(self->m_mutex);
+            Mutex::Guard t_mg(self->m_thread_mutex);
+            self->printer().info("wait 250ms");
+            wait(250_milliseconds);
+            self->m_did_execute = true;
+            return nullptr;
+          }));
 
       // unlock to allow thread to continue
       TEST_ASSERT(m_mutex.unlock().is_success());

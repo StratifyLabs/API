@@ -1,19 +1,15 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
 #if defined __StratifyOS__
-#include <fcntl.h>
 #include <sos/dev/rtc.h>
 #include <sys/time.h>
 #include <unistd.h>
 #endif
 
-#include <ctime>
-
 #include "var/StackString.hpp"
 
 #include "printer/Printer.hpp"
 
-#include "chrono/ClockTimer.hpp"
 #include "chrono/DateTime.hpp"
 
 #if defined __win32
@@ -72,7 +68,7 @@ DateTime &DateTime::operator-=(const DateTime &a) {
 }
 
 DateTime DateTime::get_system_time() {
-  time_t t = ::time(0);
+  time_t t = ::time(nullptr);
   if (t < 962668800) {
     t = 962668800;
   }
@@ -111,12 +107,12 @@ Date::Date(const DateTime &date_time, const Construct &options) {
 
 var::GeneralString Date::to_string(var::StringView format) const {
   API_RETURN_VALUE_IF_ERROR(var::GeneralString());
-  char buffer[64] = {0};
+  char buffer[64] = {};
   size_t result =
       strftime(buffer, 63, var::StackString64(format).cstring(), &m_tm);
   if (result == 0) {
     API_SYSTEM_CALL("format time", -1);
-    return var::GeneralString();
+    return {};
   }
-  return var::GeneralString(buffer);
+  return {buffer};
 }

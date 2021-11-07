@@ -7,8 +7,8 @@ namespace sys {}
 
 #include "sys/Cli.hpp"
 #include "sys/System.hpp"
-#include "sys/Version.hpp"
 #include "sys/TemporaryDirectory.hpp"
+#include "sys/Version.hpp"
 
 #if defined __link
 #include "sys/Process.hpp"

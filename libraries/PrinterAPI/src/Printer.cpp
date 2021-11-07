@@ -245,7 +245,7 @@ Printer &Printer::close_array() {
 }
 
 void Printer::print_open_object(Level verbose_level, var::StringView key) {
-  print(verbose_level, key, "");
+  print(verbose_level, key, "", IsNewline::yes);
   m_indent++;
 }
 
@@ -256,7 +256,7 @@ void Printer::print_close_object() {
 }
 
 void Printer::print_open_array(Level verbose_level, var::StringView key) {
-  print(verbose_level, key, "");
+  print(verbose_level, key, "", IsNewline::yes);
   m_indent++;
 }
 
@@ -565,17 +565,17 @@ bool Printer::update_progress(int progress, int total) {
 }
 
 Printer &Printer::key(const var::StringView key, const var::String &a) {
-  print(Level::info, key, a.cstring());
+  print(Level::info, key, a.cstring(), IsNewline::yes);
   return *this;
 }
 
 Printer &Printer::key_bool(const var::StringView key, bool a) {
-  print(Level::info, key, a ? "true" : "false");
+  print(Level::info, key, a ? "true" : "false", IsNewline::yes);
   return *this;
 }
 
 Printer &Printer::key(const var::StringView key, var::StringView a) {
-  print(Level::info, key, a);
+  print(Level::info, key, a, IsNewline::yes);
   return *this;
 }
 
@@ -585,17 +585,17 @@ Printer &Printer::newline() {
 }
 
 Printer &Printer::debug(const var::StringView a) {
-  print(Level::debug, "debug", a);
+  print(Level::debug, "debug", a, IsNewline::yes);
   return *this;
 }
 
 Printer &Printer::info(const var::StringView a) {
-  print(Level::info, "info", a);
+  print(Level::info, "info", a, IsNewline::yes);
   return *this;
 }
 
 Printer &Printer::message(const var::StringView a) {
-  print(Level::message, "message", a);
+  print(Level::message, "message", a, IsNewline::yes);
   return *this;
 }
 
@@ -603,7 +603,7 @@ Printer &Printer::warning(const var::StringView a) {
   if (flags() & Flags::yellow_warnings) {
     set_color_code(ColorCode::yellow);
   }
-  print(Level::warning, "warning", a);
+  print(Level::warning, "warning", a, IsNewline::yes);
   if (flags() & Flags::yellow_warnings) {
     clear_color_code();
   }
@@ -614,7 +614,7 @@ Printer &Printer::error(const var::StringView a) {
   if (flags() & Flags::red_errors) {
     set_color_code(ColorCode::red);
   }
-  print(Level::error, "error", a);
+  print(Level::error, "error", a, IsNewline::yes);
   if (flags() & Flags::red_errors) {
     clear_color_code();
   }
@@ -625,7 +625,7 @@ Printer &Printer::fatal(const var::StringView a) {
   if (flags() & Flags::red_errors) {
     set_color_code(ColorCode::red);
   }
-  print(Level::fatal, "fatal", a);
+  print(Level::fatal, "fatal", a, IsNewline::yes);
   if (flags() & Flags::red_errors) {
     clear_color_code();
   }
@@ -760,7 +760,7 @@ Printer &Printer::operator<<(const var::View a) {
       }
     }
 
-    print(verbose_level(), var::NumberString(i, "[%04d]"), data_string);
+    print(verbose_level(), var::NumberString(i, "[%04d]"), data_string, IsNewline::yes);
   }
 
   return *this;

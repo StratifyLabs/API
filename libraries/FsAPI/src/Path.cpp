@@ -10,7 +10,7 @@ var::StringView Path::suffix(const StringView path) {
   const auto pos = path.reverse_find(".");
 
   if (pos == var::String::npos) {
-    return var::StringView();
+    return {};
   }
 
   return StringView(path).pop_front(pos + 1);
@@ -30,7 +30,7 @@ var::StringView Path::parent_directory(const StringView path, size_t depth) {
   size_t pos = path.reverse_find('/');
 
   if (pos == var::String::npos) {
-    return var::StringView();
+    return {};
   }
 
   const StringView result = StringView(path.data(), pos);
@@ -52,7 +52,7 @@ var::StringView Path::no_suffix(const StringView path) {
     return path;
   }
 
-  return StringView(path.data(), pos);
+  return {path.data(), pos};
 }
 
 bool Path::is_hidden(const StringView path) {

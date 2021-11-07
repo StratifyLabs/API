@@ -8,7 +8,7 @@
 
 printer::Printer &
 printer::operator<<(printer::Printer &printer, const sys::Cli &a) {
-  for(size_t i =0; i < a.count(); i++){
+  for (size_t i = 0; i < a.count(); i++) {
     printer.key(var::NumberString(i, "[%d]"), a.at(i));
   }
   return printer;
@@ -27,13 +27,13 @@ Cli::Cli(int argc, char *argv[]) {
 
 const Cli &Cli::handle_version(const HandleVersion &options) const {
 #if !defined __link
-  if (get_option("--version").is_empty() == false) {
+  if (!get_option("--version").is_empty()) {
     var::GeneralString output = var::GeneralString()
-                                   .append(get_name())
-                                   .append("version: ")
-                                   .append(options.version())
-                                   .append(" by ")
-                                   .append(options.publisher());
+                                  .append(get_name())
+                                  .append("version: ")
+                                  .append(options.version())
+                                  .append(" by ")
+                                  .append(options.publisher());
 
     printf("%s\n", output.cstring());
     exit(0);
@@ -60,7 +60,7 @@ StringView Cli::at(u16 value) const {
 var::StringView Cli::get_option(StringView name, StringView help) const {
   u32 args;
 
-  if (help.is_empty() == false) {
+  if (!help.is_empty()) {
     m_help_list.push_back(name & ": " & help);
   }
 
@@ -80,13 +80,13 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
           if (tokens.count() > 1) {
             return tokens.at(1);
           } else {
-            return var::StringView("true");
+            return {"true"};
           }
         }
       }
     }
   }
-  return StringView();
+  return {};
 }
 
 var::StringView Cli::get_name() const {
@@ -99,22 +99,22 @@ var::StringView Cli::get_name() const {
 
     return result;
   }
-  return var::StringView();
+  return {};
 }
 
 var::StringView Cli::get_path() const {
   if (m_argc > 0) {
     return m_argv[0];
   }
-  return var::StringView();
+  return {};
 }
 
 const Cli &Cli::show_help(const ShowHelp &options) const {
-  if( options.publisher().is_empty() == false ){
+  if (!options.publisher().is_empty()) {
     printf("publisher: %s\n", var::PathString(options.publisher()).cstring());
   }
 
-  if( options.version().is_empty() == false ){
+  if (!options.version().is_empty()) {
     printf("version: %s\n", var::PathString(options.version()).cstring());
   }
 

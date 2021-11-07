@@ -7,8 +7,8 @@
 
 #include <algorithm>
 #include <deque>
-#include <numeric>
 #include <new>
+#include <numeric>
 
 #include "api/api.hpp"
 
@@ -16,8 +16,7 @@ namespace var {
 
 template <typename T> class Queue : public api::ExecutionContext {
 public:
-  Queue() {}
-  ~Queue() {}
+  Queue() = default;
 
   using iterator = typename std::deque<T>::iterator;
   using const_iterator = typename std::deque<T>::const_iterator;
@@ -94,8 +93,8 @@ public:
     return at(offset);
   }
 
-  bool is_empty() const { return m_deque.empty(); }
-  u32 count() const { return m_deque.size(); }
+  API_NO_DISCARD bool is_empty() const { return m_deque.empty(); }
+  API_NO_DISCARD u32 count() const { return m_deque.size(); }
 
   Queue &clear() {
     m_deque.clear();

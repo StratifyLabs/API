@@ -1,18 +1,13 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#include <cstdio>
 #include <cstring>
-#include <fcntl.h>
 
-#include "chrono/ClockTimer.hpp"
 #include "fs/DataFile.hpp"
 #include "var/StackString.hpp"
 
-#include "local.h"
-
 using namespace fs;
 
-DataFile::DataFile(const FileObject& file_to_load) {
+DataFile::DataFile(const FileObject &file_to_load) {
   m_location = 0;
   m_open_flags = OpenMode::append_read_write();
   API_RETURN_IF_ERROR();

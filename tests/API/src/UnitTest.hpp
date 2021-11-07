@@ -14,9 +14,7 @@ public:
   UnitTest(var::StringView name) : test::Test(name) {}
 
   bool execute_class_api_case() {
-
     TEST_ASSERT_RESULT(markdown_printer_test());
-
     return true;
   }
 
@@ -67,9 +65,9 @@ public:
     void *thread_error_signature;
     // create a thread and make sure it's error context is independent
     Thread t(
-        Thread::Attributes().set_detach_state(Thread::DetachState::joinable),
-        Thread::Construct().set_argument(this).set_function([](void *args)
-                                                                -> void * {
+      Thread::Attributes().set_detach_state(Thread::DetachState::joinable),
+      Thread::Construct().set_argument(this).set_function(
+        [](void *args) -> void * {
           Test *self = reinterpret_cast<Test *>(args);
           self->printer().key(
             "threadSignature",

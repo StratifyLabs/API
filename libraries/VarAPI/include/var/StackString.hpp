@@ -1,7 +1,7 @@
 #ifndef VARAPI_VAR_STACKSTRING_HPP
 #define VARAPI_VAR_STACKSTRING_HPP
 
-#include <limits.h>
+#include <climits>
 
 #include "String.hpp"
 #include "StringView.hpp"
@@ -17,7 +17,7 @@ public:
     return static_cast<Derived &>(*this);
   }
 
-  bool is_empty() const { return m_buffer[0] == 0; }
+  API_NO_DISCARD bool is_empty() const { return m_buffer[0] == 0; }
 
   Derived &append(const char a) {
     const size_t len = strnlen(m_buffer, Size - 1);
@@ -36,8 +36,8 @@ public:
     return static_cast<Derived &>(*this);
   }
 
-  size_t length() const { return strnlen(m_buffer, Size - 1); }
-  char back() const {
+  API_NO_DISCARD size_t length() const { return strnlen(m_buffer, Size - 1); }
+  API_NO_DISCARD char back() const {
     const size_t len = length();
     if (len) {
       return m_buffer[length() - 1];
@@ -116,7 +116,7 @@ public:
     const auto safe_count = count < capacity() ? count : capacity();
     for (size_t i = safe_count; i < capacity(); i++) {
       m_buffer[i - safe_count] = m_buffer[i];
-      if( m_buffer[i] == 0 ){
+      if (m_buffer[i] == 0) {
         break;
       }
     }
@@ -126,6 +126,13 @@ public:
   Derived &pop_back(size_t count = 1) {
     const auto end = length() > count ? length() - count : 0;
     m_buffer[end] = 0;
+    return static_cast<Derived &>(*this);
+  }
+
+  Derived &truncate(size_t new_length){
+    const auto current_length = length();
+    const auto end = current_length > new_length ? new_length : current_length;
+    m_buffer[new_length] = 0;
     return static_cast<Derived &>(*this);
   }
 
@@ -197,12 +204,11 @@ public:
 };
 
 #if defined __win32
-//on windows PATH_MAX is too small (261 chars)
+// on windows PATH_MAX is too small (261 chars)
 #define PATH_STRING_LENGTH 4096
 #else
-#define PATH_STRING_LENGTH PATH_MAX + 1
+#define PATH_STRING_LENGTH (PATH_MAX + 1)
 #endif
-
 
 class PathString : public StackString<PathString, PATH_STRING_LENGTH> {
 public:
@@ -234,7 +240,7 @@ PathString operator/(const StringView lhs, const StringView rhs);
 #endif
 
 class GeneralString
-    : public StackString<GeneralString, VAR_API_GENERAL_STRING_SIZE> {
+  : public StackString<GeneralString, VAR_API_GENERAL_STRING_SIZE> {
 public:
   GeneralString() = default;
   GeneralString(const StringView a) : StackString(a) {}
@@ -248,25 +254,25 @@ public:
   }
 };
 
-GeneralString operator|(const StringView lhs, const StringView rhs);
+GeneralString operator|(StringView lhs, StringView rhs);
 
 class NumberString : public StackString<NumberString, 64> {
 public:
   template <typename T> NumberString(T value) {
     // guarantee null termination
     m_buffer[capacity()] = 0;
-    constexpr const char *fmt =
-        (std::is_same<T, int>::value || std::is_same<T, signed int>::value ||
-         std::is_same<T, short>::value ||
-         std::is_same<T, signed short>::value || std::is_same<T, char>::value ||
-         std::is_same<T, signed char>::value)
-            ? "%d"
+    constexpr const char *fmt
+      = (std::is_same<T, int>::value || std::is_same<T, signed int>::value
+         || std::is_same<T, short>::value
+         || std::is_same<T, signed short>::value || std::is_same<T, char>::value
+         || std::is_same<T, signed char>::value)
+          ? "%d"
         : std::is_same<T, long>::value      ? "%ld"
         : std::is_same<T, long long>::value ? "%lld"
-        : (std::is_same<T, unsigned>::value ||
-           std::is_same<T, unsigned short>::value ||
-           std::is_same<T, unsigned char>::value)
-            ? "%u"
+        : (std::is_same<T, unsigned>::value
+           || std::is_same<T, unsigned short>::value
+           || std::is_same<T, unsigned char>::value)
+          ? "%u"
         : std::is_same<T, unsigned long>::value      ? "%lu"
         : std::is_same<T, unsigned long long>::value ? "%lld"
         : std::is_same<T, float>::value              ? "%f"
@@ -285,10 +291,11 @@ public:
   NumberString(const StringView a) : StackString(a) {}
   NumberString(const char *a) : StackString(a) {}
 
-  int to_integer() const;
-  float to_float() const;
-  long to_long(Base base = Base::decimal) const;
-  unsigned long to_unsigned_long(Base base = Base::decimal) const;
+  API_NO_DISCARD int to_integer() const;
+  API_NO_DISCARD float to_float() const;
+  API_NO_DISCARD long to_long(Base base = Base::decimal) const;
+  API_NO_DISCARD unsigned long
+  to_unsigned_long(Base base = Base::decimal) const;
 
   // implicit conversion
   operator const char *() const { return m_buffer; }

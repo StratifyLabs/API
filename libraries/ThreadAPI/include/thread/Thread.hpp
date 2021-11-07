@@ -4,7 +4,7 @@
 #define THREADAPI_THREAD_THREAD_HPP
 
 #include <pthread.h>
-#include <signal.h>
+#include <csignal>
 
 #include "Sched.hpp"
 #include "chrono/ClockTime.hpp"
@@ -37,7 +37,7 @@ public:
     ~Attributes();
 
     Attributes &set_stack_size(size_t value);
-    int get_stack_size() const;
+    API_NO_DISCARD int get_stack_size() const;
 
 
     Attributes &set_detach_state(DetachState value);
@@ -49,22 +49,22 @@ public:
       return set_detach_state(DetachState::detached);
     }
 
-    DetachState get_detach_state() const;
+    API_NO_DISCARD DetachState get_detach_state() const;
 
     Attributes &set_inherit_sched(IsInherit value);
-    IsInherit get_inherit_sched() const;
+    API_NO_DISCARD IsInherit get_inherit_sched() const;
 
     Attributes &set_scope(ContentionScope value);
-    ContentionScope get_scope() const;
+    API_NO_DISCARD ContentionScope get_scope() const;
 
     Attributes &set_sched_policy(Sched::Policy value);
     Attributes &set_sched_priority(int priority);
-    Sched::Policy get_sched_policy() const;
-    int get_sched_priority() const;
+    API_NO_DISCARD Sched::Policy get_sched_policy() const;
+    API_NO_DISCARD int get_sched_priority() const;
 
   private:
     friend class Thread;
-    pthread_attr_t m_pthread_attr;
+    pthread_attr_t m_pthread_attr{};
   };
 
   class Construct {
@@ -79,14 +79,14 @@ public:
   Thread &operator=(const Thread &thread) = delete;
 
   // allow moving threads
-  Thread &operator=(Thread &&a) {
+  Thread &operator=(Thread &&a)  noexcept {
     swap(std::move(a));
     return *this;
   }
-  Thread(Thread &&a) { swap(std::move(a)); }
+  Thread(Thread &&a)  noexcept { swap(std::move(a)); }
   Thread &&move() { return std::move(*this); }
 
-  Thread(const Construct &options);
+  explicit Thread(const Construct &options);
   Thread(const Attributes &attributes, const Construct &options);
   Thread(const Attributes &attributes, void * argument, function_t thread_function){
     construct(attributes, Construct().set_argument(argument).set_function(thread_function));
@@ -97,7 +97,7 @@ public:
   ~Thread();
 
   /*! \details Gets the ID of the thread. */
-  pthread_t id() const { return m_id; }
+  API_NO_DISCARD pthread_t id() const { return m_id; }
 
   /*! \details Returns true if the thread has a valid id.
    *
@@ -106,7 +106,7 @@ public:
    * also return false;
    *
    */
-  bool is_valid() const;
+  API_NO_DISCARD bool is_valid() const;
 
   enum class CancelType {
     deferred = PTHREAD_CANCEL_DEFERRED,
@@ -120,8 +120,8 @@ public:
   };
 
   Thread &set_sched_parameters(Sched::Policy policy, int priority);
-  Sched::Policy get_sched_policy() const;
-  int get_sched_priority() const;
+  API_NO_DISCARD Sched::Policy get_sched_policy() const;
+  API_NO_DISCARD int get_sched_priority() const;
 
   static CancelState set_cancel_state(CancelState cancel_state);
 

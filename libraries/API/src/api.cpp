@@ -4,9 +4,8 @@
 
 #if defined __link
 #include <cxxabi.h>
-#endif
-
 #include <pthread.h>
+#endif
 
 #include <cstdio>
 #include <cstring>
@@ -100,7 +99,7 @@ void ExecutionContext::exit_fatal(const char *message) {
   exit(1);
 }
 
-ProgressCallback::ProgressCallback() {}
+ProgressCallback::ProgressCallback() = default;
 
 bool ProgressCallback::update(int value, int total) const {
   if (m_callback) {

@@ -1,14 +1,7 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#include <cstdio>
-#include <cstring>
-#include <fcntl.h>
-
-#include "chrono/ClockTimer.hpp"
 #include "fs/ViewFile.hpp"
 #include "var/StackString.hpp"
-
-#include "local.h"
 
 using namespace fs;
 
@@ -55,7 +48,7 @@ int ViewFile::interface_write(const void *buf, int nbyte) const {
   }
 
   if (size_ready < 0) {
-    //EOF should return 0 bytes written
+    // EOF should return 0 bytes written
     errno = ENOSPC;
     return -1;
   }

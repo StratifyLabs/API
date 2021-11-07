@@ -18,22 +18,18 @@ namespace var {
 
 template <typename T, size_t item_count> class Ring {
 public:
-
   using Buffer = Array<T, item_count>;
 
-  Ring(){
-    m_head = 0;
-    m_tail = 0;
-    m_is_overflow_allowed = true;
-  }
+  Ring() = default;
 
   ~Ring() {
     while (is_empty() == false) {
+      // this will ensure the destructor gets called
       pop();
     }
   }
 
-  u32 count_ready() const {
+  API_NO_DISCARD u32 count_ready() const {
     // how many item are available
     if (m_tail == m_count) {
       return m_count; // ring is full
@@ -46,8 +42,8 @@ public:
     return m_count - (m_tail - m_head);
   }
 
-  bool is_full() const { return m_tail == m_count; }
-  bool is_empty() const { return m_tail == m_head; }
+  API_NO_DISCARD bool is_full() const { return m_tail == m_count; }
+  API_NO_DISCARD bool is_empty() const { return m_tail == m_head; }
 
   Ring &set_overflow_allowed(bool value = true) {
     m_is_overflow_allowed = value;
@@ -167,10 +163,10 @@ public:
   }
 
 private:
-  u32 m_head;
-  u32 m_tail;
-  u32 m_count;
-  bool m_is_overflow_allowed;
+  u32 m_head{};
+  u32 m_tail{};
+  u32 m_count{};
+  bool m_is_overflow_allowed = true;
 
   u32 frame_size() { return sizeof(T); }
 

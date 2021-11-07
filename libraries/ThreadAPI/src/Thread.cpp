@@ -2,32 +2,32 @@
 
 #include "thread/Thread.hpp"
 #include "chrono.hpp"
-#include "thread/Mutex.hpp"
-#include "thread/Cond.hpp"
 
 #include <cstdio>
-#include <errno.h>
 using namespace thread;
 
-Thread::Attributes::Attributes() {
-#if defined __win32
-  return;
+#if defined __link
+#define THREAD_ATTRIBUTES_DEFAULT_STACK_SIZE (512*1024)
+#else
+#define THREAD_ATTRIBUTES_DEFAULT_STACK_SIZE (4096)
 #endif
+
+Thread::Attributes::Attributes() {
   API_RETURN_IF_ERROR();
   API_SYSTEM_CALL("", pthread_attr_init(&m_pthread_attr));
   set_inherit_sched(IsInherit::yes);
-  set_stack_size(4096);
+  set_stack_size(THREAD_ATTRIBUTES_DEFAULT_STACK_SIZE);
   set_detach_state(DetachState::detached);
   set_sched_policy(Sched::Policy::other);
-  set_sched_priority(Sched::get_priority_min(Sched::Policy::other));
+#if !__win32
+  const auto minimum_priority = Sched::get_priority_min(Sched::Policy::other);
+  set_sched_priority(minimum_priority);
+#endif
 }
 
 Thread::Attributes::~Attributes() { pthread_attr_destroy(&m_pthread_attr); }
 
 Thread::Attributes &Thread::Attributes::set_stack_size(size_t value) {
-#if defined __win32
-  return *this;
-#endif
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL("", pthread_attr_setstacksize(&m_pthread_attr, value));
   return *this;
@@ -41,9 +41,6 @@ int Thread::Attributes::get_stack_size() const {
 }
 
 Thread::Attributes &Thread::Attributes::set_detach_state(DetachState value) {
-#if defined __win32
-  return *this;
-#endif
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL("", pthread_attr_setdetachstate(&m_pthread_attr,
                                                   static_cast<int>(value)));
@@ -59,9 +56,6 @@ Thread::DetachState Thread::Attributes::get_detach_state() const {
 }
 
 Thread::Attributes &Thread::Attributes::set_inherit_sched(IsInherit value) {
-#if defined __win32
-  return *this;
-#endif
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL("", pthread_attr_setinheritsched(&m_pthread_attr,
                                                    static_cast<int>(value)));
@@ -90,25 +84,26 @@ Thread::ContentionScope Thread::Attributes::get_scope() const {
 }
 
 Thread::Attributes &Thread::Attributes::set_sched_priority(int priority) {
-#if defined __win32
-  return *this;
-#endif
   API_RETURN_VALUE_IF_ERROR(*this);
+#if defined __win32
+  //I am not sure if windows implements this
+#else
   struct sched_param param = {};
   param.sched_priority = priority;
   API_SYSTEM_CALL("", pthread_attr_setschedparam(&m_pthread_attr, &param));
   set_inherit_sched(IsInherit::no);
+#endif
   return *this;
 }
 
 Thread::Attributes &Thread::Attributes::set_sched_policy(Sched::Policy value) {
-#if defined __win32
-  return *this;
-#endif
   API_RETURN_VALUE_IF_ERROR(*this);
+#if defined __win32
+#else
   API_SYSTEM_CALL("", pthread_attr_setschedpolicy(&m_pthread_attr,
                                                   static_cast<int>(value)));
   set_inherit_sched(IsInherit::no);
+#endif
   return *this;
 }
 
@@ -142,15 +137,18 @@ struct StartUp {
 };
 
 void Thread::construct(const Attributes &attributes, const Construct & options){
+  API_RETURN_IF_ERROR();
   API_ASSERT(options.function() != nullptr);
 
+  //this can't be a member of Thread because if thread gets
+  //moved the address will be wrong
+  //this is deleted in the new thread OR below if creation fails
   auto * startup = new StartUp{ .function = options.function(), .argument = options.argument() };
 
   // First create the thread
   int result =
-    API_SYSTEM_CALL("", pthread_create(&m_id, &attributes.m_pthread_attr,
+    API_SYSTEM_CALL("pthread_create", pthread_create(&m_id, &attributes.m_pthread_attr,
                                        handle_thread, startup));
-
   if (result < 0) {
     m_state = State::error;
     delete startup;
@@ -163,19 +161,18 @@ void Thread::construct(const Attributes &attributes, const Construct & options){
 }
 
 void *Thread::handle_thread(void *args) {
-  auto *startup = reinterpret_cast<StartUp *>(args);
+  auto *startup_pointer = reinterpret_cast<StartUp *>(args);
+  StartUp startup(*startup_pointer);
+  delete startup_pointer;
 
-  function_t function = startup->function;
-  void *argument = startup->argument;
-  void *result = function(argument);
-  delete startup;
+  void *result = startup.function(startup.argument);
   free_context();
   return result;
 }
 
 
 Thread::~Thread() {
-  api::ErrorGuard error_guard;
+  api::ErrorScope error_scope;
   if (is_joinable()) {
     API_RESET_ERROR();
     cancel();

@@ -24,11 +24,10 @@ public:
     Construct() : m_format("%Y-%m-%d %H:%M:%S") {}
   };
 
-  DateTime(const Construct &options);
+  explicit DateTime(const Construct &options);
+  explicit DateTime(MicroTime t) : m_ctime(t.seconds()) {}
 
-  DateTime(MicroTime t) : m_ctime(t.seconds()) {}
-
-  bool is_valid() { return m_ctime != 0; }
+  API_NO_DISCARD bool is_valid() const { return m_ctime != 0; }
 
   DateTime operator+(const DateTime &a) const {
     DateTime result;
@@ -49,7 +48,7 @@ public:
   bool operator>=(const DateTime &a) const { return m_ctime >= a.m_ctime; }
   bool operator<=(const DateTime &a) const { return m_ctime <= a.m_ctime; }
 
-  DateTime age() const { return DateTime::get_system_time() - *this; }
+  API_NO_DISCARD DateTime age() const { return DateTime::get_system_time() - *this; }
 
   DateTime &operator+=(const DateTime &a);
 
@@ -62,11 +61,11 @@ public:
     return *this;
   }
 
-  time_t ctime() const { return m_ctime; }
+  API_NO_DISCARD time_t ctime() const { return m_ctime; }
 
-  u32 second() const;
-  u32 minute() const;
-  u32 hour() const;
+  API_NO_DISCARD u32 second() const;
+  API_NO_DISCARD u32 minute() const;
+  API_NO_DISCARD u32 hour() const;
 
 private:
   time_t m_ctime;
@@ -86,38 +85,38 @@ public:
     const DateTime &date_time,
     const Construct &options = Construct());
 
-  var::GeneralString to_string(var::StringView format = "%Y-%m-%d %H:%M:%S") const;
+  API_NO_DISCARD var::GeneralString to_string(var::StringView format = "%Y-%m-%d %H:%M:%S") const;
 
-  int second() const { return m_tm.tm_sec; }
-  int minute() const { return m_tm.tm_min; }
-  int hour() const { return m_tm.tm_hour; }
+  API_NO_DISCARD int second() const { return m_tm.tm_sec; }
+  API_NO_DISCARD int minute() const { return m_tm.tm_min; }
+  API_NO_DISCARD int hour() const { return m_tm.tm_hour; }
 
   enum class Month {
-    null,
-    january,
-    february,
-    march,
-    april,
-    may,
-    june,
-    july,
-    august,
-    september,
-    october,
-    november,
-    december
+    null API_MAYBE_UNUSED,
+    january API_MAYBE_UNUSED,
+    february API_MAYBE_UNUSED,
+    march API_MAYBE_UNUSED,
+    april API_MAYBE_UNUSED,
+    may API_MAYBE_UNUSED,
+    june API_MAYBE_UNUSED,
+    july API_MAYBE_UNUSED,
+    august API_MAYBE_UNUSED,
+    september API_MAYBE_UNUSED,
+    october API_MAYBE_UNUSED,
+    november API_MAYBE_UNUSED,
+    december API_MAYBE_UNUSED
   };
 
-  int day() const { return m_tm.tm_mday; }
-  int weekday() const { return m_tm.tm_wday; }
-  int yearday() const { return m_tm.tm_yday; }
-  Month month() const { return Month(m_tm.tm_mon + 1); }
-  int year() const { return m_tm.tm_year + 1900; }
+  API_NO_DISCARD int day() const { return m_tm.tm_mday; }
+  API_NO_DISCARD int weekday() const { return m_tm.tm_wday; }
+  API_NO_DISCARD  API_MAYBE_UNUSED int yearday() const { return m_tm.tm_yday; }
+  API_NO_DISCARD Month month() const { return Month(m_tm.tm_mon + 1); }
+  API_NO_DISCARD int year() const { return m_tm.tm_year + 1900; }
 
-  const struct tm &get_tm() const { return m_tm; }
+  API_NO_DISCARD API_MAYBE_UNUSED const struct tm &get_tm() const { return m_tm; }
 
 private:
-  struct tm m_tm;
+  struct tm m_tm{};
 };
 
 } // namespace chrono

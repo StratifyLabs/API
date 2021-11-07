@@ -4,7 +4,7 @@
 #define CHRONO_API_CHRONO_CLOCK_TIME_HPP_
 
 #include <sdk/types.h>
-#include <time.h>
+#include <ctime>
 
 #include "DateTime.hpp"
 
@@ -17,10 +17,10 @@ public:
   enum class ClockId { realtime = CLOCK_REALTIME };
 
   static ClockTime get_system_time(ClockId clock_id = ClockId::realtime);
-  static ClockTime get_system_resolution(ClockId clock_id = ClockId::realtime);
+  API_MAYBE_UNUSED static ClockTime get_system_resolution(ClockId clock_id = ClockId::realtime);
 
   ClockTime() = default;
-  ClockTime(const struct timespec &nano_time) : m_value(nano_time) {}
+  explicit ClockTime(const struct timespec &nano_time) : m_value(nano_time) {}
   explicit ClockTime(const MicroTime &micro_time);
 
 
@@ -35,7 +35,7 @@ public:
   }
 
   ClockTime &set_seconds(u32 seconds) {
-    m_value.tv_sec = seconds;
+    m_value.tv_sec = time_t(seconds);
     return *this;
   }
 
@@ -47,7 +47,7 @@ public:
   operator const struct timespec *() const { return &m_value; }
   operator struct timespec *() { return &m_value; }
 
-  bool is_valid() const { return *this != invalid(); }
+  API_NO_DISCARD bool is_valid() const { return *this != invalid(); }
 
   static ClockTime invalid() {
     return ClockTime().set_seconds(-1).set_nanoseconds(-1);
@@ -62,7 +62,7 @@ public:
 
   ClockTime operator+(const ClockTime &a) const { return add(*this, a); }
   ClockTime operator-(const ClockTime &a) const { return subtract(*this, a); }
-  ClockTime get_age() const;
+  API_NO_DISCARD API_MAYBE_UNUSED ClockTime get_age() const;
 
   ClockTime &operator+=(const ClockTime &a) {
     *this = add(*this, a);
@@ -75,11 +75,11 @@ public:
     return *this;
   }
 
-  s32 seconds() const { return m_value.tv_sec; }
-  s32 nanoseconds() const { return m_value.tv_nsec; }
+  API_NO_DISCARD s32 seconds() const { return m_value.tv_sec; }
+  API_NO_DISCARD s32 nanoseconds() const { return m_value.tv_nsec; }
 
   using UniqueString = var::KeyString;
-  UniqueString to_unique_string() const {
+  API_NO_DISCARD UniqueString to_unique_string() const {
     return UniqueString().format("%ld.%09ld", seconds(), nanoseconds());
   }
 
@@ -90,7 +90,7 @@ public:
   struct timespec *timespec() {
     return &m_value;
   }
-  const struct timespec *timespec() const { return &m_value; }
+  API_NO_DISCARD const struct timespec *timespec() const { return &m_value; }
 
   operator MicroTime() const {
     return MicroTime(seconds() * 1000000UL + nanoseconds() / 1000UL);

@@ -111,6 +111,7 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 	sos_sdk_app_target(RELEASE ${LOCAL_NAME} "unittest" release ${SOS_ARCH})
   message(STATUS "API UnitTest Executable ${RELEASE_TARGET}")
 	add_executable(${RELEASE_TARGET})
+	add_dependencies(api_tests ${RELEASE_TARGET})
 	target_sources(${RELEASE_TARGET}
 		PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
@@ -127,7 +128,6 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 
 	set(CTEST_OUTPUT_ON_FAILURE ON)
 	if(SOS_IS_LINK)
-
 		sos_sdk_app_target(COVERAGE ${LOCAL_NAME} "${LIB_OPTION}unittest" coverage ${SOS_ARCH})
 		add_executable(${COVERAGE_TARGET})
 		sos_sdk_copy_target(${RELEASE_TARGET} ${COVERAGE_TARGET})
@@ -135,7 +135,6 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 		set_target_properties(${COVERAGE_TARGET}
 			PROPERTIES
 			LINK_FLAGS --coverage)
-
 	endif()
 
 	sos_sdk_app_add_arch_targets("${RELEASE_OPTIONS}" "${DEPENDENCIES}" ${RAM_SIZE})
@@ -149,11 +148,8 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 		)
 
 	if(SOS_IS_LINK)
-
 		sos_sdk_add_test(${LOCAL_NAME} ${LIB_OPTION}unittest release)
 		#sos_sdk_add_test(${LOCAL_NAME} ${LIB_OPTION}unittest coverage)
-
-
 	endif()
 
 endfunction()

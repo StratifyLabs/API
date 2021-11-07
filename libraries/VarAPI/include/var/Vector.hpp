@@ -24,7 +24,6 @@ public:
     return *this;
   }
 
-
   Vector<T> &operator<<(const T &a) { return push_back(a); }
 
   using iterator = typename std::vector<T>::iterator;
@@ -132,12 +131,11 @@ public:
   API_NO_DISCARD T &operator[](size_t offset) { return m_vector[offset]; }
 
   API_NO_DISCARD size_t find_offset(const T &a) const {
-    size_t offset = std::find(begin(), end(), a) - begin();
-    return offset;
+    return std::find(begin(), end(), a) - begin();
   }
 
   API_NO_DISCARD const T &find(const T &a, const T &not_found = T()) const {
-    size_t offset = find_offset(a);
+    const size_t offset = find_offset(a);
     if (offset == count()) {
       return not_found;
     }
@@ -149,8 +147,8 @@ public:
       bsearch(&a, std::vector<T>::data(), count(), sizeof(T), ascending));
   }
 
-  API_NO_DISCARD T *search(const T &a,
-                           int (*compare)(const void *, const void *)) {
+  API_NO_DISCARD T *
+  search(const T &a, int (*compare)(const void *, const void *)) {
     return reinterpret_cast<T *>(
       bsearch(&a, std::vector<T>::data(), count(), sizeof(T), compare));
   }

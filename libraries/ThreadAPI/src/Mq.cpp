@@ -46,7 +46,7 @@ Mq& Mq::set_flags(fs::OpenMode open_mode){
   return *this;
 }
 
-void Mq::set_attributes(const Attributes &attributes){
+void Mq::set_attributes(const Attributes &attributes) const{
   API_RETURN_IF_ERROR();
   API_SYSTEM_CALL("", mq_setattr(m_handle, &attributes.m_attr, nullptr));
 }

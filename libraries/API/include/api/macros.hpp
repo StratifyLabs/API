@@ -97,13 +97,13 @@ public:                                                                        \
 
 #define API_READ_ACCESS_MEMBER_FUNDAMENTAL(c, t, p, v)                         \
 public:                                                                        \
-  t v() const { return m_##p.v; }
+  API_NO_DISCARD t v() const { return m_##p.v; }
 
 #define API_RAMF(c, t, p, v) API_READ_ACCESS_MEMBER_FUNDAMENTAL(c, t, p, v)
 
 #define API_ACCESS_MEMBER_FUNDAMENTAL_WITH_ALIAS(c, t, p, a, v)                \
 public:                                                                        \
-  t a() const { return m_##p.v; }                                              \
+  API_NO_DISCARD t a() const { return m_##p.v; }                               \
   c &set_##a(t value) {                                                        \
     m_##p.v = value;                                                           \
     return *this;                                                              \
@@ -114,7 +114,7 @@ public:                                                                        \
 
 #define API_ACCESS_MEMBER_COMPOUND(c, t, p, v)                                 \
 public:                                                                        \
-  const t &v() const { return m_##p.v; }                                       \
+  API_NO_DISCARD const t &v() const { return m_##p.v; }                        \
   c &set_##v(const t &value) {                                                 \
     m_##p.v = value;                                                           \
     return *this;                                                              \
@@ -124,7 +124,7 @@ public:                                                                        \
 
 #define API_READ_ACCESS_FUNDAMENTAL(c, t, v, iv)                               \
 public:                                                                        \
-  t v() const { return m_##v; }                                                \
+  API_NO_DISCARD t v() const { return m_##v; }                                 \
                                                                                \
 private:                                                                       \
   t m_##v = iv
@@ -133,7 +133,7 @@ private:                                                                       \
 
 #define API_ACCESS_COMPOUND(c, t, v)                                           \
 public:                                                                        \
-  const t &v() const { return m_##v; }                                         \
+  API_NO_DISCARD const t &v() const { return m_##v; }                          \
   t &v() { return m_##v; }                                                     \
   c &set_##v(const t &value) {                                                 \
     m_##v = value;                                                             \
@@ -147,7 +147,7 @@ private:                                                                       \
 
 #define API_ACCESS_STRING(PARENT_VALUE, VALUE_NAME)                            \
 public:                                                                        \
-  const var::StringView VALUE_NAME() const {                                   \
+  API_NO_DISCARD var::StringView VALUE_NAME() const {                          \
     return m_##VALUE_NAME.string_view();                                       \
   }                                                                            \
   PARENT_VALUE &set_##VALUE_NAME(const var::StringView value) {                \
@@ -163,7 +163,7 @@ private:                                                                       \
 
 #define API_READ_ACCESS_COMPOUND(c, t, v)                                      \
 public:                                                                        \
-  const t &v() const { return m_##v; }                                         \
+  API_NO_DISCARD const t &v() const { return m_##v; }                          \
                                                                                \
 private:                                                                       \
   t m_##v
