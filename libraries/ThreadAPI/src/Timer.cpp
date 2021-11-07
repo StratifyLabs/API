@@ -55,4 +55,8 @@ chrono::ClockTime Timer::alarm(const Alarm &options) {
   return chrono::ClockTime(return_value() * 1_microseconds);
 }
 
+#else
+
+int thread_api_timer_unused = 0;
+
 #endif

@@ -99,5 +99,9 @@ int Mq::File::interface_lseek(int offset, int whence) const {
   return m_location;
 }
 
+#else
+
+int thread_api_mq_unused = 0;
+
 #endif
 
