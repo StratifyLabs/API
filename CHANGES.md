@@ -4,7 +4,7 @@
 
 > Important! `fs::TemporaryDirectory()` which is not used often was moved to `sys::TemporaryDirectory()` to avoid a circular dependency between SysAPI and FsAPI. This is a symantic versioning breaking change (though a small one)
 
-
+- Updates to CMake test structure, added `API_test` target
 - Improved performance of `File::get_line()`
 - Add `StrackString<>::truncate()` method
 - Better test integration with super projects (`api_tests` target)

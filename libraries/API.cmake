@@ -111,7 +111,7 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 	sos_sdk_app_target(RELEASE ${LOCAL_NAME} "unittest" release ${SOS_ARCH})
   message(STATUS "API UnitTest Executable ${RELEASE_TARGET}")
 	add_executable(${RELEASE_TARGET})
-	add_dependencies(api_tests ${RELEASE_TARGET})
+	add_dependencies(API_test ${RELEASE_TARGET})
 	target_sources(${RELEASE_TARGET}
 		PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
