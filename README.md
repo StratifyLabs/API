@@ -1,7 +1,5 @@
 # API
 
-![Build](https://github.com/StratifyLabs/API/workflows/Build/badge.svg)
-
 ## Overview
 
 API is a collection of cross-platform C++ libraries for 
@@ -20,6 +18,13 @@ including
 - [SysAPI](libraries/SysAPI): command line interface, system name, semantic versions
 - [ThreadAPI](libraries/ThreadAPI): thread management
 - [VarAPI](libraries/VarAPI): data and strings
+
+## How to Build
+
+The `API` library is designed to be a CMake sub-project. To build, please use one of these projects:
+
+- Desktop [Command Line Interface](https://github.com/StratifyLabs/cli)
+- [Stratify OS on Nucleo-144](https://github.com/StratifyLabs/StratifyOS-Nucleo144)
 
 ## Design
 
