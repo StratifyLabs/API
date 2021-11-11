@@ -89,7 +89,7 @@ var::PathString Process::which(const var::StringView executable) {
 
   const char *path = getenv("PATH");
   if (path == nullptr) {
-    return var::PathString();
+    return {};
   }
 
   const auto path_list = var::StringView(path).split(";:");
@@ -100,7 +100,7 @@ var::PathString Process::which(const var::StringView executable) {
     }
   }
 
-  return var::PathString();
+  return {};
 }
 
 u8 Process::Status::exit_status() const { return WEXITSTATUS(m_status_value); }
@@ -138,7 +138,7 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};
-  STARTUPINFOA startup_info = {};
+  STARTUPINFOA startup_info{};
 
   var::PathString cwd;
   _getcwd(cwd.data(), cwd.capacity());
@@ -155,11 +155,9 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     _chdir(pwd.cstring());
   }
 
-  // change working directory?
-
   m_process = HANDLE(_spawnvpe(
     P_NOWAIT,
-    arguments.get_value(0),
+    arguments.path().cstring(),
     arguments.m_arguments.data(),
     environment.m_arguments.data()));
 
@@ -171,9 +169,10 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     _chdir(cwd.cstring());
   }
 
-  if (m_process == nullptr) {
+  if (m_process == nullptr || m_process == INVALID_HANDLE_VALUE) {
+    printf("Last error %d\n", GetLastError());
     m_process = INVALID_HANDLE_VALUE;
-    API_RETURN_ASSIGN_ERROR("failed to spawn", EINVAL);
+    API_RETURN_ASSIGN_ERROR("failed to spawn", errno);
   }
 
 #else
@@ -211,6 +210,7 @@ Process &Process::wait() {
     return *this;
   }
 
+
   DWORD code = 0;
   WaitForSingleObject(m_process, INFINITE);
   CloseHandle(m_process);
@@ -241,24 +241,18 @@ bool Process::is_running() {
   API_RETURN_VALUE_IF_ERROR(false);
 #if defined __win32
   if (m_process == INVALID_HANDLE_VALUE || m_process == nullptr) {
-    API_PRINTF_TRACE_LINE();
     return false;
   }
 
   DWORD code = STILL_ACTIVE;
   if (GetExitCodeProcess(m_process, &code) == 0) {
-    printf("error is %d\n", GetLastError());
-    API_PRINTF_TRACE_LINE();
     m_process = INVALID_HANDLE_VALUE;
     return false;
   }
 
   if (code == STILL_ACTIVE) {
-    API_PRINTF_TRACE_LINE();
-
     return true;
   }
-  API_PRINTF_TRACE_LINE();
 
   m_status = int(code);
   return false;
