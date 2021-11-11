@@ -7,6 +7,7 @@
 
 ## Bug Fixes
 
+- House keeping on `Process` for linux and mac
 - Fix `Process` spawn on Windows when the path has a space. `argv[0]` is given just the executable name
 
 # Version 1.2.0
