@@ -2,10 +2,9 @@
 
 #if defined __link
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <unistd.h>
 
-#include <sys/types.h>
 #if !defined __win32
 #include <sys/wait.h>
 #else
@@ -94,9 +93,9 @@ var::PathString Process::which(const var::StringView executable) {
 
   const auto path_list = var::StringView(path).split(";:");
   for (const auto &entry : path_list) {
-    const auto path = entry / executable;
-    if (fs::FileSystem().exists(path)) {
-      return path;
+    const auto entry_path = entry / executable;
+    if (fs::FileSystem().exists(entry_path)) {
+      return entry_path;
     }
   }
 
@@ -176,21 +175,23 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   }
 
 #else
+
   m_pid = API_SYSTEM_CALL("fork()", fork());
   if (m_pid == 0) {
 
     // this will run in the child process
     Arguments args(arguments);
-    Environment env(environment);
 
-    chdir(env.find("PWD"));
+    if( chdir(environment.find("PWD")) < 0 ){
+      API_RETURN_ASSIGN_ERROR("failed to chdir to PWD", errno);
+    }
 
     dup2(m_pipe.write_file().fileno(), STDOUT_FILENO);
     // stdout will now write to the pipe -- this fileno isn't needed anymore
     // but doesn't necessarily have to be closed
     m_pipe.write_file() = fs::File();
     // replace the current process with the one specified
-    ::execve(args.m_arguments.at(0), args.m_arguments.data(), environ);
+    ::execve(args.path(), args.m_arguments.data(), environ);
     perror("failed to launch\n");
     exit(1);
   }

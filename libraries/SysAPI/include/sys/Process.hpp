@@ -57,7 +57,11 @@ public:
     explicit Arguments(const var::StringView path) : m_path(path) {
       m_arguments.push_back(nullptr);
       if (path != "") {
+#if defined __win32
         push(fs::Path::name(path));
+#else
+        push(path);
+#endif
       }
     }
 
