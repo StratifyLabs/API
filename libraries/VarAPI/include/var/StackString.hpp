@@ -10,6 +10,9 @@ namespace var {
 
 template <class Derived, int Size> class StackString {
 public:
+
+
+
   using Base = StringView::Base;
   Derived &clear() {
     m_buffer[0] = 0;
@@ -154,6 +157,19 @@ public:
     return replace(options);
   }
 
+  StackString<Derived,Size>(const StackString&) = default;
+  StackString<Derived,Size>& operator=(const StackString&) = default;
+
+  StackString<Derived,Size>(StackString&&a){
+    move(a);
+  }
+
+  StackString<Derived,Size>& operator=(StackString&&a){
+    move(a);
+    return *this;
+  }
+
+
 protected:
   StackString() { m_buffer[0] = 0; }
   StackString(const StringView a) {
@@ -173,6 +189,14 @@ protected:
   }
 
   char m_buffer[Size];
+
+private:
+  void move(StackString & a){
+    char tmp[Size];
+    strncpy(tmp, a.m_buffer, capacity());
+    strncpy(a.m_buffer, m_buffer, capacity());
+    strncpy(m_buffer, tmp, capacity());
+  }
 };
 
 class IdString : public StackString<IdString, 24> {
