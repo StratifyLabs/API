@@ -139,3 +139,20 @@ const char *Demangler::demangle(const char *input) {
 #endif
   return m_last;
 }
+
+#if defined __link
+void signal_segmentation_fault(int){
+  static int count = 0;
+  if (count == 0) {
+    API_ASSERT(false);
+    count++;
+  }
+}
+
+#endif
+
+void api::catch_segmentation_fault(){
+#if defined __link
+  signal(11, signal_segmentation_fault);
+#endif
+}

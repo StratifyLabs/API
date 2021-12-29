@@ -3,7 +3,7 @@
 
 ## New Features
 
-- None yet
+- Add `api::catch_segmentation_fault()` to call `API_ASSERT()` when a segmentation fault happens (desktop)
 
 ## Bug Fixes
 

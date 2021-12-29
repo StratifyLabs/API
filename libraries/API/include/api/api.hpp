@@ -519,6 +519,8 @@ private:
   const Type m_finish = 0;
 };
 
+void catch_segmentation_fault();
+
 } // namespace api
 
 #endif // API_API_HPP_
