@@ -1,0 +1,623 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classapi_1_1_execution_context" kind="class" language="C++" prot="public">
+    <compoundname>api::ExecutionContext</compoundname>
+    <derivedcompoundref refid="classvar_1_1_vector" prot="public" virt="non-virtual">var::Vector&lt; var::Vector&lt; T &gt; &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_vector" prot="public" virt="non-virtual">var::Vector&lt; StringView &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classchrono_1_1_clock_timer" prot="public" virt="non-virtual">chrono::ClockTimer</derivedcompoundref>
+    <derivedcompoundref refid="classfs_1_1_aio" prot="public" virt="non-virtual">fs::Aio</derivedcompoundref>
+    <derivedcompoundref refid="classfs_1_1_dir_object" prot="public" virt="non-virtual">fs::DirObject</derivedcompoundref>
+    <derivedcompoundref refid="classfs_1_1_file_object" prot="public" virt="non-virtual">fs::FileObject</derivedcompoundref>
+    <derivedcompoundref refid="classfs_1_1_file_system" prot="public" virt="non-virtual">fs::FileSystem</derivedcompoundref>
+    <derivedcompoundref refid="classprinter_1_1_printer" prot="public" virt="non-virtual">printer::Printer</derivedcompoundref>
+    <derivedcompoundref refid="classsys_1_1_cli" prot="public" virt="non-virtual">sys::Cli</derivedcompoundref>
+    <derivedcompoundref refid="classsys_1_1_temporary_directory" prot="public" virt="non-virtual">sys::TemporaryDirectory</derivedcompoundref>
+    <derivedcompoundref refid="classtest_1_1_test" prot="public" virt="non-virtual">test::Test</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_cond" prot="public" virt="non-virtual">thread::Cond</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_cond_1_1_attributes" prot="public" virt="non-virtual">thread::Cond::Attributes</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_mq" prot="public" virt="non-virtual">thread::Mq</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_mutex" prot="public" virt="non-virtual">thread::Mutex</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_mutex_1_1_attributes" prot="public" virt="non-virtual">thread::Mutex::Attributes</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_sched" prot="public" virt="non-virtual">thread::Sched</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_semaphore_object" prot="public" virt="non-virtual">thread::SemaphoreObject</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_signal_flags" prot="public" virt="non-virtual">thread::SignalFlags</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_thread" prot="public" virt="non-virtual">thread::Thread</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_thread_1_1_attributes" prot="public" virt="non-virtual">thread::Thread::Attributes</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_timer" prot="public" virt="non-virtual">thread::Timer</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_base64" prot="public" virt="non-virtual">var::Base64</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_container_object" prot="public" virt="non-virtual">var::ContainerObject&lt; Derived, Container, T &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_data" prot="public" virt="non-virtual">var::Data</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_deque" prot="public" virt="non-virtual">var::Deque&lt; T &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_queue" prot="public" virt="non-virtual">var::Queue&lt; T &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_stack" prot="public" virt="non-virtual">var::Stack&lt; T &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_string" prot="public" virt="non-virtual">var::String</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_tokenizer" prot="public" virt="non-virtual">var::Tokenizer</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_vector" prot="public" virt="non-virtual">var::Vector&lt; T &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classvar_1_1_view" prot="public" virt="non-virtual">var::View</derivedcompoundref>
+    <includes local="no">api.hpp</includes>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classapi_1_1_execution_context_1aece684bf8d8d23557e2da48457abbf93" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class ErrorGuard</definition>
+        <argsstring></argsstring>
+        <name>ErrorGuard</name>
+        <param>
+          <type><ref refid="classapi_1_1_error_guard" kindref="compound">ErrorGuard</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="217" column="16" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="217" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="classapi_1_1_execution_context_1a4c45df4d44d88da1a562a2c97f26c46e" prot="private" static="yes" mutable="no">
+        <type><ref refid="classapi_1_1_private_execution_context" kindref="compound">PrivateExecutionContext</ref></type>
+        <definition>PrivateExecutionContext api::ExecutionContext::m_private_context</definition>
+        <argsstring></argsstring>
+        <name>m_private_context</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="218" column="34" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="218" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>static int api::ExecutionContext::handle_system_call_result</definition>
+        <argsstring>(int line, const char *message, int value)</argsstring>
+        <name>handle_system_call_result</name>
+        <param>
+          <type>int</type>
+          <declname>line</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>message</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="183" column="3" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="183" bodyend="190"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>T *</type>
+        <definition>static T * api::ExecutionContext::handle_system_call_null_result</definition>
+        <argsstring>(int line, const char *message, T *value)</argsstring>
+        <name>handle_system_call_null_result</name>
+        <param>
+          <type>int</type>
+          <declname>line</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>message</declname>
+        </param>
+        <param>
+          <type>T *</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="194" column="3" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="194" bodyend="199"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classapi_1_1_error" kindref="compound">Error</ref> &amp;</type>
+        <definition>static Error &amp; api::ExecutionContext::error</definition>
+        <argsstring>()</argsstring>
+        <name>error</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="201" column="16" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="201" bodyend="201"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void api::ExecutionContext::free_context</definition>
+        <argsstring>()</argsstring>
+        <name>free_context</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="202" column="15" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="202" bodyend="202"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void api::ExecutionContext::exit_fatal</definition>
+        <argsstring>(const char *message)</argsstring>
+        <name>exit_fatal</name>
+        <param>
+          <type>const char *</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="203" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>static size_t api::ExecutionContext::context_count</definition>
+        <argsstring>()</argsstring>
+        <name>context_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="205" column="24" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="205" bodyend="207"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void api::ExecutionContext::reset_error</definition>
+        <argsstring>()</argsstring>
+        <name>reset_error</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="208" column="22" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="208" bodyend="211"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool api::ExecutionContext::is_error</definition>
+        <argsstring>()</argsstring>
+        <name>is_error</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="212" column="22" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="212" bodyend="212"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool api::ExecutionContext::is_success</definition>
+        <argsstring>()</argsstring>
+        <name>is_success</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="213" column="22" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="213" bodyend="213"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>static int api::ExecutionContext::return_value</definition>
+        <argsstring>()</argsstring>
+        <name>return_value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="214" column="21" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="214" bodyend="214"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>This class is the base class for almost all classes in all API frameworks. </para>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="8">
+        <label>fs::DirAccess&lt; Dir &gt;</label>
+        <link refid="classfs_1_1_dir_access"/>
+        <childnode refid="7" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>fs::FileAccess&lt; DataFile &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="11" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>fs::FileAccess&lt; File &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="11" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>fs::FileAccess&lt; LambdaFile &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="11" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs::FileAccess&lt; NullFile &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="11" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs::FileAccess&lt; ViewFile &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="11" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>thread::SemAccess&lt; Semaphore &gt;</label>
+        <link refid="classthread_1_1_sem_access"/>
+        <childnode refid="40" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>thread::SemAccess&lt; UnnamedSemaphore &gt;</label>
+        <link refid="classthread_1_1_sem_access"/>
+        <childnode refid="40" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>var::Vector&lt; StringView &gt;</label>
+        <link refid="classvar_1_1_vector"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>var::Vector&lt; var::Vector&lt; T &gt; &gt;</label>
+        <link refid="classvar_1_1_vector"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="5">
+        <label>chrono::ClockTimer</label>
+        <link refid="classchrono_1_1_clock_timer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>fs::Aio</label>
+        <link refid="classfs_1_1_aio"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>fs::DataFile</label>
+        <link refid="classfs_1_1_data_file"/>
+        <childnode refid="12" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>fs::Dir</label>
+        <link refid="classfs_1_1_dir"/>
+        <childnode refid="8" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>fs::DirAccess&lt; Derived &gt;</label>
+        <link refid="classfs_1_1_dir_access"/>
+        <childnode refid="7" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>fs::DirObject</label>
+        <link refid="classfs_1_1_dir_object"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>fs::File</label>
+        <link refid="classfs_1_1_file"/>
+        <childnode refid="14" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>fs::FileAccess&lt; Derived &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="11" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>fs::FileObject</label>
+        <link refid="classfs_1_1_file_object"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>fs::FileSystem</label>
+        <link refid="classfs_1_1_file_system"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>fs::LambdaFile</label>
+        <link refid="classfs_1_1_lambda_file"/>
+        <childnode refid="17" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs::NullFile</label>
+        <link refid="classfs_1_1_null_file"/>
+        <childnode refid="19" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>fs::ViewFile</label>
+        <link refid="classfs_1_1_view_file"/>
+        <childnode refid="21" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>printer::JsonPrinter</label>
+        <link refid="classprinter_1_1_json_printer"/>
+        <childnode refid="25" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>printer::MarkdownPrinter</label>
+        <link refid="classprinter_1_1_markdown_printer"/>
+        <childnode refid="25" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>printer::NullPrinter</label>
+        <link refid="classprinter_1_1_null_printer"/>
+        <childnode refid="25" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>printer::Printer</label>
+        <link refid="classprinter_1_1_printer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>printer::YamlPrinter</label>
+        <link refid="classprinter_1_1_yaml_printer"/>
+        <childnode refid="25" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>sys::Cli</label>
+        <link refid="classsys_1_1_cli"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>sys::TemporaryDirectory</label>
+        <link refid="classsys_1_1_temporary_directory"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>test::Function&lt; return_type, args &gt;</label>
+        <link refid="classtest_1_1_function"/>
+        <childnode refid="32" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>test::Test</label>
+        <link refid="classtest_1_1_test"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>thread::Cond</label>
+        <link refid="classthread_1_1_cond"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>thread::Cond::Attributes</label>
+        <link refid="classthread_1_1_cond_1_1_attributes"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>thread::Mq</label>
+        <link refid="classthread_1_1_mq"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>thread::Mq::File</label>
+        <link refid="classthread_1_1_mq_1_1_file"/>
+        <childnode refid="14" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>thread::Mutex</label>
+        <link refid="classthread_1_1_mutex"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>thread::Mutex::Attributes</label>
+        <link refid="classthread_1_1_mutex_1_1_attributes"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>thread::Sched</label>
+        <link refid="classthread_1_1_sched"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>thread::SemAccess&lt; Derived &gt;</label>
+        <link refid="classthread_1_1_sem_access"/>
+        <childnode refid="40" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>thread::Semaphore</label>
+        <link refid="classthread_1_1_semaphore"/>
+        <childnode refid="41" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>thread::SemaphoreObject</label>
+        <link refid="classthread_1_1_semaphore_object"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>thread::Signal</label>
+        <link refid="classthread_1_1_signal"/>
+        <childnode refid="46" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>thread::SignalFlags</label>
+        <link refid="classthread_1_1_signal_flags"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>thread::SignalHandler</label>
+        <link refid="classthread_1_1_signal_handler"/>
+        <childnode refid="46" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>thread::Thread</label>
+        <link refid="classthread_1_1_thread"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>thread::Thread::Attributes</label>
+        <link refid="classthread_1_1_thread_1_1_attributes"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>thread::Timer</label>
+        <link refid="classthread_1_1_timer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>thread::UnnamedSemaphore</label>
+        <link refid="classthread_1_1_unnamed_semaphore"/>
+        <childnode refid="43" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>var::Base64</label>
+        <link refid="classvar_1_1_base64"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>var::ContainerObject&lt; Derived, Container, T &gt;</label>
+        <link refid="classvar_1_1_container_object"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>var::Data</label>
+        <link refid="classvar_1_1_data"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>var::Deque&lt; T &gt;</label>
+        <link refid="classvar_1_1_deque"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>var::Matrix&lt; T &gt;</label>
+        <link refid="classvar_1_1_matrix"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>var::Queue&lt; T &gt;</label>
+        <link refid="classvar_1_1_queue"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>var::Stack&lt; T &gt;</label>
+        <link refid="classvar_1_1_stack"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>var::String</label>
+        <link refid="classvar_1_1_string"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>var::Tokenizer</label>
+        <link refid="classvar_1_1_tokenizer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="60">
+        <label>var::Vector&lt; T &gt;</label>
+        <link refid="classvar_1_1_vector"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>var::View</label>
+        <link refid="classvar_1_1_view"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="API/libraries/API/include/api/api.hpp" line="180" column="1" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="180" bodyend="219"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>context_count</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1aece684bf8d8d23557e2da48457abbf93" prot="private" virt="non-virtual"><scope>api::ExecutionContext</scope><name>ErrorGuard</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>free_context</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>handle_system_call_result</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>is_success</name></member>
+      <member refid="classapi_1_1_execution_context_1a4c45df4d44d88da1a562a2c97f26c46e" prot="private" virt="non-virtual"><scope>api::ExecutionContext</scope><name>m_private_context</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>api::ExecutionContext</scope><name>return_value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

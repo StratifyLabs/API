@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classfs_1_1_path" kind="class" language="C++" prot="public">
+    <compoundname>fs::Path</compoundname>
+    <includes local="no">Path.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classfs_1_1_path_1ae873893c1d903f0274f58ffab1b2e68c" prot="private" static="no" mutable="no">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>var::StringView fs::Path::m_path</definition>
+        <argsstring></argsstring>
+        <name>m_path</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/Path.hpp" line="21" column="19" bodyfile="API/libraries/FsAPI/include/fs/Path.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classfs_1_1_path_1adc3880fb96328d93ac87d693a3410f13" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>static var::StringView fs::Path::suffix</definition>
+        <argsstring>(var::StringView path)</argsstring>
+        <name>suffix</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/Path.hpp" line="12" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_path_1a04e26c1a972c3606e5c2ab1c364819e9" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>static var::StringView fs::Path::name</definition>
+        <argsstring>(var::StringView path)</argsstring>
+        <name>name</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/Path.hpp" line="13" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_path_1ab325c681ba73b9c2cd3b07588dd472d1" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>static var::StringView fs::Path::parent_directory</definition>
+        <argsstring>(var::StringView path, size_t depth=1)</argsstring>
+        <name>parent_directory</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>depth</declname>
+          <defval>1</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/Path.hpp" line="15" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_path_1a62db066e34eddd469d0aef1ce4d89059" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>static var::StringView fs::Path::base_name</definition>
+        <argsstring>(var::StringView path)</argsstring>
+        <name>base_name</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/Path.hpp" line="16" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_path_1a70947c9612c68f7cdae6c0706cfe4b88" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>static var::StringView fs::Path::no_suffix</definition>
+        <argsstring>(var::StringView path)</argsstring>
+        <name>no_suffix</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/Path.hpp" line="17" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_path_1a0c265fdd0c5bdc14fdbbd54da1c5bc02" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool fs::Path::is_hidden</definition>
+        <argsstring>(var::StringView path)</argsstring>
+        <name>is_hidden</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/Path.hpp" line="18" column="16"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/FsAPI/include/fs/Path.hpp" line="10" column="1" bodyfile="API/libraries/FsAPI/include/fs/Path.hpp" bodystart="10" bodyend="22"/>
+    <listofallmembers>
+      <member refid="classfs_1_1_path_1a62db066e34eddd469d0aef1ce4d89059" prot="public" virt="non-virtual"><scope>fs::Path</scope><name>base_name</name></member>
+      <member refid="classfs_1_1_path_1a0c265fdd0c5bdc14fdbbd54da1c5bc02" prot="public" virt="non-virtual"><scope>fs::Path</scope><name>is_hidden</name></member>
+      <member refid="classfs_1_1_path_1ae873893c1d903f0274f58ffab1b2e68c" prot="private" virt="non-virtual"><scope>fs::Path</scope><name>m_path</name></member>
+      <member refid="classfs_1_1_path_1a04e26c1a972c3606e5c2ab1c364819e9" prot="public" virt="non-virtual"><scope>fs::Path</scope><name>name</name></member>
+      <member refid="classfs_1_1_path_1a70947c9612c68f7cdae6c0706cfe4b88" prot="public" virt="non-virtual"><scope>fs::Path</scope><name>no_suffix</name></member>
+      <member refid="classfs_1_1_path_1ab325c681ba73b9c2cd3b07588dd472d1" prot="public" virt="non-virtual"><scope>fs::Path</scope><name>parent_directory</name></member>
+      <member refid="classfs_1_1_path_1adc3880fb96328d93ac87d693a3410f13" prot="public" virt="non-virtual"><scope>fs::Path</scope><name>suffix</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

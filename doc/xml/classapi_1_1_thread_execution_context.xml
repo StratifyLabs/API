@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classapi_1_1_thread_execution_context" kind="class" language="C++" prot="public">
+    <compoundname>api::ThreadExecutionContext</compoundname>
+    <includes local="no">api.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classapi_1_1_thread_execution_context_1a48a03837aaa8b22abfb5d08daafc5778" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>api::ThreadExecutionContext::~ThreadExecutionContext</definition>
+        <argsstring>()</argsstring>
+        <name>~ThreadExecutionContext</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="246" column="3" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="246" bodyend="246"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/API/include/api/api.hpp" line="244" column="1" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="244" bodyend="247"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_thread_execution_context_1a48a03837aaa8b22abfb5d08daafc5778" prot="public" virt="non-virtual"><scope>api::ThreadExecutionContext</scope><name>~ThreadExecutionContext</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

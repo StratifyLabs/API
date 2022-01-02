@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_thread_1_1_construct" kind="class" language="C++" prot="public">
+    <compoundname>thread::Thread::Construct</compoundname>
+    <includes local="no">Thread.hpp</includes>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classthread_1_1_thread_1_1_construct_1a071aa686fee28b70e6a5208c74533441" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::Construct::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Construct, function_t, function, nullptr)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classthread_1_1_thread_1_1_construct" kindref="compound">Construct</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classthread_1_1_thread_1ac8a4c2a5c78aede89f189557064e84d2" kindref="member">function_t</ref></type>
+        </param>
+        <param>
+          <type>function</type>
+        </param>
+        <param>
+          <type>nullptr</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="71" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1_1_construct_1a7ccbc8f837e4d47df5c717b73200f06b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::Construct::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Construct, void *, argument, nullptr)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classthread_1_1_thread_1_1_construct" kindref="compound">Construct</ref></type>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type>argument</type>
+        </param>
+        <param>
+          <type>nullptr</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="72" column="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="70" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="70" bodyend="73"/>
+    <listofallmembers>
+      <member refid="classthread_1_1_thread_1_1_construct_1a071aa686fee28b70e6a5208c74533441" prot="private" virt="non-virtual"><scope>thread::Thread::Construct</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classthread_1_1_thread_1_1_construct_1a7ccbc8f837e4d47df5c717b73200f06b" prot="private" virt="non-virtual"><scope>thread::Thread::Construct</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

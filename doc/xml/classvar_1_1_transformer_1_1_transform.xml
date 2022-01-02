@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_transformer_1_1_transform" kind="class" language="C++" prot="public">
+    <compoundname>var::Transformer::Transform</compoundname>
+    <includes local="no">View.hpp</includes>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvar_1_1_transformer_1_1_transform_1a216c8c7070d1decbe6590254d64c02d3" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::Transformer::Transform::API_AC</definition>
+        <argsstring>(Transform, var::View, input)</argsstring>
+        <name>API_AC</name>
+        <param>
+          <type><ref refid="classvar_1_1_transformer_1_1_transform" kindref="compound">Transform</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+        </param>
+        <param>
+          <type>input</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/View.hpp" line="296" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_transformer_1_1_transform_1adc012ec2ec09b157c768f8af78d92bdc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::Transformer::Transform::API_AC</definition>
+        <argsstring>(Transform, var::View, output)</argsstring>
+        <name>API_AC</name>
+        <param>
+          <type><ref refid="classvar_1_1_transformer_1_1_transform" kindref="compound">Transform</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+        </param>
+        <param>
+          <type>output</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/View.hpp" line="297" column="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/View.hpp" line="295" column="3" bodyfile="API/libraries/VarAPI/include/var/View.hpp" bodystart="295" bodyend="298"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_transformer_1_1_transform_1a216c8c7070d1decbe6590254d64c02d3" prot="private" virt="non-virtual"><scope>var::Transformer::Transform</scope><name>API_AC</name></member>
+      <member refid="classvar_1_1_transformer_1_1_transform_1adc012ec2ec09b157c768f8af78d92bdc" prot="private" virt="non-virtual"><scope>var::Transformer::Transform</scope><name>API_AC</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="namespaceapi" kind="namespace" language="C++">
+    <compoundname>api</compoundname>
+    <innerclass refid="classapi_1_1_api" prot="public">api::Api</innerclass>
+    <innerclass refid="classapi_1_1_api_info" prot="public">api::ApiInfo</innerclass>
+    <innerclass refid="classapi_1_1_demangler" prot="public">api::Demangler</innerclass>
+    <innerclass refid="classapi_1_1_error" prot="public">api::Error</innerclass>
+    <innerclass refid="classapi_1_1_error_guard" prot="public">api::ErrorGuard</innerclass>
+    <innerclass refid="classapi_1_1_execution_context" prot="public">api::ExecutionContext</innerclass>
+    <innerclass refid="classapi_1_1_index" prot="public">api::Index</innerclass>
+    <innerclass refid="classapi_1_1_index_iterator" prot="public">api::IndexIterator</innerclass>
+    <innerclass refid="classapi_1_1_private_execution_context" prot="public">api::PrivateExecutionContext</innerclass>
+    <innerclass refid="classapi_1_1_progress_callback" prot="public">api::ProgressCallback</innerclass>
+    <innerclass refid="classapi_1_1_range" prot="public">api::Range</innerclass>
+    <innerclass refid="classapi_1_1_range_iterator" prot="public">api::RangeIterator</innerclass>
+    <innerclass refid="classapi_1_1_thread_execution_context" prot="public">api::ThreadExecutionContext</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="namespaceapi_1a50bccdd6a269a17ad69000a3acabfa04" prot="public" static="no">
+        <type><ref refid="classapi_1_1_error_guard" kindref="compound">ErrorGuard</ref></type>
+        <definition>using api::ErrorContext = typedef ErrorGuard</definition>
+        <argsstring></argsstring>
+        <name>ErrorContext</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="241" column="1" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="241" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="namespaceapi_1a4efe504e63365f31261ab7c97d2047e7" prot="public" static="no">
+        <type><ref refid="classapi_1_1_error_guard" kindref="compound">ErrorGuard</ref></type>
+        <definition>using api::ErrorScope = typedef ErrorGuard</definition>
+        <argsstring></argsstring>
+        <name>ErrorScope</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="242" column="1" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="242" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="namespaceapi_1afafed9fab17d151041a76c41cec415fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const void *</type>
+        <definition>const void * api::kernel_request_api</definition>
+        <argsstring>(u32 request)</argsstring>
+        <name>kernel_request_api</name>
+        <param>
+          <type>u32</type>
+          <declname>request</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="41" column="23" declfile="API/libraries/API/include/api/api.hpp" declline="41" declcolumn="23"/>
+      </memberdef>
+      <memberdef kind="function" id="namespaceapi_1abdebff78cb996a8397e5241439324f83" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void api::api_assert</definition>
+        <argsstring>(bool value, const char *function, int line)</argsstring>
+        <name>api_assert</name>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>function</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>line</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="273" column="6" declfile="API/libraries/API/include/api/api.hpp" declline="273" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/API/include/api/api.hpp" line="24" column="1"/>
+  </compounddef>
+</doxygen>

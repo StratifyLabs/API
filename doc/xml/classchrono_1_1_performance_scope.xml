@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classchrono_1_1_performance_scope" kind="class" language="C++" prot="public">
+    <compoundname>chrono::PerformanceScope</compoundname>
+    <includes local="no">ClockTimer.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classchrono_1_1_performance_scope_1a6ef5b85322bd471ef874b6a1b66a0994" prot="private" static="no" mutable="no">
+        <type>const <ref refid="classchrono_1_1_clock_timer" kindref="compound">ClockTimer</ref> *</type>
+        <definition>const ClockTimer* chrono::PerformanceScope::m_timer</definition>
+        <argsstring></argsstring>
+        <name>m_timer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" line="114" column="21" bodyfile="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classchrono_1_1_performance_scope_1ab27ec22f601dcb7b7cd5888e641c0592" prot="private" static="no" mutable="no">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">printer::Printer</ref> *</type>
+        <definition>printer::Printer* chrono::PerformanceScope::m_printer</definition>
+        <argsstring></argsstring>
+        <name>m_printer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" line="115" column="21" bodyfile="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classchrono_1_1_performance_scope_1a4108c9c32dfdca81a7c14c1a6c7ef691" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 chrono::PerformanceScope::m_start</definition>
+        <argsstring></argsstring>
+        <name>m_start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" line="116" column="7" bodyfile="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classchrono_1_1_performance_scope_1a5cec6dbdbee9f6b30fcb263401774918" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>chrono::PerformanceScope::PerformanceScope</definition>
+        <argsstring>(var::StringView name, const ClockTimer &amp;timer, printer::Printer &amp;printer)</argsstring>
+        <name>PerformanceScope</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classchrono_1_1_clock_timer" kindref="compound">ClockTimer</ref> &amp;</type>
+          <declname>timer</declname>
+        </param>
+        <param>
+          <type><ref refid="classprinter_1_1_printer" kindref="compound">printer::Printer</ref> &amp;</type>
+          <declname>printer</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" line="110" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classchrono_1_1_performance_scope_1aa658c916988eed7d1683f4d4c32f5e01" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>chrono::PerformanceScope::~PerformanceScope</definition>
+        <argsstring>()</argsstring>
+        <name>~PerformanceScope</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" line="111" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" line="108" column="1" bodyfile="API/libraries/ChronoAPI/include/chrono/ClockTimer.hpp" bodystart="108" bodyend="117"/>
+    <listofallmembers>
+      <member refid="classchrono_1_1_performance_scope_1ab27ec22f601dcb7b7cd5888e641c0592" prot="private" virt="non-virtual"><scope>chrono::PerformanceScope</scope><name>m_printer</name></member>
+      <member refid="classchrono_1_1_performance_scope_1a4108c9c32dfdca81a7c14c1a6c7ef691" prot="private" virt="non-virtual"><scope>chrono::PerformanceScope</scope><name>m_start</name></member>
+      <member refid="classchrono_1_1_performance_scope_1a6ef5b85322bd471ef874b6a1b66a0994" prot="private" virt="non-virtual"><scope>chrono::PerformanceScope</scope><name>m_timer</name></member>
+      <member refid="classchrono_1_1_performance_scope_1a5cec6dbdbee9f6b30fcb263401774918" prot="public" virt="non-virtual"><scope>chrono::PerformanceScope</scope><name>PerformanceScope</name></member>
+      <member refid="classchrono_1_1_performance_scope_1aa658c916988eed7d1683f4d4c32f5e01" prot="public" virt="non-virtual"><scope>chrono::PerformanceScope</scope><name>~PerformanceScope</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

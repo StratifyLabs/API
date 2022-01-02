@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classapi_1_1_progress_callback" kind="class" language="C++" prot="public">
+    <compoundname>api::ProgressCallback</compoundname>
+    <includes local="no">api.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classapi_1_1_progress_callback_1a608461fe809da5f78759451bdee3024b" prot="public" static="no">
+        <type>bool(*</type>
+        <definition>typedef bool(* api::ProgressCallback::callback_t) (void *, int, int)</definition>
+        <argsstring>)(void *, int, int)</argsstring>
+        <name>callback_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Defines the callback function prototype.</para>
+<para>The function has three arguments. The first is the context() member of this object. The first integer is the current progress value and the second is the total progress value.</para>
+<para>If the total (third argument) is zero, the operation is either complete or aborted. If total is set to -1, the progress should be shown as indeterminate. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="384" column="11" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="384" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classapi_1_1_progress_callback_1a14b1114430ee1c1cce62c58ba7349d77" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>api::ProgressCallback::ProgressCallback</definition>
+        <argsstring>()</argsstring>
+        <name>ProgressCallback</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Constructs an empty object. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="387" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_progress_callback_1ad5088dff96b7e7a5a2a2fa9f824d0e02" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool api::ProgressCallback::update</definition>
+        <argsstring>(int value, int total) const</argsstring>
+        <name>update</name>
+        <param>
+          <type>int</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>total</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Executes the callback if it is valid.</para>
+<para>This method is called within operations in order to execute the provided callback.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The value of the progress of the operation </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>total</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The total possible progress for the operation </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>true to abort the operation or false to continue as normal </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="401" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classapi_1_1_progress_callback_1a60052db8770421357afeabcc3f7ef104" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>static int api::ProgressCallback::indeterminate_progress_total</definition>
+        <argsstring>()</argsstring>
+        <name>indeterminate_progress_total</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="389" column="14" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="389" bodyend="389"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_progress_callback_1a2d78bebf0cb67f0a50ad7207d827e092" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int api::ProgressCallback::update_function</definition>
+        <argsstring>(const void *context, int value, int total)</argsstring>
+        <name>update_function</name>
+        <param>
+          <type>const void *</type>
+          <declname>context</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>total</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="403" column="14"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classapi_1_1_progress_callback_1ae2a0e0a8a12db4afbe38f23d3f0ddf47" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>api::ProgressCallback::API_AF</definition>
+        <argsstring>(ProgressCallback, callback_t, callback, nullptr)</argsstring>
+        <name>API_AF</name>
+        <param>
+          <type><ref refid="classapi_1_1_progress_callback" kindref="compound">ProgressCallback</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classapi_1_1_progress_callback_1a608461fe809da5f78759451bdee3024b" kindref="member">callback_t</ref></type>
+        </param>
+        <param>
+          <type>callback</type>
+        </param>
+        <param>
+          <type>nullptr</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="406" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_progress_callback_1a7c74b1c46c810b23cf84d0f023d103d5" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>api::ProgressCallback::API_AF</definition>
+        <argsstring>(ProgressCallback, void *, context, nullptr)</argsstring>
+        <name>API_AF</name>
+        <param>
+          <type><ref refid="classapi_1_1_progress_callback" kindref="compound">ProgressCallback</ref></type>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type>context</type>
+        </param>
+        <param>
+          <type>nullptr</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="407" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para><ref refid="classapi_1_1_progress_callback" kindref="compound">ProgressCallback</ref> Class. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>The <ref refid="classapi_1_1_progress_callback" kindref="compound">ProgressCallback</ref> class is used by various methods to allow the application to update the progress of an operation.</para>
+<para><programlisting><codeline><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sys_8hpp" kindref="compound">sys.hpp</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;inet.hpp&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal">Printer<sp/>p;</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal">p.set_progress_key(</highlight><highlight class="stringliteral">&quot;downloading&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline><highlight class="normal">HttpClient<sp/>http_client;</highlight></codeline>
+<codeline><highlight class="normal">DataFile<sp/>data_file(File::APPEND);</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"></highlight><highlight class="comment">//download<sp/>file<sp/>to<sp/>data_file<sp/>and<sp/>print<sp/>the<sp/>progress<sp/>using<sp/>#&apos;s</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal">http_client.get(</highlight><highlight class="stringliteral">&quot;http://some.url/file&quot;</highlight><highlight class="normal">,<sp/>data_file,<sp/>p.progress_callback());</highlight></codeline>
+</programlisting> </para>
+    </detaileddescription>
+    <location file="API/libraries/API/include/api/api.hpp" line="370" column="1" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="370" bodyend="408"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_progress_callback_1ae2a0e0a8a12db4afbe38f23d3f0ddf47" prot="private" virt="non-virtual"><scope>api::ProgressCallback</scope><name>API_AF</name></member>
+      <member refid="classapi_1_1_progress_callback_1a7c74b1c46c810b23cf84d0f023d103d5" prot="private" virt="non-virtual"><scope>api::ProgressCallback</scope><name>API_AF</name></member>
+      <member refid="classapi_1_1_progress_callback_1a608461fe809da5f78759451bdee3024b" prot="public" virt="non-virtual"><scope>api::ProgressCallback</scope><name>callback_t</name></member>
+      <member refid="classapi_1_1_progress_callback_1a60052db8770421357afeabcc3f7ef104" prot="public" virt="non-virtual"><scope>api::ProgressCallback</scope><name>indeterminate_progress_total</name></member>
+      <member refid="classapi_1_1_progress_callback_1a14b1114430ee1c1cce62c58ba7349d77" prot="public" virt="non-virtual"><scope>api::ProgressCallback</scope><name>ProgressCallback</name></member>
+      <member refid="classapi_1_1_progress_callback_1ad5088dff96b7e7a5a2a2fa9f824d0e02" prot="public" virt="non-virtual"><scope>api::ProgressCallback</scope><name>update</name></member>
+      <member refid="classapi_1_1_progress_callback_1a2d78bebf0cb67f0a50ad7207d827e092" prot="public" virt="non-virtual"><scope>api::ProgressCallback</scope><name>update_function</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

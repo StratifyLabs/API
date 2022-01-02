@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classfs_1_1_file_info" kind="class" language="C++" prot="public">
+    <compoundname>fs::FileInfo</compoundname>
+    <basecompoundref refid="classfs_1_1_open_mode" prot="public" virt="non-virtual">fs::OpenMode</basecompoundref>
+    <includes local="no">FileInfo.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classfs_1_1_file_info_1ae59da3a8393cddcefa1c22848932e1a0" prot="private" static="no" mutable="no">
+        <type>struct stat</type>
+        <definition>struct stat fs::FileInfo::m_stat</definition>
+        <argsstring></argsstring>
+        <name>m_stat</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="329" column="13" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="329" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classfs_1_1_file_info_1a05ce1f5ff9b1bc86cef2bc9f3a5291c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileInfo::FileInfo</definition>
+        <argsstring>()</argsstring>
+        <name>FileInfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="306" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1a58fbb36e60de6153fc1886382a4845bc" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileInfo::FileInfo</definition>
+        <argsstring>(const struct stat &amp;st)</argsstring>
+        <name>FileInfo</name>
+        <param>
+          <type>const struct stat &amp;</type>
+          <declname>st</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="307" column="12" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="307" bodyend="309"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1a977c89f18708de7cb5841cb195b09bcd" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::FileInfo::is_valid</definition>
+        <argsstring>() const</argsstring>
+        <name>is_valid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="311" column="9" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="311" bodyend="311"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1aff29435b1e45f1dab904de33521c8447" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::FileInfo::is_directory</definition>
+        <argsstring>() const</argsstring>
+        <name>is_directory</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="312" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1aae2483d37d8ad701e8b782da75bb7afa" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::FileInfo::is_file</definition>
+        <argsstring>() const</argsstring>
+        <name>is_file</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="313" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1a2a86c367fbfbbd455c75fa86c4d250ee" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::FileInfo::is_device</definition>
+        <argsstring>() const</argsstring>
+        <name>is_device</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="314" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1adfd136047aba7b19e97e177e4bca2ea2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::FileInfo::is_block_device</definition>
+        <argsstring>() const</argsstring>
+        <name>is_block_device</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="315" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1a86ec97e6d663b962e13a95bfc2fca724" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::FileInfo::is_character_device</definition>
+        <argsstring>() const</argsstring>
+        <name>is_character_device</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="316" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1abed4008250cde0cd3f65072b35ae1cb0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::FileInfo::is_socket</definition>
+        <argsstring>() const</argsstring>
+        <name>is_socket</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="317" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1ab1967a23b3d0062825c89c729edf72a2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::FileInfo::is_fifo</definition>
+        <argsstring>() const</argsstring>
+        <name>is_fifo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="318" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1a28ec6f20d6af2c02fe158e632ae13446" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 fs::FileInfo::size</definition>
+        <argsstring>() const</argsstring>
+        <name>size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="319" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1ae12aca6f37623c42084f3c58c351bfbb" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref></type>
+        <definition>Permissions fs::FileInfo::permissions</definition>
+        <argsstring>() const</argsstring>
+        <name>permissions</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="321" column="16" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="321" bodyend="323"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1ad028afe664ceb9c62d08b943d266d7eb" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int fs::FileInfo::owner</definition>
+        <argsstring>() const</argsstring>
+        <name>owner</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="325" column="8" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="325" bodyend="325"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_info_1ac84002664fbf37de37ec3359ef2a85b5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int fs::FileInfo::group</definition>
+        <argsstring>() const</argsstring>
+        <name>group</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="326" column="8" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="326" bodyend="326"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>fs::FileInfo</label>
+        <link refid="classfs_1_1_file_info"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>fs::FileInfoFlags</label>
+        <link refid="classfs_1_1_file_info_flags"/>
+      </node>
+      <node id="2">
+        <label>fs::OpenMode</label>
+        <link refid="classfs_1_1_open_mode"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>fs::FileInfo</label>
+        <link refid="classfs_1_1_file_info"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>fs::FileInfoFlags</label>
+        <link refid="classfs_1_1_file_info_flags"/>
+      </node>
+      <node id="2">
+        <label>fs::OpenMode</label>
+        <link refid="classfs_1_1_open_mode"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="304" column="1" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="304" bodyend="330"/>
+    <listofallmembers>
+      <member refid="classfs_1_1_open_mode_1ac5b343d4b368857ad796f18794dd432c" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>access</name></member>
+      <member refid="classfs_1_1_file_info_flags_1aa8c8d5b66e54b777f3d1ada3d0197930" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>AccessFlags</name></member>
+      <member refid="classfs_1_1_open_mode_1ad1475da7eba5443e6d61e8488a475344" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>append</name></member>
+      <member refid="classfs_1_1_open_mode_1a5d2739a09f04b1ea2e3d97793266b8a5" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>append_read_write</name></member>
+      <member refid="classfs_1_1_open_mode_1a6fe40a6eb18bb8f1f1ced0f3be8ca0ac" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>append_write_only</name></member>
+      <member refid="classfs_1_1_open_mode_1a81f16fb3e8c4b1cbdedca3ab6a6ed9e4" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>create</name></member>
+      <member refid="classfs_1_1_open_mode_1a73e1dd025413a261f6bc9d89425be5ab" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>create_append_write_only</name></member>
+      <member refid="classfs_1_1_open_mode_1adbb79ac5a0bda592b9ef8b0abf76bd48" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>create_truncate</name></member>
+      <member refid="classfs_1_1_file_info_1a05ce1f5ff9b1bc86cef2bc9f3a5291c2" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>FileInfo</name></member>
+      <member refid="classfs_1_1_file_info_1a58fbb36e60de6153fc1886382a4845bc" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>FileInfo</name></member>
+      <member refid="classfs_1_1_file_info_1ac84002664fbf37de37ec3359ef2a85b5" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>group</name></member>
+      <member refid="classfs_1_1_open_mode_1a1225ecff23511c050cea4c6778bb68fa" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_append</name></member>
+      <member refid="classfs_1_1_file_info_1adfd136047aba7b19e97e177e4bca2ea2" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_block_device</name></member>
+      <member refid="classfs_1_1_file_info_1a86ec97e6d663b962e13a95bfc2fca724" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_character_device</name></member>
+      <member refid="classfs_1_1_open_mode_1a6d5e9e5e59a6486b223a8e52fff43108" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_create</name></member>
+      <member refid="classfs_1_1_file_info_1a2a86c367fbfbbd455c75fa86c4d250ee" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_device</name></member>
+      <member refid="classfs_1_1_file_info_1aff29435b1e45f1dab904de33521c8447" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_directory</name></member>
+      <member refid="classfs_1_1_open_mode_1aabd19bd164a43109f21e300443a8e651" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_exclusive</name></member>
+      <member refid="classfs_1_1_file_info_1ab1967a23b3d0062825c89c729edf72a2" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_fifo</name></member>
+      <member refid="classfs_1_1_file_info_1aae2483d37d8ad701e8b782da75bb7afa" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_file</name></member>
+      <member refid="classfs_1_1_open_mode_1a0a75b134342d2b8c45d8ab4007e1c88b" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_non_blocking</name></member>
+      <member refid="classfs_1_1_open_mode_1ad6de8b2940d251ce8503eb0d95ea4906" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_read_only</name></member>
+      <member refid="classfs_1_1_open_mode_1ab340d3fb5406eae30983ce9b362dedd3" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_read_write</name></member>
+      <member refid="classfs_1_1_file_info_1abed4008250cde0cd3f65072b35ae1cb0" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_socket</name></member>
+      <member refid="classfs_1_1_open_mode_1a9917cd51c2a1d4db4d18892abe92b9ff" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_truncate</name></member>
+      <member refid="classfs_1_1_file_info_1a977c89f18708de7cb5841cb195b09bcd" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_valid</name></member>
+      <member refid="classfs_1_1_open_mode_1ac1c5065cb0a3571ad809d59527aa828a" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>is_write_only</name></member>
+      <member refid="classfs_1_1_file_info_1ae59da3a8393cddcefa1c22848932e1a0" prot="private" virt="non-virtual"><scope>fs::FileInfo</scope><name>m_stat</name></member>
+      <member refid="classfs_1_1_open_mode_1acc48a25622a68dfce0a2b8516b1e8326" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>o_flags</name></member>
+      <member refid="classfs_1_1_file_info_flags_1a79f31ab4b6deb27ede7b26193adb5c1d" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>OpenFlags</name></member>
+      <member refid="classfs_1_1_open_mode_1aaea5a754bc69d376da33d4f10ee21357" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>OpenMode</name></member>
+      <member refid="classfs_1_1_open_mode_1a274e29cafdc28e1f4bad9227a7b3579c" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>OpenMode</name></member>
+      <member refid="classfs_1_1_file_info_1ad028afe664ceb9c62d08b943d266d7eb" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>owner</name></member>
+      <member refid="classfs_1_1_file_info_flags_1aab8959020c647fca0f3d80e0101b5abf" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>PermissionFlags</name></member>
+      <member refid="classfs_1_1_file_info_1ae12aca6f37623c42084f3c58c351bfbb" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>permissions</name></member>
+      <member refid="classfs_1_1_open_mode_1a751d3dd39d9f50ff529c8a955bb7b6be" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>read_only</name></member>
+      <member refid="classfs_1_1_open_mode_1a200f68e6902aa665179255291a303111" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>read_write</name></member>
+      <member refid="classfs_1_1_open_mode_1a2cdaee03788a3ca499bfa8a0f564edf8" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>set_append</name></member>
+      <member refid="classfs_1_1_open_mode_1a8e5a08935b7921fde6a780bd93435d05" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>set_create</name></member>
+      <member refid="classfs_1_1_open_mode_1ab52df834f18a59e38d018775997f0902" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>set_exclusive</name></member>
+      <member refid="classfs_1_1_open_mode_1ae85ba95f72aef4a8165fee83b2098afd" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>set_non_blocking</name></member>
+      <member refid="classfs_1_1_open_mode_1a962bd758cad028bb7359253d1d2cf494" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>set_read_only</name></member>
+      <member refid="classfs_1_1_open_mode_1a09f0354abc63c5c2ec445f427e53ced0" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>set_read_write</name></member>
+      <member refid="classfs_1_1_open_mode_1a0ccdbbc19cd9bcdcbbafe7b29391bb66" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>set_truncate</name></member>
+      <member refid="classfs_1_1_open_mode_1a1e14f3cedc2c0e1c6ebfdc2f68b8c169" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>set_write_only</name></member>
+      <member refid="classfs_1_1_file_info_1a28ec6f20d6af2c02fe158e632ae13446" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>size</name></member>
+      <member refid="classfs_1_1_file_info_flags_1ad1f26cc0bce96368db7bd5c4d5b59704" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>TypeFlags</name></member>
+      <member refid="classfs_1_1_open_mode_1acba431eb4041c71ede2c5dc54eff7282" prot="public" virt="non-virtual"><scope>fs::FileInfo</scope><name>write_only</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

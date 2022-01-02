@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="dir_7fec5fa76bd86cb11c2a4b2e83f07905" kind="dir">
+    <compoundname>ChronoAPI</compoundname>
+    <innerdir refid="dir_a81d71fff193c9716f5fe785574063fc">include</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ChronoAPI/"/>
+  </compounddef>
+</doxygen>

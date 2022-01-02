@@ -1,0 +1,290 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="namespacevar" kind="namespace" language="C++">
+    <compoundname>var</compoundname>
+    <innerclass refid="classvar_1_1_array" prot="public">var::Array</innerclass>
+    <innerclass refid="classvar_1_1_base64" prot="public">var::Base64</innerclass>
+    <innerclass refid="classvar_1_1_base64_decoder" prot="public">var::Base64Decoder</innerclass>
+    <innerclass refid="classvar_1_1_base64_encoder" prot="public">var::Base64Encoder</innerclass>
+    <innerclass refid="classvar_1_1_bits" prot="public">var::Bits</innerclass>
+    <innerclass refid="classvar_1_1_container_object" prot="public">var::ContainerObject</innerclass>
+    <innerclass refid="classvar_1_1_data" prot="public">var::Data</innerclass>
+    <innerclass refid="classvar_1_1_data_info" prot="public">var::DataInfo</innerclass>
+    <innerclass refid="classvar_1_1_deque" prot="public">var::Deque</innerclass>
+    <innerclass refid="classvar_1_1_general_string" prot="public">var::GeneralString</innerclass>
+    <innerclass refid="classvar_1_1_id_string" prot="public">var::IdString</innerclass>
+    <innerclass refid="classvar_1_1_key_string" prot="public">var::KeyString</innerclass>
+    <innerclass refid="classvar_1_1_matrix" prot="public">var::Matrix</innerclass>
+    <innerclass refid="classvar_1_1_name_string" prot="public">var::NameString</innerclass>
+    <innerclass refid="classvar_1_1_number_string" prot="public">var::NumberString</innerclass>
+    <innerclass refid="classvar_1_1_pair" prot="public">var::Pair</innerclass>
+    <innerclass refid="classvar_1_1_path_string" prot="public">var::PathString</innerclass>
+    <innerclass refid="classvar_1_1_queue" prot="public">var::Queue</innerclass>
+    <innerclass refid="classvar_1_1_ring" prot="public">var::Ring</innerclass>
+    <innerclass refid="classvar_1_1_stack" prot="public">var::Stack</innerclass>
+    <innerclass refid="classvar_1_1_stack_string" prot="public">var::StackString</innerclass>
+    <innerclass refid="classvar_1_1_string" prot="public">var::String</innerclass>
+    <innerclass refid="classvar_1_1_string_view" prot="public">var::StringView</innerclass>
+    <innerclass refid="classvar_1_1_tokenizer" prot="public">var::Tokenizer</innerclass>
+    <innerclass refid="classvar_1_1_transformer" prot="public">var::Transformer</innerclass>
+    <innerclass refid="classvar_1_1_vector" prot="public">var::Vector</innerclass>
+    <innerclass refid="classvar_1_1_view" prot="public">var::View</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="namespacevar_1ab8da8f9be9708e0504562baa3f7bb09d" prot="public" static="no">
+        <type><ref refid="classvar_1_1_number_string" kindref="compound">NumberString</ref></type>
+        <definition>using var::StackString64 = typedef NumberString</definition>
+        <argsstring></argsstring>
+        <name>StackString64</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StackString.hpp" line="304" column="1" bodyfile="API/libraries/VarAPI/include/var/StackString.hpp" bodystart="304" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="namespacevar_1ae6d46a5a5b3922626c34c5a470414ce0" prot="public" static="no">
+        <type><ref refid="classvar_1_1_vector" kindref="compound">Vector</ref>&lt; <ref refid="classvar_1_1_string" kindref="compound">String</ref> &gt;</type>
+        <definition>using var::StringList = typedef Vector&lt;String&gt;</definition>
+        <argsstring></argsstring>
+        <name>StringList</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="326" column="1" bodyfile="API/libraries/VarAPI/include/var/String.hpp" bodystart="326" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="namespacevar_1a6ecee59ce59f51bcc0a1189ed84d554a" prot="public" static="no">
+        <type><ref refid="classvar_1_1_vector" kindref="compound">Vector</ref>&lt; <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref> &gt;</type>
+        <definition>using var::StringViewList = typedef Vector&lt;StringView&gt;</definition>
+        <argsstring></argsstring>
+        <name>StringViewList</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="226" column="1" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="226" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="namespacevar_1a36f3577938a5e5a0d25122dcd2381ab9" prot="public" static="no">
+        <type><ref refid="classvar_1_1_tokenizer" kindref="compound">Tokenizer</ref></type>
+        <definition>typedef Tokenizer var::Token</definition>
+        <argsstring></argsstring>
+        <name>Token</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Tokenizer.hpp" line="40" column="19" bodyfile="API/libraries/VarAPI/include/var/Tokenizer.hpp" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="namespacevar_1a5b203af4c63c908ff786a8d80e6e84ab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">printer::Printer</ref> &amp;</type>
+        <definition>printer::Printer &amp; var::operator&lt;&lt;</definition>
+        <argsstring>(printer::Printer &amp;printer, const Matrix&lt; T &gt; &amp;matrix)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type><ref refid="classprinter_1_1_printer" kindref="compound">printer::Printer</ref> &amp;</type>
+          <declname>printer</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classvar_1_1_matrix" kindref="compound">Matrix</ref>&lt; T &gt; &amp;</type>
+          <declname>matrix</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Matrix.hpp" line="68" column="1" bodyfile="API/libraries/VarAPI/include/var/Matrix.hpp" bodystart="69" bodyend="83"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacevar_1a331680fd15fb1537023be86d5828513e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_path_string" kindref="compound">PathString</ref></type>
+        <definition>PathString var::operator&amp;</definition>
+        <argsstring>(const StringView lhs, const StringView rhs)</argsstring>
+        <name>operator&amp;</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>lhs</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StackString.hpp" line="233" column="12" declfile="API/libraries/VarAPI/include/var/StackString.hpp" declline="233" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacevar_1ac5fc826094648ab7aab81bc04e47ef2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_path_string" kindref="compound">PathString</ref></type>
+        <definition>PathString var::operator/</definition>
+        <argsstring>(const StringView lhs, const StringView rhs)</argsstring>
+        <name>operator/</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>lhs</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StackString.hpp" line="234" column="12" declfile="API/libraries/VarAPI/include/var/StackString.hpp" declline="234" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacevar_1a12affee639138783e9f32808d8770750" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_general_string" kindref="compound">GeneralString</ref></type>
+        <definition>GeneralString var::operator|</definition>
+        <argsstring>(StringView lhs, StringView rhs)</argsstring>
+        <name>operator|</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>lhs</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StackString.hpp" line="257" column="15" declfile="API/libraries/VarAPI/include/var/StackString.hpp" declline="257" declcolumn="15"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacevar_1abe580a67cadc084787f83a9f43ff3481" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string" kindref="compound">String</ref></type>
+        <definition>String var::operator+</definition>
+        <argsstring>(StringView lhs, const String &amp;rhs)</argsstring>
+        <name>operator+</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>lhs</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classvar_1_1_string" kindref="compound">String</ref> &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="321" column="8" declfile="API/libraries/VarAPI/include/var/String.hpp" declline="321" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacevar_1aebbd64f7ea5551a91366045da8c81bb6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string" kindref="compound">String</ref></type>
+        <definition>String var::operator+</definition>
+        <argsstring>(StringView lhs, StringView rhs)</argsstring>
+        <name>operator+</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>lhs</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="322" column="8" declfile="API/libraries/VarAPI/include/var/String.hpp" declline="322" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacevar_1aeec2fc14c5a6bb40cfc239c02d524f08" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string" kindref="compound">String</ref></type>
+        <definition>String var::operator+</definition>
+        <argsstring>(const String &amp;lhs, StringView rhs)</argsstring>
+        <name>operator+</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string" kindref="compound">String</ref> &amp;</type>
+          <declname>lhs</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="323" column="8" declfile="API/libraries/VarAPI/include/var/String.hpp" declline="323" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacevar_1a9c21e7bd6040c6f6d74c4081f3186dfe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string" kindref="compound">String</ref></type>
+        <definition>String var::operator+</definition>
+        <argsstring>(StringView lhs, String &amp;&amp;rhs)</argsstring>
+        <name>operator+</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>lhs</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string" kindref="compound">String</ref> &amp;&amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="324" column="8" declfile="API/libraries/VarAPI/include/var/String.hpp" declline="324" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacevar_1a92a73a6163a153697b1ae09ad7595f47" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::operator==</definition>
+        <argsstring>(const char *lhs, StringView rhs)</argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const char *</type>
+          <declname>lhs</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="224" column="13" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="224" bodyend="224"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para><ref refid="classvar_1_1_data" kindref="compound">Data</ref> Management. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>The var namespace is a collection of data storage mechanisms and routines such as buffers and strings. </para>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var.hpp" line="12" column="1"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,1594 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classprinter_1_1_printer" kind="class" language="C++" prot="public">
+    <compoundname>printer::Printer</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <basecompoundref refid="structprinter_1_1_printer_flags" prot="public" virt="non-virtual">printer::PrinterFlags</basecompoundref>
+    <derivedcompoundref refid="classprinter_1_1_json_printer" prot="public" virt="non-virtual">printer::JsonPrinter</derivedcompoundref>
+    <derivedcompoundref refid="classprinter_1_1_markdown_printer" prot="public" virt="non-virtual">printer::MarkdownPrinter</derivedcompoundref>
+    <derivedcompoundref refid="classprinter_1_1_null_printer" prot="public" virt="non-virtual">printer::NullPrinter</derivedcompoundref>
+    <derivedcompoundref refid="classprinter_1_1_yaml_printer" prot="public" virt="non-virtual">printer::YamlPrinter</derivedcompoundref>
+    <includes local="no">Printer.hpp</includes>
+    <innerclass refid="classprinter_1_1_printer_1_1_array" prot="public">printer::Printer::Array</innerclass>
+    <innerclass refid="classprinter_1_1_printer_1_1_container_access" prot="protected">printer::Printer::ContainerAccess</innerclass>
+    <innerclass refid="classprinter_1_1_printer_1_1_flag_scope" prot="public">printer::Printer::FlagScope</innerclass>
+    <innerclass refid="classprinter_1_1_printer_1_1_level_scope" prot="public">printer::Printer::LevelScope</innerclass>
+    <innerclass refid="classprinter_1_1_printer_1_1_object" prot="public">printer::Printer::Object</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="classprinter_1_1_printer_1a645180927c5f9c0187ee7f62797dcee9" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>IsNewline</name>
+        <enumvalue id="classprinter_1_1_printer_1a645180927c5f9c0187ee7f62797dcee9a7fa3b767c460b54a2be4d49030b349c7" prot="public">
+          <name>no</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classprinter_1_1_printer_1a645180927c5f9c0187ee7f62797dcee9aa6105c0a611b41b08f1209506350279e" prot="public">
+          <name>yes</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="279" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="279" bodyend="279"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classprinter_1_1_printer_1a6794af9b1268003c6bacb95c576d0ef0" prot="public" static="no">
+        <type><ref refid="classprinter_1_1_printer_1_1_flag_scope" kindref="compound">FlagScope</ref></type>
+        <definition>using printer::Printer::FlagGuard =  FlagScope</definition>
+        <argsstring></argsstring>
+        <name>FlagGuard</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="190" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="190" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classprinter_1_1_printer_1a4aa2c1781a670addfa7a0e2fec9f0533" prot="public" static="no">
+        <type><ref refid="classprinter_1_1_printer_1_1_level_scope" kindref="compound">LevelScope</ref></type>
+        <definition>using printer::Printer::LevelGuard =  LevelScope</definition>
+        <argsstring></argsstring>
+        <name>LevelGuard</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="204" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="204" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classprinter_1_1_printer_1a0daaf209d4b6db19709ced3d566d859d" prot="private" static="no" mutable="no">
+        <type><ref refid="classapi_1_1_progress_callback" kindref="compound">api::ProgressCallback</ref></type>
+        <definition>api::ProgressCallback printer::Printer::m_progress_callback</definition>
+        <argsstring></argsstring>
+        <name>m_progress_callback</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="346" column="25" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="346" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1afae435aac12b39a2cf729d7471863e76" prot="private" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 printer::Printer::m_progress_width</definition>
+        <argsstring></argsstring>
+        <name>m_progress_width</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="347" column="7" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="347" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1a68e2cb0a18bc77733371905f32e0e6b4" prot="private" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 printer::Printer::m_progress_state</definition>
+        <argsstring></argsstring>
+        <name>m_progress_state</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="348" column="7" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="348" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1a5c80cacacae9eb97075fccf247160c0a" prot="private" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 printer::Printer::m_progress_key_state</definition>
+        <argsstring></argsstring>
+        <name>m_progress_key_state</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="349" column="7" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="349" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1afcfb4bec5ab696f7eee6dd0f552774df" prot="private" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 printer::Printer::m_indent</definition>
+        <argsstring></argsstring>
+        <name>m_indent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="350" column="7" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="350" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1a493774d3648cdc3c78e16086b2a0a919" prot="private" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 printer::Printer::m_indent_size</definition>
+        <argsstring></argsstring>
+        <name>m_indent_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="351" column="7" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="351" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1a0ea51d34e51b5333a0383626b38c7114" prot="private" static="no" mutable="no">
+        <type><ref refid="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" kindref="member">Flags</ref></type>
+        <definition>Flags printer::Printer::m_print_flags</definition>
+        <argsstring></argsstring>
+        <name>m_print_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="352" column="9" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="352" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1a4f98791ba6d1ff7a47ef73d3bb5f805a" prot="private" static="no" mutable="no">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>var::StringView printer::Printer::m_progress_key</definition>
+        <argsstring></argsstring>
+        <name>m_progress_key</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="353" column="19" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="353" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1adddb3f5f19b7f85acdadb1ea2ea2da12" prot="private" static="no" mutable="no">
+        <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+        <definition>Level printer::Printer::m_verbose_level</definition>
+        <argsstring></argsstring>
+        <name>m_verbose_level</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="354" column="9" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="354" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classprinter_1_1_printer_1a4fb87d0c4d818902da36b33f99b6a485" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>printer::Printer::Printer</definition>
+        <argsstring>()</argsstring>
+        <name>Printer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="103" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a8c69684486638b55c0522834e9e701bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>printer::Printer::~Printer</definition>
+        <argsstring>()</argsstring>
+        <name>~Printer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="104" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a730a6af145675f41be6421ff5dccb672" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::Printer::set_format_code</definition>
+        <argsstring>(u32 code)</argsstring>
+        <name>set_format_code</name>
+        <param>
+          <type>u32</type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="108" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a6ecfa9998d077638c7ed5811badf0949" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::Printer::clear_format_code</definition>
+        <argsstring>(u32 code)</argsstring>
+        <name>clear_format_code</name>
+        <param>
+          <type>u32</type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="109" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a85a7b8ffd515cedc14a525ea2b9337f7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::Printer::clear_format_code</definition>
+        <argsstring>(FormatType code)</argsstring>
+        <name>clear_format_code</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6" kindref="member">FormatType</ref></type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="110" column="8" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="110" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a55df3f44b8276495a002304a451b9f82" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::Printer::set_format_code</definition>
+        <argsstring>(FormatType code)</argsstring>
+        <name>set_format_code</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6" kindref="member">FormatType</ref></type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="114" column="8" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="114" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1af9837defdcb8b29f0b5b65ad162c05a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::Printer::set_color_code</definition>
+        <argsstring>(u32 code)</argsstring>
+        <name>set_color_code</name>
+        <param>
+          <type>u32</type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="118" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a821f0a3f20c56190883c85cf80fe3bf3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::Printer::clear_color_code</definition>
+        <argsstring>()</argsstring>
+        <name>clear_color_code</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="119" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1abbd4cd566dc6b661d76cac82ae90c6bb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::Printer::set_color_code</definition>
+        <argsstring>(ColorCode code)</argsstring>
+        <name>set_color_code</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2" kindref="member">ColorCode</ref></type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="121" column="8" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="121" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ae8ca7074424d34befad40b436cc1e724" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(s32 a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>s32</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="125" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ab521ff0d8c73a28250c8f947b56fd15f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(u32 a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>u32</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="126" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1afe61918bb5aa5fdcc0625473b682c468" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(s16 a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>s16</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="127" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ab2bf12bf763bc0f14f09e57c397e082d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(u16 a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>u16</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="128" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1acaded67c204b32d9ebc2378f40019806" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(s8 a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>s8</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="129" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a8ecb06b9104152001a410167323a5605" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(u8 a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>u8</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="130" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1aead81564c0e3ef87b0d654492462c1d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(float a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>float</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="131" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a644a4825dd7d757eaf65fbcfdf21ce00" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(void *a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>void *</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="132" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1af614ec17d0d8b05080733eb00e1e58cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(var::StringView a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="133" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1af52a96f110a38d74e1457daf3009af36" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(var::View a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="134" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1af90071e21dc137df82a0dd781d3831e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(const var::String &amp;a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string" kindref="compound">var::String</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="135" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a6b95fbe7cf990bb667c9e24137d2cefe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(const var::StringList &amp;a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>const <ref refid="namespacevar_1ae6d46a5a5b3922626c34c5a470414ce0" kindref="member">var::StringList</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="136" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a7d32dbfe47a252e90656adecd01c79c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(const var::StringViewList &amp;a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>const <ref refid="namespacevar_1a6ecee59ce59f51bcc0a1189ed84d554a" kindref="member">var::StringViewList</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="137" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a87c3610e417d243f100fc853575241cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(const api::Error &amp;error_context)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>const <ref refid="classapi_1_1_error" kindref="compound">api::Error</ref> &amp;</type>
+          <declname>error_context</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="138" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a13f82eb2a5084eed331ff411ccb91924" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::operator&lt;&lt;</definition>
+        <argsstring>(const var::DataInfo &amp;a)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_data_info" kindref="compound">var::DataInfo</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="140" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a7b8b03a118fa9ed613c6f756eb3f2bd4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::set_verbose_level</definition>
+        <argsstring>(Level level)</argsstring>
+        <name>set_verbose_level</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>level</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="143" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="143" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a6c730298caef57374c9e406c386eb650" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::set_verbose_level</definition>
+        <argsstring>(var::StringView level)</argsstring>
+        <name>set_verbose_level</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>level</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="148" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1afd00702412a4397fea19a7533772501e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+        <definition>Level printer::Printer::verbose_level</definition>
+        <argsstring>() const</argsstring>
+        <name>verbose_level</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="150" column="9" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="150" bodyend="150"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1acf5cb38156a7d1a38756ee31e4e2dd74" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::trace</definition>
+        <argsstring>(const char *function, int line, var::StringView message)</argsstring>
+        <name>trace</name>
+        <param>
+          <type>const char *</type>
+          <declname>function</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>line</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="152" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a2e234c0ab3e443c5b468f3edbac4f615" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::debug</definition>
+        <argsstring>(var::StringView a)</argsstring>
+        <name>debug</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="153" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a3124cc06ddd6301b88e4c5b6a5e41ad3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::message</definition>
+        <argsstring>(var::StringView a)</argsstring>
+        <name>message</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="154" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ab108c7894118836b26914f19d165585d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::info</definition>
+        <argsstring>(var::StringView a)</argsstring>
+        <name>info</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="155" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ae1ac21257e02f9e73ddad2d9919407bf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::warning</definition>
+        <argsstring>(var::StringView a)</argsstring>
+        <name>warning</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="156" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1af58fa658833ffc4504842356e82dea60" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::error</definition>
+        <argsstring>(var::StringView a)</argsstring>
+        <name>error</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="157" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ae47c77e600470dc81bb335424a0597f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::fatal</definition>
+        <argsstring>(var::StringView a)</argsstring>
+        <name>fatal</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="158" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a9749a0efebd453a22731c502b54e67c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::newline</definition>
+        <argsstring>()</argsstring>
+        <name>newline</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="159" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1afbbec1c5ad59f43cc984317d9da494c9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::error</definition>
+        <argsstring>(api::PrivateExecutionContext result, u32 line_number)</argsstring>
+        <name>error</name>
+        <param>
+          <type><ref refid="classapi_1_1_private_execution_context" kindref="compound">api::PrivateExecutionContext</ref></type>
+          <declname>result</declname>
+        </param>
+        <param>
+          <type>u32</type>
+          <declname>line_number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="161" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a94b1db13551a54d40ecfd864ff913139" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::enable_flags</definition>
+        <argsstring>(Flags value)</argsstring>
+        <name>enable_flags</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" kindref="member">Flags</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="163" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="163" bodyend="166"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a4705e9660b890fe0516b8ed2cf857321" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::disable_flags</definition>
+        <argsstring>(Flags value)</argsstring>
+        <name>disable_flags</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" kindref="member">Flags</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="167" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="167" bodyend="170"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ae5b2fc1b0569a3dd165f72083229d5db" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" kindref="member">Flags</ref></type>
+        <definition>Flags printer::Printer::flags</definition>
+        <argsstring>() const</argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="172" column="9" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="172" bodyend="172"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1abfbe04bd833d9a9527d6622d34af13d7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::set_flags</definition>
+        <argsstring>(Flags value)</argsstring>
+        <name>set_flags</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" kindref="member">Flags</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="173" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="173" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1aa201a118ad355398f0622873643e27e5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const <ref refid="classapi_1_1_progress_callback" kindref="compound">api::ProgressCallback</ref> *</type>
+        <definition>const api::ProgressCallback * printer::Printer::progress_callback</definition>
+        <argsstring>() const</argsstring>
+        <name>progress_callback</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="206" column="32" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="206" bodyend="208"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a4c0919a788f00dae7e5064f160f998dc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool printer::Printer::update_progress</definition>
+        <argsstring>(int progress, int total)</argsstring>
+        <name>update_progress</name>
+        <param>
+          <type>int</type>
+          <declname>progress</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>total</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="215" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a5363fab3913492a129821270df01d734" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::set_progress_key</definition>
+        <argsstring>(var::StringView progress_key)</argsstring>
+        <name>set_progress_key</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>progress_key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="217" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="217" bodyend="222"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a787b50d547dae7ad353558f344211dc3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::set_indent_size</definition>
+        <argsstring>(u16 value)</argsstring>
+        <name>set_indent_size</name>
+        <param>
+          <type>u16</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="224" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="224" bodyend="227"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1acfbbbfd93487986e77fb4800a5290f84" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 printer::Printer::indent_size</definition>
+        <argsstring>() const</argsstring>
+        <name>indent_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="229" column="7" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="229" bodyend="231"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ae47c280740f828b7fb48081a817bc046" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::set_progress_width</definition>
+        <argsstring>(u16 value)</argsstring>
+        <name>set_progress_width</name>
+        <param>
+          <type>u16</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="233" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="233" bodyend="236"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a321fd30fb725303a10590f43be96d46c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>var::StringView printer::Printer::progress_key</definition>
+        <argsstring>() const</argsstring>
+        <name>progress_key</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="238" column="20" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="238" bodyend="238"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a10b36cd8f80e30197ba4f81bb07f72fb" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" kindref="member">Flags</ref></type>
+        <definition>Flags printer::Printer::o_flags</definition>
+        <argsstring>() const</argsstring>
+        <name>o_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="248" column="10" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="248" bodyend="248"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ad8a7e662b966f7ac1b7fd7782b4cbf8e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::key_bool</definition>
+        <argsstring>(var::StringView key, bool value)</argsstring>
+        <name>key_bool</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="250" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1aa867d093aaae14e638494778a5b24de7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::key</definition>
+        <argsstring>(var::StringView key, var::StringView a)</argsstring>
+        <name>key</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="251" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a08632c11c0e1c900a9aebc279ac58d0e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::key</definition>
+        <argsstring>(var::StringView key, const var::String &amp;a)</argsstring>
+        <name>key</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classvar_1_1_string" kindref="compound">var::String</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="252" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1aa1221c600660b8ff0151064e233718cc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::object</definition>
+        <argsstring>(var::StringView key, const T &amp;value, Level level=Level::fatal)</argsstring>
+        <name>object</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const T &amp;</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>level</declname>
+          <defval><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578fadf6402fd9ecc60f5a2159fdf45711cd4" kindref="member">Level::fatal</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="255" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="255" bodyend="261"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a4bf8c77b443d0ca34b43b4c92e84a361" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::array</definition>
+        <argsstring>(const var::StringView key, const T &amp;value, Level level=Level::fatal)</argsstring>
+        <name>array</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const T &amp;</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>level</declname>
+          <defval><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578fadf6402fd9ecc60f5a2159fdf45711cd4" kindref="member">Level::fatal</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="264" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="264" bodyend="270"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a959c25c3c569cc100787ba8a236ebb3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::open_object</definition>
+        <argsstring>(var::StringView key, Level level=Level::fatal)</argsstring>
+        <name>open_object</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>level</declname>
+          <defval><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578fadf6402fd9ecc60f5a2159fdf45711cd4" kindref="member">Level::fatal</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="272" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a6ac4fbebbe0a02cc1b1f9d63d9e5b31b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::close_object</definition>
+        <argsstring>()</argsstring>
+        <name>close_object</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="273" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ada37e51eb14f9541a189b27155753e0b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::open_array</definition>
+        <argsstring>(var::StringView key, Level level=Level::fatal)</argsstring>
+        <name>open_array</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>level</declname>
+          <defval><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578fadf6402fd9ecc60f5a2159fdf45711cd4" kindref="member">Level::fatal</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="274" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a93dd732c80b78fe8fe17cf5e132aab97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer &amp; printer::Printer::close_array</definition>
+        <argsstring>()</argsstring>
+        <name>close_array</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="275" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a5845da8e40fb25ec17adc0eb29c28420" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>var::StringView printer::Printer::terminal_color_code</definition>
+        <argsstring>(ColorCode code)</argsstring>
+        <name>terminal_color_code</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2" kindref="member">ColorCode</ref></type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="277" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a81fdfcf02fea881c672e96340c414be6" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void printer::Printer::print_open_object</definition>
+        <argsstring>(Level verbose_level, var::StringView key)</argsstring>
+        <name>print_open_object</name>
+        <reimplementedby refid="classprinter_1_1_json_printer_1acb0e844b31f480ea060e638ef18c036d">print_open_object</reimplementedby>
+        <reimplementedby refid="classprinter_1_1_markdown_printer_1a4cc9cf1dc5865f8792033c8120491749">print_open_object</reimplementedby>
+        <reimplementedby refid="classprinter_1_1_yaml_printer_1a0c0d70b342eee155d69046a1d7e2326d">print_open_object</reimplementedby>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>verbose_level</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="281" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ac467e16b4a8fdd5e17e79e138b902f3d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void printer::Printer::print_close_object</definition>
+        <argsstring>()</argsstring>
+        <name>print_close_object</name>
+        <reimplementedby refid="classprinter_1_1_json_printer_1a64eac8f1aa1cd6d2d04cacd71ed487ad">print_close_object</reimplementedby>
+        <reimplementedby refid="classprinter_1_1_markdown_printer_1a99364a3fd93ffae37652bb3d3db80c76">print_close_object</reimplementedby>
+        <reimplementedby refid="classprinter_1_1_yaml_printer_1ac2dcf89fea9ccfa349fb769b155752fb">print_close_object</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="282" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a8c64d262c40bb8d762cbb8bf3d12c632" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void printer::Printer::print_open_array</definition>
+        <argsstring>(Level verbose_level, var::StringView key)</argsstring>
+        <name>print_open_array</name>
+        <reimplementedby refid="classprinter_1_1_json_printer_1a274c2adb3281fca331417a02a6739d99">print_open_array</reimplementedby>
+        <reimplementedby refid="classprinter_1_1_yaml_printer_1ac0fb40b67a50659c9ed0fedb377cd69d">print_open_array</reimplementedby>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>verbose_level</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="284" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a8b1c0864bcb98826f8ae87818ca705a9" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void printer::Printer::print_close_array</definition>
+        <argsstring>()</argsstring>
+        <name>print_close_array</name>
+        <reimplementedby refid="classprinter_1_1_json_printer_1ac9bbb44c152e64dd7f3170ebdfdfe974">print_close_array</reimplementedby>
+        <reimplementedby refid="classprinter_1_1_yaml_printer_1a01c95b6582dd90bdf1465b56c776fa88">print_close_array</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="285" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a962407a90d9dceec0799af35caef1dfd" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void printer::Printer::print</definition>
+        <argsstring>(Level level, var::StringView key, var::StringView value, IsNewline is_newline)</argsstring>
+        <name>print</name>
+        <reimplementedby refid="classprinter_1_1_json_printer_1aa0d42afeed8a7da77a4cbb4e132f21c5">print</reimplementedby>
+        <reimplementedby refid="classprinter_1_1_markdown_printer_1a2c467f0043799eb05269b15eab66bc21">print</reimplementedby>
+        <reimplementedby refid="classprinter_1_1_yaml_printer_1abdda9eb2bb71fcff1b4a6ea5b7d17443">print</reimplementedby>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>level</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type><ref refid="classprinter_1_1_printer_1a645180927c5f9c0187ee7f62797dcee9" kindref="member">IsNewline</ref></type>
+          <declname>is_newline</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="287" column="16"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classprinter_1_1_printer_1a66221e3b837ca4797c304a708883ca1b" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2" kindref="member">ColorCode</ref></type>
+        <definition>static ColorCode printer::Printer::color_code</definition>
+        <argsstring>(var::StringView color)</argsstring>
+        <name>color_code</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>color</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="106" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1ac48c9fec3546c54cce9594cb38722292" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool printer::Printer::update_progress_callback</definition>
+        <argsstring>(void *context, int progress, int total)</argsstring>
+        <name>update_progress_callback</name>
+        <param>
+          <type>void *</type>
+          <declname>context</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>progress</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>total</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="210" column="15" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="210" bodyend="213"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a2ff7ff47bc3fcd08fcf93ad472cff11b" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char</type>
+        <definition>static char printer::Printer::get_bitmap_pixel_character</definition>
+        <argsstring>(u32 color, u8 bits_per_pixel)</argsstring>
+        <name>get_bitmap_pixel_character</name>
+        <param>
+          <type>u32</type>
+          <declname>color</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>bits_per_pixel</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="239" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1a26f7057827b3f4ab34b81b43c246fd13" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>static u32 printer::Printer::get_bitmap_pixel_color</definition>
+        <argsstring>(char c, u8 bits_per_pixel)</argsstring>
+        <name>get_bitmap_pixel_color</name>
+        <param>
+          <type>char</type>
+          <declname>c</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>bits_per_pixel</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="241" column="15"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classprinter_1_1_printer_1a95bc440379e877c0c5b85a62139231cf" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void printer::Printer::interface_print_final</definition>
+        <argsstring>(var::StringView view)</argsstring>
+        <name>interface_print_final</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>view</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="337" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1aed532677dc74f5f7b2156b4d26076276" prot="protected" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::Printer::write_fileno</definition>
+        <argsstring>(int fd, var::StringView view) const</argsstring>
+        <name>write_fileno</name>
+        <param>
+          <type>int</type>
+          <declname>fd</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>view</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="339" column="8"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="4">
+        <label>printer::JsonPrinter</label>
+        <link refid="classprinter_1_1_json_printer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>printer::MarkdownPrinter</label>
+        <link refid="classprinter_1_1_markdown_printer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>printer::NullPrinter</label>
+        <link refid="classprinter_1_1_null_printer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>printer::Printer</label>
+        <link refid="classprinter_1_1_printer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>printer::PrinterFlags</label>
+        <link refid="structprinter_1_1_printer_flags"/>
+      </node>
+      <node id="7">
+        <label>printer::YamlPrinter</label>
+        <link refid="classprinter_1_1_yaml_printer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>printer::Printer</label>
+        <link refid="classprinter_1_1_printer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>printer::PrinterFlags</label>
+        <link refid="structprinter_1_1_printer_flags"/>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="101" column="1" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="101" bodyend="359"/>
+    <listofallmembers>
+      <member refid="classprinter_1_1_printer_1a4bf8c77b443d0ca34b43b4c92e84a361" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>array</name></member>
+      <member refid="classprinter_1_1_printer_1a821f0a3f20c56190883c85cf80fe3bf3" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>clear_color_code</name></member>
+      <member refid="classprinter_1_1_printer_1a6ecfa9998d077638c7ed5811badf0949" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>clear_format_code</name></member>
+      <member refid="classprinter_1_1_printer_1a85a7b8ffd515cedc14a525ea2b9337f7" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>clear_format_code</name></member>
+      <member refid="classprinter_1_1_printer_1a93dd732c80b78fe8fe17cf5e132aab97" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>close_array</name></member>
+      <member refid="classprinter_1_1_printer_1a6ac4fbebbe0a02cc1b1f9d63d9e5b31b" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>close_object</name></member>
+      <member refid="classprinter_1_1_printer_1a66221e3b837ca4797c304a708883ca1b" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>color_code</name></member>
+      <member refid="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>ColorCode</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>context_count</name></member>
+      <member refid="classprinter_1_1_printer_1a2e234c0ab3e443c5b468f3edbac4f615" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>debug</name></member>
+      <member refid="classprinter_1_1_printer_1a4705e9660b890fe0516b8ed2cf857321" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>disable_flags</name></member>
+      <member refid="classprinter_1_1_printer_1a94b1db13551a54d40ecfd864ff913139" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>enable_flags</name></member>
+      <member refid="classprinter_1_1_printer_1af58fa658833ffc4504842356e82dea60" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>error</name></member>
+      <member refid="classprinter_1_1_printer_1afbbec1c5ad59f43cc984317d9da494c9" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual" ambiguityscope="api::ExecutionContext::"><scope>printer::Printer</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>exit_fatal</name></member>
+      <member refid="classprinter_1_1_printer_1ae47c77e600470dc81bb335424a0597f2" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>fatal</name></member>
+      <member refid="classprinter_1_1_printer_1a6794af9b1268003c6bacb95c576d0ef0" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>FlagGuard</name></member>
+      <member refid="classprinter_1_1_printer_1ae5b2fc1b0569a3dd165f72083229d5db" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>flags</name></member>
+      <member refid="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>Flags</name></member>
+      <member refid="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>FormatType</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>free_context</name></member>
+      <member refid="classprinter_1_1_printer_1a2ff7ff47bc3fcd08fcf93ad472cff11b" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>get_bitmap_pixel_character</name></member>
+      <member refid="classprinter_1_1_printer_1a26f7057827b3f4ab34b81b43c246fd13" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>get_bitmap_pixel_color</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>handle_system_call_result</name></member>
+      <member refid="classprinter_1_1_printer_1acfbbbfd93487986e77fb4800a5290f84" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>indent_size</name></member>
+      <member refid="classprinter_1_1_printer_1ab108c7894118836b26914f19d165585d" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>info</name></member>
+      <member refid="classprinter_1_1_printer_1a95bc440379e877c0c5b85a62139231cf" prot="protected" virt="virtual"><scope>printer::Printer</scope><name>interface_print_final</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>is_success</name></member>
+      <member refid="classprinter_1_1_printer_1a645180927c5f9c0187ee7f62797dcee9" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>IsNewline</name></member>
+      <member refid="classprinter_1_1_printer_1aa867d093aaae14e638494778a5b24de7" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>key</name></member>
+      <member refid="classprinter_1_1_printer_1a08632c11c0e1c900a9aebc279ac58d0e" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>key</name></member>
+      <member refid="classprinter_1_1_printer_1ad8a7e662b966f7ac1b7fd7782b4cbf8e" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>key_bool</name></member>
+      <member refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>Level</name></member>
+      <member refid="classprinter_1_1_printer_1a4aa2c1781a670addfa7a0e2fec9f0533" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>LevelGuard</name></member>
+      <member refid="classprinter_1_1_printer_1afcfb4bec5ab696f7eee6dd0f552774df" prot="private" virt="non-virtual"><scope>printer::Printer</scope><name>m_indent</name></member>
+      <member refid="classprinter_1_1_printer_1a493774d3648cdc3c78e16086b2a0a919" prot="private" virt="non-virtual"><scope>printer::Printer</scope><name>m_indent_size</name></member>
+      <member refid="classprinter_1_1_printer_1a0ea51d34e51b5333a0383626b38c7114" prot="private" virt="non-virtual"><scope>printer::Printer</scope><name>m_print_flags</name></member>
+      <member refid="classprinter_1_1_printer_1a0daaf209d4b6db19709ced3d566d859d" prot="private" virt="non-virtual"><scope>printer::Printer</scope><name>m_progress_callback</name></member>
+      <member refid="classprinter_1_1_printer_1a4f98791ba6d1ff7a47ef73d3bb5f805a" prot="private" virt="non-virtual"><scope>printer::Printer</scope><name>m_progress_key</name></member>
+      <member refid="classprinter_1_1_printer_1a5c80cacacae9eb97075fccf247160c0a" prot="private" virt="non-virtual"><scope>printer::Printer</scope><name>m_progress_key_state</name></member>
+      <member refid="classprinter_1_1_printer_1a68e2cb0a18bc77733371905f32e0e6b4" prot="private" virt="non-virtual"><scope>printer::Printer</scope><name>m_progress_state</name></member>
+      <member refid="classprinter_1_1_printer_1afae435aac12b39a2cf729d7471863e76" prot="private" virt="non-virtual"><scope>printer::Printer</scope><name>m_progress_width</name></member>
+      <member refid="classprinter_1_1_printer_1adddb3f5f19b7f85acdadb1ea2ea2da12" prot="private" virt="non-virtual"><scope>printer::Printer</scope><name>m_verbose_level</name></member>
+      <member refid="classprinter_1_1_printer_1a3124cc06ddd6301b88e4c5b6a5e41ad3" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>message</name></member>
+      <member refid="classprinter_1_1_printer_1a9749a0efebd453a22731c502b54e67c2" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>newline</name></member>
+      <member refid="classprinter_1_1_printer_1a10b36cd8f80e30197ba4f81bb07f72fb" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>o_flags</name></member>
+      <member refid="classprinter_1_1_printer_1aa1221c600660b8ff0151064e233718cc" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>object</name></member>
+      <member refid="classprinter_1_1_printer_1ada37e51eb14f9541a189b27155753e0b" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>open_array</name></member>
+      <member refid="classprinter_1_1_printer_1a959c25c3c569cc100787ba8a236ebb3c" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>open_object</name></member>
+      <member refid="classprinter_1_1_printer_1ae8ca7074424d34befad40b436cc1e724" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1ab521ff0d8c73a28250c8f947b56fd15f" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1afe61918bb5aa5fdcc0625473b682c468" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1ab2bf12bf763bc0f14f09e57c397e082d" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1acaded67c204b32d9ebc2378f40019806" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a8ecb06b9104152001a410167323a5605" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1aead81564c0e3ef87b0d654492462c1d2" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a644a4825dd7d757eaf65fbcfdf21ce00" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1af614ec17d0d8b05080733eb00e1e58cd" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1af52a96f110a38d74e1457daf3009af36" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1af90071e21dc137df82a0dd781d3831e4" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a6b95fbe7cf990bb667c9e24137d2cefe" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a7d32dbfe47a252e90656adecd01c79c0" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a87c3610e417d243f100fc853575241cb" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a13f82eb2a5084eed331ff411ccb91924" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a962407a90d9dceec0799af35caef1dfd" prot="public" virt="virtual"><scope>printer::Printer</scope><name>print</name></member>
+      <member refid="classprinter_1_1_printer_1a8b1c0864bcb98826f8ae87818ca705a9" prot="public" virt="virtual"><scope>printer::Printer</scope><name>print_close_array</name></member>
+      <member refid="classprinter_1_1_printer_1ac467e16b4a8fdd5e17e79e138b902f3d" prot="public" virt="virtual"><scope>printer::Printer</scope><name>print_close_object</name></member>
+      <member refid="classprinter_1_1_printer_1a8c64d262c40bb8d762cbb8bf3d12c632" prot="public" virt="virtual"><scope>printer::Printer</scope><name>print_open_array</name></member>
+      <member refid="classprinter_1_1_printer_1a81fdfcf02fea881c672e96340c414be6" prot="public" virt="virtual"><scope>printer::Printer</scope><name>print_open_object</name></member>
+      <member refid="classprinter_1_1_printer_1a4fb87d0c4d818902da36b33f99b6a485" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>Printer</name></member>
+      <member refid="classprinter_1_1_printer_1aa201a118ad355398f0622873643e27e5" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>progress_callback</name></member>
+      <member refid="classprinter_1_1_printer_1a321fd30fb725303a10590f43be96d46c" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>progress_key</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>return_value</name></member>
+      <member refid="classprinter_1_1_printer_1af9837defdcb8b29f0b5b65ad162c05a7" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_color_code</name></member>
+      <member refid="classprinter_1_1_printer_1abbd4cd566dc6b661d76cac82ae90c6bb" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_color_code</name></member>
+      <member refid="classprinter_1_1_printer_1abfbe04bd833d9a9527d6622d34af13d7" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_flags</name></member>
+      <member refid="classprinter_1_1_printer_1a730a6af145675f41be6421ff5dccb672" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_format_code</name></member>
+      <member refid="classprinter_1_1_printer_1a55df3f44b8276495a002304a451b9f82" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_format_code</name></member>
+      <member refid="classprinter_1_1_printer_1a787b50d547dae7ad353558f344211dc3" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_indent_size</name></member>
+      <member refid="classprinter_1_1_printer_1a5363fab3913492a129821270df01d734" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_progress_key</name></member>
+      <member refid="classprinter_1_1_printer_1ae47c280740f828b7fb48081a817bc046" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_progress_width</name></member>
+      <member refid="classprinter_1_1_printer_1a7b8b03a118fa9ed613c6f756eb3f2bd4" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_verbose_level</name></member>
+      <member refid="classprinter_1_1_printer_1a6c730298caef57374c9e406c386eb650" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>set_verbose_level</name></member>
+      <member refid="classprinter_1_1_printer_1a5845da8e40fb25ec17adc0eb29c28420" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>terminal_color_code</name></member>
+      <member refid="classprinter_1_1_printer_1acf5cb38156a7d1a38756ee31e4e2dd74" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>trace</name></member>
+      <member refid="classprinter_1_1_printer_1a4c0919a788f00dae7e5064f160f998dc" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>update_progress</name></member>
+      <member refid="classprinter_1_1_printer_1ac48c9fec3546c54cce9594cb38722292" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>update_progress_callback</name></member>
+      <member refid="classprinter_1_1_printer_1afd00702412a4397fea19a7533772501e" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>verbose_level</name></member>
+      <member refid="classprinter_1_1_printer_1ae1ac21257e02f9e73ddad2d9919407bf" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>warning</name></member>
+      <member refid="classprinter_1_1_printer_1aed532677dc74f5f7b2156b4d26076276" prot="protected" virt="non-virtual"><scope>printer::Printer</scope><name>write_fileno</name></member>
+      <member refid="classprinter_1_1_printer_1a8c69684486638b55c0522834e9e701bc" prot="public" virt="non-virtual"><scope>printer::Printer</scope><name>~Printer</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

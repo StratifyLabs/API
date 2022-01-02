@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="thread_2thread_8hpp" kind="file" language="C++">
+    <compoundname>thread/thread.hpp</compoundname>
+    <includes local="no">pthread.h</includes>
+    <includes local="no">csignal</includes>
+    <includes refid="_sched_8hpp" local="yes">Sched.hpp</includes>
+    <includes refid="_clock_time_8hpp" local="yes">chrono/ClockTime.hpp</includes>
+    <includedby refid="_signal_8hpp" local="yes">Signal.hpp</includedby>
+    <includedby refid="thread_8hpp" local="yes">thread.hpp</includedby>
+    <incdepgraph>
+      <node id="8">
+        <label>api/api.hpp</label>
+        <link refid="api_8hpp"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>macros.hpp</label>
+        <link refid="_a_p_i_2include_2api_2macros_8hpp"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>chrono/ClockTime.hpp</label>
+        <link refid="_clock_time_8hpp"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>DateTime.hpp</label>
+        <link refid="_date_time_8hpp"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>MicroTime.hpp</label>
+        <link refid="_micro_time_8hpp"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>Sched.hpp</label>
+        <link refid="_sched_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Thread.hpp</label>
+        <link refid="thread_2thread_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>var/StackString.hpp</label>
+        <link refid="_stack_string_8hpp"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>var/String.hpp</label>
+        <link refid="_string_8hpp"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>StringView.hpp</label>
+        <link refid="_string_view_8hpp"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>Vector.hpp</label>
+        <link refid="_vector_8hpp"/>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>algorithm</label>
+      </node>
+      <node id="9">
+        <label>cerrno</label>
+      </node>
+      <node id="10">
+        <label>climits</label>
+      </node>
+      <node id="3">
+        <label>csignal</label>
+      </node>
+      <node id="20">
+        <label>cstdarg</label>
+      </node>
+      <node id="11">
+        <label>cstring</label>
+      </node>
+      <node id="17">
+        <label>ctime</label>
+      </node>
+      <node id="26">
+        <label>functional</label>
+      </node>
+      <node id="27">
+        <label>numeric</label>
+      </node>
+      <node id="2">
+        <label>pthread.h</label>
+      </node>
+      <node id="5">
+        <label>sched.h</label>
+      </node>
+      <node id="14">
+        <label>sdk/types.h</label>
+      </node>
+      <node id="15">
+        <label>sos/arch.h</label>
+      </node>
+      <node id="21">
+        <label>string</label>
+      </node>
+      <node id="23">
+        <label>string_view</label>
+      </node>
+      <node id="7">
+        <label>sys/types.h</label>
+      </node>
+      <node id="6">
+        <label>unistd.h</label>
+      </node>
+      <node id="12">
+        <label>vector</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4">
+        <label>thread.hpp</label>
+        <link refid="thread_8hpp"/>
+      </node>
+      <node id="2">
+        <label>Signal.hpp</label>
+        <link refid="_signal_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Thread.hpp</label>
+        <link refid="thread_2thread_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>Timer.hpp</label>
+        <link refid="_timer_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classthread_1_1_thread" prot="public">thread::Thread</innerclass>
+    <innerclass refid="classthread_1_1_thread_1_1_attributes" prot="public">thread::Thread::Attributes</innerclass>
+    <innerclass refid="classthread_1_1_thread_1_1_construct" prot="public">thread::Thread::Construct</innerclass>
+    <innernamespace refid="namespacethread">thread</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp"/>
+  </compounddef>
+</doxygen>

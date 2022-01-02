@@ -1,0 +1,313 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="_micro_time_8hpp" kind="file" language="C++">
+    <compoundname>MicroTime.hpp</compoundname>
+    <includes local="no">sdk/types.h</includes>
+    <includes local="no">ctime</includes>
+    <includes refid="_a_p_i_2include_2api_2macros_8hpp" local="yes">api/macros.hpp</includes>
+    <includes refid="_micro_time_8hpp" local="yes">chrono/MicroTime.hpp</includes>
+    <includedby refid="_aio_8hpp" local="yes">Aio.hpp</includedby>
+    <includedby refid="_clock_timer_8hpp" local="yes">ClockTimer.hpp</includedby>
+    <includedby refid="_date_time_8hpp" local="yes">DateTime.hpp</includedby>
+    <includedby refid="_file_8hpp" local="yes">File.hpp</includedby>
+    <includedby refid="_micro_time_8hpp" local="yes">MicroTime.hpp</includedby>
+    <includedby refid="chrono_8hpp" local="yes">chrono.hpp</includedby>
+    <incdepgraph>
+      <node id="4">
+        <label>api/macros.hpp</label>
+        <link refid="_a_p_i_2include_2api_2macros_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>MicroTime.hpp</label>
+        <link refid="_micro_time_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="1" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>ctime</label>
+      </node>
+      <node id="2">
+        <label>sdk/types.h</label>
+      </node>
+      <node id="5">
+        <label>sos/arch.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="8">
+        <label>chrono.hpp</label>
+        <link refid="chrono_8hpp"/>
+      </node>
+      <node id="10">
+        <label>ClockTime.hpp</label>
+        <link refid="_clock_time_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>ClockTimer.hpp</label>
+        <link refid="_clock_timer_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>DateTime.hpp</label>
+        <link refid="_date_time_8hpp"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>MicroTime.hpp</label>
+        <link refid="_micro_time_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="1" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>fs.hpp</label>
+        <link refid="fs_8hpp"/>
+      </node>
+      <node id="2">
+        <label>Aio.hpp</label>
+        <link refid="_aio_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>DataFile.hpp</label>
+        <link refid="_data_file_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>Dir.hpp</label>
+        <link refid="_dir_8hpp"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>File.hpp</label>
+        <link refid="_file_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>FileSystem.hpp</label>
+        <link refid="_file_system_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>LambdaFile.hpp</label>
+        <link refid="_lambda_file_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>ViewFile.hpp</label>
+        <link refid="_view_file_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>test.hpp</label>
+        <link refid="_test_8hpp"/>
+      </node>
+      <node id="6">
+        <label>Function.hpp</label>
+        <link refid="_function_8hpp"/>
+      </node>
+      <node id="5">
+        <label>Test.hpp</label>
+        <link refid="test_2_test_8hpp"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>thread.hpp</label>
+        <link refid="thread_8hpp"/>
+      </node>
+      <node id="11">
+        <label>Cond.hpp</label>
+        <link refid="_cond_8hpp"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>Mq.hpp</label>
+        <link refid="_mq_8hpp"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>Mutex.hpp</label>
+        <link refid="_mutex_8hpp"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>Sem.hpp</label>
+        <link refid="_sem_8hpp"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>Signal.hpp</label>
+        <link refid="_signal_8hpp"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>Thread.hpp</label>
+        <link refid="thread_2thread_8hpp"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>Timer.hpp</label>
+        <link refid="_timer_8hpp"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classchrono_1_1_micro_time" prot="public">chrono::MicroTime</innerclass>
+    <innernamespace refid="namespacechrono">chrono</innernamespace>
+    <innernamespace refid="namespaceprinter">printer</innernamespace>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="_micro_time_8hpp_1a27b154d2bc7006d2e079577f0532970e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classchrono_1_1_micro_time" kindref="compound">chrono::MicroTime</ref></type>
+        <definition>chrono::MicroTime operator&quot;&quot;_seconds</definition>
+        <argsstring>(unsigned long long int value)</argsstring>
+        <name>operator&quot;&quot;_seconds</name>
+        <param>
+          <type>unsigned long long int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/MicroTime.hpp" line="104" column="26" bodyfile="API/libraries/ChronoAPI/include/chrono/MicroTime.hpp" bodystart="104" bodyend="106"/>
+      </memberdef>
+      <memberdef kind="function" id="_micro_time_8hpp_1afa8c8c1249f5f5531a75c72518c42985" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classchrono_1_1_micro_time" kindref="compound">chrono::MicroTime</ref></type>
+        <definition>chrono::MicroTime operator&quot;&quot;_milliseconds</definition>
+        <argsstring>(unsigned long long int value)</argsstring>
+        <name>operator&quot;&quot;_milliseconds</name>
+        <param>
+          <type>unsigned long long int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/MicroTime.hpp" line="109" column="1" bodyfile="API/libraries/ChronoAPI/include/chrono/MicroTime.hpp" bodystart="109" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="function" id="_micro_time_8hpp_1acbf8c287fc7e6a6b97d4634d047ed78d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classchrono_1_1_micro_time" kindref="compound">chrono::MicroTime</ref></type>
+        <definition>chrono::MicroTime operator&quot;&quot;_microseconds</definition>
+        <argsstring>(unsigned long long int value)</argsstring>
+        <name>operator&quot;&quot;_microseconds</name>
+        <param>
+          <type>unsigned long long int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/MicroTime.hpp" line="114" column="1" bodyfile="API/libraries/ChronoAPI/include/chrono/MicroTime.hpp" bodystart="114" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="function" id="_micro_time_8hpp_1a64922cccdbb0a62013300968a7c9897b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classchrono_1_1_micro_time" kindref="compound">chrono::MicroTime</ref></type>
+        <definition>chrono::MicroTime operator&quot;&quot;_nanoseconds</definition>
+        <argsstring>(unsigned long long int value)</argsstring>
+        <name>operator&quot;&quot;_nanoseconds</name>
+        <param>
+          <type>unsigned long long int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/MicroTime.hpp" line="118" column="26" bodyfile="API/libraries/ChronoAPI/include/chrono/MicroTime.hpp" bodystart="118" bodyend="120"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ChronoAPI/include/chrono/MicroTime.hpp"/>
+  </compounddef>
+</doxygen>

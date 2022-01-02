@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classapi_1_1_index_iterator" kind="class" language="C++" prot="public">
+    <compoundname>api::IndexIterator</compoundname>
+    <includes local="no">api.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>typename Type</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classapi_1_1_index_iterator_1ab4416abf206c642b970729004332670d" prot="private" static="no" mutable="no">
+        <type>Type</type>
+        <definition>Type api::IndexIterator&lt; Type &gt;::m_value</definition>
+        <argsstring></argsstring>
+        <name>m_value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="502" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="502" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classapi_1_1_index_iterator_1a7aeab49e12000da6da3a7aa3bba9e0a7" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>api::IndexIterator&lt; Type &gt;::IndexIterator</definition>
+        <argsstring>(Type value)</argsstring>
+        <name>IndexIterator</name>
+        <param>
+          <type>Type</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="483" column="12" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="483" bodyend="483"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_index_iterator_1aeedb4d2580434ef773fb3d51382aeba4" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool api::IndexIterator&lt; Type &gt;::operator!=</definition>
+        <argsstring>(IndexIterator const &amp;a) const noexcept</argsstring>
+        <name>operator!=</name>
+        <param>
+          <type><ref refid="classapi_1_1_index_iterator" kindref="compound">IndexIterator</ref> const &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="485" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="485" bodyend="487"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_index_iterator_1a89b9326bd1b0883dd69559cc962b4480" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Type</type>
+        <definition>Type api::IndexIterator&lt; Type &gt;::operator*</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>operator*</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="489" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="489" bodyend="489"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_index_iterator_1a386139ae5017b8b0c644365aa51faaea" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classapi_1_1_index_iterator" kindref="compound">IndexIterator</ref> &amp;</type>
+        <definition>IndexIterator &amp; api::IndexIterator&lt; Type &gt;::operator++</definition>
+        <argsstring>()</argsstring>
+        <name>operator++</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="491" column="17" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="491" bodyend="494"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_index_iterator_1ac1ec402f7bc97f7f0676a08f1af1828d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classapi_1_1_index_iterator" kindref="compound">IndexIterator</ref> &amp;</type>
+        <definition>IndexIterator &amp; api::IndexIterator&lt; Type &gt;::operator--</definition>
+        <argsstring>()</argsstring>
+        <name>operator--</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="496" column="17" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="496" bodyend="499"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/API/include/api/api.hpp" line="481" column="12" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="481" bodyend="503"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_index_iterator_1a7aeab49e12000da6da3a7aa3bba9e0a7" prot="public" virt="non-virtual"><scope>api::IndexIterator</scope><name>IndexIterator</name></member>
+      <member refid="classapi_1_1_index_iterator_1ab4416abf206c642b970729004332670d" prot="private" virt="non-virtual"><scope>api::IndexIterator</scope><name>m_value</name></member>
+      <member refid="classapi_1_1_index_iterator_1aeedb4d2580434ef773fb3d51382aeba4" prot="public" virt="non-virtual"><scope>api::IndexIterator</scope><name>operator!=</name></member>
+      <member refid="classapi_1_1_index_iterator_1a89b9326bd1b0883dd69559cc962b4480" prot="public" virt="non-virtual"><scope>api::IndexIterator</scope><name>operator*</name></member>
+      <member refid="classapi_1_1_index_iterator_1a386139ae5017b8b0c644365aa51faaea" prot="public" virt="non-virtual"><scope>api::IndexIterator</scope><name>operator++</name></member>
+      <member refid="classapi_1_1_index_iterator_1ac1ec402f7bc97f7f0676a08f1af1828d" prot="public" virt="non-virtual"><scope>api::IndexIterator</scope><name>operator--</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

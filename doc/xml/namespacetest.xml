@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="namespacetest" kind="namespace" language="C++">
+    <compoundname>test</compoundname>
+    <innerclass refid="classtest_1_1_case" prot="public">test::Case</innerclass>
+    <innerclass refid="classtest_1_1_function" prot="public">test::Function</innerclass>
+    <innerclass refid="classtest_1_1_test" prot="public">test::Test</innerclass>
+    <innerclass refid="structtest_1_1_test_flags" prot="public">test::TestFlags</innerclass>
+    <briefdescription>
+<para><ref refid="classtest_1_1_test" kindref="compound">Test</ref> framework. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>The test namespace includes a collection of classes that are used for executing tests.</para>
+<para>The tests are timed automatically and output a report in various, easily-parsable formats (including JSON). </para>
+    </detaileddescription>
+    <location file="API/libraries/TestAPI/include/test.hpp" line="12" column="1"/>
+  </compounddef>
+</doxygen>

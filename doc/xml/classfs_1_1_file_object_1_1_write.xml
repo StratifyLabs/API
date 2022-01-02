@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classfs_1_1_file_object_1_1_write" kind="class" language="C++" prot="public">
+    <compoundname>fs::FileObject::Write</compoundname>
+    <includes local="no">File.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_write_1af77db8dd26bb0c616fb64ea32d0c74d2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::Write::Write</definition>
+        <argsstring>()</argsstring>
+        <name>Write</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="67" column="5" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="67" bodyend="69"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_write_1adbfbc487ce5ced467fe8978924eea345" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::Write::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Write, int, location, -1)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref></type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1a47bf1de51cfbcc8ec10f1a2b6c685e8b" kindref="member">location</ref></type>
+        </param>
+        <param>
+          <type>-</type>
+          <declname>1</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="72" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_write_1a2f7009a50339d1d55d15a259be386e79" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::Write::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Write, u32, page_size, FSAPI_LINK_DEFAULT_PAGE_SIZE)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref></type>
+        </param>
+        <param>
+          <type>u32</type>
+        </param>
+        <param>
+          <type>page_size</type>
+        </param>
+        <param>
+          <type><ref refid="_fs_a_p_i_2include_2fs_2macros_8hpp_1ac5ac9f43e9b738312b6c52f643f10936" kindref="member">FSAPI_LINK_DEFAULT_PAGE_SIZE</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="73" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_write_1ad8d45c4b933582ef379edbce4cae40f7" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::Write::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Write, size_t, size, static_cast&lt; size_t &gt;(-1))</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1a65a2979f65847e45e639b160d474457c" kindref="member">size</ref></type>
+        </param>
+        <param>
+          <type>static_cast&lt; size_t &gt;</type>
+          <array>-1</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="74" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_write_1a766316b1386d1cfb4b85a1403c82675e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::Write::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Write, char, terminator, 0)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref></type>
+        </param>
+        <param>
+          <type>char</type>
+        </param>
+        <param>
+          <type>terminator</type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="75" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_write_1a31054bc4f3b7a5ed2979b383a5b9be73" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::Write::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Write, chrono::MicroTime, timeout, 0_microseconds)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classchrono_1_1_micro_time" kindref="compound">chrono::MicroTime</ref></type>
+        </param>
+        <param>
+          <type>timeout</type>
+        </param>
+        <param>
+          <type>0_microseconds</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="76" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_write_1a90cd6dd45deaf75170e3b36cd8cf6058" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::Write::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Write, chrono::MicroTime, retry_delay, 10_milliseconds)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classchrono_1_1_micro_time" kindref="compound">chrono::MicroTime</ref></type>
+        </param>
+        <param>
+          <type>retry_delay</type>
+        </param>
+        <param>
+          <type>10_milliseconds</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="77" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_write_1a4d67e902f6bec5e00bbd0613d026c1b2" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::Write::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Write, const var::Transformer *, transformer, nullptr)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref></type>
+        </param>
+        <param>
+          <type>const <ref refid="classvar_1_1_transformer" kindref="compound">var::Transformer</ref> *</type>
+        </param>
+        <param>
+          <type>transformer</type>
+        </param>
+        <param>
+          <type>nullptr</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="82" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_write_1a87c74ee59f85259b3f017df887e6ae31" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::Write::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Write, const api::ProgressCallback *, progress_callback, nullptr)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref></type>
+        </param>
+        <param>
+          <type>const <ref refid="classapi_1_1_progress_callback" kindref="compound">api::ProgressCallback</ref> *</type>
+        </param>
+        <param>
+          <type>progress_callback</type>
+        </param>
+        <param>
+          <type>nullptr</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="87" column="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/FsAPI/include/fs/File.hpp" line="65" column="3" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="65" bodyend="92"/>
+    <listofallmembers>
+      <member refid="classfs_1_1_file_object_1_1_write_1adbfbc487ce5ced467fe8978924eea345" prot="private" virt="non-virtual"><scope>fs::FileObject::Write</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classfs_1_1_file_object_1_1_write_1a2f7009a50339d1d55d15a259be386e79" prot="private" virt="non-virtual"><scope>fs::FileObject::Write</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classfs_1_1_file_object_1_1_write_1ad8d45c4b933582ef379edbce4cae40f7" prot="private" virt="non-virtual"><scope>fs::FileObject::Write</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classfs_1_1_file_object_1_1_write_1a766316b1386d1cfb4b85a1403c82675e" prot="private" virt="non-virtual"><scope>fs::FileObject::Write</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classfs_1_1_file_object_1_1_write_1a31054bc4f3b7a5ed2979b383a5b9be73" prot="private" virt="non-virtual"><scope>fs::FileObject::Write</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classfs_1_1_file_object_1_1_write_1a90cd6dd45deaf75170e3b36cd8cf6058" prot="private" virt="non-virtual"><scope>fs::FileObject::Write</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classfs_1_1_file_object_1_1_write_1a4d67e902f6bec5e00bbd0613d026c1b2" prot="private" virt="non-virtual"><scope>fs::FileObject::Write</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classfs_1_1_file_object_1_1_write_1a87c74ee59f85259b3f017df887e6ae31" prot="private" virt="non-virtual"><scope>fs::FileObject::Write</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classfs_1_1_file_object_1_1_write_1af77db8dd26bb0c616fb64ea32d0c74d2" prot="public" virt="non-virtual"><scope>fs::FileObject::Write</scope><name>Write</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

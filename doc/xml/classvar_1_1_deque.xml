@@ -1,0 +1,460 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_deque" kind="class" language="C++" prot="public">
+    <compoundname>var::Deque</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <includes local="no">Deque.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classvar_1_1_deque_1a16400639882fa14ff38e8e0040e2d83b" prot="public" static="no">
+        <type>typename std::deque&lt; T &gt;::<ref refid="classvar_1_1_deque_1a16400639882fa14ff38e8e0040e2d83b" kindref="member">iterator</ref></type>
+        <definition>using var::Deque&lt; T &gt;::iterator =  typename std::deque&lt;T&gt;::iterator</definition>
+        <argsstring></argsstring>
+        <name>iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="16" column="3" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_deque_1aef4a12cd10c5e1f5ba530ffb44c6f459" prot="public" static="no">
+        <type>typename std::deque&lt; T &gt;::<ref refid="classvar_1_1_deque_1aef4a12cd10c5e1f5ba530ffb44c6f459" kindref="member">const_iterator</ref></type>
+        <definition>using var::Deque&lt; T &gt;::const_iterator =  typename std::deque&lt;T&gt;::const_iterator</definition>
+        <argsstring></argsstring>
+        <name>const_iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="17" column="3" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_deque_1a031bad139b2cb1985a356257ba70519f" prot="public" static="no">
+        <type>typename std::deque&lt; T &gt;::<ref refid="classvar_1_1_deque_1a031bad139b2cb1985a356257ba70519f" kindref="member">reverse_iterator</ref></type>
+        <definition>using var::Deque&lt; T &gt;::reverse_iterator =  typename std::deque&lt;T&gt;::reverse_iterator</definition>
+        <argsstring></argsstring>
+        <name>reverse_iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="18" column="3" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_deque_1a4e96aa7fc80371d6755c897a18b8866d" prot="public" static="no">
+        <type>typename std::deque&lt; T &gt;::<ref refid="classvar_1_1_deque_1a4e96aa7fc80371d6755c897a18b8866d" kindref="member">const_reverse_iterator</ref></type>
+        <definition>using var::Deque&lt; T &gt;::const_reverse_iterator =  typename std::deque&lt;T&gt;::const_reverse_iterator</definition>
+        <argsstring></argsstring>
+        <name>const_reverse_iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="19" column="3" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvar_1_1_deque_1a2a616a6fb19cdaf4935ef4bd152d9efc" prot="private" static="no" mutable="no">
+        <type>std::deque&lt; T &gt;</type>
+        <definition>std::deque&lt;T&gt; var::Deque&lt; T &gt;::m_deque</definition>
+        <argsstring></argsstring>
+        <name>m_deque</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="75" column="14" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvar_1_1_deque_1a1930790791d634c861481ac19a759954" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1aef4a12cd10c5e1f5ba530ffb44c6f459" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::Deque&lt; T &gt;::begin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>begin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="21" column="18" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="21" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1afba282b7dffac1e73efb7881b5750a52" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1a16400639882fa14ff38e8e0040e2d83b" kindref="member">iterator</ref></type>
+        <definition>iterator var::Deque&lt; T &gt;::begin</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>begin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="22" column="12" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="22" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a830627e7fdadf2554533641f8088a1c3" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1aef4a12cd10c5e1f5ba530ffb44c6f459" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::Deque&lt; T &gt;::end</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="24" column="18" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="24" bodyend="24"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a76b62c74f8bf464a1782588356f57e70" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1a16400639882fa14ff38e8e0040e2d83b" kindref="member">iterator</ref></type>
+        <definition>iterator var::Deque&lt; T &gt;::end</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="25" column="12" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="25" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1aaaace24ea9ff3c2f9dd98315defdf636" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1aef4a12cd10c5e1f5ba530ffb44c6f459" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::Deque&lt; T &gt;::cbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>cbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="27" column="18" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="27" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1ad8c8df0388ea7e379a6891627307ecd1" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1aef4a12cd10c5e1f5ba530ffb44c6f459" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::Deque&lt; T &gt;::cend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>cend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="28" column="18" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="28" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a2e127bc6e16f1a4785a5f203672ba3fa" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1a4e96aa7fc80371d6755c897a18b8866d" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::Deque&lt; T &gt;::rbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>rbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="30" column="26" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="30" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a1eab6614b20312d62768a794f9a741bb" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1a031bad139b2cb1985a356257ba70519f" kindref="member">reverse_iterator</ref></type>
+        <definition>reverse_iterator var::Deque&lt; T &gt;::rbegin</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>rbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="31" column="20" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="31" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a1604a6081c6197d5d0c62a2c5f5a8274" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1a4e96aa7fc80371d6755c897a18b8866d" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::Deque&lt; T &gt;::rend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>rend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="33" column="26" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="33" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1abdec9d4b962664e16e66beef8fa43da1" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1a031bad139b2cb1985a356257ba70519f" kindref="member">reverse_iterator</ref></type>
+        <definition>reverse_iterator var::Deque&lt; T &gt;::rend</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>rend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="34" column="20" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="34" bodyend="34"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a1900ba725940e81e186b7d057a23f6cf" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1a4e96aa7fc80371d6755c897a18b8866d" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::Deque&lt; T &gt;::crbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>crbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="36" column="26" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="36" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a392582541bb3a14510e5e3baac88c7f2" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque_1a4e96aa7fc80371d6755c897a18b8866d" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::Deque&lt; T &gt;::crend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>crend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="37" column="26" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="37" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a3b9ed1f9c33adbefca2fab45009bfde2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T &amp; var::Deque&lt; T &gt;::back</definition>
+        <argsstring>()</argsstring>
+        <name>back</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="39" column="6" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="39" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1afcfd7493b682730f09368a58ff50f0ca" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T &amp; var::Deque&lt; T &gt;::back</definition>
+        <argsstring>() const</argsstring>
+        <name>back</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="40" column="12" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="40" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1af38e161532649c3576b6a5b349ee9832" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T &amp; var::Deque&lt; T &gt;::front</definition>
+        <argsstring>() const</argsstring>
+        <name>front</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="42" column="12" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="42" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a28ce4b1407a5a7eef340c3510d78a992" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T &amp; var::Deque&lt; T &gt;::front</definition>
+        <argsstring>()</argsstring>
+        <name>front</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="43" column="6" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="43" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1af7848f41cd9928caa321e2cd36cec877" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque" kindref="compound">Deque</ref> &amp;</type>
+        <definition>Deque &amp; var::Deque&lt; T &gt;::push_front</definition>
+        <argsstring>(const T &amp;value)</argsstring>
+        <name>push_front</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="45" column="9" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="45" bodyend="48"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a13887d4244aa7d57c64f8778548c4cb9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque" kindref="compound">Deque</ref> &amp;</type>
+        <definition>Deque &amp; var::Deque&lt; T &gt;::push_back</definition>
+        <argsstring>(const T &amp;value)</argsstring>
+        <name>push_back</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="50" column="9" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="50" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a685971da31f783e774dc662193c1b071" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque" kindref="compound">Deque</ref> &amp;</type>
+        <definition>Deque &amp; var::Deque&lt; T &gt;::pop_front</definition>
+        <argsstring>()</argsstring>
+        <name>pop_front</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="55" column="9" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="55" bodyend="58"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1aa831b99d931e2be2e2ae6610b8e7eda6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque" kindref="compound">Deque</ref> &amp;</type>
+        <definition>Deque &amp; var::Deque&lt; T &gt;::pop_back</definition>
+        <argsstring>()</argsstring>
+        <name>pop_back</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="60" column="9" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="60" bodyend="63"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1a2e8363f3e1dbe126301f350bef0bb73f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::Deque&lt; T &gt;::is_empty</definition>
+        <argsstring>() const</argsstring>
+        <name>is_empty</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="65" column="9" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="65" bodyend="65"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1ac3a29e23b3f8ef5847f89def57ee90a0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 var::Deque&lt; T &gt;::count</definition>
+        <argsstring>() const</argsstring>
+        <name>count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="66" column="8" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="66" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_deque_1ab9d1aa7053f6abe0413b0fe317356d90" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_deque" kindref="compound">Deque</ref> &amp;</type>
+        <definition>Deque &amp; var::Deque&lt; T &gt;::clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="68" column="9" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="68" bodyend="72"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::Deque&lt; T &gt;</label>
+        <link refid="classvar_1_1_deque"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::Deque&lt; T &gt;</label>
+        <link refid="classvar_1_1_deque"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/VarAPI/include/var/Deque.hpp" line="14" column="12" bodyfile="API/libraries/VarAPI/include/var/Deque.hpp" bodystart="14" bodyend="76"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_deque_1a3b9ed1f9c33adbefca2fab45009bfde2" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>back</name></member>
+      <member refid="classvar_1_1_deque_1afcfd7493b682730f09368a58ff50f0ca" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>back</name></member>
+      <member refid="classvar_1_1_deque_1a1930790791d634c861481ac19a759954" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>begin</name></member>
+      <member refid="classvar_1_1_deque_1afba282b7dffac1e73efb7881b5750a52" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>begin</name></member>
+      <member refid="classvar_1_1_deque_1aaaace24ea9ff3c2f9dd98315defdf636" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>cbegin</name></member>
+      <member refid="classvar_1_1_deque_1ad8c8df0388ea7e379a6891627307ecd1" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>cend</name></member>
+      <member refid="classvar_1_1_deque_1ab9d1aa7053f6abe0413b0fe317356d90" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>clear</name></member>
+      <member refid="classvar_1_1_deque_1aef4a12cd10c5e1f5ba530ffb44c6f459" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>const_iterator</name></member>
+      <member refid="classvar_1_1_deque_1a4e96aa7fc80371d6755c897a18b8866d" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>const_reverse_iterator</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>context_count</name></member>
+      <member refid="classvar_1_1_deque_1ac3a29e23b3f8ef5847f89def57ee90a0" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>count</name></member>
+      <member refid="classvar_1_1_deque_1a1900ba725940e81e186b7d057a23f6cf" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>crbegin</name></member>
+      <member refid="classvar_1_1_deque_1a392582541bb3a14510e5e3baac88c7f2" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>crend</name></member>
+      <member refid="classvar_1_1_deque_1a830627e7fdadf2554533641f8088a1c3" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>end</name></member>
+      <member refid="classvar_1_1_deque_1a76b62c74f8bf464a1782588356f57e70" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>end</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>free_context</name></member>
+      <member refid="classvar_1_1_deque_1af38e161532649c3576b6a5b349ee9832" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>front</name></member>
+      <member refid="classvar_1_1_deque_1a28ce4b1407a5a7eef340c3510d78a992" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>front</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>handle_system_call_result</name></member>
+      <member refid="classvar_1_1_deque_1a2e8363f3e1dbe126301f350bef0bb73f" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>is_empty</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>is_success</name></member>
+      <member refid="classvar_1_1_deque_1a16400639882fa14ff38e8e0040e2d83b" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>iterator</name></member>
+      <member refid="classvar_1_1_deque_1a2a616a6fb19cdaf4935ef4bd152d9efc" prot="private" virt="non-virtual"><scope>var::Deque</scope><name>m_deque</name></member>
+      <member refid="classvar_1_1_deque_1aa831b99d931e2be2e2ae6610b8e7eda6" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>pop_back</name></member>
+      <member refid="classvar_1_1_deque_1a685971da31f783e774dc662193c1b071" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>pop_front</name></member>
+      <member refid="classvar_1_1_deque_1a13887d4244aa7d57c64f8778548c4cb9" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>push_back</name></member>
+      <member refid="classvar_1_1_deque_1af7848f41cd9928caa321e2cd36cec877" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>push_front</name></member>
+      <member refid="classvar_1_1_deque_1a2e127bc6e16f1a4785a5f203672ba3fa" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_deque_1a1eab6614b20312d62768a794f9a741bb" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_deque_1a1604a6081c6197d5d0c62a2c5f5a8274" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>rend</name></member>
+      <member refid="classvar_1_1_deque_1abdec9d4b962664e16e66beef8fa43da1" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>rend</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>return_value</name></member>
+      <member refid="classvar_1_1_deque_1a031bad139b2cb1985a356257ba70519f" prot="public" virt="non-virtual"><scope>var::Deque</scope><name>reverse_iterator</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

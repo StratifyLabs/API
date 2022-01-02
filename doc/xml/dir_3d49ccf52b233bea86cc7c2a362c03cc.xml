@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="dir_3d49ccf52b233bea86cc7c2a362c03cc" kind="dir">
+    <compoundname>include</compoundname>
+    <innerdir refid="dir_effa6631281d487f59492e52f2e4451a">printer</innerdir>
+    <innerfile refid="_printer_8hpp">Printer.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/PrinterAPI/include/"/>
+  </compounddef>
+</doxygen>

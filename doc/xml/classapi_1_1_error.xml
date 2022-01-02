@@ -1,0 +1,350 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classapi_1_1_error" kind="class" language="C++" prot="public">
+    <compoundname>api::Error</compoundname>
+    <includes local="no">api.hpp</includes>
+    <innerclass refid="classapi_1_1_error_1_1_backtrace" prot="public">api::Error::Backtrace</innerclass>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classapi_1_1_error_1ad2850542435e657b278ceb4ba5c3af6b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class PrivateExecutionContext</definition>
+        <argsstring></argsstring>
+        <name>PrivateExecutionContext</name>
+        <param>
+          <type><ref refid="classapi_1_1_private_execution_context" kindref="compound">PrivateExecutionContext</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="124" column="16" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="friend" id="classapi_1_1_error_1a1d913e17536c16ea3dcb2e4898b6c392" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class BacktraceSymbols</definition>
+        <argsstring></argsstring>
+        <name>BacktraceSymbols</name>
+        <param>
+          <type>BacktraceSymbols</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="125" column="16" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="classapi_1_1_error_1aeb07fd6cd1c754edc6404461d1d06b54" prot="private" static="yes" constexpr="yes" mutable="no">
+        <type>constexpr size_t</type>
+        <definition>constexpr size_t api::Error::m_message_size</definition>
+        <argsstring></argsstring>
+        <name>m_message_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="126" column="27" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classapi_1_1_error_1a071323e11cf7673309f1de228652af5d" prot="private" static="yes" constexpr="yes" mutable="no">
+        <type>constexpr size_t</type>
+        <definition>constexpr size_t api::Error::m_backtrace_buffer_size</definition>
+        <argsstring></argsstring>
+        <name>m_backtrace_buffer_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="127" column="27" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classapi_1_1_error_1a708501411a4d8bb8ab703cbab1488a16" prot="private" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* api::Error::m_signature</definition>
+        <argsstring></argsstring>
+        <name>m_signature</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="129" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classapi_1_1_error_1adbfaa5f849ef48149f4af1000c7e37f3" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int api::Error::m_error_number</definition>
+        <argsstring></argsstring>
+        <name>m_error_number</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="130" column="7" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classapi_1_1_error_1a2a03e77defce967a1f54f41cc677f29e" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int api::Error::m_line_number</definition>
+        <argsstring></argsstring>
+        <name>m_line_number</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="131" column="7" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="131" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classapi_1_1_error_1aded09e6c4b12400bc2c16fee8904a6ea" prot="private" static="no" mutable="no">
+        <type>char</type>
+        <definition>char api::Error::m_message[m_message_size+1]</definition>
+        <argsstring>[m_message_size+1]</argsstring>
+        <name>m_message</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="132" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classapi_1_1_error_1a0732198f934f8a0add00583be7faae85" prot="private" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* api::Error::m_backtrace_buffer[m_backtrace_buffer_size]</definition>
+        <argsstring>[m_backtrace_buffer_size]</argsstring>
+        <name>m_backtrace_buffer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="133" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classapi_1_1_error_1a021861c02702df89cb05f4fb0ada797a" prot="private" static="no" mutable="no">
+        <type>size_t</type>
+        <definition>size_t api::Error::m_backtrace_count</definition>
+        <argsstring></argsstring>
+        <name>m_backtrace_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="134" column="10" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classapi_1_1_error_1a4d0fa58e13cbe90e039e7e7ff179e04a" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool api::Error::m_is_guarded</definition>
+        <argsstring></argsstring>
+        <name>m_is_guarded</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="135" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="135" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classapi_1_1_error_1a86239ce091dc71856bd665831c27ed4d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * api::Error::message</definition>
+        <argsstring>() const</argsstring>
+        <name>message</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="107" column="15" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="107" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_error_1ab74a4a74cd8f8631ffa8df80939d2cee" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int api::Error::error_number</definition>
+        <argsstring>() const</argsstring>
+        <name>error_number</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="108" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="108" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_error_1aa07da2637d5fb8ecd8be5aca321397e6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int api::Error::line_number</definition>
+        <argsstring>() const</argsstring>
+        <name>line_number</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="109" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="109" bodyend="109"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_error_1a188fab6c3303230ae9353bacf59cc8e7" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>void *</type>
+        <definition>void * api::Error::signature</definition>
+        <argsstring>() const</argsstring>
+        <name>signature</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="111" column="9" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="111" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_error_1a0ae0464e1d576efe976baec80a3cfb42" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool api::Error::is_error</definition>
+        <argsstring>() const</argsstring>
+        <name>is_error</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="117" column="9" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="117" bodyend="117"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_error_1af4412577dd84fa9899e1586032f29495" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void api::Error::reset</definition>
+        <argsstring>()</argsstring>
+        <name>reset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="118" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="118" bodyend="118"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_error_1ab665c0a08b27561586909d67621d6ab5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool api::Error::is_guarded</definition>
+        <argsstring>() const</argsstring>
+        <name>is_guarded</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="119" column="9" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="119" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_error_1a2a0fc1485bd6f561c8fb89d9b5770531" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void api::Error::set_guarded</definition>
+        <argsstring>(bool value=true)</argsstring>
+        <name>set_guarded</name>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+          <defval>true</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="120" column="8" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="120" bodyend="120"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classapi_1_1_error_1ad8bce7cc0ece17ec882291e3b123845a" prot="public" static="yes" constexpr="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>constexpr static size_t</type>
+        <definition>constexpr static size_t api::Error::backtrace_buffer_size</definition>
+        <argsstring>()</argsstring>
+        <name>backtrace_buffer_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="113" column="27" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="113" bodyend="115"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classapi_1_1_error_1a966b71addc747e6c22d4517c6ee18926" prot="private" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>api::Error::Error</definition>
+        <argsstring>(void *signature)</argsstring>
+        <name>Error</name>
+        <param>
+          <type>void *</type>
+          <declname>signature</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="123" column="12" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="123" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_error_1a6baadacd81f8b6c954d4061c7c4a33a9" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void api::Error::capture_backtrace</definition>
+        <argsstring>()</argsstring>
+        <name>capture_backtrace</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="137" column="15" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="137" bodyend="148"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/API/include/api/api.hpp" line="73" column="1" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="73" bodyend="149"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_error_1ad8bce7cc0ece17ec882291e3b123845a" prot="public" virt="non-virtual"><scope>api::Error</scope><name>backtrace_buffer_size</name></member>
+      <member refid="classapi_1_1_error_1a1d913e17536c16ea3dcb2e4898b6c392" prot="private" virt="non-virtual"><scope>api::Error</scope><name>BacktraceSymbols</name></member>
+      <member refid="classapi_1_1_error_1a6baadacd81f8b6c954d4061c7c4a33a9" prot="private" virt="non-virtual"><scope>api::Error</scope><name>capture_backtrace</name></member>
+      <member refid="classapi_1_1_error_1a966b71addc747e6c22d4517c6ee18926" prot="private" virt="non-virtual"><scope>api::Error</scope><name>Error</name></member>
+      <member refid="classapi_1_1_error_1ab74a4a74cd8f8631ffa8df80939d2cee" prot="public" virt="non-virtual"><scope>api::Error</scope><name>error_number</name></member>
+      <member refid="classapi_1_1_error_1a0ae0464e1d576efe976baec80a3cfb42" prot="public" virt="non-virtual"><scope>api::Error</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_error_1ab665c0a08b27561586909d67621d6ab5" prot="public" virt="non-virtual"><scope>api::Error</scope><name>is_guarded</name></member>
+      <member refid="classapi_1_1_error_1aa07da2637d5fb8ecd8be5aca321397e6" prot="public" virt="non-virtual"><scope>api::Error</scope><name>line_number</name></member>
+      <member refid="classapi_1_1_error_1a0732198f934f8a0add00583be7faae85" prot="private" virt="non-virtual"><scope>api::Error</scope><name>m_backtrace_buffer</name></member>
+      <member refid="classapi_1_1_error_1a071323e11cf7673309f1de228652af5d" prot="private" virt="non-virtual"><scope>api::Error</scope><name>m_backtrace_buffer_size</name></member>
+      <member refid="classapi_1_1_error_1a021861c02702df89cb05f4fb0ada797a" prot="private" virt="non-virtual"><scope>api::Error</scope><name>m_backtrace_count</name></member>
+      <member refid="classapi_1_1_error_1adbfaa5f849ef48149f4af1000c7e37f3" prot="private" virt="non-virtual"><scope>api::Error</scope><name>m_error_number</name></member>
+      <member refid="classapi_1_1_error_1a4d0fa58e13cbe90e039e7e7ff179e04a" prot="private" virt="non-virtual"><scope>api::Error</scope><name>m_is_guarded</name></member>
+      <member refid="classapi_1_1_error_1a2a03e77defce967a1f54f41cc677f29e" prot="private" virt="non-virtual"><scope>api::Error</scope><name>m_line_number</name></member>
+      <member refid="classapi_1_1_error_1aded09e6c4b12400bc2c16fee8904a6ea" prot="private" virt="non-virtual"><scope>api::Error</scope><name>m_message</name></member>
+      <member refid="classapi_1_1_error_1aeb07fd6cd1c754edc6404461d1d06b54" prot="private" virt="non-virtual"><scope>api::Error</scope><name>m_message_size</name></member>
+      <member refid="classapi_1_1_error_1a708501411a4d8bb8ab703cbab1488a16" prot="private" virt="non-virtual"><scope>api::Error</scope><name>m_signature</name></member>
+      <member refid="classapi_1_1_error_1a86239ce091dc71856bd665831c27ed4d" prot="public" virt="non-virtual"><scope>api::Error</scope><name>message</name></member>
+      <member refid="classapi_1_1_error_1ad2850542435e657b278ceb4ba5c3af6b" prot="private" virt="non-virtual"><scope>api::Error</scope><name>PrivateExecutionContext</name></member>
+      <member refid="classapi_1_1_error_1af4412577dd84fa9899e1586032f29495" prot="public" virt="non-virtual"><scope>api::Error</scope><name>reset</name></member>
+      <member refid="classapi_1_1_error_1a2a0fc1485bd6f561c8fb89d9b5770531" prot="public" virt="non-virtual"><scope>api::Error</scope><name>set_guarded</name></member>
+      <member refid="classapi_1_1_error_1a188fab6c3303230ae9353bacf59cc8e7" prot="public" virt="non-virtual"><scope>api::Error</scope><name>signature</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

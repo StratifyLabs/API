@@ -1,0 +1,551 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="structprinter_1_1_printer_flags" kind="struct" language="C++" prot="public">
+    <compoundname>printer::PrinterFlags</compoundname>
+    <derivedcompoundref refid="classprinter_1_1_printer" prot="public" virt="non-virtual">printer::Printer</derivedcompoundref>
+    <includes local="no">Printer.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Flags</name>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a37a6259cc0c1dae299a7866489dff0bd" prot="public">
+          <name>null</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093ab8d1b43eae73587ba56baef574709ecb" prot="public">
+          <name>hex</name>
+          <initializer>= (1 &lt;&lt; 0)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a3f3e0fb9d945f54beaab2c0b4dd8f12a" prot="public">
+          <name>type_unsigned</name>
+          <initializer>= (1 &lt;&lt; 1)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a9ed978263150b937e941f377cade9306" prot="public">
+          <name>type_signed</name>
+          <initializer>= (1 &lt;&lt; 2)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a56f02a91b633c48cd45392fc53fa1831" prot="public">
+          <name>type_char</name>
+          <initializer>= (1 &lt;&lt; 3)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a543f7865b393f484d18069d92f17a71c" prot="public">
+          <name>type_float</name>
+          <initializer>= (1 &lt;&lt; 25)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a48a316cdc7045404083a63a6b8e9f91c" prot="public">
+          <name>width_8</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a1a3c3593787138217681fbf5d3740b57" prot="public">
+          <name>width_16</name>
+          <initializer>= (1 &lt;&lt; 4)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a4b2dfc24fa2bc430b1e6d64d013f65f0" prot="public">
+          <name>width_32</name>
+          <initializer>= (1 &lt;&lt; 5)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a64dcce7ed1a0cfc02d4d05ab5b091c19" prot="public">
+          <name>simple_progress</name>
+          <initializer>= (1 &lt;&lt; 6)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a77ef17275947c7822a3faaf6e4526160" prot="public">
+          <name>bold_keys</name>
+          <initializer>= (1 &lt;&lt; 7)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a8a89a49a379035cfae8d3202fde4691f" prot="public">
+          <name>bold_values</name>
+          <initializer>= (1 &lt;&lt; 8)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a140e9217df91038466506008a7085cd6" prot="public">
+          <name>bold_objects</name>
+          <initializer>= (1 &lt;&lt; 9)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a7571b15bcd3d4b24155c8458b323a77c" prot="public">
+          <name>bold_arrays</name>
+          <initializer>= (1 &lt;&lt; 10)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a14663c9653d407c5a6c0a2fe385edb69" prot="public">
+          <name>green_values</name>
+          <initializer>= (1 &lt;&lt; 11)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a47bfe65a006873d3c7a2951f8f5a1175" prot="public">
+          <name>red_values</name>
+          <initializer>= (1 &lt;&lt; 12)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093aee020e1ae3b654ff0b9f723f6b1911aa" prot="public">
+          <name>yellow_values</name>
+          <initializer>= (1 &lt;&lt; 13)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093adf43741516d13941a63ed3b7283e14cd" prot="public">
+          <name>red_errors</name>
+          <initializer>= (1 &lt;&lt; 14)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a9d18221c30dd25922c8c0f23f4141e7f" prot="public">
+          <name>yellow_warnings</name>
+          <initializer>= (1 &lt;&lt; 15)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093abc0af2b1b46cc0dd82d81c6df9e9226f" prot="public">
+          <name>cyan_keys</name>
+          <initializer>= (1 &lt;&lt; 16)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a07344137fd9aa25cfa37b6af0d3fe011" prot="public">
+          <name>yellow_keys</name>
+          <initializer>= (1 &lt;&lt; 17)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a50d62cd0854d4b12ce7e5912792b8a58" prot="public">
+          <name>magenta_keys</name>
+          <initializer>= (1 &lt;&lt; 18)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093aee26908bf9629eeb4b37dac350f4754a" prot="public">
+          <name>blob</name>
+          <initializer>= (1 &lt;&lt; 19)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a51818d395b7c13ab94bd387939ac866b" prot="public">
+          <name>cyan_values</name>
+          <initializer>= (1 &lt;&lt; 20)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a04a77b89a53825f4162fbdcb200a87c7" prot="public">
+          <name>red_keys</name>
+          <initializer>= (1 &lt;&lt; 21)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093ae97579b7254c2ae47df6feee1b0b0f59" prot="public">
+          <name>no_progress_newline</name>
+          <initializer>= (1 &lt;&lt; 22)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093adc18383683777b7cf8818c177b1d4bc8" prot="public">
+          <name>key_quotes</name>
+          <initializer>= (1 &lt;&lt; 23)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093a91014b3528830aee5d53e2e152ea85ad" prot="public">
+          <name>value_quotes</name>
+          <initializer>= (1 &lt;&lt; 24)</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Number printing flags. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="26" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="26" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="enum" id="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>FormatType</name>
+        <enumvalue id="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6afea087517c26fadd409bd4b9dc642555" prot="public">
+          <name>normal</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6a69dcab4a73aeec2113f69b61e6263da8" prot="public">
+          <name>bold</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6a563728df0fdd90631ac1e51258e2857d" prot="public">
+          <name>dim</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6a6dc7b4483f8c2c701a48e42db552806d" prot="public">
+          <name>underline</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6a40652ee9ae143f1c1c830f01a5449ecb" prot="public">
+          <name>blink</name>
+          <initializer>= 5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6a184401f335d6b8661e04dfea47b9dcd5" prot="public">
+          <name>inverted</name>
+          <initializer>= 7</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6a662f707d5491e9bce8238a6c0be92190" prot="public">
+          <name>hidden</name>
+          <initializer>= 8</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="57" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="57" bodyend="65"/>
+      </memberdef>
+      <memberdef kind="enum" id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>ColorCode</name>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a334c4a4c42fdb79d7ebc3e73b517e6f8" prot="public">
+          <name>none</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2afea087517c26fadd409bd4b9dc642555" prot="public">
+          <name>normal</name>
+          <initializer>= 39</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a1ffd9e753c8054cc61456ac7fac1ac89" prot="public">
+          <name>black</name>
+          <initializer>= 30</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2abda9643ac6601722a28f238714274da4" prot="public">
+          <name>red</name>
+          <initializer>= 31</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a9f27410725ab8cc8854a2769c7a516b8" prot="public">
+          <name>green</name>
+          <initializer>= 32</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2ad487dd0b55dfcacdd920ccbdaeafa351" prot="public">
+          <name>yellow</name>
+          <initializer>= 33</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a48d6215903dff56238e52e8891380c8f" prot="public">
+          <name>blue</name>
+          <initializer>= 34</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a4c2a4a7078da0ac6733464eacfd00f86" prot="public">
+          <name>magenta</name>
+          <initializer>= 35</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a6411532ba4971f378391776a9db629d3" prot="public">
+          <name>cyan</name>
+          <initializer>= 36</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a770e427f6a16eb64e2ece9585ba9d193" prot="public">
+          <name>light_gray</name>
+          <initializer>= 37</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a49dba686026a18435dd23b5e83eb5cfd" prot="public">
+          <name>dark_gray</name>
+          <initializer>= 90</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a9fec81ba3d6228b82a5bb8fe57c3da22" prot="public">
+          <name>light_red</name>
+          <initializer>= 91</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2ac10bddadd1786a8a12f96ae7db5bafb8" prot="public">
+          <name>light_green</name>
+          <initializer>= 92</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a743b7827c281254e45c305696344535b" prot="public">
+          <name>light_yellow</name>
+          <initializer>= 93</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2a61a2783898a9df78bb27edc33f768e6e" prot="public">
+          <name>light_blue</name>
+          <initializer>= 94</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="67" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="67" bodyend="83"/>
+      </memberdef>
+      <memberdef kind="enum" id="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Level</name>
+        <enumvalue id="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578fadf6402fd9ecc60f5a2159fdf45711cd4" prot="public">
+          <name>fatal</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578facb5e100e5a9a3e7f6d1fd97512215282" prot="public">
+          <name>error</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578fa7b83d3f08fa392b79e3f553b585971cd" prot="public">
+          <name>warning</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578facaf9b6b99962bf5c2264824231d7a40c" prot="public">
+          <name>info</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578fa78e731027d8fd50ed642340b7c9a63b3" prot="public">
+          <name>message</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578faad42f6697b035b7580e4fef93be20b4d" prot="public">
+          <name>debug</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578fa04a75036e9d520bb983c5ed03b8d0182" prot="public">
+          <name>trace</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="85" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="85" bodyend="85"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>printer::JsonPrinter</label>
+        <link refid="classprinter_1_1_json_printer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>printer::MarkdownPrinter</label>
+        <link refid="classprinter_1_1_markdown_printer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>printer::NullPrinter</label>
+        <link refid="classprinter_1_1_null_printer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>printer::Printer</label>
+        <link refid="classprinter_1_1_printer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>printer::PrinterFlags</label>
+        <link refid="structprinter_1_1_printer_flags"/>
+      </node>
+      <node id="6">
+        <label>printer::YamlPrinter</label>
+        <link refid="classprinter_1_1_yaml_printer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="24" column="1" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="24" bodyend="86"/>
+    <listofallmembers>
+      <member refid="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2" prot="public" virt="non-virtual"><scope>printer::PrinterFlags</scope><name>ColorCode</name></member>
+      <member refid="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" prot="public" virt="non-virtual"><scope>printer::PrinterFlags</scope><name>Flags</name></member>
+      <member refid="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6" prot="public" virt="non-virtual"><scope>printer::PrinterFlags</scope><name>FormatType</name></member>
+      <member refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" prot="public" virt="non-virtual"><scope>printer::PrinterFlags</scope><name>Level</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

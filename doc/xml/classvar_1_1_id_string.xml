@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_id_string" kind="class" language="C++" prot="public">
+    <compoundname>var::IdString</compoundname>
+    <basecompoundref refid="classvar_1_1_stack_string" prot="public" virt="non-virtual">var::StackString&lt; IdString, 24 &gt;</basecompoundref>
+    <includes local="no">StackString.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvar_1_1_id_string_1a8921533f9cd4a3a80f27c77f0b100dfc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::IdString::IdString</definition>
+        <argsstring>()=default</argsstring>
+        <name>IdString</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StackString.hpp" line="180" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_id_string_1a543359676e6f2ec993eaa8777269845d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>var::IdString::IdString</definition>
+        <argsstring>(const StringView a)</argsstring>
+        <name>IdString</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StackString.hpp" line="181" column="3" bodyfile="API/libraries/VarAPI/include/var/StackString.hpp" bodystart="181" bodyend="181"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_id_string_1aeb5c4afac779a4126c6e83ab3d602c91" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>var::IdString::IdString</definition>
+        <argsstring>(const char *a)</argsstring>
+        <name>IdString</name>
+        <param>
+          <type>const char *</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StackString.hpp" line="182" column="3" bodyfile="API/libraries/VarAPI/include/var/StackString.hpp" bodystart="182" bodyend="182"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_id_string_1ae2a364236f7216a4501fe6f1fe3cc98c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>var::IdString::operator const char *</definition>
+        <argsstring>() const</argsstring>
+        <name>operator const char *</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StackString.hpp" line="184" column="3" bodyfile="API/libraries/VarAPI/include/var/StackString.hpp" bodystart="184" bodyend="184"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>var::StackString&lt; IdString, 24 &gt;</label>
+        <link refid="classvar_1_1_stack_string"/>
+      </node>
+      <node id="1">
+        <label>var::IdString</label>
+        <link refid="classvar_1_1_id_string"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>var::StackString&lt; IdString, 24 &gt;</label>
+        <link refid="classvar_1_1_stack_string"/>
+      </node>
+      <node id="1">
+        <label>var::IdString</label>
+        <link refid="classvar_1_1_id_string"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/VarAPI/include/var/StackString.hpp" line="178" column="1" bodyfile="API/libraries/VarAPI/include/var/StackString.hpp" bodystart="178" bodyend="185"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_stack_string_1a90bc48e9f85f3915418eea0b645fec34" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>append</name></member>
+      <member refid="classvar_1_1_stack_string_1a3fdacf768831127c5717e925d304bc89" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>append</name></member>
+      <member refid="classvar_1_1_stack_string_1aeafed56c61ce2b9b2dffaba0d86e1e5b" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>at</name></member>
+      <member refid="classvar_1_1_stack_string_1ae0d4754e8bc082b08068a92b9499018b" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>back</name></member>
+      <member refid="classvar_1_1_stack_string_1a9ceb6aa6a5329ac97932493cbba50572" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>Base</name></member>
+      <member refid="classvar_1_1_stack_string_1a1a28765c4f59cbac3f114bc6ea4a488f" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>capacity</name></member>
+      <member refid="classvar_1_1_stack_string_1a9c576958086a82507ab3d3a0f900754d" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>clear</name></member>
+      <member refid="classvar_1_1_stack_string_1a13333835d25c67b85ec18cbf90ab7256" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>cstring</name></member>
+      <member refid="classvar_1_1_stack_string_1ac2af71b997e22b1c514972323ea6b180" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>data</name></member>
+      <member refid="classvar_1_1_stack_string_1a9c5a279a19ac8d57c3d9a11391398976" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>format</name></member>
+      <member refid="classvar_1_1_id_string_1a8921533f9cd4a3a80f27c77f0b100dfc" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>IdString</name></member>
+      <member refid="classvar_1_1_id_string_1a543359676e6f2ec993eaa8777269845d" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>IdString</name></member>
+      <member refid="classvar_1_1_id_string_1aeb5c4afac779a4126c6e83ab3d602c91" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>IdString</name></member>
+      <member refid="classvar_1_1_stack_string_1a4837e5e5acc337eb88c8348885ad8d01" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>is_empty</name></member>
+      <member refid="classvar_1_1_stack_string_1a54567000529855d01f921072fa826b9a" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>length</name></member>
+      <member refid="classvar_1_1_stack_string_1a69c76314c7e0c181c3c170b6c3453d2b" prot="protected" virt="non-virtual"><scope>var::IdString</scope><name>m_buffer</name></member>
+      <member refid="classvar_1_1_id_string_1ae2a364236f7216a4501fe6f1fe3cc98c" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator const char *</name></member>
+      <member refid="classvar_1_1_stack_string_1a2c9860343022d5759c9a9c61d4aec891" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator!=</name></member>
+      <member refid="classvar_1_1_stack_string_1a69238d0f2ab90207680ad6aa1c71521d" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator!=</name></member>
+      <member refid="classvar_1_1_stack_string_1a42efabff48c21adfa6f8d146691a563d" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator!=</name></member>
+      <member refid="classvar_1_1_stack_string_1aa62d5431a113ee4cfc8851379bbf26fb" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator()</name></member>
+      <member refid="classvar_1_1_stack_string_1ab87eb5df10f25477392ebd3075a2aa4b" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator*</name></member>
+      <member refid="classvar_1_1_stack_string_1a9a3f269d28e7faba675ce6c7a5643f47" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator&lt;</name></member>
+      <member refid="classvar_1_1_stack_string_1a88fa6167a8c8a0127668260e24b6ee4f" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator==</name></member>
+      <member refid="classvar_1_1_stack_string_1af8def0baadcf12c37d1b91664580af5e" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator==</name></member>
+      <member refid="classvar_1_1_stack_string_1a26e35b0846a2718be050843882c41bf4" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator==</name></member>
+      <member refid="classvar_1_1_stack_string_1ad70882a2ea81e272196a311fd63721b6" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>operator&gt;</name></member>
+      <member refid="classvar_1_1_stack_string_1a1c1b56b61c7b1eb1344b7c0d0e3ff117" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>pop_back</name></member>
+      <member refid="classvar_1_1_stack_string_1ab404d4e94e06f940ecb52ac917693c72" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>pop_front</name></member>
+      <member refid="classvar_1_1_stack_string_1ae020f401f0923a0c87ba1c18a5ac6181" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>replace</name></member>
+      <member refid="classvar_1_1_stack_string_1a5b929bd0b01001067857fc962a457d2f" prot="protected" virt="non-virtual"><scope>var::IdString</scope><name>StackString</name></member>
+      <member refid="classvar_1_1_stack_string_1ad0467c93cb791f63c179024080bdceec" prot="protected" virt="non-virtual"><scope>var::IdString</scope><name>StackString</name></member>
+      <member refid="classvar_1_1_stack_string_1a96cd53b693cce09c1198221e16de897e" prot="protected" virt="non-virtual"><scope>var::IdString</scope><name>StackString</name></member>
+      <member refid="classvar_1_1_stack_string_1af5aeb9062b132f1408655fe5af3f6783" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>string_view</name></member>
+      <member refid="classvar_1_1_stack_string_1ab02f72b33ca04746714bec4965caa5df" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>to_lower</name></member>
+      <member refid="classvar_1_1_stack_string_1ab4fbadc071b0664cbeab9850cc0898c6" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>to_upper</name></member>
+      <member refid="classvar_1_1_stack_string_1ab31c741882edff83c4a06232e1d68a90" prot="public" virt="non-virtual"><scope>var::IdString</scope><name>truncate</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

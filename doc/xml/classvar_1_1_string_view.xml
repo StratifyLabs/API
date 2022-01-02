@@ -1,0 +1,1278 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_string_view" kind="class" language="C++" prot="public">
+    <compoundname>var::StringView</compoundname>
+    <includes local="no">StringView.hpp</includes>
+    <innerclass refid="classvar_1_1_string_view_1_1_get_substring" prot="public">var::StringView::GetSubstring</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Base</name>
+        <enumvalue id="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9ae271e2d9f011df547b9b98db5a3f287a" prot="public">
+          <name>auto_</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9a34d0e21ea08f041727cd3c62f02535e3" prot="public">
+          <name>octal</name>
+          <initializer>= 8</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9abdaa3c20a3e3851599514f7c6be5f62f" prot="public">
+          <name>decimal</name>
+          <initializer>= 10</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9a2c34788af99f9ca074434e362d584d54" prot="public">
+          <name>hexadecimal</name>
+          <initializer>= 16</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="34" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="34" bodyend="34"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_string_view_1aa59f7e31268522df8ca81db3d72e6a9e" prot="public" static="no">
+        <type>typename std::string_view::iterator</type>
+        <definition>using var::StringView::iterator =  typename std::string_view::iterator</definition>
+        <argsstring></argsstring>
+        <name>iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="95" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_string_view_1a76723e736d9eb4bc16f2340ed04b8034" prot="public" static="no">
+        <type>typename std::string_view::const_iterator</type>
+        <definition>using var::StringView::const_iterator =  typename std::string_view::const_iterator</definition>
+        <argsstring></argsstring>
+        <name>const_iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="96" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_string_view_1a22a5ba9c8cd020c5c59516e0149d634e" prot="public" static="no">
+        <type>typename std::string_view::reverse_iterator</type>
+        <definition>using var::StringView::reverse_iterator =  typename std::string_view::reverse_iterator</definition>
+        <argsstring></argsstring>
+        <name>reverse_iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="97" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_string_view_1a78235860adca0736dd3bdcc70e59d4cf" prot="public" static="no">
+        <type>typename std::string_view::const_reverse_iterator</type>
+        <definition>using var::StringView::const_reverse_iterator =  typename std::string_view::const_reverse_iterator</definition>
+        <argsstring></argsstring>
+        <name>const_reverse_iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="98" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="classvar_1_1_string_view_1aa361886269517a46d938cf264d11f6cf" prot="public" static="yes" constexpr="yes" mutable="no">
+        <type>constexpr static size_t</type>
+        <definition>constexpr static size_t var::StringView::npos</definition>
+        <argsstring></argsstring>
+        <name>npos</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="32" column="27" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvar_1_1_string_view_1a7fb804f7dc96dd9f705c84095f37f1ca" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class String</definition>
+        <argsstring></argsstring>
+        <name>String</name>
+        <param>
+          <type><ref refid="classvar_1_1_string" kindref="compound">String</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="216" column="16" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="216" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvar_1_1_string_view_1a32fda4bca60855121cf5c932319e0225" prot="private" static="no" mutable="no">
+        <type>std::string_view</type>
+        <definition>std::string_view var::StringView::m_string_view</definition>
+        <argsstring></argsstring>
+        <name>m_string_view</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="217" column="20" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="217" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvar_1_1_string_view_1ac5188eb59deb182f84bc5126aa78e46c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>()</argsstring>
+        <name>StringView</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="36" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="36" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a59e5f1a426eba7f535db31a827c49b79" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const char *value)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const char *</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="37" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="37" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1ae3c2deb2b483fb36a6e7afe326cbbeac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const String &amp;value)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string" kindref="compound">String</ref> &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="38" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1af38ba5ef1f6b99c6f7495c5387410bac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const IdString &amp;value)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_id_string" kindref="compound">IdString</ref> &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="39" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1af4e89f86673c487a658fc1def63aac9a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const KeyString &amp;value)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_key_string" kindref="compound">KeyString</ref> &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="40" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a8c8d8711f3c8e593ed037acc8dd48ae3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const NumberString &amp;value)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_number_string" kindref="compound">NumberString</ref> &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="41" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a6b74eed6a784072794749d64d56d5083" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const PathString &amp;value)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_path_string" kindref="compound">PathString</ref> &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="42" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a077c2a35d20d5ef2f5a194995994572e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const NameString &amp;value)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_name_string" kindref="compound">NameString</ref> &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="43" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1afc8f1c70657f7060b5ad9feb7ca8ce95" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const GeneralString &amp;value)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_general_string" kindref="compound">GeneralString</ref> &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="44" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1aecfd0ae76f6ffbcdd0e303af06280506" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const char *value, size_t length)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const char *</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="46" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="46" bodyend="48"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a2474429e117b9317293d136468dfc3f7" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::is_null</definition>
+        <argsstring>() const</argsstring>
+        <name>is_null</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="50" column="9" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="50" bodyend="52"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a78cd9ddd58e3e68c3907cd63961dc6ed" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref> &amp;</type>
+        <definition>StringView &amp; var::StringView::set_null</definition>
+        <argsstring>()</argsstring>
+        <name>set_null</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="54" column="14" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="54" bodyend="57"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1ae1c97f4e649fbc03631e16e2b14f349b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::is_null_terminated</definition>
+        <argsstring>() const</argsstring>
+        <name>is_null_terminated</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="59" column="9" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="59" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a16dc3f1ad9c743cd3ac7f782afa39a0a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>char</type>
+        <definition>char var::StringView::at</definition>
+        <argsstring>(size_t value) const</argsstring>
+        <name>at</name>
+        <param>
+          <type>size_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="63" column="9" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="63" bodyend="63"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a6048899479eabb76268e1810932546a3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>char</type>
+        <definition>char var::StringView::front</definition>
+        <argsstring>() const</argsstring>
+        <name>front</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="64" column="9" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="64" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1ad561a28e64f39ad948c6ab4d59077d37" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>char</type>
+        <definition>char var::StringView::back</definition>
+        <argsstring>() const</argsstring>
+        <name>back</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="65" column="9" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="65" bodyend="65"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a1527d3097b5dc5dc8df33dc53e3595be" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::StringView::length</definition>
+        <argsstring>() const</argsstring>
+        <name>length</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="66" column="11" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="66" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1aec1ec5054884dc10e3e96d96fd67de6e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::is_empty</definition>
+        <argsstring>() const</argsstring>
+        <name>is_empty</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="68" column="9" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="68" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a4ac982bc42d2aef701b3dd1329339154" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref> &amp;</type>
+        <definition>StringView &amp; var::StringView::pop_front</definition>
+        <argsstring>(size_t length=1)</argsstring>
+        <name>pop_front</name>
+        <param>
+          <type>size_t</type>
+          <declname>length</declname>
+          <defval>1</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="70" column="14" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="70" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a9864297c73047ae3c70b3db9daf10ad3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref> &amp;</type>
+        <definition>StringView &amp; var::StringView::pop_back</definition>
+        <argsstring>(size_t length=1)</argsstring>
+        <name>pop_back</name>
+        <param>
+          <type>size_t</type>
+          <declname>length</declname>
+          <defval>1</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="75" column="14" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="75" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a8e9d804e50ad2ed58fa6f432a8745fd8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+        <definition>StringView var::StringView::get_substring</definition>
+        <argsstring>(const GetSubstring &amp;options) const</argsstring>
+        <name>get_substring</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view_1_1_get_substring" kindref="compound">GetSubstring</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="85" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1ae314c3509cd512a6a7436d00becea64d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+        <definition>StringView var::StringView::operator()</definition>
+        <argsstring>(const GetSubstring &amp;options) const</argsstring>
+        <name>operator()</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view_1_1_get_substring" kindref="compound">GetSubstring</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="86" column="15" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="86" bodyend="88"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a8c696b6a4ee35a531b72cee9daf943b7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+        <definition>StringView var::StringView::get_substring_at_position</definition>
+        <argsstring>(size_t position) const</argsstring>
+        <name>get_substring_at_position</name>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="90" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a575f8e3d2168ede51e7bc2cdd43fd7a1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+        <definition>StringView var::StringView::get_substring_with_length</definition>
+        <argsstring>(size_t length) const</argsstring>
+        <name>get_substring_with_length</name>
+        <param>
+          <type>size_t</type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="91" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a69ed49ce363917ffa86513ca31e8343a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_vector" kindref="compound">var::Vector</ref>&lt; <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref> &gt;</type>
+        <definition>var::Vector&lt; StringView &gt; var::StringView::split</definition>
+        <argsstring>(StringView delimeters) const</argsstring>
+        <name>split</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>delimeters</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="93" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a2034f8b658dfef696c6cf9269e2cb83d" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a76723e736d9eb4bc16f2340ed04b8034" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::StringView::begin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>begin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="101" column="19" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="101" bodyend="103"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a34496139406eea2a6ef8524eb285b3e4" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1aa59f7e31268522df8ca81db3d72e6a9e" kindref="member">iterator</ref></type>
+        <definition>iterator var::StringView::begin</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>begin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="104" column="13" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="104" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1acf7a6fa71525f3f4e071e13b35206f45" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a76723e736d9eb4bc16f2340ed04b8034" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::StringView::end</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="106" column="19" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="106" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a2100a15f3209078e6e94287cc2169dce" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1aa59f7e31268522df8ca81db3d72e6a9e" kindref="member">iterator</ref></type>
+        <definition>iterator var::StringView::end</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="109" column="13" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="109" bodyend="109"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a7f1d29a3a82614dceed884625d7d824e" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a76723e736d9eb4bc16f2340ed04b8034" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::StringView::cbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>cbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="111" column="19" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="111" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a13bbb8b83bc507b63ec72192b9d64d85" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a76723e736d9eb4bc16f2340ed04b8034" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::StringView::cend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>cend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="114" column="19" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="114" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1aa176c26ac55aa67880c954200f73f655" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a78235860adca0736dd3bdcc70e59d4cf" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::StringView::rbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>rbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="118" column="27" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="118" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1abf071d35311c8188ffe9a96f9c6119fb" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a22a5ba9c8cd020c5c59516e0149d634e" kindref="member">reverse_iterator</ref></type>
+        <definition>reverse_iterator var::StringView::rbegin</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>rbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="121" column="21" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="121" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a47f790dfc5a74f5a7c3e74567932c925" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a78235860adca0736dd3bdcc70e59d4cf" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::StringView::rend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>rend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="125" column="27" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="125" bodyend="127"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1affd4e2f6af7d75e3d538197df396c633" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a22a5ba9c8cd020c5c59516e0149d634e" kindref="member">reverse_iterator</ref></type>
+        <definition>reverse_iterator var::StringView::rend</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>rend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="128" column="21" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="128" bodyend="130"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a84fab0a8a2a19167fab6790cc3243950" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a78235860adca0736dd3bdcc70e59d4cf" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::StringView::crbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>crbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="132" column="27" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="132" bodyend="134"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1afae41f20d05e15ff4beaddbba2e7f9cb" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1a78235860adca0736dd3bdcc70e59d4cf" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::StringView::crend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>crend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="135" column="27" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="135" bodyend="137"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1accc9b2997b134a03eb07dedcd65f65c8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::StringView::find</definition>
+        <argsstring>(StringView a, size_t position=0) const</argsstring>
+        <name>find</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="139" column="11" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="139" bodyend="141"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a8793b9413b8d30918c336f01e1b56f11" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::StringView::find</definition>
+        <argsstring>(char a, size_t position=0) const</argsstring>
+        <name>find</name>
+        <param>
+          <type>char</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="143" column="11" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="143" bodyend="145"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a07622ee75293fbd1409e1da5db2b5120" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::StringView::find_first_of</definition>
+        <argsstring>(StringView a, size_t position=0) const</argsstring>
+        <name>find_first_of</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="147" column="11" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="147" bodyend="149"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1aca5493514f22a29ee06f6d78e9849cf8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::StringView::find_first_not_of</definition>
+        <argsstring>(StringView a, size_t position=0) const</argsstring>
+        <name>find_first_not_of</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="152" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="152" bodyend="154"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1ab662f4990bf813319c953cbbb8687390" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::StringView::reverse_find</definition>
+        <argsstring>(StringView a, size_t position=npos) const</argsstring>
+        <name>reverse_find</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+          <defval><ref refid="classvar_1_1_string_view_1aa361886269517a46d938cf264d11f6cf" kindref="member">npos</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="157" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="157" bodyend="159"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1aa8182be11cd22479c998f31768bbdc63" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::StringView::reverse_find</definition>
+        <argsstring>(char a, size_t position=npos) const</argsstring>
+        <name>reverse_find</name>
+        <param>
+          <type>char</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+          <defval><ref refid="classvar_1_1_string_view_1aa361886269517a46d938cf264d11f6cf" kindref="member">npos</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="161" column="11" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="161" bodyend="163"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a290f71116f355e4ef3824a549a1e134b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::StringView::find_last_of</definition>
+        <argsstring>(StringView a, size_t position=0) const</argsstring>
+        <name>find_last_of</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="165" column="11" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="165" bodyend="167"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a8fc193a1d8b605128730197430134c6b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::StringView::find_last_not_of</definition>
+        <argsstring>(StringView a, size_t position=0) const</argsstring>
+        <name>find_last_not_of</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="170" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="170" bodyend="172"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1afc161b985e8a74a3835d862e83314d5f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator==</definition>
+        <argsstring>(const StringView a) const</argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="174" column="8" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="174" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a8c24b9b0bfb67e92fc84e648f60b4084" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator!=</definition>
+        <argsstring>(const StringView a) const</argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="178" column="8" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="178" bodyend="180"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a64c28ea8edf90e738009bf72b0a0273a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator==</definition>
+        <argsstring>(const char *a) const</argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const char *</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="182" column="8" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="182" bodyend="182"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a3cc2fb989bcfe71c96442cd644e419f0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator!=</definition>
+        <argsstring>(const char *a) const</argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const char *</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="183" column="8" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="183" bodyend="183"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a06e891cc63f3d3cb52053139bf0103e4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator==</definition>
+        <argsstring>(const String &amp;a) const</argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string" kindref="compound">String</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="185" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1ac158ec36950154b71bd4aa91a4244bf1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator!=</definition>
+        <argsstring>(const String &amp;a) const</argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string" kindref="compound">String</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="186" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1ac549c828489b4b19ff7ec08bab3fb8de" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator&gt;</definition>
+        <argsstring>(const StringView a) const</argsstring>
+        <name>operator&gt;</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="188" column="8" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="188" bodyend="190"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a035ca6bda6a537cf22dff27c879ce176" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator&gt;=</definition>
+        <argsstring>(const StringView a) const</argsstring>
+        <name>operator&gt;=</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="192" column="8" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="192" bodyend="194"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a1c2ec4a17bdd294cd50203568746eac5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator&lt;</definition>
+        <argsstring>(const StringView a) const</argsstring>
+        <name>operator&lt;</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="196" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="196" bodyend="198"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1abaa051a621d1b1dad14eeb23d9f71f43" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::StringView::operator&lt;=</definition>
+        <argsstring>(const StringView a) const</argsstring>
+        <name>operator&lt;=</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="200" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="200" bodyend="202"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a266c527f980d1c3bfbfc832cef4c8169" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>long</type>
+        <definition>long var::StringView::to_long</definition>
+        <argsstring>(Base base=Base::decimal) const</argsstring>
+        <name>to_long</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9" kindref="member">Base</ref></type>
+          <declname>base</declname>
+          <defval><ref refid="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9abdaa3c20a3e3851599514f7c6be5f62f" kindref="member">Base::decimal</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="204" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1ac4a90a2b72185274be67298bd36f4924" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float var::StringView::to_float</definition>
+        <argsstring>() const</argsstring>
+        <name>to_float</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="205" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a0969427e974af0c1ca60fa46bad8981e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>unsigned long</type>
+        <definition>unsigned long var::StringView::to_unsigned_long</definition>
+        <argsstring>(Base base=Base::decimal) const</argsstring>
+        <name>to_unsigned_long</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9" kindref="member">Base</ref></type>
+          <declname>base</declname>
+          <defval><ref refid="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9abdaa3c20a3e3851599514f7c6be5f62f" kindref="member">Base::decimal</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="207" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a34f4ed6d05053779dd6205f125853e59" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int var::StringView::to_integer</definition>
+        <argsstring>() const</argsstring>
+        <name>to_integer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="208" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a7e522dd6cfdc6e9546dfc056b84babd9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * var::StringView::data</definition>
+        <argsstring>() const</argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="210" column="15" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="210" bodyend="210"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1ab2d660f34159960f2dd3b7d006149428" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string" kindref="compound">String</ref></type>
+        <definition>String var::StringView::to_string</definition>
+        <argsstring>() const</argsstring>
+        <name>to_string</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="212" column="11"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvar_1_1_string_view_1a8ecb920e89880c8021001d9c432f68e6" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string" kindref="compound">String</ref></type>
+        <definition>static String var::StringView::to_string</definition>
+        <argsstring>(const StringView &amp;a)</argsstring>
+        <name>to_string</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="213" column="18"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvar_1_1_string_view_1aa1f02b7f6bdfa668c7fdfd951d2c49ee" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>var::StringView::StringView</definition>
+        <argsstring>(const std::string_view string_view)</argsstring>
+        <name>StringView</name>
+        <param>
+          <type>const std::string_view</type>
+          <declname>string_view</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="219" column="3" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="219" bodyend="219"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_view_1a3aaec9347d0cdc9b91888efa397e08fa" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9" kindref="member">Base</ref></type>
+        <definition>Base var::StringView::get_base</definition>
+        <argsstring>(Base input) const</argsstring>
+        <name>get_base</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9" kindref="member">Base</ref></type>
+          <declname>input</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="221" column="9"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/StringView.hpp" line="30" column="1" bodyfile="API/libraries/VarAPI/include/var/StringView.hpp" bodystart="30" bodyend="222"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_string_view_1a16dc3f1ad9c743cd3ac7f782afa39a0a" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>at</name></member>
+      <member refid="classvar_1_1_string_view_1ad561a28e64f39ad948c6ab4d59077d37" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>back</name></member>
+      <member refid="classvar_1_1_string_view_1ab8ac90a82dd067897c09f9b4da75e5a9" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>Base</name></member>
+      <member refid="classvar_1_1_string_view_1a2034f8b658dfef696c6cf9269e2cb83d" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>begin</name></member>
+      <member refid="classvar_1_1_string_view_1a34496139406eea2a6ef8524eb285b3e4" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>begin</name></member>
+      <member refid="classvar_1_1_string_view_1a7f1d29a3a82614dceed884625d7d824e" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>cbegin</name></member>
+      <member refid="classvar_1_1_string_view_1a13bbb8b83bc507b63ec72192b9d64d85" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>cend</name></member>
+      <member refid="classvar_1_1_string_view_1a76723e736d9eb4bc16f2340ed04b8034" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>const_iterator</name></member>
+      <member refid="classvar_1_1_string_view_1a78235860adca0736dd3bdcc70e59d4cf" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>const_reverse_iterator</name></member>
+      <member refid="classvar_1_1_string_view_1a84fab0a8a2a19167fab6790cc3243950" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>crbegin</name></member>
+      <member refid="classvar_1_1_string_view_1afae41f20d05e15ff4beaddbba2e7f9cb" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>crend</name></member>
+      <member refid="classvar_1_1_string_view_1a7e522dd6cfdc6e9546dfc056b84babd9" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>data</name></member>
+      <member refid="classvar_1_1_string_view_1acf7a6fa71525f3f4e071e13b35206f45" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>end</name></member>
+      <member refid="classvar_1_1_string_view_1a2100a15f3209078e6e94287cc2169dce" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>end</name></member>
+      <member refid="classvar_1_1_string_view_1accc9b2997b134a03eb07dedcd65f65c8" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>find</name></member>
+      <member refid="classvar_1_1_string_view_1a8793b9413b8d30918c336f01e1b56f11" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>find</name></member>
+      <member refid="classvar_1_1_string_view_1aca5493514f22a29ee06f6d78e9849cf8" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>find_first_not_of</name></member>
+      <member refid="classvar_1_1_string_view_1a07622ee75293fbd1409e1da5db2b5120" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>find_first_of</name></member>
+      <member refid="classvar_1_1_string_view_1a8fc193a1d8b605128730197430134c6b" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>find_last_not_of</name></member>
+      <member refid="classvar_1_1_string_view_1a290f71116f355e4ef3824a549a1e134b" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>find_last_of</name></member>
+      <member refid="classvar_1_1_string_view_1a6048899479eabb76268e1810932546a3" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>front</name></member>
+      <member refid="classvar_1_1_string_view_1a3aaec9347d0cdc9b91888efa397e08fa" prot="private" virt="non-virtual"><scope>var::StringView</scope><name>get_base</name></member>
+      <member refid="classvar_1_1_string_view_1a8e9d804e50ad2ed58fa6f432a8745fd8" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>get_substring</name></member>
+      <member refid="classvar_1_1_string_view_1a8c696b6a4ee35a531b72cee9daf943b7" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>get_substring_at_position</name></member>
+      <member refid="classvar_1_1_string_view_1a575f8e3d2168ede51e7bc2cdd43fd7a1" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>get_substring_with_length</name></member>
+      <member refid="classvar_1_1_string_view_1aec1ec5054884dc10e3e96d96fd67de6e" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>is_empty</name></member>
+      <member refid="classvar_1_1_string_view_1a2474429e117b9317293d136468dfc3f7" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>is_null</name></member>
+      <member refid="classvar_1_1_string_view_1ae1c97f4e649fbc03631e16e2b14f349b" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>is_null_terminated</name></member>
+      <member refid="classvar_1_1_string_view_1aa59f7e31268522df8ca81db3d72e6a9e" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>iterator</name></member>
+      <member refid="classvar_1_1_string_view_1a1527d3097b5dc5dc8df33dc53e3595be" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>length</name></member>
+      <member refid="classvar_1_1_string_view_1a32fda4bca60855121cf5c932319e0225" prot="private" virt="non-virtual"><scope>var::StringView</scope><name>m_string_view</name></member>
+      <member refid="classvar_1_1_string_view_1aa361886269517a46d938cf264d11f6cf" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>npos</name></member>
+      <member refid="classvar_1_1_string_view_1a8c24b9b0bfb67e92fc84e648f60b4084" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator!=</name></member>
+      <member refid="classvar_1_1_string_view_1a3cc2fb989bcfe71c96442cd644e419f0" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator!=</name></member>
+      <member refid="classvar_1_1_string_view_1ac158ec36950154b71bd4aa91a4244bf1" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator!=</name></member>
+      <member refid="classvar_1_1_string_view_1ae314c3509cd512a6a7436d00becea64d" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator()</name></member>
+      <member refid="classvar_1_1_string_view_1a1c2ec4a17bdd294cd50203568746eac5" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator&lt;</name></member>
+      <member refid="classvar_1_1_string_view_1abaa051a621d1b1dad14eeb23d9f71f43" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator&lt;=</name></member>
+      <member refid="classvar_1_1_string_view_1afc161b985e8a74a3835d862e83314d5f" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator==</name></member>
+      <member refid="classvar_1_1_string_view_1a64c28ea8edf90e738009bf72b0a0273a" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator==</name></member>
+      <member refid="classvar_1_1_string_view_1a06e891cc63f3d3cb52053139bf0103e4" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator==</name></member>
+      <member refid="classvar_1_1_string_view_1ac549c828489b4b19ff7ec08bab3fb8de" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator&gt;</name></member>
+      <member refid="classvar_1_1_string_view_1a035ca6bda6a537cf22dff27c879ce176" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>operator&gt;=</name></member>
+      <member refid="classvar_1_1_string_view_1a9864297c73047ae3c70b3db9daf10ad3" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>pop_back</name></member>
+      <member refid="classvar_1_1_string_view_1a4ac982bc42d2aef701b3dd1329339154" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>pop_front</name></member>
+      <member refid="classvar_1_1_string_view_1aa176c26ac55aa67880c954200f73f655" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_string_view_1abf071d35311c8188ffe9a96f9c6119fb" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_string_view_1a47f790dfc5a74f5a7c3e74567932c925" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>rend</name></member>
+      <member refid="classvar_1_1_string_view_1affd4e2f6af7d75e3d538197df396c633" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>rend</name></member>
+      <member refid="classvar_1_1_string_view_1ab662f4990bf813319c953cbbb8687390" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>reverse_find</name></member>
+      <member refid="classvar_1_1_string_view_1aa8182be11cd22479c998f31768bbdc63" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>reverse_find</name></member>
+      <member refid="classvar_1_1_string_view_1a22a5ba9c8cd020c5c59516e0149d634e" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>reverse_iterator</name></member>
+      <member refid="classvar_1_1_string_view_1a78cd9ddd58e3e68c3907cd63961dc6ed" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>set_null</name></member>
+      <member refid="classvar_1_1_string_view_1a69ed49ce363917ffa86513ca31e8343a" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>split</name></member>
+      <member refid="classvar_1_1_string_view_1a7fb804f7dc96dd9f705c84095f37f1ca" prot="private" virt="non-virtual"><scope>var::StringView</scope><name>String</name></member>
+      <member refid="classvar_1_1_string_view_1ac5188eb59deb182f84bc5126aa78e46c" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1a59e5f1a426eba7f535db31a827c49b79" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1ae3c2deb2b483fb36a6e7afe326cbbeac" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1af38ba5ef1f6b99c6f7495c5387410bac" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1af4e89f86673c487a658fc1def63aac9a" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1a8c8d8711f3c8e593ed037acc8dd48ae3" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1a6b74eed6a784072794749d64d56d5083" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1a077c2a35d20d5ef2f5a194995994572e" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1afc8f1c70657f7060b5ad9feb7ca8ce95" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1aecfd0ae76f6ffbcdd0e303af06280506" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1aa1f02b7f6bdfa668c7fdfd951d2c49ee" prot="private" virt="non-virtual"><scope>var::StringView</scope><name>StringView</name></member>
+      <member refid="classvar_1_1_string_view_1ac4a90a2b72185274be67298bd36f4924" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>to_float</name></member>
+      <member refid="classvar_1_1_string_view_1a34f4ed6d05053779dd6205f125853e59" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>to_integer</name></member>
+      <member refid="classvar_1_1_string_view_1a266c527f980d1c3bfbfc832cef4c8169" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>to_long</name></member>
+      <member refid="classvar_1_1_string_view_1ab2d660f34159960f2dd3b7d006149428" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>to_string</name></member>
+      <member refid="classvar_1_1_string_view_1a8ecb920e89880c8021001d9c432f68e6" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>to_string</name></member>
+      <member refid="classvar_1_1_string_view_1a0969427e974af0c1ca60fa46bad8981e" prot="public" virt="non-virtual"><scope>var::StringView</scope><name>to_unsigned_long</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

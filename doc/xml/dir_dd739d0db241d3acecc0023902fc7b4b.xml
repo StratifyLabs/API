@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="dir_dd739d0db241d3acecc0023902fc7b4b" kind="dir">
+    <compoundname>FsAPI</compoundname>
+    <innerdir refid="dir_63ab423959ae740e015b48fc088b603c">include</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/FsAPI/"/>
+  </compounddef>
+</doxygen>

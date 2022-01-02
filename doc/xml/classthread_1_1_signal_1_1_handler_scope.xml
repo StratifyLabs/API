@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_signal_1_1_handler_scope" kind="class" language="C++" prot="public">
+    <compoundname>thread::Signal::HandlerScope</compoundname>
+    <includes local="no">Signal.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classthread_1_1_signal_1_1_handler_scope_1a0e5eb0bd85938e130c919dfb572d2b80" prot="private" static="no" mutable="no">
+        <type><ref refid="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7" kindref="member">Number</ref></type>
+        <definition>Number thread::Signal::HandlerScope::m_signo</definition>
+        <argsstring></argsstring>
+        <name>m_signo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="256" column="12" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="256" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classthread_1_1_signal_1_1_handler_scope_1a00cb809535fccefe4be695c238293997" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::Signal::HandlerScope::HandlerScope</definition>
+        <argsstring>(Signal &amp;signal, const SignalHandler &amp;handler)</argsstring>
+        <name>HandlerScope</name>
+        <param>
+          <type><ref refid="classthread_1_1_signal" kindref="compound">Signal</ref> &amp;</type>
+          <declname>signal</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classthread_1_1_signal_handler" kindref="compound">SignalHandler</ref> &amp;</type>
+          <declname>handler</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="249" column="5" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="249" bodyend="252"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_signal_1_1_handler_scope_1a2d8ecb0045ed29c0e9a9866509a1d031" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::Signal::HandlerScope::~HandlerScope</definition>
+        <argsstring>()</argsstring>
+        <name>~HandlerScope</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="253" column="5" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="253" bodyend="253"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="247" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="247" bodyend="257"/>
+    <listofallmembers>
+      <member refid="classthread_1_1_signal_1_1_handler_scope_1a00cb809535fccefe4be695c238293997" prot="public" virt="non-virtual"><scope>thread::Signal::HandlerScope</scope><name>HandlerScope</name></member>
+      <member refid="classthread_1_1_signal_1_1_handler_scope_1a0e5eb0bd85938e130c919dfb572d2b80" prot="private" virt="non-virtual"><scope>thread::Signal::HandlerScope</scope><name>m_signo</name></member>
+      <member refid="classthread_1_1_signal_1_1_handler_scope_1a2d8ecb0045ed29c0e9a9866509a1d031" prot="public" virt="non-virtual"><scope>thread::Signal::HandlerScope</scope><name>~HandlerScope</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

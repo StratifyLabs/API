@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_string_1_1_erase" kind="class" language="C++" prot="public">
+    <compoundname>var::String::Erase</compoundname>
+    <includes local="no">String.hpp</includes>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvar_1_1_string_1_1_erase_1aa3e40b540aabfe97b7b919972f23c546" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Erase::API_AF</definition>
+        <argsstring>(Erase, size_t, position, 0)</argsstring>
+        <name>API_AF</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_erase" kindref="compound">Erase</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type>position</type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="64" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_1_1_erase_1a45fe4599d6ea3d0994d315b99f7801dc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Erase::API_AF</definition>
+        <argsstring>(Erase, size_t, length, npos)</argsstring>
+        <name>API_AF</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_erase" kindref="compound">Erase</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_1a8c2c1593115919632c3d7c8cd8f314b0" kindref="member">length</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_1afc03049bebc249f850e91e306f7a68c3" kindref="member">npos</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="65" column="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/String.hpp" line="63" column="3" bodyfile="API/libraries/VarAPI/include/var/String.hpp" bodystart="63" bodyend="66"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_string_1_1_erase_1aa3e40b540aabfe97b7b919972f23c546" prot="private" virt="non-virtual"><scope>var::String::Erase</scope><name>API_AF</name></member>
+      <member refid="classvar_1_1_string_1_1_erase_1a45fe4599d6ea3d0994d315b99f7801dc" prot="private" virt="non-virtual"><scope>var::String::Erase</scope><name>API_AF</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

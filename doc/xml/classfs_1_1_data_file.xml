@@ -1,0 +1,465 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classfs_1_1_data_file" kind="class" language="C++" prot="public">
+    <compoundname>fs::DataFile</compoundname>
+    <basecompoundref refid="classfs_1_1_file_access" prot="public" virt="non-virtual">fs::FileAccess&lt; DataFile &gt;</basecompoundref>
+    <includes local="no">DataFile.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classfs_1_1_data_file_1abc2dcb14c2e41866ba07f2ce73492d18" prot="private" static="no" mutable="yes">
+        <type>int</type>
+        <definition>int fs::DataFile::m_location</definition>
+        <argsstring></argsstring>
+        <name>m_location</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="52" column="15" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classfs_1_1_data_file_1a94807d8b896df11b50f2b1555afd2702" prot="private" static="no" mutable="yes">
+        <type><ref refid="classfs_1_1_open_mode" kindref="compound">OpenMode</ref></type>
+        <definition>OpenMode fs::DataFile::m_open_flags</definition>
+        <argsstring></argsstring>
+        <name>m_open_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="53" column="20" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classfs_1_1_data_file_1a4dec503948f3ba67c9ea570934c77130" prot="private" static="no" mutable="yes">
+        <type><ref refid="classvar_1_1_data" kindref="compound">var::Data</ref></type>
+        <definition>var::Data fs::DataFile::m_data</definition>
+        <argsstring></argsstring>
+        <name>m_data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="54" column="21" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classfs_1_1_data_file_1afc6679f53c25ff069f755a2c226a75c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::DataFile::DataFile</definition>
+        <argsstring>(DataFile &amp;&amp;file)=default</argsstring>
+        <name>DataFile</name>
+        <param>
+          <type><ref refid="classfs_1_1_data_file" kindref="compound">DataFile</ref> &amp;&amp;</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Constructs a data file. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="15" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a5d0ce088d381a9a0e6420ce90cc08f23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classfs_1_1_data_file" kindref="compound">DataFile</ref> &amp;</type>
+        <definition>DataFile &amp; fs::DataFile::operator=</definition>
+        <argsstring>(DataFile &amp;&amp;file)=default</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classfs_1_1_data_file" kindref="compound">DataFile</ref> &amp;&amp;</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="16" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a41dbb6693afbd117f11a965676e028b9" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>fs::DataFile::DataFile</definition>
+        <argsstring>(const OpenMode &amp;flags=OpenMode::append_read_write())</argsstring>
+        <name>DataFile</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_open_mode" kindref="compound">OpenMode</ref> &amp;</type>
+          <declname>flags</declname>
+          <defval><ref refid="classfs_1_1_open_mode_1a5d2739a09f04b1ea2e3d97793266b8a5" kindref="member">OpenMode::append_read_write</ref>()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="18" column="12" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="18" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1abfd891482c9dbbb80c16a76ccd83e757" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::DataFile::DataFile</definition>
+        <argsstring>(const FileObject &amp;file_to_load)</argsstring>
+        <name>DataFile</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object" kindref="compound">FileObject</ref> &amp;</type>
+          <declname>file_to_load</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="23" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a2edf70aad27516262fb63e0488df3ca2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_data_file" kindref="compound">DataFile</ref> &amp;</type>
+        <definition>DataFile &amp; fs::DataFile::reserve</definition>
+        <argsstring>(size_t size)</argsstring>
+        <name>reserve</name>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="25" column="12" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="25" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a87194ab7b857e1105141c33efc611d4d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_data_file" kindref="compound">DataFile</ref> &amp;</type>
+        <definition>DataFile &amp; fs::DataFile::resize</definition>
+        <argsstring>(size_t size)</argsstring>
+        <name>resize</name>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="30" column="12" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="30" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a6e4018de1f6bc16f299feb5708767c85" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_data_file" kindref="compound">DataFile</ref> &amp;</type>
+        <definition>DataFile &amp; fs::DataFile::copy</definition>
+        <argsstring>(var::View view)</argsstring>
+        <name>copy</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>view</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="35" column="12" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="35" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a89e6a6527d9ae4e62f246c9b95ba58fa" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_data_file" kindref="compound">DataFile</ref> &amp;</type>
+        <definition>DataFile &amp; fs::DataFile::set_flags</definition>
+        <argsstring>(OpenMode open_flags)</argsstring>
+        <name>set_flags</name>
+        <param>
+          <type><ref refid="classfs_1_1_open_mode" kindref="compound">OpenMode</ref></type>
+          <declname>open_flags</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="40" column="12" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="40" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a67201836f07a83346716249bedf5ca42" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const <ref refid="classfs_1_1_open_mode" kindref="compound">OpenMode</ref> &amp;</type>
+        <definition>const OpenMode &amp; fs::DataFile::flags</definition>
+        <argsstring>() const</argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="44" column="18" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="44" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a10391953749b869f71df16a915c2f484" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const <ref refid="classvar_1_1_data" kindref="compound">var::Data</ref> &amp;</type>
+        <definition>const var::Data &amp; fs::DataFile::data</definition>
+        <argsstring>() const</argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Accesses (read-only) the member data object. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="47" column="19" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="47" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1ad2aa2da0b1930dc74841371c08f941d2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_data" kindref="compound">var::Data</ref> &amp;</type>
+        <definition>var::Data &amp; fs::DataFile::data</definition>
+        <argsstring>()</argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Accesses the member data object. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="49" column="13" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="49" bodyend="49"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classfs_1_1_data_file_1ab5ffdf1050a8565f686b5c7ac624873a" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int fs::DataFile::interface_read</definition>
+        <argsstring>(void *buf, int nbyte) const override</argsstring>
+        <name>interface_read</name>
+        <reimplements refid="classfs_1_1_file_object_1a09a12609d3d16becde8ace611a91dfcf">interface_read</reimplements>
+        <param>
+          <type>void *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>nbyte</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="56" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a511352f9a599cce0519514357444b917" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int fs::DataFile::interface_write</definition>
+        <argsstring>(const void *buf, int nbyte) const override</argsstring>
+        <name>interface_write</name>
+        <reimplements refid="classfs_1_1_file_object_1abcde7c0571b2bf1dec9ea5f2480e6439">interface_write</reimplements>
+        <param>
+          <type>const void *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>nbyte</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="57" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1aa8448099309fe700ba701c55efab13b5" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int fs::DataFile::interface_lseek</definition>
+        <argsstring>(int offset, int whence) const override</argsstring>
+        <name>interface_lseek</name>
+        <reimplements refid="classfs_1_1_file_object_1a5ce9ef2131a2e715ff0f5e39976f5cc5">interface_lseek</reimplements>
+        <param>
+          <type>int</type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>whence</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="58" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_data_file_1a6c9a2f698bdffbfc19ff8d850741e657" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>int fs::DataFile::interface_ioctl</definition>
+        <argsstring>(int request, void *argument) const override</argsstring>
+        <name>interface_ioctl</name>
+        <reimplements refid="classfs_1_1_file_object_1a1512640946f22552dbfc0ff397628d48">interface_ioctl</reimplements>
+        <param>
+          <type>int</type>
+          <declname>request</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>argument</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="59" column="7" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="59" bodyend="61"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>fs::FileAccess&lt; DataFile &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>fs::DataFile</label>
+        <link refid="classfs_1_1_data_file"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>fs::FileInfoFlags</label>
+        <link refid="classfs_1_1_file_info_flags"/>
+      </node>
+      <node id="3">
+        <label>fs::FileObject</label>
+        <link refid="classfs_1_1_file_object"/>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>fs::FileAccess&lt; DataFile &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>fs::DataFile</label>
+        <link refid="classfs_1_1_data_file"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>fs::FileInfoFlags</label>
+        <link refid="classfs_1_1_file_info_flags"/>
+      </node>
+      <node id="3">
+        <label>fs::FileObject</label>
+        <link refid="classfs_1_1_file_object"/>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/FsAPI/include/fs/DataFile.hpp" line="11" column="1" bodyfile="API/libraries/FsAPI/include/fs/DataFile.hpp" bodystart="11" bodyend="62"/>
+    <listofallmembers>
+      <member refid="classfs_1_1_file_info_flags_1aa8c8d5b66e54b777f3d1ada3d0197930" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>AccessFlags</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>context_count</name></member>
+      <member refid="classfs_1_1_data_file_1a6e4018de1f6bc16f299feb5708767c85" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>copy</name></member>
+      <member refid="classfs_1_1_data_file_1a10391953749b869f71df16a915c2f484" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>data</name></member>
+      <member refid="classfs_1_1_data_file_1ad2aa2da0b1930dc74841371c08f941d2" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>data</name></member>
+      <member refid="classfs_1_1_data_file_1afc6679f53c25ff069f755a2c226a75c5" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>DataFile</name></member>
+      <member refid="classfs_1_1_data_file_1a41dbb6693afbd117f11a965676e028b9" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>DataFile</name></member>
+      <member refid="classfs_1_1_data_file_1abfd891482c9dbbb80c16a76ccd83e757" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>DataFile</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>exit_fatal</name></member>
+      <member refid="classfs_1_1_file_object_1a88365d1c6fbf5bc4c792996f2e167723" prot="protected" virt="non-virtual"><scope>fs::DataFile</scope><name>fake_ioctl</name></member>
+      <member refid="classfs_1_1_file_object_1ae74e67b7592bdfbd9a02e1943dd34628" prot="protected" virt="non-virtual"><scope>fs::DataFile</scope><name>fake_seek</name></member>
+      <member refid="classfs_1_1_file_access_1aff7dfba1226d7dedf86506aaad53d0a8" prot="protected" virt="non-virtual"><scope>fs::DataFile</scope><name>FileAccess</name></member>
+      <member refid="classfs_1_1_file_object_1a4f3943ab12b78a3d0462b0456fb4852d" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>FileObject</name></member>
+      <member refid="classfs_1_1_file_object_1a4e0b532fa654972f987b76553de2b3e8" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>FileObject</name></member>
+      <member refid="classfs_1_1_file_object_1abc9642a821aa2b9c63ac19e5ee427aeb" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>FileObject</name></member>
+      <member refid="classfs_1_1_data_file_1a67201836f07a83346716249bedf5ca42" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>flags</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>free_context</name></member>
+      <member refid="classfs_1_1_file_object_1a047a56b83c755b87a40e527c65f6d505" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>get_line</name></member>
+      <member refid="classfs_1_1_file_object_1af985a8ed1bd87544758e1c35a2262709" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>gets</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>handle_system_call_result</name></member>
+      <member refid="classfs_1_1_file_object_1a60e8766bc95ea2f5672c47dab371b840" prot="protected" virt="virtual"><scope>fs::DataFile</scope><name>interface_fsync</name></member>
+      <member refid="classfs_1_1_data_file_1a6c9a2f698bdffbfc19ff8d850741e657" prot="private" virt="virtual"><scope>fs::DataFile</scope><name>interface_ioctl</name></member>
+      <member refid="classfs_1_1_data_file_1aa8448099309fe700ba701c55efab13b5" prot="private" virt="virtual"><scope>fs::DataFile</scope><name>interface_lseek</name></member>
+      <member refid="classfs_1_1_data_file_1ab5ffdf1050a8565f686b5c7ac624873a" prot="private" virt="virtual"><scope>fs::DataFile</scope><name>interface_read</name></member>
+      <member refid="classfs_1_1_data_file_1a511352f9a599cce0519514357444b917" prot="private" virt="virtual"><scope>fs::DataFile</scope><name>interface_write</name></member>
+      <member refid="classfs_1_1_file_access_1a94af4b4a41f705e1d0d3873f299aa4af" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_access_1a304ebf21ae0c63f529eff4a190512f2c" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_access_1a5a77d9b0bb05c41e10671f20b4a9529a" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_access_1ac2c548eb665b9831793755cd35720499" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_object_1aa53dc315b36882440db2ebe5bdbaa7ce" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::DataFile</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_object_1adff5fda0af618c7ae7c3b19ab9c036b3" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::DataFile</scope><name>ioctl</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>is_success</name></member>
+      <member refid="classfs_1_1_file_object_1a67dc7666b7ba8c8b325138bdf882e7c0" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>IsNull</name></member>
+      <member refid="classfs_1_1_file_object_1a91df41f3f4682d9cb09c8ffe7bf5b6fe" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>IsOverwrite</name></member>
+      <member refid="classfs_1_1_file_object_1a47bf1de51cfbcc8ec10f1a2b6c685e8b" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>location</name></member>
+      <member refid="classfs_1_1_file_object_1aac91a36c9a958167926e7f12cb7e5503" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>LocationScope</name></member>
+      <member refid="classfs_1_1_data_file_1a4dec503948f3ba67c9ea570934c77130" prot="private" virt="non-virtual"><scope>fs::DataFile</scope><name>m_data</name></member>
+      <member refid="classfs_1_1_data_file_1abc2dcb14c2e41866ba07f2ce73492d18" prot="private" virt="non-virtual"><scope>fs::DataFile</scope><name>m_location</name></member>
+      <member refid="classfs_1_1_data_file_1a94807d8b896df11b50f2b1555afd2702" prot="private" virt="non-virtual"><scope>fs::DataFile</scope><name>m_open_flags</name></member>
+      <member refid="classfs_1_1_file_access_1a0811c2b6a99e481ace8940e28d473b8e" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>move</name></member>
+      <member refid="classfs_1_1_file_info_flags_1a79f31ab4b6deb27ede7b26193adb5c1d" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>OpenFlags</name></member>
+      <member refid="classfs_1_1_data_file_1a5d0ce088d381a9a0e6420ce90cc08f23" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>operator=</name></member>
+      <member refid="classfs_1_1_file_object_1a73e297c21ad061ba34f187375b53337f" prot="public" virt="non-virtual" ambiguityscope="FileAccess&lt; DataFile &gt;::"><scope>fs::DataFile</scope><name>operator=</name></member>
+      <member refid="classfs_1_1_file_object_1a1c6a4ef2b066354d938f316efe56d6e7" prot="public" virt="non-virtual" ambiguityscope="FileAccess&lt; DataFile &gt;::"><scope>fs::DataFile</scope><name>operator=</name></member>
+      <member refid="classfs_1_1_file_info_flags_1aab8959020c647fca0f3d80e0101b5abf" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>PermissionFlags</name></member>
+      <member refid="classfs_1_1_file_access_1a0d8277ad45ad2466fa617041eef28af3" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_access_1a1bac8e8fbc2db6a0a297515c5dac9cee" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_access_1a4c8fd069ce022ee2c9ea87627455a90c" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_access_1a24db80aa448d5024054f69de2a8575ab" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_object_1a0c266a254383d5148c4fcdbbc8c95aa0" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::DataFile</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_object_1aaefd003b44858eb6a7e097b636ac3ee6" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::DataFile</scope><name>read</name></member>
+      <member refid="classfs_1_1_data_file_1a2edf70aad27516262fb63e0488df3ca2" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>reserve</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>reset_error</name></member>
+      <member refid="classfs_1_1_data_file_1a87194ab7b857e1105141c33efc611d4d" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>resize</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>return_value</name></member>
+      <member refid="classfs_1_1_file_access_1aebc3eb3be9d3229f69020dee6fd07a4b" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>seek</name></member>
+      <member refid="classfs_1_1_file_access_1a87d1ded5e914ba3e73f3df2974259f60" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>seek</name></member>
+      <member refid="classfs_1_1_data_file_1a89e6a6527d9ae4e62f246c9b95ba58fa" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>set_flags</name></member>
+      <member refid="classfs_1_1_file_object_1a65a2979f65847e45e639b160d474457c" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>size</name></member>
+      <member refid="classfs_1_1_file_object_1a6ffa543b59a25f2d79825ee59b696b5a" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>size_signed</name></member>
+      <member refid="classfs_1_1_file_access_1a08175d6e4283fa4fbfeb2ded6f4bc365" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>sync</name></member>
+      <member refid="classfs_1_1_file_access_1ad53c24025903e57f692ddcc7bdb3dd79" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>sync</name></member>
+      <member refid="classfs_1_1_file_info_flags_1ad1f26cc0bce96368db7bd5c4d5b59704" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>TypeFlags</name></member>
+      <member refid="classfs_1_1_file_object_1ad1f7c261534e382960445c4123232b84" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>verify</name></member>
+      <member refid="classfs_1_1_file_object_1a04217bfdda67e008ac4543e66c711b6b" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>Whence</name></member>
+      <member refid="classfs_1_1_file_access_1add4c17c096c6b42cf5a3a8e7ccf98892" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1a76d72d108f14a9045761520e2111779c" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1aac7b500c9230fc0405c455a1e039609d" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1aee4bb4e627d42743931b87b0de2f19f3" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1a610cd5f38513a7340f01ab8425f5e358" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1aa139f5528704671abd2497581de49a9c" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1a138febb11720818550afca4c554e82f3" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1afdb69ceb7d43dadb55b1042fe64ab73d" prot="public" virt="non-virtual"><scope>fs::DataFile</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_object_1a900d46a46fa3a48d136acb055af4914a" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::DataFile</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_object_1a14b2b1b72b220f672d4757cc9df81f8a" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::DataFile</scope><name>write</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

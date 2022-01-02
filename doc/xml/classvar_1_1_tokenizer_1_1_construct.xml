@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_tokenizer_1_1_construct" kind="class" language="C++" prot="public">
+    <compoundname>var::Tokenizer::Construct</compoundname>
+    <includes local="no">Tokenizer.hpp</includes>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvar_1_1_tokenizer_1_1_construct_1ab374656d34a307eab6803904813d46ac" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::Tokenizer::Construct::API_ACCESS_COMPOUND</definition>
+        <argsstring>(Construct, StringView, delimeters)</argsstring>
+        <name>API_ACCESS_COMPOUND</name>
+        <param>
+          <type><ref refid="classvar_1_1_tokenizer_1_1_construct" kindref="compound">Construct</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+        </param>
+        <param>
+          <type>delimeters</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Tokenizer.hpp" line="16" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_tokenizer_1_1_construct_1a891509edf72af94ee16b0cc411b07d05" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::Tokenizer::Construct::API_ACCESS_COMPOUND</definition>
+        <argsstring>(Construct, StringView, ignore_between)</argsstring>
+        <name>API_ACCESS_COMPOUND</name>
+        <param>
+          <type><ref refid="classvar_1_1_tokenizer_1_1_construct" kindref="compound">Construct</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+        </param>
+        <param>
+          <type>ignore_between</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Tokenizer.hpp" line="17" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_tokenizer_1_1_construct_1a0f9b7c234b132cb48ab00c3505920a1d" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::Tokenizer::Construct::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Construct, u32, maximum_delimeter_count, 0)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classvar_1_1_tokenizer_1_1_construct" kindref="compound">Construct</ref></type>
+        </param>
+        <param>
+          <type>u32</type>
+        </param>
+        <param>
+          <type>maximum_delimeter_count</type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Tokenizer.hpp" line="18" column="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/Tokenizer.hpp" line="15" column="3" bodyfile="API/libraries/VarAPI/include/var/Tokenizer.hpp" bodystart="15" bodyend="19"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_tokenizer_1_1_construct_1ab374656d34a307eab6803904813d46ac" prot="private" virt="non-virtual"><scope>var::Tokenizer::Construct</scope><name>API_ACCESS_COMPOUND</name></member>
+      <member refid="classvar_1_1_tokenizer_1_1_construct_1a891509edf72af94ee16b0cc411b07d05" prot="private" virt="non-virtual"><scope>var::Tokenizer::Construct</scope><name>API_ACCESS_COMPOUND</name></member>
+      <member refid="classvar_1_1_tokenizer_1_1_construct_1a0f9b7c234b132cb48ab00c3505920a1d" prot="private" virt="non-virtual"><scope>var::Tokenizer::Construct</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

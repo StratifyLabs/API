@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_base64_decoder" kind="class" language="C++" prot="public">
+    <compoundname>var::Base64Decoder</compoundname>
+    <basecompoundref refid="classvar_1_1_transformer" prot="public" virt="non-virtual">var::Transformer</basecompoundref>
+    <includes local="no">Base64.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvar_1_1_base64_decoder_1a45b3303073e3ff1aeccc1955b815d1b1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int var::Base64Decoder::transform</definition>
+        <argsstring>(const Transform &amp;options) const override</argsstring>
+        <name>transform</name>
+        <reimplements refid="classvar_1_1_transformer_1a88dc136e9d743e4f45b84a7bf71ec9b0">transform</reimplements>
+        <param>
+          <type>const <ref refid="classvar_1_1_transformer_1_1_transform" kindref="compound">Transform</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Base64.hpp" line="51" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_base64_decoder_1a33eca96dd840ac4b9caaba44eb20bd34" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>size_t</type>
+        <definition>size_t var::Base64Decoder::get_output_size</definition>
+        <argsstring>(size_t nbyte) const override</argsstring>
+        <name>get_output_size</name>
+        <reimplements refid="classvar_1_1_transformer_1a437a1e4036b38537097032ec8ca8078c">get_output_size</reimplements>
+        <param>
+          <type>size_t</type>
+          <declname>nbyte</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Base64.hpp" line="52" column="11" bodyfile="API/libraries/VarAPI/include/var/Base64.hpp" bodystart="52" bodyend="54"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_base64_decoder_1a8a7ce35128f4e4db5775eeae642ce3fd" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>size_t</type>
+        <definition>size_t var::Base64Decoder::page_size_boundary</definition>
+        <argsstring>() const override</argsstring>
+        <name>page_size_boundary</name>
+        <reimplements refid="classvar_1_1_transformer_1a55ecc895b99b5ffab1942c90dcd4d1a7">page_size_boundary</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Base64.hpp" line="55" column="11" bodyfile="API/libraries/VarAPI/include/var/Base64.hpp" bodystart="55" bodyend="55"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>var::Base64Decoder</label>
+        <link refid="classvar_1_1_base64_decoder"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>var::Transformer</label>
+        <link refid="classvar_1_1_transformer"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>var::Base64Decoder</label>
+        <link refid="classvar_1_1_base64_decoder"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>var::Transformer</label>
+        <link refid="classvar_1_1_transformer"/>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/VarAPI/include/var/Base64.hpp" line="49" column="1" bodyfile="API/libraries/VarAPI/include/var/Base64.hpp" bodystart="49" bodyend="56"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_base64_decoder_1a33eca96dd840ac4b9caaba44eb20bd34" prot="public" virt="virtual"><scope>var::Base64Decoder</scope><name>get_output_size</name></member>
+      <member refid="classvar_1_1_base64_decoder_1a8a7ce35128f4e4db5775eeae642ce3fd" prot="public" virt="virtual"><scope>var::Base64Decoder</scope><name>page_size_boundary</name></member>
+      <member refid="classvar_1_1_base64_decoder_1a45b3303073e3ff1aeccc1955b815d1b1" prot="public" virt="virtual"><scope>var::Base64Decoder</scope><name>transform</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

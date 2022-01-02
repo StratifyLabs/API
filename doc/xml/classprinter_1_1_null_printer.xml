@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classprinter_1_1_null_printer" kind="class" language="C++" prot="public">
+    <compoundname>printer::NullPrinter</compoundname>
+    <basecompoundref refid="classprinter_1_1_printer" prot="public" virt="non-virtual">printer::Printer</basecompoundref>
+    <includes local="no">Printer.hpp</includes>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classprinter_1_1_null_printer_1a37b466a633130280ded9f6627d549ef3" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::NullPrinter::print</definition>
+        <argsstring>(const char *key, const char *value)</argsstring>
+        <name>print</name>
+        <param>
+          <type>const char *</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="363" column="8" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="363" bodyend="366"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>printer::NullPrinter</label>
+        <link refid="classprinter_1_1_null_printer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>printer::Printer</label>
+        <link refid="classprinter_1_1_printer"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>printer::PrinterFlags</label>
+        <link refid="structprinter_1_1_printer_flags"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>printer::NullPrinter</label>
+        <link refid="classprinter_1_1_null_printer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>printer::Printer</label>
+        <link refid="classprinter_1_1_printer"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>printer::PrinterFlags</label>
+        <link refid="structprinter_1_1_printer_flags"/>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="361" column="1" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="361" bodyend="367"/>
+    <listofallmembers>
+      <member refid="classprinter_1_1_printer_1a4bf8c77b443d0ca34b43b4c92e84a361" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>array</name></member>
+      <member refid="classprinter_1_1_printer_1a821f0a3f20c56190883c85cf80fe3bf3" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>clear_color_code</name></member>
+      <member refid="classprinter_1_1_printer_1a6ecfa9998d077638c7ed5811badf0949" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>clear_format_code</name></member>
+      <member refid="classprinter_1_1_printer_1a85a7b8ffd515cedc14a525ea2b9337f7" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>clear_format_code</name></member>
+      <member refid="classprinter_1_1_printer_1a93dd732c80b78fe8fe17cf5e132aab97" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>close_array</name></member>
+      <member refid="classprinter_1_1_printer_1a6ac4fbebbe0a02cc1b1f9d63d9e5b31b" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>close_object</name></member>
+      <member refid="classprinter_1_1_printer_1a66221e3b837ca4797c304a708883ca1b" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>color_code</name></member>
+      <member refid="structprinter_1_1_printer_flags_1ae850212056f0c1782f17620d0a4601a2" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>ColorCode</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>context_count</name></member>
+      <member refid="classprinter_1_1_printer_1a2e234c0ab3e443c5b468f3edbac4f615" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>debug</name></member>
+      <member refid="classprinter_1_1_printer_1a4705e9660b890fe0516b8ed2cf857321" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>disable_flags</name></member>
+      <member refid="classprinter_1_1_printer_1a94b1db13551a54d40ecfd864ff913139" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>enable_flags</name></member>
+      <member refid="classprinter_1_1_printer_1af58fa658833ffc4504842356e82dea60" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>error</name></member>
+      <member refid="classprinter_1_1_printer_1afbbec1c5ad59f43cc984317d9da494c9" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual" ambiguityscope="api::ExecutionContext::"><scope>printer::NullPrinter</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>exit_fatal</name></member>
+      <member refid="classprinter_1_1_printer_1ae47c77e600470dc81bb335424a0597f2" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>fatal</name></member>
+      <member refid="classprinter_1_1_printer_1a6794af9b1268003c6bacb95c576d0ef0" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>FlagGuard</name></member>
+      <member refid="classprinter_1_1_printer_1ae5b2fc1b0569a3dd165f72083229d5db" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>flags</name></member>
+      <member refid="structprinter_1_1_printer_flags_1ab7e8a8d6665b23258dde809521a66093" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>Flags</name></member>
+      <member refid="structprinter_1_1_printer_flags_1a2d4d5adc15ba5bd9b2bc1b256b03a1c6" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>FormatType</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>free_context</name></member>
+      <member refid="classprinter_1_1_printer_1a2ff7ff47bc3fcd08fcf93ad472cff11b" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>get_bitmap_pixel_character</name></member>
+      <member refid="classprinter_1_1_printer_1a26f7057827b3f4ab34b81b43c246fd13" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>get_bitmap_pixel_color</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>handle_system_call_result</name></member>
+      <member refid="classprinter_1_1_printer_1acfbbbfd93487986e77fb4800a5290f84" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>indent_size</name></member>
+      <member refid="classprinter_1_1_printer_1ab108c7894118836b26914f19d165585d" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>info</name></member>
+      <member refid="classprinter_1_1_printer_1a95bc440379e877c0c5b85a62139231cf" prot="protected" virt="virtual"><scope>printer::NullPrinter</scope><name>interface_print_final</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>is_success</name></member>
+      <member refid="classprinter_1_1_printer_1a645180927c5f9c0187ee7f62797dcee9" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>IsNewline</name></member>
+      <member refid="classprinter_1_1_printer_1aa867d093aaae14e638494778a5b24de7" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>key</name></member>
+      <member refid="classprinter_1_1_printer_1a08632c11c0e1c900a9aebc279ac58d0e" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>key</name></member>
+      <member refid="classprinter_1_1_printer_1ad8a7e662b966f7ac1b7fd7782b4cbf8e" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>key_bool</name></member>
+      <member refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>Level</name></member>
+      <member refid="classprinter_1_1_printer_1a4aa2c1781a670addfa7a0e2fec9f0533" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>LevelGuard</name></member>
+      <member refid="classprinter_1_1_printer_1a3124cc06ddd6301b88e4c5b6a5e41ad3" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>message</name></member>
+      <member refid="classprinter_1_1_printer_1a9749a0efebd453a22731c502b54e67c2" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>newline</name></member>
+      <member refid="classprinter_1_1_printer_1a10b36cd8f80e30197ba4f81bb07f72fb" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>o_flags</name></member>
+      <member refid="classprinter_1_1_printer_1aa1221c600660b8ff0151064e233718cc" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>object</name></member>
+      <member refid="classprinter_1_1_printer_1ada37e51eb14f9541a189b27155753e0b" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>open_array</name></member>
+      <member refid="classprinter_1_1_printer_1a959c25c3c569cc100787ba8a236ebb3c" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>open_object</name></member>
+      <member refid="classprinter_1_1_printer_1ae8ca7074424d34befad40b436cc1e724" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1ab521ff0d8c73a28250c8f947b56fd15f" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1afe61918bb5aa5fdcc0625473b682c468" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1ab2bf12bf763bc0f14f09e57c397e082d" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1acaded67c204b32d9ebc2378f40019806" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a8ecb06b9104152001a410167323a5605" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1aead81564c0e3ef87b0d654492462c1d2" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a644a4825dd7d757eaf65fbcfdf21ce00" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1af614ec17d0d8b05080733eb00e1e58cd" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1af52a96f110a38d74e1457daf3009af36" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1af90071e21dc137df82a0dd781d3831e4" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a6b95fbe7cf990bb667c9e24137d2cefe" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a7d32dbfe47a252e90656adecd01c79c0" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a87c3610e417d243f100fc853575241cb" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_printer_1a13f82eb2a5084eed331ff411ccb91924" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classprinter_1_1_null_printer_1a37b466a633130280ded9f6627d549ef3" prot="protected" virt="non-virtual"><scope>printer::NullPrinter</scope><name>print</name></member>
+      <member refid="classprinter_1_1_printer_1a962407a90d9dceec0799af35caef1dfd" prot="public" virt="virtual" ambiguityscope="printer::Printer::"><scope>printer::NullPrinter</scope><name>print</name></member>
+      <member refid="classprinter_1_1_printer_1a8b1c0864bcb98826f8ae87818ca705a9" prot="public" virt="virtual"><scope>printer::NullPrinter</scope><name>print_close_array</name></member>
+      <member refid="classprinter_1_1_printer_1ac467e16b4a8fdd5e17e79e138b902f3d" prot="public" virt="virtual"><scope>printer::NullPrinter</scope><name>print_close_object</name></member>
+      <member refid="classprinter_1_1_printer_1a8c64d262c40bb8d762cbb8bf3d12c632" prot="public" virt="virtual"><scope>printer::NullPrinter</scope><name>print_open_array</name></member>
+      <member refid="classprinter_1_1_printer_1a81fdfcf02fea881c672e96340c414be6" prot="public" virt="virtual"><scope>printer::NullPrinter</scope><name>print_open_object</name></member>
+      <member refid="classprinter_1_1_printer_1a4fb87d0c4d818902da36b33f99b6a485" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>Printer</name></member>
+      <member refid="classprinter_1_1_printer_1aa201a118ad355398f0622873643e27e5" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>progress_callback</name></member>
+      <member refid="classprinter_1_1_printer_1a321fd30fb725303a10590f43be96d46c" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>progress_key</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>return_value</name></member>
+      <member refid="classprinter_1_1_printer_1af9837defdcb8b29f0b5b65ad162c05a7" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_color_code</name></member>
+      <member refid="classprinter_1_1_printer_1abbd4cd566dc6b661d76cac82ae90c6bb" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_color_code</name></member>
+      <member refid="classprinter_1_1_printer_1abfbe04bd833d9a9527d6622d34af13d7" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_flags</name></member>
+      <member refid="classprinter_1_1_printer_1a730a6af145675f41be6421ff5dccb672" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_format_code</name></member>
+      <member refid="classprinter_1_1_printer_1a55df3f44b8276495a002304a451b9f82" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_format_code</name></member>
+      <member refid="classprinter_1_1_printer_1a787b50d547dae7ad353558f344211dc3" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_indent_size</name></member>
+      <member refid="classprinter_1_1_printer_1a5363fab3913492a129821270df01d734" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_progress_key</name></member>
+      <member refid="classprinter_1_1_printer_1ae47c280740f828b7fb48081a817bc046" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_progress_width</name></member>
+      <member refid="classprinter_1_1_printer_1a7b8b03a118fa9ed613c6f756eb3f2bd4" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_verbose_level</name></member>
+      <member refid="classprinter_1_1_printer_1a6c730298caef57374c9e406c386eb650" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>set_verbose_level</name></member>
+      <member refid="classprinter_1_1_printer_1a5845da8e40fb25ec17adc0eb29c28420" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>terminal_color_code</name></member>
+      <member refid="classprinter_1_1_printer_1acf5cb38156a7d1a38756ee31e4e2dd74" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>trace</name></member>
+      <member refid="classprinter_1_1_printer_1a4c0919a788f00dae7e5064f160f998dc" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>update_progress</name></member>
+      <member refid="classprinter_1_1_printer_1ac48c9fec3546c54cce9594cb38722292" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>update_progress_callback</name></member>
+      <member refid="classprinter_1_1_printer_1afd00702412a4397fea19a7533772501e" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>verbose_level</name></member>
+      <member refid="classprinter_1_1_printer_1ae1ac21257e02f9e73ddad2d9919407bf" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>warning</name></member>
+      <member refid="classprinter_1_1_printer_1aed532677dc74f5f7b2156b4d26076276" prot="protected" virt="non-virtual"><scope>printer::NullPrinter</scope><name>write_fileno</name></member>
+      <member refid="classprinter_1_1_printer_1a8c69684486638b55c0522834e9e701bc" prot="public" virt="non-virtual"><scope>printer::NullPrinter</scope><name>~Printer</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

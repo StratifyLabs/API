@@ -1,0 +1,502 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="_vector_8hpp" kind="file" language="C++">
+    <compoundname>Vector.hpp</compoundname>
+    <includes local="no">algorithm</includes>
+    <includes local="no">functional</includes>
+    <includes local="no">numeric</includes>
+    <includes local="no">vector</includes>
+    <includes refid="api_8hpp" local="yes">api/api.hpp</includes>
+    <includedby refid="_dir_8hpp" local="yes">Dir.hpp</includedby>
+    <includedby refid="_json_printer_8hpp" local="yes">JsonPrinter.hpp</includedby>
+    <includedby refid="_markdown_printer_8hpp" local="yes">MarkdownPrinter.hpp</includedby>
+    <includedby refid="_matrix_8hpp" local="yes">Matrix.hpp</includedby>
+    <includedby refid="_string_8hpp" local="yes">String.hpp</includedby>
+    <includedby refid="_string_view_8hpp" local="yes">StringView.hpp</includedby>
+    <includedby refid="_tokenizer_8hpp" local="yes">Tokenizer.hpp</includedby>
+    <includedby refid="_view_8hpp" local="yes">View.hpp</includedby>
+    <includedby refid="_yaml_printer_8hpp" local="yes">YamlPrinter.hpp</includedby>
+    <includedby refid="var_8hpp" local="yes">var.hpp</includedby>
+    <incdepgraph>
+      <node id="6">
+        <label>api/api.hpp</label>
+        <link refid="api_8hpp"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>macros.hpp</label>
+        <link refid="_a_p_i_2include_2api_2macros_8hpp"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Vector.hpp</label>
+        <link refid="_vector_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>algorithm</label>
+      </node>
+      <node id="7">
+        <label>cerrno</label>
+      </node>
+      <node id="8">
+        <label>climits</label>
+      </node>
+      <node id="9">
+        <label>cstring</label>
+      </node>
+      <node id="3">
+        <label>functional</label>
+      </node>
+      <node id="4">
+        <label>numeric</label>
+      </node>
+      <node id="11">
+        <label>sdk/types.h</label>
+      </node>
+      <node id="12">
+        <label>sos/arch.h</label>
+      </node>
+      <node id="5">
+        <label>vector</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="19">
+        <label>chrono.hpp</label>
+        <link refid="chrono_8hpp"/>
+      </node>
+      <node id="17">
+        <label>ClockTime.hpp</label>
+        <link refid="_clock_time_8hpp"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>ClockTimer.hpp</label>
+        <link refid="_clock_timer_8hpp"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>DateTime.hpp</label>
+        <link refid="_date_time_8hpp"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>fs.hpp</label>
+        <link refid="fs_8hpp"/>
+      </node>
+      <node id="29">
+        <label>Aio.hpp</label>
+        <link refid="_aio_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>DataFile.hpp</label>
+        <link refid="_data_file_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>Dir.hpp</label>
+        <link refid="_dir_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>File.hpp</label>
+        <link refid="_file_8hpp"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>FileInfo.hpp</label>
+        <link refid="_file_info_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>FileSystem.hpp</label>
+        <link refid="_file_system_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>LambdaFile.hpp</label>
+        <link refid="_lambda_file_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>Path.hpp</label>
+        <link refid="_path_8hpp"/>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>ViewFile.hpp</label>
+        <link refid="_view_file_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>printer.hpp</label>
+        <link refid="_printer_8hpp"/>
+      </node>
+      <node id="5">
+        <label>JsonPrinter.hpp</label>
+        <link refid="_json_printer_8hpp"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>MarkdownPrinter.hpp</label>
+        <link refid="_markdown_printer_8hpp"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>Printer.hpp</label>
+        <link refid="printer_2_printer_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>YamlPrinter.hpp</label>
+        <link refid="_yaml_printer_8hpp"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys.hpp</label>
+        <link refid="sys_8hpp"/>
+      </node>
+      <node id="13">
+        <label>Cli.hpp</label>
+        <link refid="_cli_8hpp"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>System.hpp</label>
+        <link refid="_system_8hpp"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>TemporaryDirectory.hpp</label>
+        <link refid="_temporary_directory_8hpp"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>Version.hpp</label>
+        <link refid="_version_8hpp"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>test.hpp</label>
+        <link refid="_test_8hpp"/>
+      </node>
+      <node id="10">
+        <label>Case.hpp</label>
+        <link refid="_case_8hpp"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>Function.hpp</label>
+        <link refid="_function_8hpp"/>
+      </node>
+      <node id="14">
+        <label>Test.hpp</label>
+        <link refid="test_2_test_8hpp"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>thread.hpp</label>
+        <link refid="thread_8hpp"/>
+      </node>
+      <node id="20">
+        <label>Cond.hpp</label>
+        <link refid="_cond_8hpp"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>Mq.hpp</label>
+        <link refid="_mq_8hpp"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>Mutex.hpp</label>
+        <link refid="_mutex_8hpp"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>Sem.hpp</label>
+        <link refid="_sem_8hpp"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>Signal.hpp</label>
+        <link refid="_signal_8hpp"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>Thread.hpp</label>
+        <link refid="thread_2thread_8hpp"/>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>Timer.hpp</label>
+        <link refid="_timer_8hpp"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>var.hpp</label>
+        <link refid="var_8hpp"/>
+      </node>
+      <node id="39">
+        <label>Base64.hpp</label>
+        <link refid="_base64_8hpp"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>Data.hpp</label>
+        <link refid="_data_8hpp"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>Matrix.hpp</label>
+        <link refid="_matrix_8hpp"/>
+      </node>
+      <node id="35">
+        <label>StackString.hpp</label>
+        <link refid="_stack_string_8hpp"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>String.hpp</label>
+        <link refid="_string_8hpp"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>StringView.hpp</label>
+        <link refid="_string_view_8hpp"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>Tokenizer.hpp</label>
+        <link refid="_tokenizer_8hpp"/>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Vector.hpp</label>
+        <link refid="_vector_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>View.hpp</label>
+        <link refid="_view_8hpp"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classvar_1_1_vector" prot="public">var::Vector</innerclass>
+    <innerclass refid="classvar_1_1_vector_1_1_erase" prot="public">var::Vector::Erase</innerclass>
+    <innernamespace refid="namespacevar">var</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/Vector.hpp"/>
+  </compounddef>
+</doxygen>

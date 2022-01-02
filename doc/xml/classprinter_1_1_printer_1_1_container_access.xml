@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classprinter_1_1_printer_1_1_container_access" kind="class" language="C++" prot="protected">
+    <compoundname>printer::Printer::ContainerAccess</compoundname>
+    <includes local="no">Printer.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classprinter_1_1_printer_1_1_container_access_1a471344a621b1fd0733844429c8d2e914" prot="private" static="no" mutable="no">
+        <type>T</type>
+        <definition>T printer::Printer::ContainerAccess&lt; T &gt;::m_type</definition>
+        <argsstring></argsstring>
+        <name>m_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="332" column="7" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="332" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1_1_container_access_1a5308a33b1c88546b83e6b318e5bbc16b" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 printer::Printer::ContainerAccess&lt; T &gt;::m_count</definition>
+        <argsstring></argsstring>
+        <name>m_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="333" column="9" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="333" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1_1_container_access_1ab8bcf5275c2607a23e98ec8b38182356" prot="private" static="no" mutable="no">
+        <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+        <definition>Level printer::Printer::ContainerAccess&lt; T &gt;::m_verbose_level</definition>
+        <argsstring></argsstring>
+        <name>m_verbose_level</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="334" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="334" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_container_access_1a7ff92b3682bb141316caf0634f294cbe" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>printer::Printer::ContainerAccess&lt; T &gt;::ContainerAccess</definition>
+        <argsstring>(Level verbose_level, T type)</argsstring>
+        <name>ContainerAccess</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>verbose_level</declname>
+        </param>
+        <param>
+          <type>T</type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="320" column="5" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="320" bodyend="321"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_container_access_1acba99a9d7ca97256a0df6aa4e1d13a68" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+        <definition>Level printer::Printer::ContainerAccess&lt; T &gt;::verbose_level</definition>
+        <argsstring>() const</argsstring>
+        <name>verbose_level</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="323" column="12" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="323" bodyend="323"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_container_access_1ae87be450e7e608c045d7a47a5bdd0a9b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void printer::Printer::ContainerAccess&lt; T &gt;::set_verbose_level</definition>
+        <argsstring>(Level level)</argsstring>
+        <name>set_verbose_level</name>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>level</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="324" column="10" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="324" bodyend="324"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_container_access_1abda4551405c78d24640226af777d210b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const u32 &amp;</type>
+        <definition>const u32 &amp; printer::Printer::ContainerAccess&lt; T &gt;::count</definition>
+        <argsstring>() const</argsstring>
+        <name>count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="326" column="16" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="326" bodyend="326"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_container_access_1adf5b0ac8f6f9d12f0b1210bff1d5430b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u32 &amp;</type>
+        <definition>u32 &amp; printer::Printer::ContainerAccess&lt; T &gt;::count</definition>
+        <argsstring>()</argsstring>
+        <name>count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="327" column="9" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="327" bodyend="327"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_container_access_1aeab28a60d5244e7072108f98f1f145d8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>T</type>
+        <definition>T printer::Printer::ContainerAccess&lt; T &gt;::type</definition>
+        <argsstring>() const</argsstring>
+        <name>type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="329" column="7" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="329" bodyend="329"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="318" column="14" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="318" bodyend="335"/>
+    <listofallmembers>
+      <member refid="classprinter_1_1_printer_1_1_container_access_1a7ff92b3682bb141316caf0634f294cbe" prot="public" virt="non-virtual"><scope>printer::Printer::ContainerAccess</scope><name>ContainerAccess</name></member>
+      <member refid="classprinter_1_1_printer_1_1_container_access_1abda4551405c78d24640226af777d210b" prot="public" virt="non-virtual"><scope>printer::Printer::ContainerAccess</scope><name>count</name></member>
+      <member refid="classprinter_1_1_printer_1_1_container_access_1adf5b0ac8f6f9d12f0b1210bff1d5430b" prot="public" virt="non-virtual"><scope>printer::Printer::ContainerAccess</scope><name>count</name></member>
+      <member refid="classprinter_1_1_printer_1_1_container_access_1a5308a33b1c88546b83e6b318e5bbc16b" prot="private" virt="non-virtual"><scope>printer::Printer::ContainerAccess</scope><name>m_count</name></member>
+      <member refid="classprinter_1_1_printer_1_1_container_access_1a471344a621b1fd0733844429c8d2e914" prot="private" virt="non-virtual"><scope>printer::Printer::ContainerAccess</scope><name>m_type</name></member>
+      <member refid="classprinter_1_1_printer_1_1_container_access_1ab8bcf5275c2607a23e98ec8b38182356" prot="private" virt="non-virtual"><scope>printer::Printer::ContainerAccess</scope><name>m_verbose_level</name></member>
+      <member refid="classprinter_1_1_printer_1_1_container_access_1ae87be450e7e608c045d7a47a5bdd0a9b" prot="public" virt="non-virtual"><scope>printer::Printer::ContainerAccess</scope><name>set_verbose_level</name></member>
+      <member refid="classprinter_1_1_printer_1_1_container_access_1aeab28a60d5244e7072108f98f1f145d8" prot="public" virt="non-virtual"><scope>printer::Printer::ContainerAccess</scope><name>type</name></member>
+      <member refid="classprinter_1_1_printer_1_1_container_access_1acba99a9d7ca97256a0df6aa4e1d13a68" prot="public" virt="non-virtual"><scope>printer::Printer::ContainerAccess</scope><name>verbose_level</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

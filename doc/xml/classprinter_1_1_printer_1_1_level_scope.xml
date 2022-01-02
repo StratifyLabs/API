@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classprinter_1_1_printer_1_1_level_scope" kind="class" language="C++" prot="public">
+    <compoundname>printer::Printer::LevelScope</compoundname>
+    <includes local="no">Printer.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classprinter_1_1_printer_1_1_level_scope_1a5f92afdee2b7e02cf912730bd2ffd5c1" prot="private" static="no" mutable="no">
+        <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+        <definition>Level printer::Printer::LevelScope::m_level</definition>
+        <argsstring></argsstring>
+        <name>m_level</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="200" column="11" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="200" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classprinter_1_1_printer_1_1_level_scope_1a4cea128818beb5362f763f65182987e3" prot="private" static="no" mutable="no">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer&amp; printer::Printer::LevelScope::m_printer</definition>
+        <argsstring></argsstring>
+        <name>m_printer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="201" column="13" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="201" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_level_scope_1a18ceaa143096d8349dd5c41334cb7571" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>printer::Printer::LevelScope::LevelScope</definition>
+        <argsstring>(Printer &amp;printer)</argsstring>
+        <name>LevelScope</name>
+        <param>
+          <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+          <declname>printer</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="194" column="14" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="194" bodyend="195"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_level_scope_1ae8891304681c4a2b071d8dffdd61ce82" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>printer::Printer::LevelScope::~LevelScope</definition>
+        <argsstring>()</argsstring>
+        <name>~LevelScope</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="197" column="5" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="197" bodyend="197"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="192" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="192" bodyend="202"/>
+    <listofallmembers>
+      <member refid="classprinter_1_1_printer_1_1_level_scope_1a18ceaa143096d8349dd5c41334cb7571" prot="public" virt="non-virtual"><scope>printer::Printer::LevelScope</scope><name>LevelScope</name></member>
+      <member refid="classprinter_1_1_printer_1_1_level_scope_1a5f92afdee2b7e02cf912730bd2ffd5c1" prot="private" virt="non-virtual"><scope>printer::Printer::LevelScope</scope><name>m_level</name></member>
+      <member refid="classprinter_1_1_printer_1_1_level_scope_1a4cea128818beb5362f763f65182987e3" prot="private" virt="non-virtual"><scope>printer::Printer::LevelScope</scope><name>m_printer</name></member>
+      <member refid="classprinter_1_1_printer_1_1_level_scope_1ae8891304681c4a2b071d8dffdd61ce82" prot="public" virt="non-virtual"><scope>printer::Printer::LevelScope</scope><name>~LevelScope</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,324 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classfs_1_1_permissions" kind="class" language="C++" prot="public">
+    <compoundname>fs::Permissions</compoundname>
+    <basecompoundref refid="classfs_1_1_file_info_flags" prot="public" virt="non-virtual">fs::FileInfoFlags</basecompoundref>
+    <includes local="no">FileInfo.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classfs_1_1_permissions_1a64cfbb9eb1c677dea46df6efeb0d7e8b" prot="private" static="no" mutable="no">
+        <type><ref refid="classfs_1_1_file_info_flags_1aab8959020c647fca0f3d80e0101b5abf" kindref="member">PermissionFlags</ref></type>
+        <definition>PermissionFlags fs::Permissions::m_permissions</definition>
+        <argsstring></argsstring>
+        <name>m_permissions</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="156" column="19" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classfs_1_1_permissions_1af6b57545676267469286b675760802c1" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>fs::Permissions::Permissions</definition>
+        <argsstring>(int mode=0666)</argsstring>
+        <name>Permissions</name>
+        <param>
+          <type>int</type>
+          <declname>mode</declname>
+          <defval>0666</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="88" column="12" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="88" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1aba067f24efa74d991ddc8e8a64d60ffa" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::Permissions::is_owner_read</definition>
+        <argsstring>() const</argsstring>
+        <name>is_owner_read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="102" column="10" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="102" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a2d0d5abc3015962f0548f85f378136ab" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::Permissions::is_owner_write</definition>
+        <argsstring>() const</argsstring>
+        <name>is_owner_write</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="105" column="10" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="105" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1aff126c84211474772c62bcd908920fbe" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::Permissions::is_owner_execute</definition>
+        <argsstring>() const</argsstring>
+        <name>is_owner_execute</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="108" column="10" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="108" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a4b27827132f6e68ba7db514888bc258e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::Permissions::is_public_read</definition>
+        <argsstring>() const</argsstring>
+        <name>is_public_read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="111" column="10" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="111" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a7ca6b698486b046fcfd60916a3baccbe" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::Permissions::is_public_write</definition>
+        <argsstring>() const</argsstring>
+        <name>is_public_write</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="114" column="10" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="114" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1aaffc78a7edb3702040c9e9afa81d880d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::Permissions::is_public_execute</definition>
+        <argsstring>() const</argsstring>
+        <name>is_public_execute</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="117" column="10" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="117" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a832e18b124564cedc97799b942072fdb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref> &amp;</type>
+        <definition>Permissions &amp; fs::Permissions::set_owner_read</definition>
+        <argsstring>()</argsstring>
+        <name>set_owner_read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="121" column="16" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="121" bodyend="124"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a753833a66d3a450ebef1509ad84d7761" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref> &amp;</type>
+        <definition>Permissions &amp; fs::Permissions::set_owner_write</definition>
+        <argsstring>()</argsstring>
+        <name>set_owner_write</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="125" column="16" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="125" bodyend="128"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1abc9cf990d6cb650144cd170e1df80ac4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref> &amp;</type>
+        <definition>Permissions &amp; fs::Permissions::set_owner_execute</definition>
+        <argsstring>()</argsstring>
+        <name>set_owner_execute</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="129" column="16" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="129" bodyend="132"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1ae44ffc5dfcb3333abe89ccba77e0db79" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref> &amp;</type>
+        <definition>Permissions &amp; fs::Permissions::set_public_read</definition>
+        <argsstring>()</argsstring>
+        <name>set_public_read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="134" column="16" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="134" bodyend="137"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a06757f9cb5fca653b88054266ab02335" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref> &amp;</type>
+        <definition>Permissions &amp; fs::Permissions::set_public_write</definition>
+        <argsstring>()</argsstring>
+        <name>set_public_write</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="138" column="16" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="138" bodyend="141"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a9a3f57a5ecfe1a85cf1ee56933d2e281" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref> &amp;</type>
+        <definition>Permissions &amp; fs::Permissions::set_public_execute</definition>
+        <argsstring>()</argsstring>
+        <name>set_public_execute</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="142" column="16" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="142" bodyend="145"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a58b253a86354a51c25f2893c53432bda" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fs::Permissions::operator==</definition>
+        <argsstring>(const Permissions &amp;a) const</argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="147" column="8" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="147" bodyend="149"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a6eb4dfaba72ad500d11b47279477ebf2" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int fs::Permissions::permissions</definition>
+        <argsstring>() const</argsstring>
+        <name>permissions</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="151" column="8" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="151" bodyend="153"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classfs_1_1_permissions_1a54dfb14266dde142da127d0b9aa605d6" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref></type>
+        <definition>static Permissions fs::Permissions::all_access</definition>
+        <argsstring>()</argsstring>
+        <name>all_access</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="92" column="24" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="92" bodyend="94"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a33bba43f81e865ad7ea80a05c7c62755" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref></type>
+        <definition>static Permissions fs::Permissions::read_only</definition>
+        <argsstring>()</argsstring>
+        <name>read_only</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="95" column="24" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="95" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_permissions_1a69c3ddf5e27f055f8c537a655a3b9a7a" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_permissions" kindref="compound">Permissions</ref></type>
+        <definition>static Permissions fs::Permissions::write_only</definition>
+        <argsstring>()</argsstring>
+        <name>write_only</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="98" column="24" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="98" bodyend="100"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>fs::FileInfoFlags</label>
+        <link refid="classfs_1_1_file_info_flags"/>
+      </node>
+      <node id="1">
+        <label>fs::Permissions</label>
+        <link refid="classfs_1_1_permissions"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>fs::FileInfoFlags</label>
+        <link refid="classfs_1_1_file_info_flags"/>
+      </node>
+      <node id="1">
+        <label>fs::Permissions</label>
+        <link refid="classfs_1_1_permissions"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/FsAPI/include/fs/FileInfo.hpp" line="86" column="1" bodyfile="API/libraries/FsAPI/include/fs/FileInfo.hpp" bodystart="86" bodyend="157"/>
+    <listofallmembers>
+      <member refid="classfs_1_1_file_info_flags_1aa8c8d5b66e54b777f3d1ada3d0197930" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>AccessFlags</name></member>
+      <member refid="classfs_1_1_permissions_1a54dfb14266dde142da127d0b9aa605d6" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>all_access</name></member>
+      <member refid="classfs_1_1_permissions_1aff126c84211474772c62bcd908920fbe" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>is_owner_execute</name></member>
+      <member refid="classfs_1_1_permissions_1aba067f24efa74d991ddc8e8a64d60ffa" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>is_owner_read</name></member>
+      <member refid="classfs_1_1_permissions_1a2d0d5abc3015962f0548f85f378136ab" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>is_owner_write</name></member>
+      <member refid="classfs_1_1_permissions_1aaffc78a7edb3702040c9e9afa81d880d" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>is_public_execute</name></member>
+      <member refid="classfs_1_1_permissions_1a4b27827132f6e68ba7db514888bc258e" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>is_public_read</name></member>
+      <member refid="classfs_1_1_permissions_1a7ca6b698486b046fcfd60916a3baccbe" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>is_public_write</name></member>
+      <member refid="classfs_1_1_permissions_1a64cfbb9eb1c677dea46df6efeb0d7e8b" prot="private" virt="non-virtual"><scope>fs::Permissions</scope><name>m_permissions</name></member>
+      <member refid="classfs_1_1_file_info_flags_1a79f31ab4b6deb27ede7b26193adb5c1d" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>OpenFlags</name></member>
+      <member refid="classfs_1_1_permissions_1a58b253a86354a51c25f2893c53432bda" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>operator==</name></member>
+      <member refid="classfs_1_1_file_info_flags_1aab8959020c647fca0f3d80e0101b5abf" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>PermissionFlags</name></member>
+      <member refid="classfs_1_1_permissions_1af6b57545676267469286b675760802c1" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>Permissions</name></member>
+      <member refid="classfs_1_1_permissions_1a6eb4dfaba72ad500d11b47279477ebf2" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>permissions</name></member>
+      <member refid="classfs_1_1_permissions_1a33bba43f81e865ad7ea80a05c7c62755" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>read_only</name></member>
+      <member refid="classfs_1_1_permissions_1abc9cf990d6cb650144cd170e1df80ac4" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>set_owner_execute</name></member>
+      <member refid="classfs_1_1_permissions_1a832e18b124564cedc97799b942072fdb" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>set_owner_read</name></member>
+      <member refid="classfs_1_1_permissions_1a753833a66d3a450ebef1509ad84d7761" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>set_owner_write</name></member>
+      <member refid="classfs_1_1_permissions_1a9a3f57a5ecfe1a85cf1ee56933d2e281" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>set_public_execute</name></member>
+      <member refid="classfs_1_1_permissions_1ae44ffc5dfcb3333abe89ccba77e0db79" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>set_public_read</name></member>
+      <member refid="classfs_1_1_permissions_1a06757f9cb5fca653b88054266ab02335" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>set_public_write</name></member>
+      <member refid="classfs_1_1_file_info_flags_1ad1f26cc0bce96368db7bd5c4d5b59704" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>TypeFlags</name></member>
+      <member refid="classfs_1_1_permissions_1a69c3ddf5e27f055f8c537a655a3b9a7a" prot="public" virt="non-virtual"><scope>fs::Permissions</scope><name>write_only</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

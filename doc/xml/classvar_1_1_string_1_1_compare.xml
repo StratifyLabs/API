@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_string_1_1_compare" kind="class" language="C++" prot="public">
+    <compoundname>var::String::Compare</compoundname>
+    <includes local="no">String.hpp</includes>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvar_1_1_string_1_1_compare_1a09fb83ec258d15404a867f7397757192" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Compare::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Compare, size_t, position, 0)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_compare" kindref="compound">Compare</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type>position</type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="76" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_1_1_compare_1a3b2746daf6753cc940d363a6b22eb211" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Compare::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Compare, size_t, length, 0)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_compare" kindref="compound">Compare</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_1a8c2c1593115919632c3d7c8cd8f314b0" kindref="member">length</ref></type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="77" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_1_1_compare_1a72e3b84940dc402007670b7048d5ddc7" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Compare::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Compare, size_t, sub_position, 0)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_compare" kindref="compound">Compare</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type>sub_position</type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="78" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_1_1_compare_1a4cf58bcb6b542a4ecb32415083a1302f" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Compare::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Compare, size_t, sub_length, npos)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_compare" kindref="compound">Compare</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type>sub_length</type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_1afc03049bebc249f850e91e306f7a68c3" kindref="member">npos</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="79" column="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/String.hpp" line="75" column="3" bodyfile="API/libraries/VarAPI/include/var/String.hpp" bodystart="75" bodyend="80"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_string_1_1_compare_1a09fb83ec258d15404a867f7397757192" prot="private" virt="non-virtual"><scope>var::String::Compare</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classvar_1_1_string_1_1_compare_1a3b2746daf6753cc940d363a6b22eb211" prot="private" virt="non-virtual"><scope>var::String::Compare</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classvar_1_1_string_1_1_compare_1a72e3b84940dc402007670b7048d5ddc7" prot="private" virt="non-virtual"><scope>var::String::Compare</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classvar_1_1_string_1_1_compare_1a4cf58bcb6b542a4ecb32415083a1302f" prot="private" virt="non-virtual"><scope>var::String::Compare</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

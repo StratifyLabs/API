@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classfs_1_1_file_object_1_1_location_guard" kind="class" language="C++" prot="public">
+    <compoundname>fs::FileObject::LocationGuard</compoundname>
+    <includes local="no">File.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classfs_1_1_file_object_1_1_location_guard_1a87cb9a7b741bed63abc99e1b299c84a0" prot="private" static="no" mutable="no">
+        <type>const <ref refid="classfs_1_1_file_object" kindref="compound">FileObject</ref> &amp;</type>
+        <definition>const FileObject&amp; fs::FileObject::LocationGuard::m_object</definition>
+        <argsstring></argsstring>
+        <name>m_object</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="129" column="22" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classfs_1_1_file_object_1_1_location_guard_1ae097aec54f4c5e9b7f8d887488b95d83" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int fs::FileObject::LocationGuard::m_location</definition>
+        <argsstring></argsstring>
+        <name>m_location</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="130" column="9" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_location_guard_1a744070026475cdb9ec0b1c04806729ac" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::LocationGuard::LocationGuard</definition>
+        <argsstring>(const FileObject &amp;object)</argsstring>
+        <name>LocationGuard</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object" kindref="compound">FileObject</ref> &amp;</type>
+          <declname>object</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="122" column="14" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="122" bodyend="124"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_object_1_1_location_guard_1ac87c3770af22ac9d737efa07855b1068" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileObject::LocationGuard::~LocationGuard</definition>
+        <argsstring>()</argsstring>
+        <name>~LocationGuard</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="126" column="5" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="126" bodyend="126"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/FsAPI/include/fs/File.hpp" line="120" column="3" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="120" bodyend="131"/>
+    <listofallmembers>
+      <member refid="classfs_1_1_file_object_1_1_location_guard_1a744070026475cdb9ec0b1c04806729ac" prot="public" virt="non-virtual"><scope>fs::FileObject::LocationGuard</scope><name>LocationGuard</name></member>
+      <member refid="classfs_1_1_file_object_1_1_location_guard_1ae097aec54f4c5e9b7f8d887488b95d83" prot="private" virt="non-virtual"><scope>fs::FileObject::LocationGuard</scope><name>m_location</name></member>
+      <member refid="classfs_1_1_file_object_1_1_location_guard_1a87cb9a7b741bed63abc99e1b299c84a0" prot="private" virt="non-virtual"><scope>fs::FileObject::LocationGuard</scope><name>m_object</name></member>
+      <member refid="classfs_1_1_file_object_1_1_location_guard_1ac87c3770af22ac9d737efa07855b1068" prot="public" virt="non-virtual"><scope>fs::FileObject::LocationGuard</scope><name>~LocationGuard</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

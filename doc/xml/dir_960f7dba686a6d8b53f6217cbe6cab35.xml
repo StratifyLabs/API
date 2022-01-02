@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="dir_960f7dba686a6d8b53f6217cbe6cab35" kind="dir">
+    <compoundname>chrono</compoundname>
+    <innerfile refid="_clock_time_8hpp">ClockTime.hpp</innerfile>
+    <innerfile refid="_clock_timer_8hpp">ClockTimer.hpp</innerfile>
+    <innerfile refid="_date_time_8hpp">DateTime.hpp</innerfile>
+    <innerfile refid="_micro_time_8hpp">MicroTime.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ChronoAPI/include/chrono/"/>
+  </compounddef>
+</doxygen>

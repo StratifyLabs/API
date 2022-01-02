@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_mq_1_1_info" kind="class" language="C++" prot="public">
+    <compoundname>thread::Mq::Info</compoundname>
+    <includes local="no">Mq.hpp</includes>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classthread_1_1_mq_1_1_info_1a834acb177a845f84131939ece3a2307c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class Mq</definition>
+        <argsstring></argsstring>
+        <name>Mq</name>
+        <param>
+          <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="66" column="18" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classthread_1_1_mq_1_1_info_1a834fa4e091cec9c7624e25d29a5b1cb0" prot="private" static="no" mutable="no">
+        <type>struct mq_attr</type>
+        <definition>struct mq_attr thread::Mq::Info::m_attr</definition>
+        <argsstring></argsstring>
+        <name>m_attr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="67" column="18" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_info_1a421414dc77fd4cb1cefa610ea2ad18e8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mq::Info::Info</definition>
+        <argsstring>()</argsstring>
+        <name>Info</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="56" column="5" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="56" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_info_1a895333388c619da97f5ee5c5ca1a8ec5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfs_1_1_file_info_flags_1a79f31ab4b6deb27ede7b26193adb5c1d" kindref="member">OpenMode::OpenFlags</ref></type>
+        <definition>OpenMode::OpenFlags thread::Mq::Info::flags</definition>
+        <argsstring>() const</argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="57" column="26" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="57" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_info_1a4b441287a424509aa6e56673cb423c93" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long thread::Mq::Info::o_flags</definition>
+        <argsstring>() const</argsstring>
+        <name>o_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="60" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="60" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_info_1a7e687e1ee186d12217401b4d85c17423" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long thread::Mq::Info::current_message_count</definition>
+        <argsstring>() const</argsstring>
+        <name>current_message_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="61" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="61" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_info_1a2dbc25cabf1ef2eaf6311be9239af623" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long thread::Mq::Info::maximum_message_count</definition>
+        <argsstring>() const</argsstring>
+        <name>maximum_message_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="62" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="62" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_info_1a70238205fad91f027d7898ab609bf059" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long thread::Mq::Info::message_size</definition>
+        <argsstring>() const</argsstring>
+        <name>message_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="63" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="63" bodyend="63"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="54" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="54" bodyend="68"/>
+    <listofallmembers>
+      <member refid="classthread_1_1_mq_1_1_info_1a7e687e1ee186d12217401b4d85c17423" prot="public" virt="non-virtual"><scope>thread::Mq::Info</scope><name>current_message_count</name></member>
+      <member refid="classthread_1_1_mq_1_1_info_1a895333388c619da97f5ee5c5ca1a8ec5" prot="public" virt="non-virtual"><scope>thread::Mq::Info</scope><name>flags</name></member>
+      <member refid="classthread_1_1_mq_1_1_info_1a421414dc77fd4cb1cefa610ea2ad18e8" prot="public" virt="non-virtual"><scope>thread::Mq::Info</scope><name>Info</name></member>
+      <member refid="classthread_1_1_mq_1_1_info_1a834fa4e091cec9c7624e25d29a5b1cb0" prot="private" virt="non-virtual"><scope>thread::Mq::Info</scope><name>m_attr</name></member>
+      <member refid="classthread_1_1_mq_1_1_info_1a2dbc25cabf1ef2eaf6311be9239af623" prot="public" virt="non-virtual"><scope>thread::Mq::Info</scope><name>maximum_message_count</name></member>
+      <member refid="classthread_1_1_mq_1_1_info_1a70238205fad91f027d7898ab609bf059" prot="public" virt="non-virtual"><scope>thread::Mq::Info</scope><name>message_size</name></member>
+      <member refid="classthread_1_1_mq_1_1_info_1a834acb177a845f84131939ece3a2307c" prot="private" virt="non-virtual"><scope>thread::Mq::Info</scope><name>Mq</name></member>
+      <member refid="classthread_1_1_mq_1_1_info_1a4b441287a424509aa6e56673cb423c93" prot="public" virt="non-virtual"><scope>thread::Mq::Info</scope><name>o_flags</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

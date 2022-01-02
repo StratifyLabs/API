@@ -1,0 +1,534 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_data" kind="class" language="C++" prot="public">
+    <compoundname>var::Data</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <includes local="no">Data.hpp</includes>
+    <innerclass refid="classvar_1_1_data_1_1_copy" prot="public">var::Data::Copy</innerclass>
+    <innerclass refid="classvar_1_1_data_1_1_erase" prot="public">var::Data::Erase</innerclass>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvar_1_1_data_1af1f92173fac1ea58691ef61349573c92" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; u8 &gt;</type>
+        <definition>std::vector&lt;u8&gt; var::Data::m_data</definition>
+        <argsstring></argsstring>
+        <name>m_data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="127" column="15" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvar_1_1_data_1a237fa6ebd27eea52083c71f3b7c34aaa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::Data::Data</definition>
+        <argsstring>()=default</argsstring>
+        <name>Data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="51" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1aa6eeb3d01649dec66ae284241fa687ee" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>var::Data::Data</definition>
+        <argsstring>(std::initializer_list&lt; u8 &gt; il)</argsstring>
+        <name>Data</name>
+        <param>
+          <type>std::initializer_list&lt; u8 &gt;</type>
+          <declname>il</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="53" column="3" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="53" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a564d0dd9041939a58396c54979f31972" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::Data::Data</definition>
+        <argsstring>(size_t size)</argsstring>
+        <name>Data</name>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="54" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1afe998fd4d7154c59c952c83b7a8b967f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * var::Data::add_null_terminator</definition>
+        <argsstring>()</argsstring>
+        <name>add_null_terminator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="60" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a8e07955806e72210065b6dfc428ba463" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 var::Data::capacity</definition>
+        <argsstring>() const</argsstring>
+        <name>capacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="62" column="8" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="62" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1aae802d83a28ac117dc76dee2bdb3dcd7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_data" kindref="compound">Data</ref> &amp;</type>
+        <definition>Data &amp; var::Data::resize</definition>
+        <argsstring>(size_t size)</argsstring>
+        <name>resize</name>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="63" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1ad5d2f2a6b0bdf05102b5876daff44e74" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_data" kindref="compound">Data</ref> &amp;</type>
+        <definition>Data &amp; var::Data::free</definition>
+        <argsstring>()</argsstring>
+        <name>free</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="64" column="8" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="64" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a1577fccaf7e2633e443cf8eb0d45b2f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_data" kindref="compound">Data</ref> &amp;</type>
+        <definition>Data &amp; var::Data::copy</definition>
+        <argsstring>(View a, const Copy &amp;options=Copy())</argsstring>
+        <name>copy</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">View</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classvar_1_1_data_1_1_copy" kindref="compound">Copy</ref> &amp;</type>
+          <declname>options</declname>
+          <defval><ref refid="classvar_1_1_data_1_1_copy" kindref="compound">Copy</ref>()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="77" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a94d3cc1ca216a78f3865044d968d3b10" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_data" kindref="compound">Data</ref> &amp;</type>
+        <definition>Data &amp; var::Data::append</definition>
+        <argsstring>(View view)</argsstring>
+        <name>append</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">View</ref></type>
+          <declname>view</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="78" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a2b166c95ef58a3af067061a6325a7bb5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_data" kindref="compound">Data</ref> &amp;</type>
+        <definition>Data &amp; var::Data::erase</definition>
+        <argsstring>(const Erase &amp;options)</argsstring>
+        <name>erase</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_data_1_1_erase" kindref="compound">Erase</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="85" column="8" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="85" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a14e6078bb0a56f61db5f6089c92f9685" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_data" kindref="compound">Data</ref> &amp;</type>
+        <definition>Data &amp; var::Data::operator()</definition>
+        <argsstring>(const Erase &amp;options)</argsstring>
+        <name>operator()</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_data_1_1_erase" kindref="compound">Erase</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="91" column="15" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="91" bodyend="91"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a95241179affcf7c93d6b86eae9357c7e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_data" kindref="compound">Data</ref> &amp;</type>
+        <definition>Data &amp; var::Data::reserve</definition>
+        <argsstring>(size_t size)</argsstring>
+        <name>reserve</name>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="99" column="8" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="99" bodyend="102"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1add1a0025b34c1bcf7c37c37bc2599c4c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::Data::operator==</definition>
+        <argsstring>(const var::Data &amp;data) const</argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_data" kindref="compound">var::Data</ref> &amp;</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="104" column="8" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="104" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a291e3b3185b6f1d8e19dddc1d8dd99b2" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::Data::operator!=</definition>
+        <argsstring>(const var::Data &amp;data) const</argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_data" kindref="compound">var::Data</ref> &amp;</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="105" column="8" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="105" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a93b4d1eb09e3ceb48547f730e30ac07e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::Data::operator&gt;</definition>
+        <argsstring>(const var::Data &amp;data) const</argsstring>
+        <name>operator&gt;</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_data" kindref="compound">var::Data</ref> &amp;</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="106" column="8" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="106" bodyend="106"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a272cbaae92f11e34c90a9d61843acc5b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::Data::operator&lt;</definition>
+        <argsstring>(const var::Data &amp;data) const</argsstring>
+        <name>operator&lt;</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_data" kindref="compound">var::Data</ref> &amp;</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="107" column="3" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="107" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a53f2a6f615422a030603cfa4166deb02" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void *</type>
+        <definition>void * var::Data::data</definition>
+        <argsstring>()</argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="109" column="9" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="109" bodyend="109"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a30731746ba74f6fb0b476ac5cbcc8bef" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const void *</type>
+        <definition>const void * var::Data::data</definition>
+        <argsstring>() const</argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="110" column="15" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="110" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a491be71ba9a737145e300fd4eac4d06a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8 *</type>
+        <definition>u8 * var::Data::data_u8</definition>
+        <argsstring>()</argsstring>
+        <name>data_u8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="113" column="7" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="113" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a9c4401f94ee7a2c99150399afd5b37ed" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const u8 *</type>
+        <definition>const u8 * var::Data::data_u8</definition>
+        <argsstring>() const</argsstring>
+        <name>data_u8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="114" column="13" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="114" bodyend="114"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a194b81e60173ea96f918e2a0c7947569" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_view" kindref="compound">View</ref></type>
+        <definition>View var::Data::view</definition>
+        <argsstring>()</argsstring>
+        <name>view</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="116" column="9" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="116" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1adb0a75623a5d5ee89f1a34a671c25786" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_view" kindref="compound">View</ref></type>
+        <definition>View var::Data::view</definition>
+        <argsstring>() const</argsstring>
+        <name>view</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="117" column="9" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="117" bodyend="117"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a6391f76a1fa5c6836a8da53678682ea7" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::Data::size</definition>
+        <argsstring>() const</argsstring>
+        <name>size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="119" column="11" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="119" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a089a026764cdcdd2ef1f2e46e501353a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>ssize_t</type>
+        <definition>ssize_t var::Data::size_signed</definition>
+        <argsstring>() const</argsstring>
+        <name>size_signed</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="120" column="12" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="120" bodyend="122"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1aafa9326bfcbe4a0a8e54843cbd0e2ce6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">StringView</ref></type>
+        <definition>StringView var::Data::string_view</definition>
+        <argsstring>() const</argsstring>
+        <name>string_view</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="124" column="15"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvar_1_1_data_1a4792ae5e84f1809c55457531e6ee1b15" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvar_1_1_data" kindref="compound">Data</ref></type>
+        <definition>static Data var::Data::from_string</definition>
+        <argsstring>(var::StringView value)</argsstring>
+        <name>from_string</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="56" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1ad9d826e0a2666c504220d827b549c905" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>static u32 var::Data::minimum_capacity</definition>
+        <argsstring>()</argsstring>
+        <name>minimum_capacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="57" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1a303af48def9fe8d2b28da5ca23e4f331" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>static u32 var::Data::block_size</definition>
+        <argsstring>()</argsstring>
+        <name>block_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="58" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_data_1ac6a7d1a9a7657252dd3d6601e3651e7c" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void var::Data::reclaim_heap_space</definition>
+        <argsstring>()</argsstring>
+        <name>reclaim_heap_space</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Data.hpp" line="94" column="15" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="94" bodyend="94"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::Data</label>
+        <link refid="classvar_1_1_data"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::Data</label>
+        <link refid="classvar_1_1_data"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/VarAPI/include/var/Data.hpp" line="49" column="1" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="49" bodyend="128"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_data_1afe998fd4d7154c59c952c83b7a8b967f" prot="public" virt="non-virtual"><scope>var::Data</scope><name>add_null_terminator</name></member>
+      <member refid="classvar_1_1_data_1a94d3cc1ca216a78f3865044d968d3b10" prot="public" virt="non-virtual"><scope>var::Data</scope><name>append</name></member>
+      <member refid="classvar_1_1_data_1a303af48def9fe8d2b28da5ca23e4f331" prot="public" virt="non-virtual"><scope>var::Data</scope><name>block_size</name></member>
+      <member refid="classvar_1_1_data_1a8e07955806e72210065b6dfc428ba463" prot="public" virt="non-virtual"><scope>var::Data</scope><name>capacity</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>var::Data</scope><name>context_count</name></member>
+      <member refid="classvar_1_1_data_1a1577fccaf7e2633e443cf8eb0d45b2f2" prot="public" virt="non-virtual"><scope>var::Data</scope><name>copy</name></member>
+      <member refid="classvar_1_1_data_1a53f2a6f615422a030603cfa4166deb02" prot="public" virt="non-virtual"><scope>var::Data</scope><name>data</name></member>
+      <member refid="classvar_1_1_data_1a30731746ba74f6fb0b476ac5cbcc8bef" prot="public" virt="non-virtual"><scope>var::Data</scope><name>data</name></member>
+      <member refid="classvar_1_1_data_1a237fa6ebd27eea52083c71f3b7c34aaa" prot="public" virt="non-virtual"><scope>var::Data</scope><name>Data</name></member>
+      <member refid="classvar_1_1_data_1aa6eeb3d01649dec66ae284241fa687ee" prot="public" virt="non-virtual"><scope>var::Data</scope><name>Data</name></member>
+      <member refid="classvar_1_1_data_1a564d0dd9041939a58396c54979f31972" prot="public" virt="non-virtual"><scope>var::Data</scope><name>Data</name></member>
+      <member refid="classvar_1_1_data_1a491be71ba9a737145e300fd4eac4d06a" prot="public" virt="non-virtual"><scope>var::Data</scope><name>data_u8</name></member>
+      <member refid="classvar_1_1_data_1a9c4401f94ee7a2c99150399afd5b37ed" prot="public" virt="non-virtual"><scope>var::Data</scope><name>data_u8</name></member>
+      <member refid="classvar_1_1_data_1a2b166c95ef58a3af067061a6325a7bb5" prot="public" virt="non-virtual"><scope>var::Data</scope><name>erase</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>var::Data</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>var::Data</scope><name>exit_fatal</name></member>
+      <member refid="classvar_1_1_data_1ad5d2f2a6b0bdf05102b5876daff44e74" prot="public" virt="non-virtual"><scope>var::Data</scope><name>free</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>var::Data</scope><name>free_context</name></member>
+      <member refid="classvar_1_1_data_1a4792ae5e84f1809c55457531e6ee1b15" prot="public" virt="non-virtual"><scope>var::Data</scope><name>from_string</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>var::Data</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>var::Data</scope><name>handle_system_call_result</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>var::Data</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>var::Data</scope><name>is_success</name></member>
+      <member refid="classvar_1_1_data_1af1f92173fac1ea58691ef61349573c92" prot="private" virt="non-virtual"><scope>var::Data</scope><name>m_data</name></member>
+      <member refid="classvar_1_1_data_1ad9d826e0a2666c504220d827b549c905" prot="public" virt="non-virtual"><scope>var::Data</scope><name>minimum_capacity</name></member>
+      <member refid="classvar_1_1_data_1a291e3b3185b6f1d8e19dddc1d8dd99b2" prot="public" virt="non-virtual"><scope>var::Data</scope><name>operator!=</name></member>
+      <member refid="classvar_1_1_data_1a14e6078bb0a56f61db5f6089c92f9685" prot="public" virt="non-virtual"><scope>var::Data</scope><name>operator()</name></member>
+      <member refid="classvar_1_1_data_1a272cbaae92f11e34c90a9d61843acc5b" prot="public" virt="non-virtual"><scope>var::Data</scope><name>operator&lt;</name></member>
+      <member refid="classvar_1_1_data_1add1a0025b34c1bcf7c37c37bc2599c4c" prot="public" virt="non-virtual"><scope>var::Data</scope><name>operator==</name></member>
+      <member refid="classvar_1_1_data_1a93b4d1eb09e3ceb48547f730e30ac07e" prot="public" virt="non-virtual"><scope>var::Data</scope><name>operator&gt;</name></member>
+      <member refid="classvar_1_1_data_1ac6a7d1a9a7657252dd3d6601e3651e7c" prot="public" virt="non-virtual"><scope>var::Data</scope><name>reclaim_heap_space</name></member>
+      <member refid="classvar_1_1_data_1a95241179affcf7c93d6b86eae9357c7e" prot="public" virt="non-virtual"><scope>var::Data</scope><name>reserve</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>var::Data</scope><name>reset_error</name></member>
+      <member refid="classvar_1_1_data_1aae802d83a28ac117dc76dee2bdb3dcd7" prot="public" virt="non-virtual"><scope>var::Data</scope><name>resize</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>var::Data</scope><name>return_value</name></member>
+      <member refid="classvar_1_1_data_1a6391f76a1fa5c6836a8da53678682ea7" prot="public" virt="non-virtual"><scope>var::Data</scope><name>size</name></member>
+      <member refid="classvar_1_1_data_1a089a026764cdcdd2ef1f2e46e501353a" prot="public" virt="non-virtual"><scope>var::Data</scope><name>size_signed</name></member>
+      <member refid="classvar_1_1_data_1aafa9326bfcbe4a0a8e54843cbd0e2ce6" prot="public" virt="non-virtual"><scope>var::Data</scope><name>string_view</name></member>
+      <member refid="classvar_1_1_data_1a194b81e60173ea96f918e2a0c7947569" prot="public" virt="non-virtual"><scope>var::Data</scope><name>view</name></member>
+      <member refid="classvar_1_1_data_1adb0a75623a5d5ee89f1a34a671c25786" prot="public" virt="non-virtual"><scope>var::Data</scope><name>view</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

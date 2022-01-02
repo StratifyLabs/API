@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_stack" kind="class" language="C++" prot="public">
+    <compoundname>var::Stack</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <includes local="no">Stack.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvar_1_1_stack_1a426e44e81951faa9cfbb80498487ac61" prot="private" static="no" mutable="no">
+        <type>std::deque&lt; T &gt;</type>
+        <definition>std::deque&lt;T&gt; var::Stack&lt; T &gt;::m_deque</definition>
+        <argsstring></argsstring>
+        <name>m_deque</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Stack.hpp" line="39" column="14" bodyfile="API/libraries/VarAPI/include/var/Stack.hpp" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvar_1_1_stack_1a0075b57792c0c8271f17e3c8b44aaee7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T &amp; var::Stack&lt; T &gt;::top</definition>
+        <argsstring>()</argsstring>
+        <name>top</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Stack.hpp" line="16" column="5" bodyfile="API/libraries/VarAPI/include/var/Stack.hpp" bodystart="16" bodyend="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_stack_1a7bcd695b2354f030cd321fe9676b506a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T &amp; var::Stack&lt; T &gt;::top</definition>
+        <argsstring>() const</argsstring>
+        <name>top</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Stack.hpp" line="17" column="11" bodyfile="API/libraries/VarAPI/include/var/Stack.hpp" bodystart="17" bodyend="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_stack_1a22a3038321c0b22022605e1d26889bc9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_stack" kindref="compound">Stack</ref> &amp;</type>
+        <definition>Stack &amp; var::Stack&lt; T &gt;::push</definition>
+        <argsstring>(const T &amp;value)</argsstring>
+        <name>push</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Stack.hpp" line="19" column="9" bodyfile="API/libraries/VarAPI/include/var/Stack.hpp" bodystart="19" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_stack_1a8a6d9d164275395eb59d7b99bb834027" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_stack" kindref="compound">Stack</ref> &amp;</type>
+        <definition>Stack &amp; var::Stack&lt; T &gt;::pop</definition>
+        <argsstring>()</argsstring>
+        <name>pop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Stack.hpp" line="24" column="9" bodyfile="API/libraries/VarAPI/include/var/Stack.hpp" bodystart="24" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_stack_1a3416cd224b1a20324e99d2b5df91a809" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::Stack&lt; T &gt;::is_empty</definition>
+        <argsstring>() const</argsstring>
+        <name>is_empty</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Stack.hpp" line="29" column="9" bodyfile="API/libraries/VarAPI/include/var/Stack.hpp" bodystart="29" bodyend="29"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_stack_1a04a01b3a8f2bf02801ca1d7c2c0bb62c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 var::Stack&lt; T &gt;::count</definition>
+        <argsstring>() const</argsstring>
+        <name>count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Stack.hpp" line="30" column="8" bodyfile="API/libraries/VarAPI/include/var/Stack.hpp" bodystart="30" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_stack_1a6a69472ccaa45cb6b3e12017ff94898a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_stack" kindref="compound">Stack</ref> &amp;</type>
+        <definition>Stack &amp; var::Stack&lt; T &gt;::clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Stack.hpp" line="32" column="9" bodyfile="API/libraries/VarAPI/include/var/Stack.hpp" bodystart="32" bodyend="36"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::Stack&lt; T &gt;</label>
+        <link refid="classvar_1_1_stack"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::Stack&lt; T &gt;</label>
+        <link refid="classvar_1_1_stack"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/VarAPI/include/var/Stack.hpp" line="14" column="12" bodyfile="API/libraries/VarAPI/include/var/Stack.hpp" bodystart="14" bodyend="40"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_stack_1a6a69472ccaa45cb6b3e12017ff94898a" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>clear</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>context_count</name></member>
+      <member refid="classvar_1_1_stack_1a04a01b3a8f2bf02801ca1d7c2c0bb62c" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>count</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>free_context</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>handle_system_call_result</name></member>
+      <member refid="classvar_1_1_stack_1a3416cd224b1a20324e99d2b5df91a809" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>is_empty</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>is_success</name></member>
+      <member refid="classvar_1_1_stack_1a426e44e81951faa9cfbb80498487ac61" prot="private" virt="non-virtual"><scope>var::Stack</scope><name>m_deque</name></member>
+      <member refid="classvar_1_1_stack_1a8a6d9d164275395eb59d7b99bb834027" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>pop</name></member>
+      <member refid="classvar_1_1_stack_1a22a3038321c0b22022605e1d26889bc9" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>push</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>return_value</name></member>
+      <member refid="classvar_1_1_stack_1a0075b57792c0c8271f17e3c8b44aaee7" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>top</name></member>
+      <member refid="classvar_1_1_stack_1a7bcd695b2354f030cd321fe9676b506a" prot="public" virt="non-virtual"><scope>var::Stack</scope><name>top</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

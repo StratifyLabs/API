@@ -1,0 +1,408 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_mutex" kind="class" language="C++" prot="public">
+    <compoundname>thread::Mutex</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <includes local="no">Mutex.hpp</includes>
+    <innerclass refid="classthread_1_1_mutex_1_1_attributes" prot="public">thread::Mutex::Attributes</innerclass>
+    <innerclass refid="classthread_1_1_mutex_1_1_guard" prot="public">thread::Mutex::Guard</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="classthread_1_1_mutex_1a693a47bbec1de53981a35ac2271e1531" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Type</name>
+        <enumvalue id="classthread_1_1_mutex_1a693a47bbec1de53981a35ac2271e1531afea087517c26fadd409bd4b9dc642555" prot="public">
+          <name>normal</name>
+          <initializer>= PTHREAD_MUTEX_NORMAL</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_mutex_1a693a47bbec1de53981a35ac2271e1531af8e45531a3ea3d5c1247b004985175a4" prot="public">
+          <name>recursive</name>
+          <initializer>= PTHREAD_MUTEX_RECURSIVE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="23" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mutex.hpp" bodystart="23" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="enum" id="classthread_1_1_mutex_1a8b39512d7e98c464519653bec591c8e1" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Protocol</name>
+        <enumvalue id="classthread_1_1_mutex_1a8b39512d7e98c464519653bec591c8e1ad694f924850480014e0ff999ff5f5048" prot="public">
+          <name>priority_none</name>
+          <initializer>= PTHREAD_PRIO_NONE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_mutex_1a8b39512d7e98c464519653bec591c8e1aa299c2ab4f3f472246fb611d979a4b0a" prot="public">
+          <name>priority_inherit</name>
+          <initializer>= PTHREAD_PRIO_INHERIT</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_mutex_1a8b39512d7e98c464519653bec591c8e1a8440fcd90a18a110241bf8d84a4e5c8e" prot="public">
+          <name>priority_protect</name>
+          <initializer>= PTHREAD_PRIO_PROTECT</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="28" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mutex.hpp" bodystart="28" bodyend="32"/>
+      </memberdef>
+      <memberdef kind="enum" id="classthread_1_1_mutex_1ac8f283e77dd72d383568594295b2505f" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>ProcessShared</name>
+        <enumvalue id="classthread_1_1_mutex_1ac8f283e77dd72d383568594295b2505fa9e81e7b963c71363e2fb3eefcfecfc0e" prot="public">
+          <name>shared</name>
+          <initializer>= PTHREAD_PROCESS_SHARED</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_mutex_1ac8f283e77dd72d383568594295b2505fafe98605c4fd6e7434fb6e1db37b30ef9" prot="public">
+          <name>private_</name>
+          <initializer>= PTHREAD_PROCESS_PRIVATE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="34" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mutex.hpp" bodystart="34" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classthread_1_1_mutex_1a83595b63e94a97c782bf0a60d0f72e56" prot="public" static="no">
+        <type><ref refid="classthread_1_1_mutex_1_1_guard" kindref="compound">Guard</ref></type>
+        <definition>using thread::Mutex::Scope =  Guard</definition>
+        <argsstring></argsstring>
+        <name>Scope</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="136" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mutex.hpp" bodystart="136" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classthread_1_1_mutex_1a7b3a3b08a18ec6e57d9a2f52744212c4" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class Cond</definition>
+        <argsstring></argsstring>
+        <name>Cond</name>
+        <param>
+          <type><ref refid="classthread_1_1_cond" kindref="compound">Cond</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="139" column="16" bodyfile="API/libraries/ThreadAPI/include/thread/Mutex.hpp" bodystart="139" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classthread_1_1_mutex_1a8a31ca31f280067235a1e6a07e4a09f6" prot="private" static="no" mutable="no">
+        <type>pthread_mutex_t</type>
+        <definition>pthread_mutex_t thread::Mutex::m_mutex</definition>
+        <argsstring></argsstring>
+        <name>m_mutex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="140" column="19" bodyfile="API/libraries/ThreadAPI/include/thread/Mutex.hpp" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classthread_1_1_mutex_1a76957f2cf0e90bd989a4f32b39abdf70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mutex::Mutex</definition>
+        <argsstring>()</argsstring>
+        <name>Mutex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="86" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1a1ac1b695c751a43dce5ad4a2164ce6e2" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mutex::Mutex</definition>
+        <argsstring>(const Attributes &amp;attr)</argsstring>
+        <name>Mutex</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_mutex_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+          <declname>attr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="87" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1a075d7eee7dd8a7318cd0a6ba88e90796" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mutex::Mutex</definition>
+        <argsstring>(const Mutex &amp;mutex)=delete</argsstring>
+        <name>Mutex</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="88" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1aa46b4029f7d32839a3eb60fa64e8d405" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;</type>
+        <definition>Mutex &amp; thread::Mutex::operator=</definition>
+        <argsstring>(const Mutex &amp;mutex)=delete</argsstring>
+        <name>operator=</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="89" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1adc4c01da9f80a2d98dd7fc33e7bb657f" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mutex::Mutex</definition>
+        <argsstring>(Mutex &amp;&amp;a) noexcept</argsstring>
+        <name>Mutex</name>
+        <param>
+          <type><ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;&amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="90" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mutex.hpp" bodystart="90" bodyend="92"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1a5490706f5b09cc22fcf8333cba6294a8" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;</type>
+        <definition>Mutex &amp; thread::Mutex::operator=</definition>
+        <argsstring>(Mutex &amp;&amp;a) noexcept</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;&amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="93" column="9" bodyfile="API/libraries/ThreadAPI/include/thread/Mutex.hpp" bodystart="93" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1a73e58706bc924f42dccea97f282372f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mutex::~Mutex</definition>
+        <argsstring>()</argsstring>
+        <name>~Mutex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="98" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1af11aa800b73e9dde04f2612c05b50420" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;</type>
+        <definition>Mutex &amp; thread::Mutex::lock</definition>
+        <argsstring>()</argsstring>
+        <name>lock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="100" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1a86be63e9f5683686b331cdaec5b20318" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;</type>
+        <definition>Mutex &amp; thread::Mutex::lock_timed</definition>
+        <argsstring>(const chrono::ClockTime &amp;clock_time)</argsstring>
+        <name>lock_timed</name>
+        <param>
+          <type>const <ref refid="classchrono_1_1_clock_time" kindref="compound">chrono::ClockTime</ref> &amp;</type>
+          <declname>clock_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="103" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1a85d5fa4de48554489a044a3bf196d6a8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool thread::Mutex::try_lock</definition>
+        <argsstring>()</argsstring>
+        <name>try_lock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="106" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1aac010af728874f7d3209af5bf7982bdd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;</type>
+        <definition>Mutex &amp; thread::Mutex::unlock</definition>
+        <argsstring>()</argsstring>
+        <name>unlock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="107" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mutex_1a936bcb814216c9bf1806c87b2030bf70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;</type>
+        <definition>Mutex &amp; thread::Mutex::unlock_with_error_check</definition>
+        <argsstring>()</argsstring>
+        <name>unlock_with_error_check</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="109" column="9"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classthread_1_1_mutex_1af583ee44d0b28ddbbd979aaa8d8428e4" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mutex" kindref="compound">Mutex</ref> &amp;</type>
+        <definition>Mutex &amp; thread::Mutex::set_attributes</definition>
+        <argsstring>(const Attributes &amp;attr)</argsstring>
+        <name>set_attributes</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_mutex_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+          <declname>attr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="142" column="9"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::Mutex</label>
+        <link refid="classthread_1_1_mutex"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::Mutex</label>
+        <link refid="classthread_1_1_mutex"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/ThreadAPI/include/thread/Mutex.hpp" line="21" column="1" bodyfile="API/libraries/ThreadAPI/include/thread/Mutex.hpp" bodystart="21" bodyend="143"/>
+    <listofallmembers>
+      <member refid="classthread_1_1_mutex_1a7b3a3b08a18ec6e57d9a2f52744212c4" prot="private" virt="non-virtual"><scope>thread::Mutex</scope><name>Cond</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>context_count</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>free_context</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>handle_system_call_result</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>is_success</name></member>
+      <member refid="classthread_1_1_mutex_1af11aa800b73e9dde04f2612c05b50420" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>lock</name></member>
+      <member refid="classthread_1_1_mutex_1a86be63e9f5683686b331cdaec5b20318" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>lock_timed</name></member>
+      <member refid="classthread_1_1_mutex_1a8a31ca31f280067235a1e6a07e4a09f6" prot="private" virt="non-virtual"><scope>thread::Mutex</scope><name>m_mutex</name></member>
+      <member refid="classthread_1_1_mutex_1a76957f2cf0e90bd989a4f32b39abdf70" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>Mutex</name></member>
+      <member refid="classthread_1_1_mutex_1a1ac1b695c751a43dce5ad4a2164ce6e2" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>Mutex</name></member>
+      <member refid="classthread_1_1_mutex_1a075d7eee7dd8a7318cd0a6ba88e90796" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>Mutex</name></member>
+      <member refid="classthread_1_1_mutex_1adc4c01da9f80a2d98dd7fc33e7bb657f" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>Mutex</name></member>
+      <member refid="classthread_1_1_mutex_1aa46b4029f7d32839a3eb60fa64e8d405" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_mutex_1a5490706f5b09cc22fcf8333cba6294a8" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_mutex_1ac8f283e77dd72d383568594295b2505f" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>ProcessShared</name></member>
+      <member refid="classthread_1_1_mutex_1a8b39512d7e98c464519653bec591c8e1" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>Protocol</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>return_value</name></member>
+      <member refid="classthread_1_1_mutex_1a83595b63e94a97c782bf0a60d0f72e56" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>Scope</name></member>
+      <member refid="classthread_1_1_mutex_1af583ee44d0b28ddbbd979aaa8d8428e4" prot="private" virt="non-virtual"><scope>thread::Mutex</scope><name>set_attributes</name></member>
+      <member refid="classthread_1_1_mutex_1a85d5fa4de48554489a044a3bf196d6a8" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>try_lock</name></member>
+      <member refid="classthread_1_1_mutex_1a693a47bbec1de53981a35ac2271e1531" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>Type</name></member>
+      <member refid="classthread_1_1_mutex_1aac010af728874f7d3209af5bf7982bdd" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>unlock</name></member>
+      <member refid="classthread_1_1_mutex_1a936bcb814216c9bf1806c87b2030bf70" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>unlock_with_error_check</name></member>
+      <member refid="classthread_1_1_mutex_1a73e58706bc924f42dccea97f282372f2" prot="public" virt="non-virtual"><scope>thread::Mutex</scope><name>~Mutex</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

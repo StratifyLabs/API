@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_pair" kind="class" language="C++" prot="public">
+    <compoundname>var::Pair</compoundname>
+    <basecompoundref refid="classvar_1_1_array" prot="public" virt="non-virtual">var::Array&lt; T, 2 &gt;</basecompoundref>
+    <includes local="no">Array.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvar_1_1_pair_1a389ecb2688fadebea9ec9f53e63e2915" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::Pair&lt; T &gt;::Pair</definition>
+        <argsstring>()=default</argsstring>
+        <name>Pair</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Array.hpp" line="113" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_pair_1a373add36f7adf6f29693493946dfe16d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>var::Pair&lt; T &gt;::Pair</definition>
+        <argsstring>(const T &amp;k, const T &amp;v)</argsstring>
+        <name>Pair</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>k</declname>
+        </param>
+        <param>
+          <type>const T &amp;</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Array.hpp" line="114" column="3" bodyfile="API/libraries/VarAPI/include/var/Array.hpp" bodystart="114" bodyend="117"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_pair_1ab3ddf47b28e8c7653ef03a42b410da56" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T &amp; var::Pair&lt; T &gt;::key</definition>
+        <argsstring>()</argsstring>
+        <name>key</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Array.hpp" line="119" column="5" bodyfile="API/libraries/VarAPI/include/var/Array.hpp" bodystart="119" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_pair_1a9a408e3cddb81581668dece4730752f0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T &amp; var::Pair&lt; T &gt;::key</definition>
+        <argsstring>() const</argsstring>
+        <name>key</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Array.hpp" line="120" column="11" bodyfile="API/libraries/VarAPI/include/var/Array.hpp" bodystart="120" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_pair_1ac2f3ed2892559da15c6180069ffbdeff" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T &amp; var::Pair&lt; T &gt;::value</definition>
+        <argsstring>()</argsstring>
+        <name>value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Array.hpp" line="122" column="5" bodyfile="API/libraries/VarAPI/include/var/Array.hpp" bodystart="122" bodyend="122"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_pair_1a3788e8675f2c0669a23ae9be32a031e8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T &amp; var::Pair&lt; T &gt;::value</definition>
+        <argsstring>() const</argsstring>
+        <name>value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Array.hpp" line="123" column="11" bodyfile="API/libraries/VarAPI/include/var/Array.hpp" bodystart="123" bodyend="123"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>var::Array&lt; T, 2 &gt;</label>
+        <link refid="classvar_1_1_array"/>
+      </node>
+      <node id="1">
+        <label>var::Pair&lt; T &gt;</label>
+        <link refid="classvar_1_1_pair"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>var::Array&lt; T, 2 &gt;</label>
+        <link refid="classvar_1_1_array"/>
+      </node>
+      <node id="1">
+        <label>var::Pair&lt; T &gt;</label>
+        <link refid="classvar_1_1_pair"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/VarAPI/include/var/Array.hpp" line="111" column="12" bodyfile="API/libraries/VarAPI/include/var/Array.hpp" bodystart="111" bodyend="124"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_array_1a2968b2176e0dcd513e1cbd15547bdd4e" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>accumulate</name></member>
+      <member refid="classvar_1_1_array_1aa9296a0b4402dc535a0e86440296571c" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>array</name></member>
+      <member refid="classvar_1_1_array_1a9e7289790dbe104457a67c9f69f4702a" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>array</name></member>
+      <member refid="classvar_1_1_array_1af6ccb876c04ec87beca9451f0caf35e1" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>Array</name></member>
+      <member refid="classvar_1_1_array_1ab9ba9a856faf89b280ffd0bd4810de71" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>Array</name></member>
+      <member refid="classvar_1_1_array_1ae8d52b1c9606ef0e0572a22d107440b3" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>Array</name></member>
+      <member refid="classvar_1_1_array_1ae9b51f83c8f1a811cc1cad1b7937f7ea" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>Array</name></member>
+      <member refid="classvar_1_1_array_1a602d1f1a75ddf2418425c98e7f96c4bf" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>at</name></member>
+      <member refid="classvar_1_1_array_1a8fc1c61210c9e81542b0c1e31daf8f0d" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>at</name></member>
+      <member refid="classvar_1_1_array_1aceffb9172c1d495f00e91eb44d2dada6" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>back</name></member>
+      <member refid="classvar_1_1_array_1a69091039a8158885ac0158e277f118df" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>back</name></member>
+      <member refid="classvar_1_1_array_1acb80ba889f18d0f3c4fc1333f32351c3" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>begin</name></member>
+      <member refid="classvar_1_1_array_1ac148040cbc8e07fde88818246b6b4672" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>begin</name></member>
+      <member refid="classvar_1_1_array_1adcbe33c69346a3ca76ce435a41a0c114" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>cbegin</name></member>
+      <member refid="classvar_1_1_array_1a07e27a0afbfde10772868e48a3d9d7dd" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>cend</name></member>
+      <member refid="classvar_1_1_array_1a4b9481cdcc625f3fcd4c591a308ebc5d" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>count</name></member>
+      <member refid="classvar_1_1_array_1a1f0313b849113fe8e4d73573c818ea97" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>crbegin</name></member>
+      <member refid="classvar_1_1_array_1a7ed7b53e325039c6162aef0a43fdcb2d" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>crend</name></member>
+      <member refid="classvar_1_1_array_1ace447fd761b954cf0297a526f79d0c7e" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>data</name></member>
+      <member refid="classvar_1_1_array_1ab40dfce22f04a32b6720d12104048dfa" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>data</name></member>
+      <member refid="classvar_1_1_array_1abdcc8f4f38a8c12e92e066ff352e2e7a" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>end</name></member>
+      <member refid="classvar_1_1_array_1a48c4f7b26ab96440e8eca4cbe2c5639e" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>end</name></member>
+      <member refid="classvar_1_1_array_1a68dbb4c2417066ee40b7693186628658" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>fill</name></member>
+      <member refid="classvar_1_1_array_1a5b662a274cc59b5386f114754c444418" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>front</name></member>
+      <member refid="classvar_1_1_array_1a2bbe8467358a7ec59fd89d8e0d74f0be" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>front</name></member>
+      <member refid="classvar_1_1_array_1a68c62ae253949e61dffc8abdc25964d5" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>is_empty</name></member>
+      <member refid="classvar_1_1_pair_1ab3ddf47b28e8c7653ef03a42b410da56" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>key</name></member>
+      <member refid="classvar_1_1_pair_1a9a408e3cddb81581668dece4730752f0" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>key</name></member>
+      <member refid="classvar_1_1_array_1ab5ff52c1c7ecfa3df07875797af0a6a5" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>operator==</name></member>
+      <member refid="classvar_1_1_array_1a0930f274ac39fa17638130148df9c204" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>operator[]</name></member>
+      <member refid="classvar_1_1_array_1aa451c5c6fb7bd4384d6c4cc5c1430b97" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>operator[]</name></member>
+      <member refid="classvar_1_1_pair_1a389ecb2688fadebea9ec9f53e63e2915" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>Pair</name></member>
+      <member refid="classvar_1_1_pair_1a373add36f7adf6f29693493946dfe16d" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>Pair</name></member>
+      <member refid="classvar_1_1_array_1a6e90618279ceb19b3186d108034ce2ee" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_array_1a71f51e0efe5e81ad0c24fab81cb8254d" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_array_1a49b5a19cde8aa1d3f30f73f44f665e31" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>rend</name></member>
+      <member refid="classvar_1_1_array_1a7e6c04bd5f30944dea9a26bae73dcf6c" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>rend</name></member>
+      <member refid="classvar_1_1_array_1a13ca09ea2b88191b803268d3874454c6" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>to_const_void</name></member>
+      <member refid="classvar_1_1_array_1a94cfa9bfb6c369e88e5950d9c6ebe3a1" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>to_void</name></member>
+      <member refid="classvar_1_1_pair_1ac2f3ed2892559da15c6180069ffbdeff" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>value</name></member>
+      <member refid="classvar_1_1_pair_1a3788e8675f2c0669a23ae9be32a031e8" prot="public" virt="non-virtual"><scope>var::Pair</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

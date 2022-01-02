@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_mq_1_1_attributes" kind="class" language="C++" prot="public">
+    <compoundname>thread::Mq::Attributes</compoundname>
+    <includes local="no">Mq.hpp</includes>
+    <innerclass refid="structthread_1_1_mq_1_1_attributes_1_1m__attr" prot="private">thread::Mq::Attributes::m_attr</innerclass>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classthread_1_1_mq_1_1_attributes_1a834acb177a845f84131939ece3a2307c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class Mq</definition>
+        <argsstring></argsstring>
+        <name>Mq</name>
+        <param>
+          <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="50" column="18" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_attributes_1aef6abbcec8d6eba8c49b098a8a4c8765" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mq::Attributes::Attributes</definition>
+        <argsstring>()=default</argsstring>
+        <name>Attributes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="28" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_attributes_1a8a811faec8604fd7c517d059ef0e86d0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long thread::Mq::Attributes::flags</definition>
+        <argsstring>() const</argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="30" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="30" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_attributes_1a2948472472cb6a6010fe495890eab9b5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long thread::Mq::Attributes::current_message_count</definition>
+        <argsstring>() const</argsstring>
+        <name>current_message_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="31" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="31" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_attributes_1a7b7ee6c3f39df277bbb02e5486d39447" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long thread::Mq::Attributes::maximum_message_count</definition>
+        <argsstring>() const</argsstring>
+        <name>maximum_message_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="32" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="32" bodyend="32"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_attributes_1a28426c36ffa700b81496bd08019c9754" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long thread::Mq::Attributes::message_size</definition>
+        <argsstring>() const</argsstring>
+        <name>message_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="33" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="33" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_attributes_1a064dbfa8bcc9f556cd2a1597482ce766" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+        <definition>Attributes &amp; thread::Mq::Attributes::set_maximum_message_count</definition>
+        <argsstring>(long v)</argsstring>
+        <name>set_maximum_message_count</name>
+        <param>
+          <type>long</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="35" column="16" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="35" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_attributes_1af68806128750c2cbe49c48b036ec202c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+        <definition>Attributes &amp; thread::Mq::Attributes::set_message_count</definition>
+        <argsstring>(long v)</argsstring>
+        <name>set_message_count</name>
+        <param>
+          <type>long</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="40" column="17" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="40" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1_1_attributes_1a1ac6a7094f87e0e6592e7c768881eb7d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+        <definition>Attributes &amp; thread::Mq::Attributes::set_message_size</definition>
+        <argsstring>(long v)</argsstring>
+        <name>set_message_size</name>
+        <param>
+          <type>long</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="44" column="16" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="44" bodyend="47"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="25" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="25" bodyend="52"/>
+    <listofallmembers>
+      <member refid="classthread_1_1_mq_1_1_attributes_1aef6abbcec8d6eba8c49b098a8a4c8765" prot="public" virt="non-virtual"><scope>thread::Mq::Attributes</scope><name>Attributes</name></member>
+      <member refid="classthread_1_1_mq_1_1_attributes_1a2948472472cb6a6010fe495890eab9b5" prot="public" virt="non-virtual"><scope>thread::Mq::Attributes</scope><name>current_message_count</name></member>
+      <member refid="classthread_1_1_mq_1_1_attributes_1a8a811faec8604fd7c517d059ef0e86d0" prot="public" virt="non-virtual"><scope>thread::Mq::Attributes</scope><name>flags</name></member>
+      <member refid="classthread_1_1_mq_1_1_attributes_1a7b7ee6c3f39df277bbb02e5486d39447" prot="public" virt="non-virtual"><scope>thread::Mq::Attributes</scope><name>maximum_message_count</name></member>
+      <member refid="classthread_1_1_mq_1_1_attributes_1a28426c36ffa700b81496bd08019c9754" prot="public" virt="non-virtual"><scope>thread::Mq::Attributes</scope><name>message_size</name></member>
+      <member refid="classthread_1_1_mq_1_1_attributes_1a834acb177a845f84131939ece3a2307c" prot="private" virt="non-virtual"><scope>thread::Mq::Attributes</scope><name>Mq</name></member>
+      <member refid="classthread_1_1_mq_1_1_attributes_1a064dbfa8bcc9f556cd2a1597482ce766" prot="public" virt="non-virtual"><scope>thread::Mq::Attributes</scope><name>set_maximum_message_count</name></member>
+      <member refid="classthread_1_1_mq_1_1_attributes_1af68806128750c2cbe49c48b036ec202c" prot="public" virt="non-virtual"><scope>thread::Mq::Attributes</scope><name>set_message_count</name></member>
+      <member refid="classthread_1_1_mq_1_1_attributes_1a1ac6a7094f87e0e6592e7c768881eb7d" prot="public" virt="non-virtual"><scope>thread::Mq::Attributes</scope><name>set_message_size</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

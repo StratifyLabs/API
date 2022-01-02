@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="_flags_8hpp" kind="file" language="C++">
+    <compoundname>Flags.hpp</compoundname>
+    <includes local="no">bitset</includes>
+    <includes local="no">sdk/types.h</includes>
+    <includedby refid="var_8hpp" local="yes">var.hpp</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>Flags.hpp</label>
+        <link refid="_flags_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>bitset</label>
+      </node>
+      <node id="3">
+        <label>sdk/types.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>var.hpp</label>
+        <link refid="var_8hpp"/>
+      </node>
+      <node id="1">
+        <label>Flags.hpp</label>
+        <link refid="_flags_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classvar_1_1_bits" prot="public">var::Bits</innerclass>
+    <innernamespace refid="namespacevar">var</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/Flags.hpp"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classprinter_1_1_printer_1_1_object" kind="class" language="C++" prot="public">
+    <compoundname>printer::Printer::Object</compoundname>
+    <includes local="no">Printer.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classprinter_1_1_printer_1_1_object_1af13ddf61d8c39f491b3d0d2cb5434207" prot="private" static="no" mutable="no">
+        <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+        <definition>Printer&amp; printer::Printer::Object::m_printer</definition>
+        <argsstring></argsstring>
+        <name>m_printer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="301" column="13" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="301" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_object_1a41bda03c68285e661fe2144ecc98f4af" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>printer::Printer::Object::Object</definition>
+        <argsstring>(Printer &amp;printer, var::StringView name, Level level=Level::info)</argsstring>
+        <name>Object</name>
+        <param>
+          <type><ref refid="classprinter_1_1_printer" kindref="compound">Printer</ref> &amp;</type>
+          <declname>printer</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>level</declname>
+          <defval><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578facaf9b6b99962bf5c2264824231d7a40c" kindref="member">Level::info</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="293" column="5" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="293" bodyend="296"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_printer_1_1_object_1aef33b212dca7e1376764084554ab54aa" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>printer::Printer::Object::~Object</definition>
+        <argsstring>()</argsstring>
+        <name>~Object</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="298" column="5" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="298" bodyend="298"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/PrinterAPI/include/printer/Printer.hpp" line="291" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/Printer.hpp" bodystart="291" bodyend="302"/>
+    <listofallmembers>
+      <member refid="classprinter_1_1_printer_1_1_object_1af13ddf61d8c39f491b3d0d2cb5434207" prot="private" virt="non-virtual"><scope>printer::Printer::Object</scope><name>m_printer</name></member>
+      <member refid="classprinter_1_1_printer_1_1_object_1a41bda03c68285e661fe2144ecc98f4af" prot="public" virt="non-virtual"><scope>printer::Printer::Object</scope><name>Object</name></member>
+      <member refid="classprinter_1_1_printer_1_1_object_1aef33b212dca7e1376764084554ab54aa" prot="public" virt="non-virtual"><scope>printer::Printer::Object</scope><name>~Object</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

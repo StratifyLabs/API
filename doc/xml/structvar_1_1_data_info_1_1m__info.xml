@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="structvar_1_1_data_info_1_1m__info" kind="struct" language="C++" prot="private">
+    <compoundname>var::DataInfo::m_info</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/Data.hpp" line="45" column="3" bodyfile="API/libraries/VarAPI/include/var/Data.hpp" bodystart="45" bodyend="45"/>
+    <listofallmembers>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

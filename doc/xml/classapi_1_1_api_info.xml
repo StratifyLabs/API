@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classapi_1_1_api_info" kind="class" language="C++" prot="public">
+    <compoundname>api::ApiInfo</compoundname>
+    <includes local="no">api.hpp</includes>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classapi_1_1_api_info_1a96d7467584ec444eaddecf2e75ca7e5d" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>static const char * api::ApiInfo::version</definition>
+        <argsstring>()</argsstring>
+        <name>version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="28" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_api_info_1a343660af8440acde30eee2ef90c0e1f7" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>static const char * api::ApiInfo::git_hash</definition>
+        <argsstring>()</argsstring>
+        <name>git_hash</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="29" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_api_info_1aadb6c345f04f937525b5169c196c3ddb" prot="public" static="yes" constexpr="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>constexpr u32</type>
+        <definition>static constexpr u32 api::ApiInfo::malloc_start_chunk_size</definition>
+        <argsstring>()</argsstring>
+        <name>malloc_start_chunk_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="31" column="24" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="31" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_api_info_1a211e2b1a63eb5b64ee07a1346c46abee" prot="public" static="yes" constexpr="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>constexpr u32</type>
+        <definition>static constexpr u32 api::ApiInfo::malloc_chunk_size</definition>
+        <argsstring>()</argsstring>
+        <name>malloc_chunk_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="35" column="24" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="35" bodyend="35"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/API/include/api/api.hpp" line="26" column="1" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="26" bodyend="36"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_api_info_1a343660af8440acde30eee2ef90c0e1f7" prot="public" virt="non-virtual"><scope>api::ApiInfo</scope><name>git_hash</name></member>
+      <member refid="classapi_1_1_api_info_1a211e2b1a63eb5b64ee07a1346c46abee" prot="public" virt="non-virtual"><scope>api::ApiInfo</scope><name>malloc_chunk_size</name></member>
+      <member refid="classapi_1_1_api_info_1aadb6c345f04f937525b5169c196c3ddb" prot="public" virt="non-virtual"><scope>api::ApiInfo</scope><name>malloc_start_chunk_size</name></member>
+      <member refid="classapi_1_1_api_info_1a96d7467584ec444eaddecf2e75ca7e5d" prot="public" virt="non-virtual"><scope>api::ApiInfo</scope><name>version</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

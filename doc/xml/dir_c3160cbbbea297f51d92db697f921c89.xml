@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="dir_c3160cbbbea297f51d92db697f921c89" kind="dir">
+    <compoundname>include</compoundname>
+    <innerdir refid="dir_5b54a435b2fca7c8819691f98514c05a">var</innerdir>
+    <innerfile refid="var_8hpp">var.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/"/>
+  </compounddef>
+</doxygen>

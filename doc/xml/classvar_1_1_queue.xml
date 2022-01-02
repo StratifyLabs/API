@@ -1,0 +1,615 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_queue" kind="class" language="C++" prot="public">
+    <compoundname>var::Queue</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <includes local="no">Queue.hpp</includes>
+    <innerclass refid="classvar_1_1_queue_1_1_erase" prot="public">var::Queue::Erase</innerclass>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classvar_1_1_queue_1a3bd29a2729b8d4c5d158a0114aa35347" prot="public" static="no">
+        <type>typename std::deque&lt; T &gt;::<ref refid="classvar_1_1_queue_1a3bd29a2729b8d4c5d158a0114aa35347" kindref="member">iterator</ref></type>
+        <definition>using var::Queue&lt; T &gt;::iterator =  typename std::deque&lt;T&gt;::iterator</definition>
+        <argsstring></argsstring>
+        <name>iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="21" column="3" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_queue_1a6d274ef0f9b51623b84470fb0e11d0cf" prot="public" static="no">
+        <type>typename std::deque&lt; T &gt;::<ref refid="classvar_1_1_queue_1a6d274ef0f9b51623b84470fb0e11d0cf" kindref="member">const_iterator</ref></type>
+        <definition>using var::Queue&lt; T &gt;::const_iterator =  typename std::deque&lt;T&gt;::const_iterator</definition>
+        <argsstring></argsstring>
+        <name>const_iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="22" column="3" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_queue_1a3fd8cce5d2500112ded4c38ea862973b" prot="public" static="no">
+        <type>typename std::deque&lt; T &gt;::<ref refid="classvar_1_1_queue_1a3fd8cce5d2500112ded4c38ea862973b" kindref="member">reverse_iterator</ref></type>
+        <definition>using var::Queue&lt; T &gt;::reverse_iterator =  typename std::deque&lt;T&gt;::reverse_iterator</definition>
+        <argsstring></argsstring>
+        <name>reverse_iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="23" column="3" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classvar_1_1_queue_1a276115e624907650418b4406b7189b56" prot="public" static="no">
+        <type>typename std::vector&lt; T &gt;::<ref refid="classvar_1_1_queue_1a276115e624907650418b4406b7189b56" kindref="member">const_reverse_iterator</ref></type>
+        <definition>using var::Queue&lt; T &gt;::const_reverse_iterator =  typename std::vector&lt;T&gt;::const_reverse_iterator</definition>
+        <argsstring></argsstring>
+        <name>const_reverse_iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="24" column="3" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvar_1_1_queue_1ac95e2635235be5ed37b700e338d59532" prot="private" static="no" mutable="no">
+        <type>std::deque&lt; T &gt;</type>
+        <definition>std::deque&lt;T&gt; var::Queue&lt; T &gt;::m_deque</definition>
+        <argsstring></argsstring>
+        <name>m_deque</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="109" column="14" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvar_1_1_queue_1aaa4db50b6cfabb9198ad7b59de65af64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::Queue&lt; T &gt;::Queue</definition>
+        <argsstring>()=default</argsstring>
+        <name>Queue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="19" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1aee51d67297cacedb1ed902b58ec3a45d" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a6d274ef0f9b51623b84470fb0e11d0cf" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::Queue&lt; T &gt;::begin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>begin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="27" column="18" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="27" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a00c4dc295ab0a888667e0e76bf537a55" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a3bd29a2729b8d4c5d158a0114aa35347" kindref="member">iterator</ref></type>
+        <definition>iterator var::Queue&lt; T &gt;::begin</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>begin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="28" column="12" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="28" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1ae667c08616b70abeb58b3a7e9f72053a" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a6d274ef0f9b51623b84470fb0e11d0cf" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::Queue&lt; T &gt;::end</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="30" column="18" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="30" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1af854cef2198d9da37567dec180b54bec" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a3bd29a2729b8d4c5d158a0114aa35347" kindref="member">iterator</ref></type>
+        <definition>iterator var::Queue&lt; T &gt;::end</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="31" column="12" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="31" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1aeec2c87e501b83c3bf66c5d43dfd8d2a" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a6d274ef0f9b51623b84470fb0e11d0cf" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::Queue&lt; T &gt;::cbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>cbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="33" column="18" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="33" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1ae08e597d9b159c01b0702d1881d00d73" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a6d274ef0f9b51623b84470fb0e11d0cf" kindref="member">const_iterator</ref></type>
+        <definition>const_iterator var::Queue&lt; T &gt;::cend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>cend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="34" column="18" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="34" bodyend="34"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a2fcd3e98ee4e567fc141a8449bee5886" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a276115e624907650418b4406b7189b56" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::Queue&lt; T &gt;::rbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>rbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="36" column="26" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="36" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a9806767ad887fa9ed086664592b4e78e" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a3fd8cce5d2500112ded4c38ea862973b" kindref="member">reverse_iterator</ref></type>
+        <definition>reverse_iterator var::Queue&lt; T &gt;::rbegin</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>rbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="37" column="20" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="37" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1ab4fc72f6432b1e9a333a57985ea18e5e" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a276115e624907650418b4406b7189b56" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::Queue&lt; T &gt;::rend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>rend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="39" column="26" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="39" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a0137b077d779bc9dc25e3856e786ca65" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a3fd8cce5d2500112ded4c38ea862973b" kindref="member">reverse_iterator</ref></type>
+        <definition>reverse_iterator var::Queue&lt; T &gt;::rend</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>rend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="40" column="20" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="40" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a5db51f17c0ac77308388bad3ccb8287e" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a276115e624907650418b4406b7189b56" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::Queue&lt; T &gt;::crbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>crbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="42" column="26" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="42" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a057a9cd077c77dc82c879d62c0614a57" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a276115e624907650418b4406b7189b56" kindref="member">const_reverse_iterator</ref></type>
+        <definition>const_reverse_iterator var::Queue&lt; T &gt;::crend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>crend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="43" column="26" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="43" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1af6b77a8ed7ddb877e467f6a990a2f834" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue_1a3bd29a2729b8d4c5d158a0114aa35347" kindref="member">iterator</ref></type>
+        <definition>iterator var::Queue&lt; T &gt;::insert</definition>
+        <argsstring>(const_iterator position, const T &amp;value)</argsstring>
+        <name>insert</name>
+        <param>
+          <type><ref refid="classvar_1_1_queue_1a6d274ef0f9b51623b84470fb0e11d0cf" kindref="member">const_iterator</ref></type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type>const T &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="45" column="12" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="45" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a77a4318f0dcfb454572bbcb8fd58c4ea" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T &amp; var::Queue&lt; T &gt;::at</definition>
+        <argsstring>(size_t position)</argsstring>
+        <name>at</name>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="49" column="5" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="49" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a05f525bc67a01360f366873a02b29da1" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T &amp; var::Queue&lt; T &gt;::at</definition>
+        <argsstring>(size_t position) const</argsstring>
+        <name>at</name>
+        <param>
+          <type>size_t</type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="50" column="11" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="50" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1adb7e0364796a7c8a207b3a8de7d917bc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T &amp; var::Queue&lt; T &gt;::back</definition>
+        <argsstring>()</argsstring>
+        <name>back</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="52" column="5" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="52" bodyend="52"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1ad2a3c5e684713c08e99e04c6b1e25f4b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T &amp; var::Queue&lt; T &gt;::back</definition>
+        <argsstring>() const</argsstring>
+        <name>back</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="53" column="11" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="53" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a4bab0509e20fa49551b48ade1dd67c71" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T &amp; var::Queue&lt; T &gt;::front</definition>
+        <argsstring>() const</argsstring>
+        <name>front</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="55" column="11" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="55" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a206f5223800950fd88d4145a3a91b467" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T &amp; var::Queue&lt; T &gt;::front</definition>
+        <argsstring>()</argsstring>
+        <name>front</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="56" column="5" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="56" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1ae7f555f2f36f0ad17a8e2c6dbc8ba236" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue" kindref="compound">Queue</ref> &amp;</type>
+        <definition>Queue &amp; var::Queue&lt; T &gt;::push</definition>
+        <argsstring>(const T &amp;value)</argsstring>
+        <name>push</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="58" column="9" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="58" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a44e83490cf7c74b0b07607cfd89acd64" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue" kindref="compound">Queue</ref> &amp;</type>
+        <definition>Queue &amp; var::Queue&lt; T &gt;::pop</definition>
+        <argsstring>()</argsstring>
+        <name>pop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="63" column="9" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="63" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a3aa37b641671e86a2110595a4d454caf" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue" kindref="compound">Queue</ref> &amp;</type>
+        <definition>Queue &amp; var::Queue&lt; T &gt;::erase</definition>
+        <argsstring>(const Erase &amp;options)</argsstring>
+        <name>erase</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_queue_1_1_erase" kindref="compound">Erase</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="73" column="9" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="73" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a4086d3057a8eb7706aa9082ee3425455" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue" kindref="compound">Queue</ref> &amp;</type>
+        <definition>Queue &amp; var::Queue&lt; T &gt;::operator()</definition>
+        <argsstring>(const Erase &amp;options)</argsstring>
+        <name>operator()</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_queue_1_1_erase" kindref="compound">Erase</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="79" column="9" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="79" bodyend="79"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a64c30c41ad9cf343d6183a1a99d6bd7f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue" kindref="compound">Queue</ref> &amp;</type>
+        <definition>Queue &amp; var::Queue&lt; T &gt;::remove</definition>
+        <argsstring>(u32 pos)</argsstring>
+        <name>remove</name>
+        <param>
+          <type>u32</type>
+          <declname>pos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="81" column="9" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="81" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a0895a91de1324761f732ef4425b82c07" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t var::Queue&lt; T &gt;::find_offset</definition>
+        <argsstring>(const T &amp;a) const</argsstring>
+        <name>find_offset</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="83" column="10" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="83" bodyend="86"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1ae00ddf410b5f1f8964fb1b5d584f5c52" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T &amp; var::Queue&lt; T &gt;::find</definition>
+        <argsstring>(const T &amp;a, const T &amp;not_found=T()) const</argsstring>
+        <name>find</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>const T &amp;</type>
+          <declname>not_found</declname>
+          <defval>T()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="88" column="11" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="88" bodyend="94"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1ab61123c6ab0aa63f0ce9dc3cb7e2cdf3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool var::Queue&lt; T &gt;::is_empty</definition>
+        <argsstring>() const</argsstring>
+        <name>is_empty</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="96" column="9" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="96" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1aa1467c84e4e722355461270945a82201" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 var::Queue&lt; T &gt;::count</definition>
+        <argsstring>() const</argsstring>
+        <name>count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="97" column="8" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="97" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1a478e6affb64fc3e4388d48bb34208bd7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_queue" kindref="compound">Queue</ref> &amp;</type>
+        <definition>Queue &amp; var::Queue&lt; T &gt;::clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="99" column="9" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="99" bodyend="102"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_queue_1adb201f3c8ad494b6258fad133ef68a83" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>T</type>
+        <definition>T var::Queue&lt; T &gt;::accumulate</definition>
+        <argsstring>(T initial_value=T()) const</argsstring>
+        <name>accumulate</name>
+        <param>
+          <type>T</type>
+          <declname>initial_value</declname>
+          <defval>T()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="104" column="6" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="104" bodyend="106"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::Queue&lt; T &gt;</label>
+        <link refid="classvar_1_1_queue"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::Queue&lt; T &gt;</label>
+        <link refid="classvar_1_1_queue"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/VarAPI/include/var/Queue.hpp" line="17" column="12" bodyfile="API/libraries/VarAPI/include/var/Queue.hpp" bodystart="17" bodyend="110"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_queue_1adb201f3c8ad494b6258fad133ef68a83" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>accumulate</name></member>
+      <member refid="classvar_1_1_queue_1a77a4318f0dcfb454572bbcb8fd58c4ea" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>at</name></member>
+      <member refid="classvar_1_1_queue_1a05f525bc67a01360f366873a02b29da1" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>at</name></member>
+      <member refid="classvar_1_1_queue_1adb7e0364796a7c8a207b3a8de7d917bc" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>back</name></member>
+      <member refid="classvar_1_1_queue_1ad2a3c5e684713c08e99e04c6b1e25f4b" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>back</name></member>
+      <member refid="classvar_1_1_queue_1aee51d67297cacedb1ed902b58ec3a45d" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>begin</name></member>
+      <member refid="classvar_1_1_queue_1a00c4dc295ab0a888667e0e76bf537a55" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>begin</name></member>
+      <member refid="classvar_1_1_queue_1aeec2c87e501b83c3bf66c5d43dfd8d2a" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>cbegin</name></member>
+      <member refid="classvar_1_1_queue_1ae08e597d9b159c01b0702d1881d00d73" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>cend</name></member>
+      <member refid="classvar_1_1_queue_1a478e6affb64fc3e4388d48bb34208bd7" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>clear</name></member>
+      <member refid="classvar_1_1_queue_1a6d274ef0f9b51623b84470fb0e11d0cf" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>const_iterator</name></member>
+      <member refid="classvar_1_1_queue_1a276115e624907650418b4406b7189b56" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>const_reverse_iterator</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>context_count</name></member>
+      <member refid="classvar_1_1_queue_1aa1467c84e4e722355461270945a82201" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>count</name></member>
+      <member refid="classvar_1_1_queue_1a5db51f17c0ac77308388bad3ccb8287e" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>crbegin</name></member>
+      <member refid="classvar_1_1_queue_1a057a9cd077c77dc82c879d62c0614a57" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>crend</name></member>
+      <member refid="classvar_1_1_queue_1ae667c08616b70abeb58b3a7e9f72053a" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>end</name></member>
+      <member refid="classvar_1_1_queue_1af854cef2198d9da37567dec180b54bec" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>end</name></member>
+      <member refid="classvar_1_1_queue_1a3aa37b641671e86a2110595a4d454caf" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>erase</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>exit_fatal</name></member>
+      <member refid="classvar_1_1_queue_1ae00ddf410b5f1f8964fb1b5d584f5c52" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>find</name></member>
+      <member refid="classvar_1_1_queue_1a0895a91de1324761f732ef4425b82c07" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>find_offset</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>free_context</name></member>
+      <member refid="classvar_1_1_queue_1a4bab0509e20fa49551b48ade1dd67c71" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>front</name></member>
+      <member refid="classvar_1_1_queue_1a206f5223800950fd88d4145a3a91b467" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>front</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>handle_system_call_result</name></member>
+      <member refid="classvar_1_1_queue_1af6b77a8ed7ddb877e467f6a990a2f834" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>insert</name></member>
+      <member refid="classvar_1_1_queue_1ab61123c6ab0aa63f0ce9dc3cb7e2cdf3" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>is_empty</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>is_success</name></member>
+      <member refid="classvar_1_1_queue_1a3bd29a2729b8d4c5d158a0114aa35347" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>iterator</name></member>
+      <member refid="classvar_1_1_queue_1ac95e2635235be5ed37b700e338d59532" prot="private" virt="non-virtual"><scope>var::Queue</scope><name>m_deque</name></member>
+      <member refid="classvar_1_1_queue_1a4086d3057a8eb7706aa9082ee3425455" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>operator()</name></member>
+      <member refid="classvar_1_1_queue_1a44e83490cf7c74b0b07607cfd89acd64" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>pop</name></member>
+      <member refid="classvar_1_1_queue_1ae7f555f2f36f0ad17a8e2c6dbc8ba236" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>push</name></member>
+      <member refid="classvar_1_1_queue_1aaa4db50b6cfabb9198ad7b59de65af64" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>Queue</name></member>
+      <member refid="classvar_1_1_queue_1a2fcd3e98ee4e567fc141a8449bee5886" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_queue_1a9806767ad887fa9ed086664592b4e78e" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_queue_1a64c30c41ad9cf343d6183a1a99d6bd7f" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>remove</name></member>
+      <member refid="classvar_1_1_queue_1ab4fc72f6432b1e9a333a57985ea18e5e" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>rend</name></member>
+      <member refid="classvar_1_1_queue_1a0137b077d779bc9dc25e3856e786ca65" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>rend</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>return_value</name></member>
+      <member refid="classvar_1_1_queue_1a3fd8cce5d2500112ded4c38ea862973b" prot="public" virt="non-virtual"><scope>var::Queue</scope><name>reverse_iterator</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

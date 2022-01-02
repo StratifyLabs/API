@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="_aio_8hpp" kind="file" language="C++">
+    <compoundname>Aio.hpp</compoundname>
+    <includes local="no">aio.h</includes>
+    <includes local="no">cstring</includes>
+    <includes refid="_micro_time_8hpp" local="yes">chrono/MicroTime.hpp</includes>
+    <includes refid="_view_8hpp" local="yes">var/View.hpp</includes>
+    <includes refid="_file_8hpp" local="yes">File.hpp</includes>
+    <includedby refid="fs_8hpp" local="yes">fs.hpp</includedby>
+    <incdepgraph>
+      <node id="12">
+        <label>api/api.hpp</label>
+        <link refid="api_8hpp"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>api/macros.hpp</label>
+        <link refid="_a_p_i_2include_2api_2macros_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>chrono/MicroTime.hpp</label>
+        <link refid="_micro_time_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Aio.hpp</label>
+        <link refid="_aio_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>File.hpp</label>
+        <link refid="_file_8hpp"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>FileInfo.hpp</label>
+        <link refid="_file_info_8hpp"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>macros.hpp</label>
+        <link refid="_fs_a_p_i_2include_2fs_2macros_8hpp"/>
+      </node>
+      <node id="16">
+        <label>Array.hpp</label>
+        <link refid="_array_8hpp"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>var/Base64.hpp</label>
+        <link refid="_base64_8hpp"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>StackString.hpp</label>
+        <link refid="_stack_string_8hpp"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>String.hpp</label>
+        <link refid="_string_8hpp"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>StringView.hpp</label>
+        <link refid="_string_view_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>Vector.hpp</label>
+        <link refid="_vector_8hpp"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>var/View.hpp</label>
+        <link refid="_view_8hpp"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>aio.h</label>
+      </node>
+      <node id="27">
+        <label>algorithm</label>
+      </node>
+      <node id="17">
+        <label>array</label>
+      </node>
+      <node id="13">
+        <label>cerrno</label>
+      </node>
+      <node id="14">
+        <label>climits</label>
+      </node>
+      <node id="22">
+        <label>cstdarg</label>
+      </node>
+      <node id="10">
+        <label>cstdio</label>
+      </node>
+      <node id="3">
+        <label>cstring</label>
+      </node>
+      <node id="6">
+        <label>ctime</label>
+      </node>
+      <node id="32">
+        <label>fcntl.h</label>
+      </node>
+      <node id="28">
+        <label>functional</label>
+      </node>
+      <node id="18">
+        <label>iterator</label>
+      </node>
+      <node id="29">
+        <label>malloc.h</label>
+      </node>
+      <node id="19">
+        <label>numeric</label>
+      </node>
+      <node id="5">
+        <label>sdk/types.h</label>
+      </node>
+      <node id="8">
+        <label>sos/arch.h</label>
+      </node>
+      <node id="23">
+        <label>string</label>
+      </node>
+      <node id="25">
+        <label>string_view</label>
+      </node>
+      <node id="33">
+        <label>sys/stat.h</label>
+      </node>
+      <node id="11">
+        <label>type_traits</label>
+      </node>
+      <node id="34">
+        <label>unistd.h</label>
+      </node>
+      <node id="15">
+        <label>vector</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>fs.hpp</label>
+        <link refid="fs_8hpp"/>
+      </node>
+      <node id="1">
+        <label>Aio.hpp</label>
+        <link refid="_aio_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classfs_1_1_aio" prot="public">fs::Aio</innerclass>
+    <innerclass refid="structfs_1_1_aio_1_1m__aio__var" prot="private">fs::Aio::m_aio_var</innerclass>
+    <innernamespace refid="namespacehal">hal</innernamespace>
+    <innernamespace refid="namespacefs">fs</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/FsAPI/include/fs/Aio.hpp"/>
+  </compounddef>
+</doxygen>

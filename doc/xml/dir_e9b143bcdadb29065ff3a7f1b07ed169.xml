@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="dir_e9b143bcdadb29065ff3a7f1b07ed169" kind="dir">
+    <compoundname>include</compoundname>
+    <innerdir refid="dir_79cffbae2f81292087435ca8b1b7560f">thread</innerdir>
+    <innerfile refid="thread_8hpp">thread.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ThreadAPI/include/"/>
+  </compounddef>
+</doxygen>

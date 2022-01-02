@@ -1,0 +1,316 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_semaphore_object" kind="class" language="C++" prot="public">
+    <compoundname>thread::SemaphoreObject</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <derivedcompoundref refid="classthread_1_1_sem_access" prot="public" virt="non-virtual">thread::SemAccess&lt; Semaphore &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_sem_access" prot="public" virt="non-virtual">thread::SemAccess&lt; UnnamedSemaphore &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_sem_access" prot="public" virt="non-virtual">thread::SemAccess&lt; Derived &gt;</derivedcompoundref>
+    <includes local="no">Sem.hpp</includes>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classthread_1_1_semaphore_object_1a22c6b2b46e816104eacba41925d6bd5e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class UnnamedSemaphore</definition>
+        <argsstring></argsstring>
+        <name>UnnamedSemaphore</name>
+        <param>
+          <type><ref refid="classthread_1_1_unnamed_semaphore" kindref="compound">UnnamedSemaphore</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="45" column="16" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="friend" id="classthread_1_1_semaphore_object_1aebe70aacee812bed6d2510814cba9c8a" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class Semaphore</definition>
+        <argsstring></argsstring>
+        <name>Semaphore</name>
+        <param>
+          <type><ref refid="classthread_1_1_semaphore" kindref="compound">Semaphore</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="46" column="16" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classthread_1_1_semaphore_object_1abd72a9b2be0f0a6d057d048447876060" prot="private" static="no" mutable="no">
+        <type>sem_t *</type>
+        <definition>sem_t* thread::SemaphoreObject::m_handle</definition>
+        <argsstring></argsstring>
+        <name>m_handle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="47" column="9" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1a043f51a6f9539394a6dc89cf695e518b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::SemaphoreObject::SemaphoreObject</definition>
+        <argsstring>(const SemaphoreObject &amp;a)=delete</argsstring>
+        <name>SemaphoreObject</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="19" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1a549513eac2fe19e91d9c58aba0a17628" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;</type>
+        <definition>SemaphoreObject &amp; thread::SemaphoreObject::operator=</definition>
+        <argsstring>(const SemaphoreObject &amp;a)=delete</argsstring>
+        <name>operator=</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="20" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1a6b0eb84a1e32058800072bd1995f0562" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int thread::SemaphoreObject::get_value</definition>
+        <argsstring>() const</argsstring>
+        <name>get_value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="22" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1af1e6485ccbdf15dd3318648dd7935111" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;</type>
+        <definition>SemaphoreObject &amp; thread::SemaphoreObject::post</definition>
+        <argsstring>()</argsstring>
+        <name>post</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="24" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1ab29660addc1dd79af30a2aab903332d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;</type>
+        <definition>SemaphoreObject &amp; thread::SemaphoreObject::wait_timed</definition>
+        <argsstring>(const chrono::ClockTime &amp;clock_time)</argsstring>
+        <name>wait_timed</name>
+        <param>
+          <type>const <ref refid="classchrono_1_1_clock_time" kindref="compound">chrono::ClockTime</ref> &amp;</type>
+          <declname>clock_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="25" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1a81f9e5e81120b7232e792f51ee4f4d3c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;</type>
+        <definition>SemaphoreObject &amp; thread::SemaphoreObject::timedwait</definition>
+        <argsstring>(const chrono::ClockTime &amp;clock_time)</argsstring>
+        <name>timedwait</name>
+        <param>
+          <type>const <ref refid="classchrono_1_1_clock_time" kindref="compound">chrono::ClockTime</ref> &amp;</type>
+          <declname>clock_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="26" column="19" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="26" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1a3dbf9243429c5d940927fb6e4a455363" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;</type>
+        <definition>SemaphoreObject &amp; thread::SemaphoreObject::try_wait</definition>
+        <argsstring>()</argsstring>
+        <name>try_wait</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="30" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1a684b43099c95a5fc3f034bb15806a1fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;</type>
+        <definition>SemaphoreObject &amp; thread::SemaphoreObject::wait</definition>
+        <argsstring>()</argsstring>
+        <name>wait</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="31" column="19"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1a77eade447315e5ca1b9134c43c5bec4f" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::SemaphoreObject::SemaphoreObject</definition>
+        <argsstring>()=default</argsstring>
+        <name>SemaphoreObject</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="34" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1a071102ada7a6d6228e6b781ea427121e" prot="protected" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::SemaphoreObject::SemaphoreObject</definition>
+        <argsstring>(SemaphoreObject &amp;&amp;a) noexcept</argsstring>
+        <name>SemaphoreObject</name>
+        <param>
+          <type><ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;&amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="36" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="36" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_semaphore_object_1a9d1a0b7b0e47a3cf42b74c995b563bd6" prot="protected" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;</type>
+        <definition>SemaphoreObject &amp; thread::SemaphoreObject::operator=</definition>
+        <argsstring>(SemaphoreObject &amp;&amp;a) noexcept</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classthread_1_1_semaphore_object" kindref="compound">SemaphoreObject</ref> &amp;&amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="39" column="19" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="39" bodyend="42"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>thread::SemAccess&lt; Semaphore &gt;</label>
+        <link refid="classthread_1_1_sem_access"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>thread::SemAccess&lt; UnnamedSemaphore &gt;</label>
+        <link refid="classthread_1_1_sem_access"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="7">
+        <label>thread::SemAccess&lt; Derived &gt;</label>
+        <link refid="classthread_1_1_sem_access"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>thread::Semaphore</label>
+        <link refid="classthread_1_1_semaphore"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>thread::SemaphoreObject</label>
+        <link refid="classthread_1_1_semaphore_object"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>thread::UnnamedSemaphore</label>
+        <link refid="classthread_1_1_unnamed_semaphore"/>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::SemaphoreObject</label>
+        <link refid="classthread_1_1_semaphore_object"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="16" column="1" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="16" bodyend="48"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>context_count</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>free_context</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a6b0eb84a1e32058800072bd1995f0562" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>get_value</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>handle_system_call_result</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>is_success</name></member>
+      <member refid="classthread_1_1_semaphore_object_1abd72a9b2be0f0a6d057d048447876060" prot="private" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>m_handle</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a549513eac2fe19e91d9c58aba0a17628" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a9d1a0b7b0e47a3cf42b74c995b563bd6" prot="protected" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_semaphore_object_1af1e6485ccbdf15dd3318648dd7935111" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>post</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>return_value</name></member>
+      <member refid="classthread_1_1_semaphore_object_1aebe70aacee812bed6d2510814cba9c8a" prot="private" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>Semaphore</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a043f51a6f9539394a6dc89cf695e518b" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>SemaphoreObject</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a77eade447315e5ca1b9134c43c5bec4f" prot="protected" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>SemaphoreObject</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a071102ada7a6d6228e6b781ea427121e" prot="protected" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>SemaphoreObject</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a81f9e5e81120b7232e792f51ee4f4d3c" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>timedwait</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a3dbf9243429c5d940927fb6e4a455363" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>try_wait</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a22c6b2b46e816104eacba41925d6bd5e" prot="private" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>UnnamedSemaphore</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a684b43099c95a5fc3f034bb15806a1fa" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>wait</name></member>
+      <member refid="classthread_1_1_semaphore_object_1ab29660addc1dd79af30a2aab903332d2" prot="public" virt="non-virtual"><scope>thread::SemaphoreObject</scope><name>wait_timed</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

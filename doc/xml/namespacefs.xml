@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="namespacefs" kind="namespace" language="C++">
+    <compoundname>fs</compoundname>
+    <innerclass refid="classfs_1_1_access" prot="public">fs::Access</innerclass>
+    <innerclass refid="classfs_1_1_aio" prot="public">fs::Aio</innerclass>
+    <innerclass refid="classfs_1_1_data_file" prot="public">fs::DataFile</innerclass>
+    <innerclass refid="classfs_1_1_dir" prot="public">fs::Dir</innerclass>
+    <innerclass refid="classfs_1_1_dir_access" prot="public">fs::DirAccess</innerclass>
+    <innerclass refid="classfs_1_1_dir_object" prot="public">fs::DirObject</innerclass>
+    <innerclass refid="classfs_1_1_file" prot="public">fs::File</innerclass>
+    <innerclass refid="classfs_1_1_file_access" prot="public">fs::FileAccess</innerclass>
+    <innerclass refid="classfs_1_1_file_info" prot="public">fs::FileInfo</innerclass>
+    <innerclass refid="classfs_1_1_file_info_flags" prot="public">fs::FileInfoFlags</innerclass>
+    <innerclass refid="classfs_1_1_file_member_access" prot="public">fs::FileMemberAccess</innerclass>
+    <innerclass refid="classfs_1_1_file_object" prot="public">fs::FileObject</innerclass>
+    <innerclass refid="classfs_1_1_file_system" prot="public">fs::FileSystem</innerclass>
+    <innerclass refid="classfs_1_1_lambda_file" prot="public">fs::LambdaFile</innerclass>
+    <innerclass refid="classfs_1_1_null_file" prot="public">fs::NullFile</innerclass>
+    <innerclass refid="classfs_1_1_open_mode" prot="public">fs::OpenMode</innerclass>
+    <innerclass refid="classfs_1_1_path" prot="public">fs::Path</innerclass>
+    <innerclass refid="classfs_1_1_permissions" prot="public">fs::Permissions</innerclass>
+    <innerclass refid="classfs_1_1_view_file" prot="public">fs::ViewFile</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="namespacefs_1a268f5f3572ece215c66853b85c003c33" prot="public" static="no">
+        <type><ref refid="classvar_1_1_vector" kindref="compound">var::Vector</ref>&lt; <ref refid="classvar_1_1_path_string" kindref="compound">var::PathString</ref> &gt;</type>
+        <definition>using fs::PathList = typedef var::Vector&lt;var::PathString&gt;</definition>
+        <argsstring></argsstring>
+        <name>PathList</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/FileSystem.hpp" line="10" column="1" bodyfile="API/libraries/FsAPI/include/fs/FileSystem.hpp" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/FsAPI/include/fs.hpp" line="6" column="1"/>
+  </compounddef>
+</doxygen>

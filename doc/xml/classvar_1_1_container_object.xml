@@ -1,0 +1,265 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_container_object" kind="class" language="C++" prot="public">
+    <compoundname>var::ContainerObject</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <includes local="no">ContainerObject.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>class Derived</type>
+      </param>
+      <param>
+        <type>typename Container</type>
+      </param>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classvar_1_1_container_object_1ae2d590d238c0a52b9c8b62007d58024a" prot="protected" static="no" mutable="no">
+        <type>Container</type>
+        <definition>Container var::ContainerObject&lt; Derived, Container, T &gt;::m_container</definition>
+        <argsstring></argsstring>
+        <name>m_container</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="62" column="13" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvar_1_1_container_object_1aeafe619fca6f2ff62016d1b0e69c4c2d" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::const_iterator</type>
+        <definition>Container::const_iterator var::ContainerObject&lt; Derived, Container, T &gt;::begin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>begin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="18" column="38" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="18" bodyend="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1a0bdb397aa61a0973e93a20ed1518173c" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::iterator</type>
+        <definition>Container::iterator var::ContainerObject&lt; Derived, Container, T &gt;::begin</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>begin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="21" column="32" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="21" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1a74663bdc45dc954ab852d94d6bb62e4d" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::const_iterator</type>
+        <definition>Container::const_iterator var::ContainerObject&lt; Derived, Container, T &gt;::end</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="23" column="38" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="23" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1a3142fa7d8c24d8e5f08b677c18cc03fd" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::iterator</type>
+        <definition>Container::iterator var::ContainerObject&lt; Derived, Container, T &gt;::end</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="26" column="32" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="26" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1a303c50edb81622b4a6648c0339e78a31" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::const_iterator</type>
+        <definition>Container::const_iterator var::ContainerObject&lt; Derived, Container, T &gt;::cbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>cbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="28" column="38" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="28" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1ac5b6fd5cd8c54ead5d4f5069b1b8baa7" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::const_iterator</type>
+        <definition>Container::const_iterator var::ContainerObject&lt; Derived, Container, T &gt;::cend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>cend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="31" column="38" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="31" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1ac244b52d2a39aa033e1f598818eb31fd" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::const_reverse_iterator</type>
+        <definition>Container::const_reverse_iterator var::ContainerObject&lt; Derived, Container, T &gt;::rbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>rbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="35" column="46" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="35" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1a8edfc7b0bbfd50c337a307dec9fe6907" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::reverse_iterator</type>
+        <definition>Container::reverse_iterator var::ContainerObject&lt; Derived, Container, T &gt;::rbegin</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>rbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="38" column="40" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="38" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1a5ae25468abfe18169ce0677ec783626e" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::const_reverse_iterator</type>
+        <definition>Container::const_reverse_iterator var::ContainerObject&lt; Derived, Container, T &gt;::rend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>rend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="42" column="46" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="42" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1a8942f203e0e1376fe69ce7df4d9040c6" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::reverse_iterator</type>
+        <definition>Container::reverse_iterator var::ContainerObject&lt; Derived, Container, T &gt;::rend</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>rend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="45" column="40" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="45" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1a85d8917cb3c153243f2726043a24eb2a" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::const_reverse_iterator</type>
+        <definition>Container::const_reverse_iterator var::ContainerObject&lt; Derived, Container, T &gt;::crbegin</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>crbegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="49" column="46" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="49" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1ac2ffc25b7c5601d7a71d872c0fca7bf6" prot="public" static="no" const="yes" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type>Container::const_reverse_iterator</type>
+        <definition>Container::const_reverse_iterator var::ContainerObject&lt; Derived, Container, T &gt;::crend</definition>
+        <argsstring>() const noexcept</argsstring>
+        <name>crend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="53" column="46" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="53" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_container_object_1a5573c8204c444087cd0d49445b296e65" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>T</type>
+        <definition>T var::ContainerObject&lt; Derived, Container, T &gt;::accumulate</definition>
+        <argsstring>(T initial_value=T()) const</argsstring>
+        <name>accumulate</name>
+        <param>
+          <type>T</type>
+          <declname>initial_value</declname>
+          <defval>T()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="57" column="6" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="57" bodyend="59"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::ContainerObject&lt; Derived, Container, T &gt;</label>
+        <link refid="classvar_1_1_container_object"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>var::ContainerObject&lt; Derived, Container, T &gt;</label>
+        <link refid="classvar_1_1_container_object"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/VarAPI/include/var/ContainerObject.hpp" line="16" column="1" bodyfile="API/libraries/VarAPI/include/var/ContainerObject.hpp" bodystart="16" bodyend="63"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_container_object_1a5573c8204c444087cd0d49445b296e65" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>accumulate</name></member>
+      <member refid="classvar_1_1_container_object_1aeafe619fca6f2ff62016d1b0e69c4c2d" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>begin</name></member>
+      <member refid="classvar_1_1_container_object_1a0bdb397aa61a0973e93a20ed1518173c" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>begin</name></member>
+      <member refid="classvar_1_1_container_object_1a303c50edb81622b4a6648c0339e78a31" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>cbegin</name></member>
+      <member refid="classvar_1_1_container_object_1ac5b6fd5cd8c54ead5d4f5069b1b8baa7" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>cend</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>context_count</name></member>
+      <member refid="classvar_1_1_container_object_1a85d8917cb3c153243f2726043a24eb2a" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>crbegin</name></member>
+      <member refid="classvar_1_1_container_object_1ac2ffc25b7c5601d7a71d872c0fca7bf6" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>crend</name></member>
+      <member refid="classvar_1_1_container_object_1a74663bdc45dc954ab852d94d6bb62e4d" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>end</name></member>
+      <member refid="classvar_1_1_container_object_1a3142fa7d8c24d8e5f08b677c18cc03fd" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>end</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>free_context</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>handle_system_call_result</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>is_success</name></member>
+      <member refid="classvar_1_1_container_object_1ae2d590d238c0a52b9c8b62007d58024a" prot="protected" virt="non-virtual"><scope>var::ContainerObject</scope><name>m_container</name></member>
+      <member refid="classvar_1_1_container_object_1ac244b52d2a39aa033e1f598818eb31fd" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_container_object_1a8edfc7b0bbfd50c337a307dec9fe6907" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>rbegin</name></member>
+      <member refid="classvar_1_1_container_object_1a5ae25468abfe18169ce0677ec783626e" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>rend</name></member>
+      <member refid="classvar_1_1_container_object_1a8942f203e0e1376fe69ce7df4d9040c6" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>rend</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>var::ContainerObject</scope><name>return_value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

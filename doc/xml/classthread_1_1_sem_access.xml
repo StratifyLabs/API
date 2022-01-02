@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_sem_access" kind="class" language="C++" prot="public">
+    <compoundname>thread::SemAccess</compoundname>
+    <basecompoundref refid="classthread_1_1_semaphore_object" prot="public" virt="non-virtual">thread::SemaphoreObject</basecompoundref>
+    <includes local="no">Sem.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>class Derived</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classthread_1_1_sem_access_1acbf9373d93d13488acc295327dfb4936" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; thread::SemAccess&lt; Derived &gt;::post</definition>
+        <argsstring>()</argsstring>
+        <name>post</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="52" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="52" bodyend="52"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_sem_access_1a81f0852eb52d8bb9cfeff67c13f719f1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; thread::SemAccess&lt; Derived &gt;::wait_timed</definition>
+        <argsstring>(const chrono::ClockTime &amp;clock_time)</argsstring>
+        <name>wait_timed</name>
+        <param>
+          <type>const <ref refid="classchrono_1_1_clock_time" kindref="compound">chrono::ClockTime</ref> &amp;</type>
+          <declname>clock_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="54" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="54" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_sem_access_1a3aa50d18702a0781af7708f1a730f3fc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; thread::SemAccess&lt; Derived &gt;::timedwait</definition>
+        <argsstring>(const chrono::ClockTime &amp;clock_time)</argsstring>
+        <name>timedwait</name>
+        <param>
+          <type>const <ref refid="classchrono_1_1_clock_time" kindref="compound">chrono::ClockTime</ref> &amp;</type>
+          <declname>clock_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="58" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="58" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_sem_access_1adb629bc5484d73963c8cdde711eed1ea" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; thread::SemAccess&lt; Derived &gt;::try_wait</definition>
+        <argsstring>()</argsstring>
+        <name>try_wait</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="62" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="62" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_sem_access_1a55c4d1e07e1107daff01fc100bf8b266" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; thread::SemAccess&lt; Derived &gt;::wait</definition>
+        <argsstring>()</argsstring>
+        <name>wait</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="66" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="66" bodyend="66"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::SemAccess&lt; Derived &gt;</label>
+        <link refid="classthread_1_1_sem_access"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>thread::SemaphoreObject</label>
+        <link refid="classthread_1_1_semaphore_object"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::SemAccess&lt; Derived &gt;</label>
+        <link refid="classthread_1_1_sem_access"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>thread::SemaphoreObject</label>
+        <link refid="classthread_1_1_semaphore_object"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/ThreadAPI/include/thread/Sem.hpp" line="50" column="12" bodyfile="API/libraries/ThreadAPI/include/thread/Sem.hpp" bodystart="50" bodyend="67"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>context_count</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>free_context</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a6b0eb84a1e32058800072bd1995f0562" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>get_value</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>handle_system_call_result</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>is_success</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a549513eac2fe19e91d9c58aba0a17628" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a9d1a0b7b0e47a3cf42b74c995b563bd6" prot="protected" virt="non-virtual"><scope>thread::SemAccess</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_sem_access_1acbf9373d93d13488acc295327dfb4936" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>post</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>return_value</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a043f51a6f9539394a6dc89cf695e518b" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>SemaphoreObject</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a77eade447315e5ca1b9134c43c5bec4f" prot="protected" virt="non-virtual"><scope>thread::SemAccess</scope><name>SemaphoreObject</name></member>
+      <member refid="classthread_1_1_semaphore_object_1a071102ada7a6d6228e6b781ea427121e" prot="protected" virt="non-virtual"><scope>thread::SemAccess</scope><name>SemaphoreObject</name></member>
+      <member refid="classthread_1_1_sem_access_1a3aa50d18702a0781af7708f1a730f3fc" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>timedwait</name></member>
+      <member refid="classthread_1_1_sem_access_1adb629bc5484d73963c8cdde711eed1ea" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>try_wait</name></member>
+      <member refid="classthread_1_1_sem_access_1a55c4d1e07e1107daff01fc100bf8b266" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>wait</name></member>
+      <member refid="classthread_1_1_sem_access_1a81f0852eb52d8bb9cfeff67c13f719f1" prot="public" virt="non-virtual"><scope>thread::SemAccess</scope><name>wait_timed</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

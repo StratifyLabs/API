@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="dir_5b54a435b2fca7c8819691f98514c05a" kind="dir">
+    <compoundname>var</compoundname>
+    <innerfile refid="_array_8hpp">Array.hpp</innerfile>
+    <innerfile refid="_base64_8hpp">Base64.hpp</innerfile>
+    <innerfile refid="_container_object_8hpp">ContainerObject.hpp</innerfile>
+    <innerfile refid="_data_8hpp">Data.hpp</innerfile>
+    <innerfile refid="_deque_8hpp">Deque.hpp</innerfile>
+    <innerfile refid="_flags_8hpp">Flags.hpp</innerfile>
+    <innerfile refid="_list_8hpp">List.hpp</innerfile>
+    <innerfile refid="_matrix_8hpp">Matrix.hpp</innerfile>
+    <innerfile refid="_queue_8hpp">Queue.hpp</innerfile>
+    <innerfile refid="_ring_8hpp">Ring.hpp</innerfile>
+    <innerfile refid="_stack_8hpp">Stack.hpp</innerfile>
+    <innerfile refid="_stack_string_8hpp">StackString.hpp</innerfile>
+    <innerfile refid="_string_8hpp">String.hpp</innerfile>
+    <innerfile refid="_string_util_8hpp">StringUtil.hpp</innerfile>
+    <innerfile refid="_string_view_8hpp">StringView.hpp</innerfile>
+    <innerfile refid="_tokenizer_8hpp">Tokenizer.hpp</innerfile>
+    <innerfile refid="_vector_8hpp">Vector.hpp</innerfile>
+    <innerfile refid="_view_8hpp">View.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/"/>
+  </compounddef>
+</doxygen>

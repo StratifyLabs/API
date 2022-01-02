@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="_fs_a_p_i_2include_2fs_2macros_8hpp" kind="file" language="C++">
+    <compoundname>FsAPI/include/fs/macros.hpp</compoundname>
+    <includedby refid="_file_info_8hpp" local="yes">FileInfo.hpp</includedby>
+    <invincdepgraph>
+      <node id="5">
+        <label>fs.hpp</label>
+        <link refid="fs_8hpp"/>
+      </node>
+      <node id="7">
+        <label>Aio.hpp</label>
+        <link refid="_aio_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>DataFile.hpp</label>
+        <link refid="_data_file_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>Dir.hpp</label>
+        <link refid="_dir_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>File.hpp</label>
+        <link refid="_file_8hpp"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>FileInfo.hpp</label>
+        <link refid="_file_info_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>FileSystem.hpp</label>
+        <link refid="_file_system_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>LambdaFile.hpp</label>
+        <link refid="_lambda_file_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>ViewFile.hpp</label>
+        <link refid="_view_file_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>macros.hpp</label>
+        <link refid="_fs_a_p_i_2include_2fs_2macros_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>thread.hpp</label>
+        <link refid="thread_8hpp"/>
+      </node>
+      <node id="10">
+        <label>Mq.hpp</label>
+        <link refid="_mq_8hpp"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>Sem.hpp</label>
+        <link refid="_sem_8hpp"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="_fs_a_p_i_2include_2fs_2macros_8hpp_1aa51eeac3f9dbe5557634373418f54958" prot="public" static="no">
+        <name>MCU_INT_CAST</name>
+        <param><defname>var</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/macros.hpp" line="7" column="9" bodyfile="API/libraries/FsAPI/include/fs/macros.hpp" bodystart="7" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_fs_a_p_i_2include_2fs_2macros_8hpp_1ac5ac9f43e9b738312b6c52f643f10936" prot="public" static="no">
+        <name>FSAPI_LINK_DEFAULT_PAGE_SIZE</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/macros.hpp" line="8" column="9" bodyfile="API/libraries/FsAPI/include/fs/macros.hpp" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/FsAPI/include/fs/macros.hpp"/>
+  </compounddef>
+</doxygen>

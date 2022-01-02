@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classapi_1_1_private_execution_context" kind="class" language="C++" prot="public">
+    <compoundname>api::PrivateExecutionContext</compoundname>
+    <includes local="no">api.hpp</includes>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classapi_1_1_private_execution_context_1a3315573b644a9bc222a160963bdde2cf" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class ExecutionContext</definition>
+        <argsstring></argsstring>
+        <name>ExecutionContext</name>
+        <param>
+          <type><ref refid="classapi_1_1_execution_context" kindref="compound">ExecutionContext</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="153" column="16" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="153" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="friend" id="classapi_1_1_private_execution_context_1aece684bf8d8d23557e2da48457abbf93" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class ErrorGuard</definition>
+        <argsstring></argsstring>
+        <name>ErrorGuard</name>
+        <param>
+          <type><ref refid="classapi_1_1_error_guard" kindref="compound">ErrorGuard</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="171" column="16" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="171" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classapi_1_1_private_execution_context_1aa0e458ad4e27b8cb1e029b3cfadb921a" prot="private" static="no" mutable="no">
+        <type><ref refid="classapi_1_1_error" kindref="compound">Error</ref></type>
+        <definition>Error api::PrivateExecutionContext::m_error</definition>
+        <argsstring></argsstring>
+        <name>m_error</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="173" column="9" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="173" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classapi_1_1_private_execution_context_1ac901860594d09d6a02b04bd5cd0977fb" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; <ref refid="classapi_1_1_error" kindref="compound">Error</ref> &gt; *</type>
+        <definition>std::vector&lt;Error&gt;* api::PrivateExecutionContext::m_error_list</definition>
+        <argsstring></argsstring>
+        <name>m_error_list</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="174" column="15" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="174" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classapi_1_1_private_execution_context_1ae3b8276f62d5ee5bbfee85488401a8d2" prot="protected" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool api::PrivateExecutionContext::is_error</definition>
+        <argsstring>() const</argsstring>
+        <name>is_error</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="154" column="15" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="154" bodyend="154"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_private_execution_context_1a1fd0a868e3525553f263d4c7bd77e342" prot="protected" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool api::PrivateExecutionContext::is_success</definition>
+        <argsstring>() const</argsstring>
+        <name>is_success</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="155" column="15" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="155" bodyend="155"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_private_execution_context_1aac5f93f5788bcbf12f6058aefbaf309b" prot="protected" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int api::PrivateExecutionContext::value</definition>
+        <argsstring>() const</argsstring>
+        <name>value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="156" column="15" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="156" bodyend="156"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_private_execution_context_1ae602dc8d1128e7871cc5f33066d1b50f" prot="protected" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t api::PrivateExecutionContext::context_count</definition>
+        <argsstring>() const</argsstring>
+        <name>context_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="158" column="11" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="158" bodyend="163"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_private_execution_context_1a7c8ca383668a4956c0f1b07ababd73d2" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classapi_1_1_error" kindref="compound">Error</ref> &amp;</type>
+        <definition>Error &amp; api::PrivateExecutionContext::get_error</definition>
+        <argsstring>()</argsstring>
+        <name>get_error</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="165" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_private_execution_context_1afff1f7cb1ba25d4d04399a515a4febc9" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void api::PrivateExecutionContext::free_context</definition>
+        <argsstring>()</argsstring>
+        <name>free_context</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="167" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classapi_1_1_private_execution_context_1a95cdab4e4b55c1ca07ad6c23d47cdbc9" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void api::PrivateExecutionContext::update_error_context</definition>
+        <argsstring>(int result, int line, const char *message)</argsstring>
+        <name>update_error_context</name>
+        <param>
+          <type>int</type>
+          <declname>result</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>line</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="168" column="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classapi_1_1_private_execution_context_1a4d01fcd4c28745a12e4ee525a1f2ce5e" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>api::PrivateExecutionContext::PrivateExecutionContext</definition>
+        <argsstring>()</argsstring>
+        <name>PrivateExecutionContext</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/API/include/api/api.hpp" line="172" column="3" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="172" bodyend="172"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/API/include/api/api.hpp" line="151" column="1" bodyfile="API/libraries/API/include/api/api.hpp" bodystart="151" bodyend="175"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_private_execution_context_1ae602dc8d1128e7871cc5f33066d1b50f" prot="protected" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>context_count</name></member>
+      <member refid="classapi_1_1_private_execution_context_1aece684bf8d8d23557e2da48457abbf93" prot="private" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>ErrorGuard</name></member>
+      <member refid="classapi_1_1_private_execution_context_1a3315573b644a9bc222a160963bdde2cf" prot="protected" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>ExecutionContext</name></member>
+      <member refid="classapi_1_1_private_execution_context_1afff1f7cb1ba25d4d04399a515a4febc9" prot="protected" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>free_context</name></member>
+      <member refid="classapi_1_1_private_execution_context_1a7c8ca383668a4956c0f1b07ababd73d2" prot="protected" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>get_error</name></member>
+      <member refid="classapi_1_1_private_execution_context_1ae3b8276f62d5ee5bbfee85488401a8d2" prot="protected" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_private_execution_context_1a1fd0a868e3525553f263d4c7bd77e342" prot="protected" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>is_success</name></member>
+      <member refid="classapi_1_1_private_execution_context_1aa0e458ad4e27b8cb1e029b3cfadb921a" prot="private" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>m_error</name></member>
+      <member refid="classapi_1_1_private_execution_context_1ac901860594d09d6a02b04bd5cd0977fb" prot="private" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>m_error_list</name></member>
+      <member refid="classapi_1_1_private_execution_context_1a4d01fcd4c28745a12e4ee525a1f2ce5e" prot="private" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>PrivateExecutionContext</name></member>
+      <member refid="classapi_1_1_private_execution_context_1a95cdab4e4b55c1ca07ad6c23d47cdbc9" prot="protected" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>update_error_context</name></member>
+      <member refid="classapi_1_1_private_execution_context_1aac5f93f5788bcbf12f6058aefbaf309b" prot="protected" virt="non-virtual"><scope>api::PrivateExecutionContext</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

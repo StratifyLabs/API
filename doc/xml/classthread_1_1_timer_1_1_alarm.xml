@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_timer_1_1_alarm" kind="class" language="C++" prot="public">
+    <compoundname>thread::Timer::Alarm</compoundname>
+    <includes local="no">Timer.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="classthread_1_1_timer_1_1_alarm_1a857d0ee4060e25c72c8e63e58ad12a69" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Type</name>
+        <enumvalue id="classthread_1_1_timer_1_1_alarm_1a857d0ee4060e25c72c8e63e58ad12a69a783e8e29e6a8c3e22baa58a19420eb4f" prot="public">
+          <name>seconds</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_timer_1_1_alarm_1a857d0ee4060e25c72c8e63e58ad12a69aeb9ccebea2d1ee9d864838706509286f" prot="public">
+          <name>useconds</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Timer.hpp" line="51" column="5" bodyfile="API/libraries/ThreadAPI/include/thread/Timer.hpp" bodystart="51" bodyend="51"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classthread_1_1_timer_1_1_alarm_1a0cda8b984eab9f34238c79aa30f42a5e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Timer::Alarm::API_AC</definition>
+        <argsstring>(Alarm, chrono::ClockTime, value)</argsstring>
+        <name>API_AC</name>
+        <param>
+          <type><ref refid="classthread_1_1_timer_1_1_alarm" kindref="compound">Alarm</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classchrono_1_1_clock_time" kindref="compound">chrono::ClockTime</ref></type>
+        </param>
+        <param>
+          <type>value</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Timer.hpp" line="54" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_timer_1_1_alarm_1afff35c5c63c4a7bc124f3235f09932e8" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Timer::Alarm::API_AC</definition>
+        <argsstring>(Alarm, chrono::ClockTime, interval)</argsstring>
+        <name>API_AC</name>
+        <param>
+          <type><ref refid="classthread_1_1_timer_1_1_alarm" kindref="compound">Alarm</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classchrono_1_1_clock_time" kindref="compound">chrono::ClockTime</ref></type>
+        </param>
+        <param>
+          <type>interval</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Timer.hpp" line="55" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_timer_1_1_alarm_1a65720ddef6f113f48862afa47c29b422" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Timer::Alarm::API_AF</definition>
+        <argsstring>(Alarm, Type, type, Type::seconds)</argsstring>
+        <name>API_AF</name>
+        <param>
+          <type><ref refid="classthread_1_1_timer_1_1_alarm" kindref="compound">Alarm</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classthread_1_1_timer_1_1_alarm_1a857d0ee4060e25c72c8e63e58ad12a69" kindref="member">Type</ref></type>
+        </param>
+        <param>
+          <type>type</type>
+        </param>
+        <param>
+          <type><ref refid="classthread_1_1_timer_1_1_alarm_1a857d0ee4060e25c72c8e63e58ad12a69a783e8e29e6a8c3e22baa58a19420eb4f" kindref="member">Type::seconds</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Timer.hpp" line="56" column="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ThreadAPI/include/thread/Timer.hpp" line="49" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Timer.hpp" bodystart="49" bodyend="57"/>
+    <listofallmembers>
+      <member refid="classthread_1_1_timer_1_1_alarm_1a0cda8b984eab9f34238c79aa30f42a5e" prot="private" virt="non-virtual"><scope>thread::Timer::Alarm</scope><name>API_AC</name></member>
+      <member refid="classthread_1_1_timer_1_1_alarm_1afff35c5c63c4a7bc124f3235f09932e8" prot="private" virt="non-virtual"><scope>thread::Timer::Alarm</scope><name>API_AC</name></member>
+      <member refid="classthread_1_1_timer_1_1_alarm_1a65720ddef6f113f48862afa47c29b422" prot="private" virt="non-virtual"><scope>thread::Timer::Alarm</scope><name>API_AF</name></member>
+      <member refid="classthread_1_1_timer_1_1_alarm_1a857d0ee4060e25c72c8e63e58ad12a69" prot="public" virt="non-virtual"><scope>thread::Timer::Alarm</scope><name>Type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

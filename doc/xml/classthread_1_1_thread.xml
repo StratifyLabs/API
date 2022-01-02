@@ -1,0 +1,843 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_thread" kind="class" language="C++" prot="public">
+    <compoundname>thread::Thread</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <includes local="no">Thread.hpp</includes>
+    <innerclass refid="classthread_1_1_thread_1_1_attributes" prot="public">thread::Thread::Attributes</innerclass>
+    <innerclass refid="classthread_1_1_thread_1_1_construct" prot="public">thread::Thread::Construct</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="classthread_1_1_thread_1a664f458a081e0032836bf3de798753c4" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>DetachState</name>
+        <enumvalue id="classthread_1_1_thread_1a664f458a081e0032836bf3de798753c4ab9e5e065a77ab703e16e5dcd0f34f131" prot="public">
+          <name>joinable</name>
+          <initializer>= PTHREAD_CREATE_JOINABLE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_thread_1a664f458a081e0032836bf3de798753c4ab0398fd2e0c78072a48131f810266119" prot="public">
+          <name>detached</name>
+          <initializer>= PTHREAD_CREATE_DETACHED</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="16" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="16" bodyend="19"/>
+      </memberdef>
+      <memberdef kind="enum" id="classthread_1_1_thread_1a48e6e0cff03495a340a7033cf84e235a" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>IsInherit</name>
+        <enumvalue id="classthread_1_1_thread_1a48e6e0cff03495a340a7033cf84e235aa7fa3b767c460b54a2be4d49030b349c7" prot="public">
+          <name>no</name>
+          <initializer>= PTHREAD_EXPLICIT_SCHED</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_thread_1a48e6e0cff03495a340a7033cf84e235aaa6105c0a611b41b08f1209506350279e" prot="public">
+          <name>yes</name>
+          <initializer>= PTHREAD_INHERIT_SCHED</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="22" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="22" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="enum" id="classthread_1_1_thread_1a789bcec59e2258c5ebb2312c56b1fc99" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>ContentionScope</name>
+        <enumvalue id="classthread_1_1_thread_1a789bcec59e2258c5ebb2312c56b1fc99a54b53072540eeeb8f8e9343e71f28176" prot="public">
+          <name>system</name>
+          <initializer>= PTHREAD_SCOPE_SYSTEM</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_thread_1a789bcec59e2258c5ebb2312c56b1fc99a5075140835d0bc504791c76b04c33d2b" prot="public">
+          <name>process</name>
+          <initializer>= PTHREAD_SCOPE_PROCESS</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="26" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="26" bodyend="29"/>
+      </memberdef>
+      <memberdef kind="enum" id="classthread_1_1_thread_1a0240a74c1e10b41f5243c363a4b41b05" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>CancelType</name>
+        <enumvalue id="classthread_1_1_thread_1a0240a74c1e10b41f5243c363a4b41b05a43fff3df3fc0b3417c86dc3040fb2d86" prot="public">
+          <name>deferred</name>
+          <initializer>= PTHREAD_CANCEL_DEFERRED</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_thread_1a0240a74c1e10b41f5243c363a4b41b05a148b8d2facfd6d8883a4273f4553ebef" prot="public">
+          <name>asynchronous</name>
+          <initializer>= PTHREAD_CANCEL_ASYNCHRONOUS</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="111" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="111" bodyend="114"/>
+      </memberdef>
+      <memberdef kind="enum" id="classthread_1_1_thread_1a94e8590e6bdc64e5c870c44235f7cc10" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>CancelState</name>
+        <enumvalue id="classthread_1_1_thread_1a94e8590e6bdc64e5c870c44235f7cc10a208f156d4a803025c284bb595a7576b4" prot="public">
+          <name>enable</name>
+          <initializer>= PTHREAD_CANCEL_ENABLE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_thread_1a94e8590e6bdc64e5c870c44235f7cc10a0aaa87422396fdd678498793b6d5250e" prot="public">
+          <name>disable</name>
+          <initializer>= PTHREAD_CANCEL_DISABLE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="117" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="117" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classthread_1_1_thread_1a6a6f750ac99ad4b411e01eda0f4ea923" prot="public" static="no">
+        <type><ref refid="classthread_1_1_sched_1ae7889312e0d18a32eca5a899ac216ca7" kindref="member">Sched::Policy</ref></type>
+        <definition>using thread::Thread::Policy =  Sched::Policy</definition>
+        <argsstring></argsstring>
+        <name>Policy</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="20" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classthread_1_1_thread_1adb761ec74ed06beefa8e7a950c4bc1a3" prot="public" static="no">
+        <type><ref refid="classthread_1_1_thread_1a789bcec59e2258c5ebb2312c56b1fc99" kindref="member">ContentionScope</ref></type>
+        <definition>using thread::Thread::Scope =  ContentionScope</definition>
+        <argsstring></argsstring>
+        <name>Scope</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="30" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classthread_1_1_thread_1ac8a4c2a5c78aede89f189557064e84d2" prot="public" static="no">
+        <type>void *(*</type>
+        <definition>typedef void *(* thread::Thread::function_t) (void *)</definition>
+        <argsstring>)(void *)</argsstring>
+        <name>function_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="32" column="11" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-type">
+      <memberdef kind="enum" id="classthread_1_1_thread_1a2aeba9a4a99bd6f41395016e9366ec93" prot="private" static="no" strong="yes">
+        <type></type>
+        <name>State</name>
+        <enumvalue id="classthread_1_1_thread_1a2aeba9a4a99bd6f41395016e9366ec93a37a6259cc0c1dae299a7866489dff0bd" prot="private">
+          <name>null</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_thread_1a2aeba9a4a99bd6f41395016e9366ec93aaa8fb77e57d1ca18d593e909729871fe" prot="private">
+          <name>completed</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_thread_1a2aeba9a4a99bd6f41395016e9366ec93acb5e100e5a9a3e7f6d1fd97512215282" prot="private">
+          <name>error</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_thread_1a2aeba9a4a99bd6f41395016e9366ec93ab9e5e065a77ab703e16e5dcd0f34f131" prot="private">
+          <name>joinable</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_thread_1a2aeba9a4a99bd6f41395016e9366ec93ab0398fd2e0c78072a48131f810266119" prot="private">
+          <name>detached</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="148" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="148" bodyend="148"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classthread_1_1_thread_1aa303814d59d56b052acb2c45dff251f2" prot="private" static="no" mutable="no">
+        <type>const <ref refid="classapi_1_1_error" kindref="compound">api::Error</ref> *</type>
+        <definition>const api::Error* thread::Thread::m_execution_context_error</definition>
+        <argsstring></argsstring>
+        <name>m_execution_context_error</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="150" column="20" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="150" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classthread_1_1_thread_1a92577acaa3ee145869782977b988a036" prot="private" static="no" mutable="no">
+        <type>volatile State</type>
+        <definition>volatile State thread::Thread::m_state</definition>
+        <argsstring></argsstring>
+        <name>m_state</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="151" column="18" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classthread_1_1_thread_1a64d3c8b9eb03c9358f0439cece0c97aa" prot="private" static="no" mutable="no">
+        <type>pthread_t</type>
+        <definition>pthread_t thread::Thread::m_id</definition>
+        <argsstring></argsstring>
+        <name>m_id</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="153" column="13" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="153" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classthread_1_1_thread_1a973380673e9365da7695614db9e59526" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::Thread</definition>
+        <argsstring>()=default</argsstring>
+        <name>Thread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="75" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a62f532ad77f44e44b504dfeba1715ba5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::Thread</definition>
+        <argsstring>(const Thread &amp;thread)=delete</argsstring>
+        <name>Thread</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;</type>
+          <declname>thread</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="78" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1aaa21802781d0cb796103f88c3c004634" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;</type>
+        <definition>Thread &amp; thread::Thread::operator=</definition>
+        <argsstring>(const Thread &amp;thread)=delete</argsstring>
+        <name>operator=</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;</type>
+          <declname>thread</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="79" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a26666606f982ace8de54207ff4df8329" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;</type>
+        <definition>Thread &amp; thread::Thread::operator=</definition>
+        <argsstring>(Thread &amp;&amp;a) noexcept</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;&amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="82" column="10" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="82" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a43647ab424aaf3c876d831a2975e17b5" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::Thread</definition>
+        <argsstring>(Thread &amp;&amp;a) noexcept</argsstring>
+        <name>Thread</name>
+        <param>
+          <type><ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;&amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="86" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="86" bodyend="86"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1ad7dd677488816357477340d8106d5e95" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;&amp;</type>
+        <definition>Thread &amp;&amp; thread::Thread::move</definition>
+        <argsstring>()</argsstring>
+        <name>move</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="87" column="10" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="87" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1ae2bea61e2ec8ab870073d2577617e996" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::Thread</definition>
+        <argsstring>(const Construct &amp;options)</argsstring>
+        <name>Thread</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_thread_1_1_construct" kindref="compound">Construct</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="89" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a89d43614ef8e31332c523d9a33a86a7b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::Thread</definition>
+        <argsstring>(const Attributes &amp;attributes, const Construct &amp;options)</argsstring>
+        <name>Thread</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_thread_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+          <declname>attributes</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classthread_1_1_thread_1_1_construct" kindref="compound">Construct</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="90" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a5669926d42324693a9fd7ae4ba5ec7f2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::Thread</definition>
+        <argsstring>(const Attributes &amp;attributes, void *argument, function_t thread_function)</argsstring>
+        <name>Thread</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_thread_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+          <declname>attributes</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>argument</declname>
+        </param>
+        <param>
+          <type><ref refid="classthread_1_1_thread_1ac8a4c2a5c78aede89f189557064e84d2" kindref="member">function_t</ref></type>
+          <declname>thread_function</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="91" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="91" bodyend="93"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1acd429cd83e7e82b996fec26f33ef744b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::Thread</definition>
+        <argsstring>(void *argument, function_t thread_function)</argsstring>
+        <name>Thread</name>
+        <param>
+          <type>void *</type>
+          <declname>argument</declname>
+        </param>
+        <param>
+          <type><ref refid="classthread_1_1_thread_1ac8a4c2a5c78aede89f189557064e84d2" kindref="member">function_t</ref></type>
+          <declname>thread_function</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="94" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="94" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a5cc06f9b6a7fe494e0f64e4476117255" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Thread::~Thread</definition>
+        <argsstring>()</argsstring>
+        <name>~Thread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="97" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1aaae34693665ccae305f592f2bd930869" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>pthread_t</type>
+        <definition>pthread_t thread::Thread::id</definition>
+        <argsstring>() const</argsstring>
+        <name>id</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the ID of the thread. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="100" column="14" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="100" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a91a221404643bc304adeca4168446c17" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool thread::Thread::is_valid</definition>
+        <argsstring>() const</argsstring>
+        <name>is_valid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns true if the thread has a valid id.</para>
+<para>If create() has not been called, this will return false. If there was an error creating the thread, this will also return false; </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="109" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a8a7848bf52b16c65d163bd14e4553383" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;</type>
+        <definition>Thread &amp; thread::Thread::set_sched_parameters</definition>
+        <argsstring>(Sched::Policy policy, int priority)</argsstring>
+        <name>set_sched_parameters</name>
+        <param>
+          <type><ref refid="classthread_1_1_sched_1ae7889312e0d18a32eca5a899ac216ca7" kindref="member">Sched::Policy</ref></type>
+          <declname>policy</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>priority</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="122" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a86a4663c4ba87a3309090dceded2e22e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_sched_1ae7889312e0d18a32eca5a899ac216ca7" kindref="member">Sched::Policy</ref></type>
+        <definition>Sched::Policy thread::Thread::get_sched_policy</definition>
+        <argsstring>() const</argsstring>
+        <name>get_sched_policy</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="123" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a73f00ca278c5e05d956813e4cc3df329" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int thread::Thread::get_sched_priority</definition>
+        <argsstring>() const</argsstring>
+        <name>get_sched_priority</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="124" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1aa3012d4aae50eb90d127310ceff59f6e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;</type>
+        <definition>const Thread &amp; thread::Thread::cancel</definition>
+        <argsstring>() const</argsstring>
+        <name>cancel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="128" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a5bbda98e9b263130471e74d40a43dbd3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;</type>
+        <definition>Thread &amp; thread::Thread::cancel</definition>
+        <argsstring>()</argsstring>
+        <name>cancel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="129" column="10" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="129" bodyend="129"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1aae8ee3a459340b1f0b698d742f6e6a09" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool thread::Thread::is_running</definition>
+        <argsstring>() const</argsstring>
+        <name>is_running</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="131" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a7ca6868e3da9d236dd35b9c43ed0adbc" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const <ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;</type>
+        <definition>const Thread &amp; thread::Thread::kill</definition>
+        <argsstring>(int signal_number) const</argsstring>
+        <name>kill</name>
+        <param>
+          <type>int</type>
+          <declname>signal_number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="134" column="16" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="134" bodyend="138"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1afabd1017a544728b2731e9b61cf0ba35" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;</type>
+        <definition>Thread &amp; thread::Thread::join</definition>
+        <argsstring>(void **value=nullptr)</argsstring>
+        <name>join</name>
+        <param>
+          <type>void **</type>
+          <declname>value</declname>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="140" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a7745be18420305cf6fe414a382697e72" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool thread::Thread::is_joinable</definition>
+        <argsstring>() const</argsstring>
+        <name>is_joinable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="142" column="9" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="142" bodyend="142"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classthread_1_1_thread_1af77bd0ff8d9e5b8f185b89d786483b84" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_thread_1a0240a74c1e10b41f5243c363a4b41b05" kindref="member">CancelType</ref></type>
+        <definition>static CancelType thread::Thread::set_cancel_type</definition>
+        <argsstring>(CancelType cancel_type)</argsstring>
+        <name>set_cancel_type</name>
+        <param>
+          <type><ref refid="classthread_1_1_thread_1a0240a74c1e10b41f5243c363a4b41b05" kindref="member">CancelType</ref></type>
+          <declname>cancel_type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="116" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1abfea2c16bf60991a3fb290b37a5a1541" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_thread_1a94e8590e6bdc64e5c870c44235f7cc10" kindref="member">CancelState</ref></type>
+        <definition>static CancelState thread::Thread::set_cancel_state</definition>
+        <argsstring>(CancelState cancel_state)</argsstring>
+        <name>set_cancel_state</name>
+        <param>
+          <type><ref refid="classthread_1_1_thread_1a94e8590e6bdc64e5c870c44235f7cc10" kindref="member">CancelState</ref></type>
+          <declname>cancel_state</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="126" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1ad242d4fe7c2d6b19df2ae8ba858664a0" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>pthread_t</type>
+        <definition>static pthread_t thread::Thread::self</definition>
+        <argsstring>()</argsstring>
+        <name>self</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="132" column="21" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="132" bodyend="132"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classthread_1_1_thread_1aba2f257ef2be3fe93004bddd12174700" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void thread::Thread::swap</definition>
+        <argsstring>(Thread &amp;&amp;a)</argsstring>
+        <name>swap</name>
+        <param>
+          <type><ref refid="classthread_1_1_thread" kindref="compound">Thread</ref> &amp;&amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="161" column="8" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="161" bodyend="165"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a70fc8d92e7fba36a4539198aa732c5dc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void thread::Thread::construct</definition>
+        <argsstring>(const Attributes &amp;attributes, const Construct &amp;options)</argsstring>
+        <name>construct</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_thread_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+          <declname>attributes</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classthread_1_1_thread_1_1_construct" kindref="compound">Construct</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="167" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_thread_1a81a110d1ba226b30941435958ce97610" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int thread::Thread::get_sched_parameters</definition>
+        <argsstring>(int &amp;policy, int &amp;priority) const</argsstring>
+        <name>get_sched_parameters</name>
+        <param>
+          <type>int &amp;</type>
+          <declname>policy</declname>
+        </param>
+        <param>
+          <type>int &amp;</type>
+          <declname>priority</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="171" column="7"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-func">
+      <memberdef kind="function" id="classthread_1_1_thread_1a23afea3bddfe9323b579d8cc87ea1c62" prot="private" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>static void * thread::Thread::handle_thread</definition>
+        <argsstring>(void *args)</argsstring>
+        <name>handle_thread</name>
+        <param>
+          <type>void *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="169" column="15"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::Thread</label>
+        <link refid="classthread_1_1_thread"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::Thread</label>
+        <link refid="classthread_1_1_thread"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/ThreadAPI/include/thread/Thread.hpp" line="14" column="1" bodyfile="API/libraries/ThreadAPI/include/thread/Thread.hpp" bodystart="14" bodyend="172"/>
+    <listofallmembers>
+      <member refid="classthread_1_1_thread_1aa3012d4aae50eb90d127310ceff59f6e" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>cancel</name></member>
+      <member refid="classthread_1_1_thread_1a5bbda98e9b263130471e74d40a43dbd3" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>cancel</name></member>
+      <member refid="classthread_1_1_thread_1a94e8590e6bdc64e5c870c44235f7cc10" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>CancelState</name></member>
+      <member refid="classthread_1_1_thread_1a0240a74c1e10b41f5243c363a4b41b05" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>CancelType</name></member>
+      <member refid="classthread_1_1_thread_1a70fc8d92e7fba36a4539198aa732c5dc" prot="private" virt="non-virtual"><scope>thread::Thread</scope><name>construct</name></member>
+      <member refid="classthread_1_1_thread_1a789bcec59e2258c5ebb2312c56b1fc99" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>ContentionScope</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>context_count</name></member>
+      <member refid="classthread_1_1_thread_1a664f458a081e0032836bf3de798753c4" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>DetachState</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>free_context</name></member>
+      <member refid="classthread_1_1_thread_1ac8a4c2a5c78aede89f189557064e84d2" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>function_t</name></member>
+      <member refid="classthread_1_1_thread_1a81a110d1ba226b30941435958ce97610" prot="private" virt="non-virtual"><scope>thread::Thread</scope><name>get_sched_parameters</name></member>
+      <member refid="classthread_1_1_thread_1a86a4663c4ba87a3309090dceded2e22e" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>get_sched_policy</name></member>
+      <member refid="classthread_1_1_thread_1a73f00ca278c5e05d956813e4cc3df329" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>get_sched_priority</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>handle_system_call_result</name></member>
+      <member refid="classthread_1_1_thread_1a23afea3bddfe9323b579d8cc87ea1c62" prot="private" virt="non-virtual"><scope>thread::Thread</scope><name>handle_thread</name></member>
+      <member refid="classthread_1_1_thread_1aaae34693665ccae305f592f2bd930869" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>id</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>is_error</name></member>
+      <member refid="classthread_1_1_thread_1a7745be18420305cf6fe414a382697e72" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>is_joinable</name></member>
+      <member refid="classthread_1_1_thread_1aae8ee3a459340b1f0b698d742f6e6a09" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>is_running</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>is_success</name></member>
+      <member refid="classthread_1_1_thread_1a91a221404643bc304adeca4168446c17" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>is_valid</name></member>
+      <member refid="classthread_1_1_thread_1a48e6e0cff03495a340a7033cf84e235a" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>IsInherit</name></member>
+      <member refid="classthread_1_1_thread_1afabd1017a544728b2731e9b61cf0ba35" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>join</name></member>
+      <member refid="classthread_1_1_thread_1a7ca6868e3da9d236dd35b9c43ed0adbc" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>kill</name></member>
+      <member refid="classthread_1_1_thread_1aa303814d59d56b052acb2c45dff251f2" prot="private" virt="non-virtual"><scope>thread::Thread</scope><name>m_execution_context_error</name></member>
+      <member refid="classthread_1_1_thread_1a64d3c8b9eb03c9358f0439cece0c97aa" prot="private" virt="non-virtual"><scope>thread::Thread</scope><name>m_id</name></member>
+      <member refid="classthread_1_1_thread_1a92577acaa3ee145869782977b988a036" prot="private" virt="non-virtual"><scope>thread::Thread</scope><name>m_state</name></member>
+      <member refid="classthread_1_1_thread_1ad7dd677488816357477340d8106d5e95" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>move</name></member>
+      <member refid="classthread_1_1_thread_1aaa21802781d0cb796103f88c3c004634" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_thread_1a26666606f982ace8de54207ff4df8329" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_thread_1a6a6f750ac99ad4b411e01eda0f4ea923" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>Policy</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>return_value</name></member>
+      <member refid="classthread_1_1_thread_1adb761ec74ed06beefa8e7a950c4bc1a3" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>Scope</name></member>
+      <member refid="classthread_1_1_thread_1ad242d4fe7c2d6b19df2ae8ba858664a0" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>self</name></member>
+      <member refid="classthread_1_1_thread_1abfea2c16bf60991a3fb290b37a5a1541" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>set_cancel_state</name></member>
+      <member refid="classthread_1_1_thread_1af77bd0ff8d9e5b8f185b89d786483b84" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>set_cancel_type</name></member>
+      <member refid="classthread_1_1_thread_1a8a7848bf52b16c65d163bd14e4553383" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>set_sched_parameters</name></member>
+      <member refid="classthread_1_1_thread_1a2aeba9a4a99bd6f41395016e9366ec93" prot="private" virt="non-virtual"><scope>thread::Thread</scope><name>State</name></member>
+      <member refid="classthread_1_1_thread_1aba2f257ef2be3fe93004bddd12174700" prot="private" virt="non-virtual"><scope>thread::Thread</scope><name>swap</name></member>
+      <member refid="classthread_1_1_thread_1a973380673e9365da7695614db9e59526" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>Thread</name></member>
+      <member refid="classthread_1_1_thread_1a62f532ad77f44e44b504dfeba1715ba5" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>Thread</name></member>
+      <member refid="classthread_1_1_thread_1a43647ab424aaf3c876d831a2975e17b5" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>Thread</name></member>
+      <member refid="classthread_1_1_thread_1ae2bea61e2ec8ab870073d2577617e996" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>Thread</name></member>
+      <member refid="classthread_1_1_thread_1a89d43614ef8e31332c523d9a33a86a7b" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>Thread</name></member>
+      <member refid="classthread_1_1_thread_1a5669926d42324693a9fd7ae4ba5ec7f2" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>Thread</name></member>
+      <member refid="classthread_1_1_thread_1acd429cd83e7e82b996fec26f33ef744b" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>Thread</name></member>
+      <member refid="classthread_1_1_thread_1a5cc06f9b6a7fe494e0f64e4476117255" prot="public" virt="non-virtual"><scope>thread::Thread</scope><name>~Thread</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

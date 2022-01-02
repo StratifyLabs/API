@@ -1,0 +1,556 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classfs_1_1_file_access" kind="class" language="C++" prot="public">
+    <compoundname>fs::FileAccess</compoundname>
+    <basecompoundref refid="classfs_1_1_file_object" prot="public" virt="non-virtual">fs::FileObject</basecompoundref>
+    <includes local="no">File.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>class Derived</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classfs_1_1_file_access_1a0d8277ad45ad2466fa617041eef28af3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::read</definition>
+        <argsstring>(void *buf, size_t size) const</argsstring>
+        <name>read</name>
+        <param>
+          <type>void *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="230" column="17" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="230" bodyend="232"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a1bac8e8fbc2db6a0a297515c5dac9cee" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::read</definition>
+        <argsstring>(void *buf, size_t size)</argsstring>
+        <name>read</name>
+        <param>
+          <type>void *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="234" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="234" bodyend="236"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a4c8fd069ce022ee2c9ea87627455a90c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::read</definition>
+        <argsstring>(var::View view) const</argsstring>
+        <name>read</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>view</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="238" column="17" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="238" bodyend="240"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a24db80aa448d5024054f69de2a8575ab" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::read</definition>
+        <argsstring>(var::View view)</argsstring>
+        <name>read</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>view</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="242" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="242" bodyend="244"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1add4c17c096c6b42cf5a3a8e7ccf98892" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::write</definition>
+        <argsstring>(const void *buf, size_t size) const</argsstring>
+        <name>write</name>
+        <param>
+          <type>const void *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="246" column="17" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="246" bodyend="248"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a76d72d108f14a9045761520e2111779c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::write</definition>
+        <argsstring>(const void *buf, size_t size)</argsstring>
+        <name>write</name>
+        <param>
+          <type>const void *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="250" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="250" bodyend="252"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1aac7b500c9230fc0405c455a1e039609d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::write</definition>
+        <argsstring>(var::View view) const</argsstring>
+        <name>write</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>view</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="254" column="17" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="254" bodyend="256"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1aee4bb4e627d42743931b87b0de2f19f3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::write</definition>
+        <argsstring>(var::View view)</argsstring>
+        <name>write</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>view</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="258" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="258" bodyend="260"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a08175d6e4283fa4fbfeb2ded6f4bc365" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::sync</definition>
+        <argsstring>() const</argsstring>
+        <name>sync</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="262" column="17" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="262" bodyend="264"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1ad53c24025903e57f692ddcc7bdb3dd79" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::sync</definition>
+        <argsstring>()</argsstring>
+        <name>sync</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="266" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="266" bodyend="266"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a610cd5f38513a7340f01ab8425f5e358" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::write</definition>
+        <argsstring>(const FileObject &amp;source_file, const Write &amp;options=Write()) const</argsstring>
+        <name>write</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object" kindref="compound">FileObject</ref> &amp;</type>
+          <declname>source_file</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref> &amp;</type>
+          <declname>options</declname>
+          <defval><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref>()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="269" column="3" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="269" bodyend="272"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1aa139f5528704671abd2497581de49a9c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::write</definition>
+        <argsstring>(const FileObject &amp;source_file, const Write &amp;options=Write())</argsstring>
+        <name>write</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object" kindref="compound">FileObject</ref> &amp;</type>
+          <declname>source_file</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref> &amp;</type>
+          <declname>options</declname>
+          <defval><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref>()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="275" column="3" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="275" bodyend="277"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a138febb11720818550afca4c554e82f3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::write</definition>
+        <argsstring>(const FileObject &amp;source_file, const var::Transformer &amp;transformer, const Write &amp;options=Write()) const</argsstring>
+        <name>write</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object" kindref="compound">FileObject</ref> &amp;</type>
+          <declname>source_file</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classvar_1_1_transformer" kindref="compound">var::Transformer</ref> &amp;</type>
+          <declname>transformer</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref> &amp;</type>
+          <declname>options</declname>
+          <defval><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref>()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="279" column="17" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="279" bodyend="285"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1afdb69ceb7d43dadb55b1042fe64ab73d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::write</definition>
+        <argsstring>(const FileObject &amp;source_file, const var::Transformer &amp;transformer, const Write &amp;options=Write())</argsstring>
+        <name>write</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object" kindref="compound">FileObject</ref> &amp;</type>
+          <declname>source_file</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classvar_1_1_transformer" kindref="compound">var::Transformer</ref> &amp;</type>
+          <declname>transformer</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref> &amp;</type>
+          <declname>options</declname>
+          <defval><ref refid="classfs_1_1_file_object_1_1_write" kindref="compound">Write</ref>()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="287" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="287" bodyend="293"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1aebc3eb3be9d3229f69020dee6fd07a4b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::seek</definition>
+        <argsstring>(int location, Whence whence=Whence::set) const</argsstring>
+        <name>seek</name>
+        <param>
+          <type>int</type>
+          <declname>location</declname>
+        </param>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1a04217bfdda67e008ac4543e66c711b6b" kindref="member">Whence</ref></type>
+          <declname>whence</declname>
+          <defval><ref refid="classfs_1_1_file_object_1a04217bfdda67e008ac4543e66c711b6bacdaeeeba9b4a4c5ebf042c0215a7bb0e" kindref="member">Whence::set</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="295" column="17" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="295" bodyend="297"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a87d1ded5e914ba3e73f3df2974259f60" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::seek</definition>
+        <argsstring>(int location, Whence whence=Whence::set)</argsstring>
+        <name>seek</name>
+        <param>
+          <type>int</type>
+          <declname>location</declname>
+        </param>
+        <param>
+          <type><ref refid="classfs_1_1_file_object_1a04217bfdda67e008ac4543e66c711b6b" kindref="member">Whence</ref></type>
+          <declname>whence</declname>
+          <defval><ref refid="classfs_1_1_file_object_1a04217bfdda67e008ac4543e66c711b6bacdaeeeba9b4a4c5ebf042c0215a7bb0e" kindref="member">Whence::set</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="299" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="299" bodyend="301"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a94af4b4a41f705e1d0d3873f299aa4af" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::ioctl</definition>
+        <argsstring>(int request, void *arg) const</argsstring>
+        <name>ioctl</name>
+        <param>
+          <type>int</type>
+          <declname>request</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="303" column="17" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="303" bodyend="305"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a304ebf21ae0c63f529eff4a190512f2c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::ioctl</definition>
+        <argsstring>(int request, void *arg)</argsstring>
+        <name>ioctl</name>
+        <param>
+          <type>int</type>
+          <declname>request</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="307" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="307" bodyend="309"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a5a77d9b0bb05c41e10671f20b4a9529a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const Derived &amp;</type>
+        <definition>const Derived &amp; fs::FileAccess&lt; Derived &gt;::ioctl</definition>
+        <argsstring>(const Ioctl &amp;options) const</argsstring>
+        <name>ioctl</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object_1_1_ioctl" kindref="compound">Ioctl</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="311" column="17" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="311" bodyend="313"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1ac2c548eb665b9831793755cd35720499" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;</type>
+        <definition>Derived &amp; fs::FileAccess&lt; Derived &gt;::ioctl</definition>
+        <argsstring>(const Ioctl &amp;options)</argsstring>
+        <name>ioctl</name>
+        <param>
+          <type>const <ref refid="classfs_1_1_file_object_1_1_ioctl" kindref="compound">Ioctl</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="315" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="315" bodyend="317"/>
+      </memberdef>
+      <memberdef kind="function" id="classfs_1_1_file_access_1a0811c2b6a99e481ace8940e28d473b8e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Derived &amp;&amp;</type>
+        <definition>Derived &amp;&amp; fs::FileAccess&lt; Derived &gt;::move</definition>
+        <argsstring>()</argsstring>
+        <name>move</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="319" column="11" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="319" bodyend="319"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classfs_1_1_file_access_1aff7dfba1226d7dedf86506aaad53d0a8" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>fs::FileAccess&lt; Derived &gt;::FileAccess</definition>
+        <argsstring>()=default</argsstring>
+        <name>FileAccess</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/FsAPI/include/fs/File.hpp" line="319" column="11"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>fs::FileAccess&lt; Derived &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>fs::FileInfoFlags</label>
+        <link refid="classfs_1_1_file_info_flags"/>
+      </node>
+      <node id="2">
+        <label>fs::FileObject</label>
+        <link refid="classfs_1_1_file_object"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>fs::FileAccess&lt; Derived &gt;</label>
+        <link refid="classfs_1_1_file_access"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>fs::FileInfoFlags</label>
+        <link refid="classfs_1_1_file_info_flags"/>
+      </node>
+      <node id="2">
+        <label>fs::FileObject</label>
+        <link refid="classfs_1_1_file_object"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/FsAPI/include/fs/File.hpp" line="228" column="12" bodyfile="API/libraries/FsAPI/include/fs/File.hpp" bodystart="228" bodyend="325"/>
+    <listofallmembers>
+      <member refid="classfs_1_1_file_info_flags_1aa8c8d5b66e54b777f3d1ada3d0197930" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>AccessFlags</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>context_count</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>exit_fatal</name></member>
+      <member refid="classfs_1_1_file_object_1a88365d1c6fbf5bc4c792996f2e167723" prot="protected" virt="non-virtual"><scope>fs::FileAccess</scope><name>fake_ioctl</name></member>
+      <member refid="classfs_1_1_file_object_1ae74e67b7592bdfbd9a02e1943dd34628" prot="protected" virt="non-virtual"><scope>fs::FileAccess</scope><name>fake_seek</name></member>
+      <member refid="classfs_1_1_file_access_1aff7dfba1226d7dedf86506aaad53d0a8" prot="protected" virt="non-virtual"><scope>fs::FileAccess</scope><name>FileAccess</name></member>
+      <member refid="classfs_1_1_file_object_1a4f3943ab12b78a3d0462b0456fb4852d" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>FileObject</name></member>
+      <member refid="classfs_1_1_file_object_1a4e0b532fa654972f987b76553de2b3e8" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>FileObject</name></member>
+      <member refid="classfs_1_1_file_object_1abc9642a821aa2b9c63ac19e5ee427aeb" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>FileObject</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>free_context</name></member>
+      <member refid="classfs_1_1_file_object_1a047a56b83c755b87a40e527c65f6d505" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>get_line</name></member>
+      <member refid="classfs_1_1_file_object_1af985a8ed1bd87544758e1c35a2262709" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>gets</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>handle_system_call_result</name></member>
+      <member refid="classfs_1_1_file_object_1a60e8766bc95ea2f5672c47dab371b840" prot="protected" virt="virtual"><scope>fs::FileAccess</scope><name>interface_fsync</name></member>
+      <member refid="classfs_1_1_file_object_1a1512640946f22552dbfc0ff397628d48" prot="protected" virt="pure-virtual"><scope>fs::FileAccess</scope><name>interface_ioctl</name></member>
+      <member refid="classfs_1_1_file_object_1a5ce9ef2131a2e715ff0f5e39976f5cc5" prot="protected" virt="pure-virtual"><scope>fs::FileAccess</scope><name>interface_lseek</name></member>
+      <member refid="classfs_1_1_file_object_1a09a12609d3d16becde8ace611a91dfcf" prot="protected" virt="pure-virtual"><scope>fs::FileAccess</scope><name>interface_read</name></member>
+      <member refid="classfs_1_1_file_object_1abcde7c0571b2bf1dec9ea5f2480e6439" prot="protected" virt="pure-virtual"><scope>fs::FileAccess</scope><name>interface_write</name></member>
+      <member refid="classfs_1_1_file_access_1a94af4b4a41f705e1d0d3873f299aa4af" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_access_1a304ebf21ae0c63f529eff4a190512f2c" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_access_1a5a77d9b0bb05c41e10671f20b4a9529a" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_access_1ac2c548eb665b9831793755cd35720499" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_object_1aa53dc315b36882440db2ebe5bdbaa7ce" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::FileAccess</scope><name>ioctl</name></member>
+      <member refid="classfs_1_1_file_object_1adff5fda0af618c7ae7c3b19ab9c036b3" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::FileAccess</scope><name>ioctl</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>is_success</name></member>
+      <member refid="classfs_1_1_file_object_1a67dc7666b7ba8c8b325138bdf882e7c0" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>IsNull</name></member>
+      <member refid="classfs_1_1_file_object_1a91df41f3f4682d9cb09c8ffe7bf5b6fe" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>IsOverwrite</name></member>
+      <member refid="classfs_1_1_file_object_1a47bf1de51cfbcc8ec10f1a2b6c685e8b" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>location</name></member>
+      <member refid="classfs_1_1_file_object_1aac91a36c9a958167926e7f12cb7e5503" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>LocationScope</name></member>
+      <member refid="classfs_1_1_file_access_1a0811c2b6a99e481ace8940e28d473b8e" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>move</name></member>
+      <member refid="classfs_1_1_file_info_flags_1a79f31ab4b6deb27ede7b26193adb5c1d" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>OpenFlags</name></member>
+      <member refid="classfs_1_1_file_object_1a73e297c21ad061ba34f187375b53337f" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>operator=</name></member>
+      <member refid="classfs_1_1_file_object_1a1c6a4ef2b066354d938f316efe56d6e7" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>operator=</name></member>
+      <member refid="classfs_1_1_file_info_flags_1aab8959020c647fca0f3d80e0101b5abf" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>PermissionFlags</name></member>
+      <member refid="classfs_1_1_file_access_1a0d8277ad45ad2466fa617041eef28af3" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_access_1a1bac8e8fbc2db6a0a297515c5dac9cee" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_access_1a4c8fd069ce022ee2c9ea87627455a90c" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_access_1a24db80aa448d5024054f69de2a8575ab" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_object_1a0c266a254383d5148c4fcdbbc8c95aa0" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::FileAccess</scope><name>read</name></member>
+      <member refid="classfs_1_1_file_object_1aaefd003b44858eb6a7e097b636ac3ee6" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::FileAccess</scope><name>read</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>return_value</name></member>
+      <member refid="classfs_1_1_file_access_1aebc3eb3be9d3229f69020dee6fd07a4b" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>seek</name></member>
+      <member refid="classfs_1_1_file_access_1a87d1ded5e914ba3e73f3df2974259f60" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>seek</name></member>
+      <member refid="classfs_1_1_file_object_1a65a2979f65847e45e639b160d474457c" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>size</name></member>
+      <member refid="classfs_1_1_file_object_1a6ffa543b59a25f2d79825ee59b696b5a" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>size_signed</name></member>
+      <member refid="classfs_1_1_file_access_1a08175d6e4283fa4fbfeb2ded6f4bc365" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>sync</name></member>
+      <member refid="classfs_1_1_file_access_1ad53c24025903e57f692ddcc7bdb3dd79" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>sync</name></member>
+      <member refid="classfs_1_1_file_info_flags_1ad1f26cc0bce96368db7bd5c4d5b59704" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>TypeFlags</name></member>
+      <member refid="classfs_1_1_file_object_1ad1f7c261534e382960445c4123232b84" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>verify</name></member>
+      <member refid="classfs_1_1_file_object_1a04217bfdda67e008ac4543e66c711b6b" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>Whence</name></member>
+      <member refid="classfs_1_1_file_access_1add4c17c096c6b42cf5a3a8e7ccf98892" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1a76d72d108f14a9045761520e2111779c" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1aac7b500c9230fc0405c455a1e039609d" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1aee4bb4e627d42743931b87b0de2f19f3" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1a610cd5f38513a7340f01ab8425f5e358" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1aa139f5528704671abd2497581de49a9c" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1a138febb11720818550afca4c554e82f3" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_access_1afdb69ceb7d43dadb55b1042fe64ab73d" prot="public" virt="non-virtual"><scope>fs::FileAccess</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_object_1a900d46a46fa3a48d136acb055af4914a" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::FileAccess</scope><name>write</name></member>
+      <member refid="classfs_1_1_file_object_1a14b2b1b72b220f672d4757cc9df81f8a" prot="public" virt="non-virtual" ambiguityscope="fs::FileObject::"><scope>fs::FileAccess</scope><name>write</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

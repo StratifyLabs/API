@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="dir_63ab423959ae740e015b48fc088b603c" kind="dir">
+    <compoundname>include</compoundname>
+    <innerdir refid="dir_144783c849700e8d3e8a7d86f7303add">fs</innerdir>
+    <innerfile refid="fs_8hpp">fs.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/FsAPI/include/"/>
+  </compounddef>
+</doxygen>

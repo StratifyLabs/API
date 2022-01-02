@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classchrono_1_1_date_1_1_construct" kind="class" language="C++" prot="public">
+    <compoundname>chrono::Date::Construct</compoundname>
+    <includes local="no">DateTime.hpp</includes>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classchrono_1_1_date_1_1_construct_1a5977f31d7d8d2ac635d124e270764f45" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>chrono::Date::Construct::API_AB</definition>
+        <argsstring>(Construct, daylight_savings, false)</argsstring>
+        <name>API_AB</name>
+        <param>
+          <type><ref refid="classchrono_1_1_date_1_1_construct" kindref="compound">Construct</ref></type>
+        </param>
+        <param>
+          <type>daylight_savings</type>
+        </param>
+        <param>
+          <type>false</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/DateTime.hpp" line="77" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classchrono_1_1_date_1_1_construct_1a8ed99aa33bf37d1216acea0771f8d33e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>chrono::Date::Construct::API_AF</definition>
+        <argsstring>(Construct, int, time_zone, 0)</argsstring>
+        <name>API_AF</name>
+        <param>
+          <type><ref refid="classchrono_1_1_date_1_1_construct" kindref="compound">Construct</ref></type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <param>
+          <type>time_zone</type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/DateTime.hpp" line="78" column="5"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classchrono_1_1_date_1_1_construct_1afef37e03197ca1d81e0672c8b7858387" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>chrono::Date::Construct::Construct</definition>
+        <argsstring>()</argsstring>
+        <name>Construct</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ChronoAPI/include/chrono/DateTime.hpp" line="81" column="5" bodyfile="API/libraries/ChronoAPI/include/chrono/DateTime.hpp" bodystart="81" bodyend="81"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/ChronoAPI/include/chrono/DateTime.hpp" line="76" column="3" bodyfile="API/libraries/ChronoAPI/include/chrono/DateTime.hpp" bodystart="76" bodyend="82"/>
+    <listofallmembers>
+      <member refid="classchrono_1_1_date_1_1_construct_1a5977f31d7d8d2ac635d124e270764f45" prot="private" virt="non-virtual"><scope>chrono::Date::Construct</scope><name>API_AB</name></member>
+      <member refid="classchrono_1_1_date_1_1_construct_1a8ed99aa33bf37d1216acea0771f8d33e" prot="private" virt="non-virtual"><scope>chrono::Date::Construct</scope><name>API_AF</name></member>
+      <member refid="classchrono_1_1_date_1_1_construct_1afef37e03197ca1d81e0672c8b7858387" prot="public" virt="non-virtual"><scope>chrono::Date::Construct</scope><name>Construct</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,477 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_mq" kind="class" language="C++" prot="public">
+    <compoundname>thread::Mq</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <includes local="no">Mq.hpp</includes>
+    <innerclass refid="classthread_1_1_mq_1_1_attributes" prot="public">thread::Mq::Attributes</innerclass>
+    <innerclass refid="classthread_1_1_mq_1_1_file" prot="public">thread::Mq::File</innerclass>
+    <innerclass refid="classthread_1_1_mq_1_1_info" prot="public">thread::Mq::Info</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="classthread_1_1_mq_1a138ac27c1719d6302fc9027045f2a1e7" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>IsExclusive</name>
+        <enumvalue id="classthread_1_1_mq_1a138ac27c1719d6302fc9027045f2a1e7a7fa3b767c460b54a2be4d49030b349c7" prot="public">
+          <name>no</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_mq_1a138ac27c1719d6302fc9027045f2a1e7aa6105c0a611b41b08f1209506350279e" prot="public">
+          <name>yes</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="21" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="21" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classthread_1_1_mq_1acb06e4981b9671af613138d95ee31d99" prot="public" static="no">
+        <type><ref refid="classfs_1_1_open_mode" kindref="compound">fs::OpenMode</ref></type>
+        <definition>using thread::Mq::OpenMode =  fs::OpenMode</definition>
+        <argsstring></argsstring>
+        <name>OpenMode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="23" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classthread_1_1_mq_1ab648e24b14fbc338769271ba7ff77735" prot="private" static="no" mutable="no">
+        <type>friend</type>
+        <definition>friend thread::Mq::File</definition>
+        <argsstring></argsstring>
+        <name>File</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="129" column="10" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classthread_1_1_mq_1a264f96b901ecf72d91991a457f850a56" prot="private" static="no" mutable="no">
+        <type>mqd_t</type>
+        <definition>mqd_t thread::Mq::m_handle</definition>
+        <argsstring></argsstring>
+        <name>m_handle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="130" column="9" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classthread_1_1_mq_1ab29bcdd53d965ee49af785787e8f6ca7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mq::Mq</definition>
+        <argsstring>()=delete</argsstring>
+        <name>Mq</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="70" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a86146937ac710e2e6a5abd70d2401cda" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mq::Mq</definition>
+        <argsstring>(const Mq &amp;a)=delete</argsstring>
+        <name>Mq</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="71" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a3403f195347fe3f337e60fc7f6079d7a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;</type>
+        <definition>Mq &amp; thread::Mq::operator=</definition>
+        <argsstring>(const Mq &amp;a)=delete</argsstring>
+        <name>operator=</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="72" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1ad078a43564019fc2f2b1766af93defd2" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mq::Mq</definition>
+        <argsstring>(Mq &amp;&amp;a) noexcept</argsstring>
+        <name>Mq</name>
+        <param>
+          <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;&amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="74" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="74" bodyend="74"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1acd5af781086c2b647f7660dd5992e73d" prot="public" static="no" const="no" explicit="no" inline="yes" noexcept="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;</type>
+        <definition>Mq &amp; thread::Mq::operator=</definition>
+        <argsstring>(Mq &amp;&amp;a) noexcept</argsstring>
+        <name>operator=</name>
+        <param>
+          <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;&amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="75" column="6" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="75" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a5227ca15e919cb47413e2497f290f7c4" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mq::Mq</definition>
+        <argsstring>(var::StringView name, const fs::OpenMode &amp;open_mode=fs::OpenMode::read_write())</argsstring>
+        <name>Mq</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classfs_1_1_open_mode" kindref="compound">fs::OpenMode</ref> &amp;</type>
+          <declname>open_mode</declname>
+          <defval><ref refid="classfs_1_1_open_mode_1a200f68e6902aa665179255291a303111" kindref="member">fs::OpenMode::read_write</ref>()</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="80" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a0f2160b8f8be756f9218d2d2f8076f7a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mq::Mq</definition>
+        <argsstring>(const Attributes &amp;attributes, IsExclusive is_exclusive, var::StringView name, const OpenMode &amp;open_mode=OpenMode::read_write(), fs::Permissions perms=fs::Permissions(0666))</argsstring>
+        <name>Mq</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_mq_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+          <declname>attributes</declname>
+        </param>
+        <param>
+          <type><ref refid="classthread_1_1_mq_1a138ac27c1719d6302fc9027045f2a1e7" kindref="member">IsExclusive</ref></type>
+          <declname>is_exclusive</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classthread_1_1_mq_1acb06e4981b9671af613138d95ee31d99" kindref="member">OpenMode</ref> &amp;</type>
+          <declname>open_mode</declname>
+          <defval><ref refid="classfs_1_1_open_mode_1a200f68e6902aa665179255291a303111" kindref="member">OpenMode::read_write</ref>()</defval>
+        </param>
+        <param>
+          <type><ref refid="classfs_1_1_permissions" kindref="compound">fs::Permissions</ref></type>
+          <declname>perms</declname>
+          <defval><ref refid="classfs_1_1_permissions" kindref="compound">fs::Permissions</ref>(0666)</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="84" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a9bb4b2ad3bb14b4897459081193aaf7f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mq::~Mq</definition>
+        <argsstring>()</argsstring>
+        <name>~Mq</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="89" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1aeb4c47aec9dbc467c8a417bda6ebc6cb" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool thread::Mq::is_valid</definition>
+        <argsstring>() const</argsstring>
+        <name>is_valid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="91" column="9" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="91" bodyend="91"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1ae45c8eb90a1edea50973b360f1274d32" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq_1_1_info" kindref="compound">Info</ref></type>
+        <definition>Info thread::Mq::get_info</definition>
+        <argsstring>() const</argsstring>
+        <name>get_info</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="93" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a0ccebdd481b7755d221bd0437f76d61e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;</type>
+        <definition>Mq &amp; thread::Mq::set_flags</definition>
+        <argsstring>(OpenMode open_mode)</argsstring>
+        <name>set_flags</name>
+        <param>
+          <type><ref refid="classthread_1_1_mq_1acb06e4981b9671af613138d95ee31d99" kindref="member">OpenMode</ref></type>
+          <declname>open_mode</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="94" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a582e6ea306ee7ee1aff1072d11a54a69" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;</type>
+        <definition>Mq &amp; thread::Mq::receive</definition>
+        <argsstring>(var::View message)</argsstring>
+        <name>receive</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="96" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a93f6b00b014c6366e2e70accc6e4ebb1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;</type>
+        <definition>Mq &amp; thread::Mq::send</definition>
+        <argsstring>(var::View message)</argsstring>
+        <name>send</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="97" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a889122e45a35d43e978315372a51df2e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;</type>
+        <definition>Mq &amp; thread::Mq::receive_timed</definition>
+        <argsstring>(var::View message, const chrono::ClockTime &amp;relative_timeout)</argsstring>
+        <name>receive_timed</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>message</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classchrono_1_1_clock_time" kindref="compound">chrono::ClockTime</ref> &amp;</type>
+          <declname>relative_timeout</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="99" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a66e09b4f30b09c99404f23b61c8c7a1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref> &amp;</type>
+        <definition>Mq &amp; thread::Mq::send_timed</definition>
+        <argsstring>(var::View message, const chrono::ClockTime &amp;relative_timeout)</argsstring>
+        <name>send_timed</name>
+        <param>
+          <type><ref refid="classvar_1_1_view" kindref="compound">var::View</ref></type>
+          <declname>message</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classchrono_1_1_clock_time" kindref="compound">chrono::ClockTime</ref> &amp;</type>
+          <declname>relative_timeout</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="101" column="6"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classthread_1_1_mq_1afc5a0a8cb2a7bca304aa3d6840a9b615" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void thread::Mq::unlink</definition>
+        <argsstring>(const char *name)</argsstring>
+        <name>unlink</name>
+        <param>
+          <type>const char *</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="103" column="15"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classthread_1_1_mq_1a85b7ff533725d8014c6171f7d4696009" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>thread::Mq::API_AF</definition>
+        <argsstring>(Mq, unsigned, message_priority, 0)</argsstring>
+        <name>API_AF</name>
+        <param>
+          <type><ref refid="classthread_1_1_mq" kindref="compound">Mq</ref></type>
+        </param>
+        <param>
+          <type>unsigned</type>
+        </param>
+        <param>
+          <type>message_priority</type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="131" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_mq_1a575954548d8897cce67e65d065704b0d" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void thread::Mq::set_attributes</definition>
+        <argsstring>(const Attributes &amp;attributes) const</argsstring>
+        <name>set_attributes</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_mq_1_1_attributes" kindref="compound">Attributes</ref> &amp;</type>
+          <declname>attributes</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="133" column="8"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::Mq</label>
+        <link refid="classthread_1_1_mq"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::Mq</label>
+        <link refid="classthread_1_1_mq"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/ThreadAPI/include/thread/Mq.hpp" line="19" column="1" bodyfile="API/libraries/ThreadAPI/include/thread/Mq.hpp" bodystart="19" bodyend="134"/>
+    <listofallmembers>
+      <member refid="classthread_1_1_mq_1a85b7ff533725d8014c6171f7d4696009" prot="private" virt="non-virtual"><scope>thread::Mq</scope><name>API_AF</name></member>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>context_count</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>exit_fatal</name></member>
+      <member refid="classthread_1_1_mq_1ab648e24b14fbc338769271ba7ff77735" prot="private" virt="non-virtual"><scope>thread::Mq</scope><name>File</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>free_context</name></member>
+      <member refid="classthread_1_1_mq_1ae45c8eb90a1edea50973b360f1274d32" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>get_info</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>handle_system_call_result</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>is_success</name></member>
+      <member refid="classthread_1_1_mq_1aeb4c47aec9dbc467c8a417bda6ebc6cb" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>is_valid</name></member>
+      <member refid="classthread_1_1_mq_1a138ac27c1719d6302fc9027045f2a1e7" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>IsExclusive</name></member>
+      <member refid="classthread_1_1_mq_1a264f96b901ecf72d91991a457f850a56" prot="private" virt="non-virtual"><scope>thread::Mq</scope><name>m_handle</name></member>
+      <member refid="classthread_1_1_mq_1ab29bcdd53d965ee49af785787e8f6ca7" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>Mq</name></member>
+      <member refid="classthread_1_1_mq_1a86146937ac710e2e6a5abd70d2401cda" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>Mq</name></member>
+      <member refid="classthread_1_1_mq_1ad078a43564019fc2f2b1766af93defd2" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>Mq</name></member>
+      <member refid="classthread_1_1_mq_1a5227ca15e919cb47413e2497f290f7c4" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>Mq</name></member>
+      <member refid="classthread_1_1_mq_1a0f2160b8f8be756f9218d2d2f8076f7a" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>Mq</name></member>
+      <member refid="classthread_1_1_mq_1acb06e4981b9671af613138d95ee31d99" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>OpenMode</name></member>
+      <member refid="classthread_1_1_mq_1a3403f195347fe3f337e60fc7f6079d7a" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_mq_1acd5af781086c2b647f7660dd5992e73d" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>operator=</name></member>
+      <member refid="classthread_1_1_mq_1a582e6ea306ee7ee1aff1072d11a54a69" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>receive</name></member>
+      <member refid="classthread_1_1_mq_1a889122e45a35d43e978315372a51df2e" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>receive_timed</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>return_value</name></member>
+      <member refid="classthread_1_1_mq_1a93f6b00b014c6366e2e70accc6e4ebb1" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>send</name></member>
+      <member refid="classthread_1_1_mq_1a66e09b4f30b09c99404f23b61c8c7a1c" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>send_timed</name></member>
+      <member refid="classthread_1_1_mq_1a575954548d8897cce67e65d065704b0d" prot="private" virt="non-virtual"><scope>thread::Mq</scope><name>set_attributes</name></member>
+      <member refid="classthread_1_1_mq_1a0ccebdd481b7755d221bd0437f76d61e" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>set_flags</name></member>
+      <member refid="classthread_1_1_mq_1afc5a0a8cb2a7bca304aa3d6840a9b615" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>unlink</name></member>
+      <member refid="classthread_1_1_mq_1a9bb4b2ad3bb14b4897459081193aaf7f" prot="public" virt="non-virtual"><scope>thread::Mq</scope><name>~Mq</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

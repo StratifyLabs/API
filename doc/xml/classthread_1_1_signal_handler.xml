@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_signal_handler" kind="class" language="C++" prot="public">
+    <compoundname>thread::SignalHandler</compoundname>
+    <basecompoundref refid="classthread_1_1_signal_flags" prot="public" virt="non-virtual">thread::SignalFlags</basecompoundref>
+    <includes local="no">Signal.hpp</includes>
+    <innerclass refid="classthread_1_1_signal_handler_1_1_construct" prot="public">thread::SignalHandler::Construct</innerclass>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classthread_1_1_signal_handler_1a13665e29b53d8ef1541ff9ce0feda985" prot="private" static="no" mutable="no">
+        <type>struct <ref refid="classthread_1_1_signal_handler_1a3f01b0753f2bdd2f8bcb2a918feb6f4a" kindref="member">sigaction</ref></type>
+        <definition>struct sigaction thread::SignalHandler::m_sig_action</definition>
+        <argsstring></argsstring>
+        <name>m_sig_action</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="144" column="18" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classthread_1_1_signal_handler_1a2e489c5566d5bf70cbe006200dafabcf" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::SignalHandler::SignalHandler</definition>
+        <argsstring>(const Construct &amp;options)</argsstring>
+        <name>SignalHandler</name>
+        <param>
+          <type>const <ref refid="classthread_1_1_signal_handler_1_1_construct" kindref="compound">Construct</ref> &amp;</type>
+          <declname>options</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="100" column="12" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="100" bodyend="114"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_signal_handler_1af94f95bfc7335a16934c6d8c6e2a9008" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::SignalHandler::SignalHandler</definition>
+        <argsstring>(signal_function_callback_t function)</argsstring>
+        <name>SignalHandler</name>
+        <param>
+          <type>signal_function_callback_t</type>
+          <declname>function</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="116" column="12" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="116" bodyend="122"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_signal_handler_1ac5b3f2644de10563a0c1bdaa181ef80f" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>thread::SignalHandler::SignalHandler</definition>
+        <argsstring>(signal_action_callback_t action)</argsstring>
+        <name>SignalHandler</name>
+        <param>
+          <type>signal_action_callback_t</type>
+          <declname>action</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="124" column="12" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="124" bodyend="127"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_signal_handler_1a3f01b0753f2bdd2f8bcb2a918feb6f4a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const struct sigaction *</type>
+        <definition>const struct sigaction * thread::SignalHandler::sigaction</definition>
+        <argsstring>() const</argsstring>
+        <name>sigaction</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="129" column="25" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="129" bodyend="131"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classthread_1_1_signal_handler_1ae0cc275cf1304262a011c8ce7088d436" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_signal_handler" kindref="compound">SignalHandler</ref></type>
+        <definition>static SignalHandler thread::SignalHandler::default_</definition>
+        <argsstring>()</argsstring>
+        <name>default_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="133" column="24" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="133" bodyend="136"/>
+      </memberdef>
+      <memberdef kind="function" id="classthread_1_1_signal_handler_1a0a67ed1ceb31b410ca0c45b0892c4189" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classthread_1_1_signal_handler" kindref="compound">SignalHandler</ref></type>
+        <definition>static SignalHandler thread::SignalHandler::ignore</definition>
+        <argsstring>()</argsstring>
+        <name>ignore</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="138" column="24" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="138" bodyend="141"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="2">
+        <label>thread::SignalFlags</label>
+        <link refid="classthread_1_1_signal_flags"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>thread::SignalHandler</label>
+        <link refid="classthread_1_1_signal_handler"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="2">
+        <label>thread::SignalFlags</label>
+        <link refid="classthread_1_1_signal_flags"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>thread::SignalHandler</label>
+        <link refid="classthread_1_1_signal_handler"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="91" column="1" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="91" bodyend="145"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>context_count</name></member>
+      <member refid="classthread_1_1_signal_handler_1ae0cc275cf1304262a011c8ce7088d436" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>default_</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>free_context</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>handle_system_call_result</name></member>
+      <member refid="classthread_1_1_signal_handler_1a0a67ed1ceb31b410ca0c45b0892c4189" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>ignore</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>is_success</name></member>
+      <member refid="classthread_1_1_signal_handler_1a13665e29b53d8ef1541ff9ce0feda985" prot="private" virt="non-virtual"><scope>thread::SignalHandler</scope><name>m_sig_action</name></member>
+      <member refid="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>Number</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>return_value</name></member>
+      <member refid="classthread_1_1_signal_handler_1a3f01b0753f2bdd2f8bcb2a918feb6f4a" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>sigaction</name></member>
+      <member refid="classthread_1_1_signal_handler_1a2e489c5566d5bf70cbe006200dafabcf" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>SignalHandler</name></member>
+      <member refid="classthread_1_1_signal_handler_1af94f95bfc7335a16934c6d8c6e2a9008" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>SignalHandler</name></member>
+      <member refid="classthread_1_1_signal_handler_1ac5b3f2644de10563a0c1bdaa181ef80f" prot="public" virt="non-virtual"><scope>thread::SignalHandler</scope><name>SignalHandler</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classsys_1_1_version" kind="class" language="C++" prot="public">
+    <compoundname>sys::Version</compoundname>
+    <includes local="no">Version.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classsys_1_1_version_1a3a13d70fd72c7b422796f1cda1a11c9e" prot="private" static="no" mutable="no">
+        <type><ref refid="classvar_1_1_key_string" kindref="compound">var::KeyString</ref></type>
+        <definition>var::KeyString sys::Version::m_version</definition>
+        <argsstring></argsstring>
+        <name>m_version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="33" column="18" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classsys_1_1_version_1a06e5d2de4ae40c204c235b5d1d4d83fd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>sys::Version::Version</definition>
+        <argsstring>()=default</argsstring>
+        <name>Version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="11" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a9930623d43c4787be78b545f7d35f475" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>sys::Version::Version</definition>
+        <argsstring>(const var::StringView value)</argsstring>
+        <name>Version</name>
+        <param>
+          <type>const <ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="12" column="12" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="12" bodyend="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a5d4ef0b3120378b29484f2c7c9c1d924" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 sys::Version::to_bcd</definition>
+        <argsstring>() const</argsstring>
+        <name>to_bcd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="14" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a426fe19eab93516f5edfb4fc00ca9eaa" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 sys::Version::to_bcd16</definition>
+        <argsstring>() const</argsstring>
+        <name>to_bcd16</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="15" column="8" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="15" bodyend="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a9cb612bbb579972ed11ab23c9d9061c3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool sys::Version::operator==</definition>
+        <argsstring>(const Version &amp;a) const</argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="classsys_1_1_version" kindref="compound">Version</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="20" column="8" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="20" bodyend="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1adb4cb69f6daaa2a282d28319398b9f00" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool sys::Version::operator&gt;</definition>
+        <argsstring>(const Version &amp;a) const</argsstring>
+        <name>operator&gt;</name>
+        <param>
+          <type>const <ref refid="classsys_1_1_version" kindref="compound">Version</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="21" column="8" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="21" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a483b352a0702c46a10a5147b6c981bbb" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool sys::Version::operator&lt;</definition>
+        <argsstring>(const Version &amp;a) const</argsstring>
+        <name>operator&lt;</name>
+        <param>
+          <type>const <ref refid="classsys_1_1_version" kindref="compound">Version</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="22" column="3" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="22" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a722f284951fce718a985a278a77af71d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool sys::Version::operator&lt;=</definition>
+        <argsstring>(const Version &amp;a) const</argsstring>
+        <name>operator&lt;=</name>
+        <param>
+          <type>const <ref refid="classsys_1_1_version" kindref="compound">Version</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="23" column="3" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="23" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a9f1d5e8029806f1b2bdedcce81838735" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool sys::Version::operator&gt;=</definition>
+        <argsstring>(const Version &amp;a) const</argsstring>
+        <name>operator&gt;=</name>
+        <param>
+          <type>const <ref refid="classsys_1_1_version" kindref="compound">Version</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="24" column="8" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="24" bodyend="24"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a83036339ca4a129c6e78cda6e6b13a59" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+        <definition>var::StringView sys::Version::string_view</definition>
+        <argsstring>() const</argsstring>
+        <name>string_view</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="26" column="20" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="26" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a9d81ab075f912f36f5396347d0083e8d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * sys::Version::cstring</definition>
+        <argsstring>() const</argsstring>
+        <name>cstring</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="29" column="15" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="29" bodyend="29"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classsys_1_1_version_1aef28f304bbcfc9937839056ac84b3211" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classsys_1_1_version" kindref="compound">Version</ref></type>
+        <definition>static Version sys::Version::from_triple</definition>
+        <argsstring>(u16 major, u8 minor, u8 patch)</argsstring>
+        <name>from_triple</name>
+        <param>
+          <type>u16</type>
+          <declname>major</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>minor</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>patch</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="17" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1afd1baf5e33a5cfaab6eb96ea39b43a5e" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classsys_1_1_version" kindref="compound">Version</ref></type>
+        <definition>static Version sys::Version::from_u16</definition>
+        <argsstring>(u16 major_minor)</argsstring>
+        <name>from_u16</name>
+        <param>
+          <type>u16</type>
+          <declname>major_minor</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="18" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classsys_1_1_version_1a1968731841cf6414abefc59cb25e9f42" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int sys::Version::compare</definition>
+        <argsstring>(const Version &amp;a, const Version &amp;b)</argsstring>
+        <name>compare</name>
+        <param>
+          <type>const <ref refid="classsys_1_1_version" kindref="compound">Version</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classsys_1_1_version" kindref="compound">Version</ref> &amp;</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="30" column="15"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/SysAPI/include/sys/Version.hpp" line="9" column="1" bodyfile="API/libraries/SysAPI/include/sys/Version.hpp" bodystart="9" bodyend="34"/>
+    <listofallmembers>
+      <member refid="classsys_1_1_version_1a1968731841cf6414abefc59cb25e9f42" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>compare</name></member>
+      <member refid="classsys_1_1_version_1a9d81ab075f912f36f5396347d0083e8d" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>cstring</name></member>
+      <member refid="classsys_1_1_version_1aef28f304bbcfc9937839056ac84b3211" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>from_triple</name></member>
+      <member refid="classsys_1_1_version_1afd1baf5e33a5cfaab6eb96ea39b43a5e" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>from_u16</name></member>
+      <member refid="classsys_1_1_version_1a3a13d70fd72c7b422796f1cda1a11c9e" prot="private" virt="non-virtual"><scope>sys::Version</scope><name>m_version</name></member>
+      <member refid="classsys_1_1_version_1a483b352a0702c46a10a5147b6c981bbb" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>operator&lt;</name></member>
+      <member refid="classsys_1_1_version_1a722f284951fce718a985a278a77af71d" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>operator&lt;=</name></member>
+      <member refid="classsys_1_1_version_1a9cb612bbb579972ed11ab23c9d9061c3" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>operator==</name></member>
+      <member refid="classsys_1_1_version_1adb4cb69f6daaa2a282d28319398b9f00" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>operator&gt;</name></member>
+      <member refid="classsys_1_1_version_1a9f1d5e8029806f1b2bdedcce81838735" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>operator&gt;=</name></member>
+      <member refid="classsys_1_1_version_1a83036339ca4a129c6e78cda6e6b13a59" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>string_view</name></member>
+      <member refid="classsys_1_1_version_1a5d4ef0b3120378b29484f2c7c9c1d924" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>to_bcd</name></member>
+      <member refid="classsys_1_1_version_1a426fe19eab93516f5edfb4fc00ca9eaa" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>to_bcd16</name></member>
+      <member refid="classsys_1_1_version_1a06e5d2de4ae40c204c235b5d1d4d83fd" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>Version</name></member>
+      <member refid="classsys_1_1_version_1a9930623d43c4787be78b545f7d35f475" prot="public" virt="non-virtual"><scope>sys::Version</scope><name>Version</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

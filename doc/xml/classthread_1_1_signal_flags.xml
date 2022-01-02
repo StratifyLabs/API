@@ -1,0 +1,333 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classthread_1_1_signal_flags" kind="class" language="C++" prot="public">
+    <compoundname>thread::SignalFlags</compoundname>
+    <basecompoundref refid="classapi_1_1_execution_context" prot="public" virt="non-virtual">api::ExecutionContext</basecompoundref>
+    <derivedcompoundref refid="classthread_1_1_signal" prot="public" virt="non-virtual">thread::Signal</derivedcompoundref>
+    <derivedcompoundref refid="classthread_1_1_signal_handler" prot="public" virt="non-virtual">thread::SignalHandler</derivedcompoundref>
+    <includes local="no">Signal.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Number</name>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a37a6259cc0c1dae299a7866489dff0bd" prot="public">
+          <name>null</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a5bb94a1c12413a2e5d14deabab29f2aa" prot="public">
+          <name>abort</name>
+          <initializer>= SIGABRT</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7af7ec5feba07906f740ae06f34e8448ce" prot="public">
+          <name>fpe</name>
+          <initializer>= SIGFPE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a2414c252176310b2c04547257948c7b7" prot="public">
+          <name>interrupt</name>
+          <initializer>= SIGINT</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a55f99613fd4c7efa27297f0b2f04407f" prot="public">
+          <name>illegal</name>
+          <initializer>= SIGILL</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a679fe1db8dc7308e44404587d0348c5e" prot="public">
+          <name>segmentation</name>
+          <initializer>= SIGSEGV</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a1459e53d3fbaa95cebaf90860dd7a259" prot="public">
+          <name>terminate</name>
+          <initializer>= SIGTERM</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a6486b4e98228b83d4b13d54febe5f170" prot="public">
+          <name>alarm</name>
+          <initializer>= SIGALRM</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7ad20f83ee6933aa1ea047fe5cbd9c1fd5" prot="public">
+          <name>bus</name>
+          <initializer>= SIGBUS</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a1b7d5726533ab525a8760351e9b5e415" prot="public">
+          <name>child</name>
+          <initializer>= SIGCHLD</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a5b4404524e842940120cc65b3214d40b" prot="public">
+          <name>continue_</name>
+          <initializer>= SIGCONT</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a11abfa6c0027efec2d323fc275e135cc" prot="public">
+          <name>handup</name>
+          <initializer>= SIGHUP</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a534735884d341071762ede7af01c53e8" prot="public">
+          <name>kill</name>
+          <initializer>= SIGKILL</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a20826a3cb51d6c7d9c219c7f4bf4e5c9" prot="public">
+          <name>pipe</name>
+          <initializer>= SIGPIPE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7adbd73c2b545209688ed794c0d5413d5a" prot="public">
+          <name>quit</name>
+          <initializer>= SIGQUIT</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7aef399b2d446bb37b7c32ad2cc1b6045b" prot="public">
+          <name>stop</name>
+          <initializer>= SIGSTOP</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a618403cb769145797a29df601ec30d46" prot="public">
+          <name>terminal_stop</name>
+          <initializer>= SIGTSTP</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7ad2a98820b9de91a392bfdb4d81315e19" prot="public">
+          <name>terminal_input</name>
+          <initializer>= SIGTTIN</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a0356b5d58b4d86a21eb202d5fb9ebbfa" prot="public">
+          <name>terminal_output</name>
+          <initializer>= SIGTTOU</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a24c9e15e52afc47c225b757e7bee1f9d" prot="public">
+          <name>user1</name>
+          <initializer>= SIGUSR1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a7e58d63b60197ceb55a1c487989a3720" prot="public">
+          <name>user2</name>
+          <initializer>= SIGUSR2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7aceef42ff8376b17ac66fd0bbc7a7a0be" prot="public">
+          <name>profiling_timer</name>
+          <initializer>= SIGPROF</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a54b53072540eeeb8f8e9343e71f28176" prot="public">
+          <name>system</name>
+          <initializer>= SIGSYS</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7aca97f68cf88e0d3b9c652c05c7619575" prot="public">
+          <name>trap</name>
+          <initializer>= SIGTRAP</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a1c0f66a0443282385b46fb9ad0a9e092" prot="public">
+          <name>high_bandwidth</name>
+          <initializer>= SIGURG</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7ac3c6681439c909c1d4d4fbd896113b65" prot="public">
+          <name>virtual_alarm</name>
+          <initializer>= SIGVTALRM</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7aa6a06e93732e5408f7574578bd4dd04c" prot="public">
+          <name>cpu_time_limit</name>
+          <initializer>= SIGXCPU</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a130cbacc6f939c09658f7a4170d116c5" prot="public">
+          <name>file_size_limit</name>
+          <initializer>= SIGXFSZ</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7ab0f6dfb42fa80caee6825bfecd30f094" prot="public">
+          <name>poll</name>
+          <initializer>= SIGPOLL</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a3c90bacea6964c272fe269bd80917fe0" prot="public">
+          <name>realtime_min</name>
+          <initializer>= SIGRTMIN</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7a37e2a166d3ab28426a1d1a481d356d33" prot="public">
+          <name>realtime</name>
+          <initializer>= SIGRTMIN + 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7ae0b060bf5deaca0b6031b22ccce65323" prot="public">
+          <name>realtime_max</name>
+          <initializer>= SIGRTMAX</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="51" column="3" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="51" bodyend="88"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="3">
+        <label>thread::Signal</label>
+        <link refid="classthread_1_1_signal"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>thread::SignalFlags</label>
+        <link refid="classthread_1_1_signal_flags"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>thread::SignalHandler</label>
+        <link refid="classthread_1_1_signal_handler"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>api::ExecutionContext</label>
+        <link refid="classapi_1_1_execution_context"/>
+      </node>
+      <node id="1">
+        <label>thread::SignalFlags</label>
+        <link refid="classthread_1_1_signal_flags"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="API/libraries/ThreadAPI/include/thread/Signal.hpp" line="49" column="1" bodyfile="API/libraries/ThreadAPI/include/thread/Signal.hpp" bodystart="49" bodyend="89"/>
+    <listofallmembers>
+      <member refid="classapi_1_1_execution_context_1a79ba50868f43a40ce4f5406a56fd0845" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>context_count</name></member>
+      <member refid="classapi_1_1_execution_context_1a856b03dd0b7c7732647427e22226898c" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>error</name></member>
+      <member refid="classapi_1_1_execution_context_1a4ec3d1f36462eb85a35a835dd2df9fac" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>exit_fatal</name></member>
+      <member refid="classapi_1_1_execution_context_1ab048cd82d85bb12f5866722012f09bcc" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>free_context</name></member>
+      <member refid="classapi_1_1_execution_context_1abe4eedd752a09e448e4ddfc38915c2d8" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>handle_system_call_null_result</name></member>
+      <member refid="classapi_1_1_execution_context_1abe0670b0e9cdc51ed9e4a8f149befa37" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>handle_system_call_result</name></member>
+      <member refid="classapi_1_1_execution_context_1ac0e1592ccf0272449e692ead348fadf6" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>is_error</name></member>
+      <member refid="classapi_1_1_execution_context_1a853635c194f91fc61577f670db986be0" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>is_success</name></member>
+      <member refid="classthread_1_1_signal_flags_1ac44be3adb1346bb8aecb2596a3cc85b7" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>Number</name></member>
+      <member refid="classapi_1_1_execution_context_1ab28ff28529a36ab1281f4a76dac43e67" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>reset_error</name></member>
+      <member refid="classapi_1_1_execution_context_1ad9199bc3e70a5685dac83e068ec0303a" prot="public" virt="non-virtual"><scope>thread::SignalFlags</scope><name>return_value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

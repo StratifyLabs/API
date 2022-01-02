@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classprinter_1_1_markdown_printer_1_1_code" kind="class" language="C++" prot="public">
+    <compoundname>printer::MarkdownPrinter::Code</compoundname>
+    <includes local="no">MarkdownPrinter.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classprinter_1_1_markdown_printer_1_1_code_1afb844e60657cc639d2f2babc9c8ac499" prot="private" static="no" mutable="no">
+        <type><ref refid="classprinter_1_1_markdown_printer" kindref="compound">MarkdownPrinter</ref> &amp;</type>
+        <definition>MarkdownPrinter&amp; printer::MarkdownPrinter::Code::m_printer</definition>
+        <argsstring></argsstring>
+        <name>m_printer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/MarkdownPrinter.hpp" line="143" column="21" bodyfile="API/libraries/PrinterAPI/include/printer/MarkdownPrinter.hpp" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classprinter_1_1_markdown_printer_1_1_code_1a03a6bea056db82dec84590494bbc57c3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>printer::MarkdownPrinter::Code::Code</definition>
+        <argsstring>(MarkdownPrinter &amp;printer, var::StringView language, Level level=Level::info)</argsstring>
+        <name>Code</name>
+        <param>
+          <type><ref refid="classprinter_1_1_markdown_printer" kindref="compound">MarkdownPrinter</ref> &amp;</type>
+          <declname>printer</declname>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_view" kindref="compound">var::StringView</ref></type>
+          <declname>language</declname>
+        </param>
+        <param>
+          <type><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578f" kindref="member">Level</ref></type>
+          <declname>level</declname>
+          <defval><ref refid="structprinter_1_1_printer_flags_1af7f6dd45e0fafecc3e492fb4b687578facaf9b6b99962bf5c2264824231d7a40c" kindref="member">Level::info</ref></defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/MarkdownPrinter.hpp" line="132" column="5" bodyfile="API/libraries/PrinterAPI/include/printer/MarkdownPrinter.hpp" bodystart="132" bodyend="138"/>
+      </memberdef>
+      <memberdef kind="function" id="classprinter_1_1_markdown_printer_1_1_code_1ab91c92fc38e8635f8ee6513a9e88c6a2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>printer::MarkdownPrinter::Code::~Code</definition>
+        <argsstring>()</argsstring>
+        <name>~Code</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/PrinterAPI/include/printer/MarkdownPrinter.hpp" line="140" column="5" bodyfile="API/libraries/PrinterAPI/include/printer/MarkdownPrinter.hpp" bodystart="140" bodyend="140"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/PrinterAPI/include/printer/MarkdownPrinter.hpp" line="130" column="3" bodyfile="API/libraries/PrinterAPI/include/printer/MarkdownPrinter.hpp" bodystart="130" bodyend="144"/>
+    <listofallmembers>
+      <member refid="classprinter_1_1_markdown_printer_1_1_code_1a03a6bea056db82dec84590494bbc57c3" prot="public" virt="non-virtual"><scope>printer::MarkdownPrinter::Code</scope><name>Code</name></member>
+      <member refid="classprinter_1_1_markdown_printer_1_1_code_1afb844e60657cc639d2f2babc9c8ac499" prot="private" virt="non-virtual"><scope>printer::MarkdownPrinter::Code</scope><name>m_printer</name></member>
+      <member refid="classprinter_1_1_markdown_printer_1_1_code_1ab91c92fc38e8635f8ee6513a9e88c6a2" prot="public" virt="non-virtual"><scope>printer::MarkdownPrinter::Code</scope><name>~Code</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

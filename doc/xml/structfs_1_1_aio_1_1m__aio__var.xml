@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="structfs_1_1_aio_1_1m__aio__var" kind="struct" language="C++" prot="private">
+    <compoundname>fs::Aio::m_aio_var</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/FsAPI/include/fs/Aio.hpp" line="199" column="3" bodyfile="API/libraries/FsAPI/include/fs/Aio.hpp" bodystart="199" bodyend="199"/>
+    <listofallmembers>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

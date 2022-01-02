@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="classvar_1_1_string_1_1_insert" kind="class" language="C++" prot="public">
+    <compoundname>var::String::Insert</compoundname>
+    <includes local="no">String.hpp</includes>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvar_1_1_string_1_1_insert_1a0862f5926cbb34f0eee575ec8d14775f" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Insert::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Insert, size_t, position, 0)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_insert" kindref="compound">Insert</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type>position</type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="69" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_1_1_insert_1a4f9249edd762b17161acbb4f8cbdb259" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Insert::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Insert, size_t, length, 0)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_insert" kindref="compound">Insert</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_1a8c2c1593115919632c3d7c8cd8f314b0" kindref="member">length</ref></type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="70" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_1_1_insert_1abbc04861abf2e55f296389c4ad30cfe1" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Insert::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Insert, size_t, sub_position, 0)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_insert" kindref="compound">Insert</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type>sub_position</type>
+        </param>
+        <param>
+          <type>0</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="71" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvar_1_1_string_1_1_insert_1a2e1eaff991a4fc2afb48898b96b76b9b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>var::String::Insert::API_ACCESS_FUNDAMENTAL</definition>
+        <argsstring>(Insert, size_t, sub_length, npos)</argsstring>
+        <name>API_ACCESS_FUNDAMENTAL</name>
+        <param>
+          <type><ref refid="classvar_1_1_string_1_1_insert" kindref="compound">Insert</ref></type>
+        </param>
+        <param>
+          <type>size_t</type>
+        </param>
+        <param>
+          <type>sub_length</type>
+        </param>
+        <param>
+          <type><ref refid="classvar_1_1_string_1afc03049bebc249f850e91e306f7a68c3" kindref="member">npos</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="API/libraries/VarAPI/include/var/String.hpp" line="72" column="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/VarAPI/include/var/String.hpp" line="68" column="3" bodyfile="API/libraries/VarAPI/include/var/String.hpp" bodystart="68" bodyend="73"/>
+    <listofallmembers>
+      <member refid="classvar_1_1_string_1_1_insert_1a0862f5926cbb34f0eee575ec8d14775f" prot="private" virt="non-virtual"><scope>var::String::Insert</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classvar_1_1_string_1_1_insert_1a4f9249edd762b17161acbb4f8cbdb259" prot="private" virt="non-virtual"><scope>var::String::Insert</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classvar_1_1_string_1_1_insert_1abbc04861abf2e55f296389c4ad30cfe1" prot="private" virt="non-virtual"><scope>var::String::Insert</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+      <member refid="classvar_1_1_string_1_1_insert_1a2e1eaff991a4fc2afb48898b96b76b9b" prot="private" virt="non-virtual"><scope>var::String::Insert</scope><name>API_ACCESS_FUNDAMENTAL</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

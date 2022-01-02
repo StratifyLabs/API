@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.2" xml:lang="en-US">
+  <compounddef id="dir_05c4fbaf7d592bd5737b064c64bc0158" kind="dir">
+    <compoundname>include</compoundname>
+    <innerdir refid="dir_14c8f29a306a6545f8d5e4f3493bcbc4">sys</innerdir>
+    <innerfile refid="sys_8hpp">sys.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="API/libraries/SysAPI/include/"/>
+  </compounddef>
+</doxygen>
