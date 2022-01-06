@@ -174,6 +174,9 @@ private:
   std::vector<Error> *m_error_list = nullptr;
 };
 
+/*! \details This class is the base class for almost all classes
+ * in all API frameworks.
+ */
 class ExecutionContext {
 public:
   static int
