@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <unistd.h>
 
+#include "printer/Printer.hpp"
+
 #if !defined __win32
 #include <sys/wait.h>
 #else
@@ -22,6 +24,33 @@
 #include "sys/Process.hpp"
 
 extern "C" char **environ;
+
+namespace printer {
+Printer &
+operator<<(Printer &printer, const sys::Process::Arguments &arguments) {
+  size_t count = 0;
+  for (const auto &arg : arguments.arguments()) {
+    if (arg != nullptr) {
+      printer.key(var::NumberString(count, "[%04d]"), arg);
+      ++count;
+    }
+  }
+  return printer;
+}
+
+Printer &operator<<(Printer &printer, const sys::Process::Environment &env) {
+  for (const auto &variable : env.variables()) {
+    if (variable != nullptr) {
+      const auto value_list = var::StringView(variable).split("=");
+      if (value_list.count() > 1) {
+        printer.key(value_list.at(0), value_list.at(1));
+      }
+    }
+  }
+  return printer;
+}
+
+} // namespace printer
 
 using namespace sys;
 
@@ -48,9 +77,11 @@ Process::Environment &Process::Environment::set(
   const auto starts_with = name | "=";
   for (size_t i = 0; i < m_arguments.count(); i++) {
     char *current_value = m_arguments.at(i);
-    if (var::StringView(current_value).find(starts_with) == 0) {
-      replace(i, format(name, value));
-      return *this;
+    if (current_value != nullptr) {
+      if (var::StringView(current_value).find(starts_with) == 0) {
+        replace(i, format(name, value));
+        return *this;
+      }
     }
   }
 
@@ -182,14 +213,20 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     // this will run in the child process
     Arguments args(arguments);
 
-    if( chdir(environment.find("PWD")) < 0 ){
+    if (chdir(environment.find("PWD")) < 0) {
       API_RETURN_ASSIGN_ERROR("failed to chdir to PWD", errno);
     }
 
-    dup2(m_pipe.write_file().fileno(), STDOUT_FILENO);
+    dup2(m_pipe_output.write_file().fileno(), STDOUT_FILENO);
     // stdout will now write to the pipe -- this fileno isn't needed anymore
     // but doesn't necessarily have to be closed
-    m_pipe.write_file() = fs::File();
+    m_pipe_output.write_file() = fs::File();
+
+    dup2(m_pipe_error.write_file().fileno(), STDERR_FILENO);
+    // stdout will now write to the pipe -- this fileno isn't needed anymore
+    // but doesn't necessarily have to be closed
+    m_pipe_error.write_file() = fs::File();
+
     // replace the current process with the one specified
     ::execve(args.path(), args.m_arguments.data(), environ);
     perror("failed to launch\n");
@@ -210,7 +247,6 @@ Process &Process::wait() {
   if (m_process == INVALID_HANDLE_VALUE || m_process == nullptr) {
     return *this;
   }
-
 
   DWORD code = 0;
   WaitForSingleObject(m_process, INFINITE);
@@ -274,6 +310,38 @@ bool Process::is_running() {
 #endif
 
   return true;
+}
+
+Process &Process::read_output() {
+  auto read_pipe = [&](const fs::FileObject &data, const fs::FileObject &pipe) {
+    var::Array<char, 2048> buffer;
+    api::ErrorScope error_scope;
+    int bytes_read = 0;
+    do {
+      bytes_read = pipe.read(buffer).return_value();
+      if (bytes_read > 0) {
+        data.write(var::View(buffer.data(), bytes_read));
+      }
+    } while (bytes_read > 0);
+  };
+
+  read_pipe(m_standard_output, m_pipe_output.read_file());
+  read_pipe(m_standard_error, m_pipe_error.read_file());
+  return *this;
+}
+
+var::String Process::get_standard_output() {
+  read_output();
+  return var::String(var::StringView(
+    reinterpret_cast<const char*>(m_standard_output.data().data_u8()),
+    m_standard_output.data().size()));
+}
+
+var::String Process::get_standard_error() {
+  read_output();
+  return var::String(var::StringView(
+    reinterpret_cast<const char*>(m_standard_error.data().data_u8()),
+    m_standard_error.data().size()));
 }
 
 #endif
