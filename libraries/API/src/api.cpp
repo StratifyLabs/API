@@ -5,6 +5,7 @@
 #if defined __link
 #include <cxxabi.h>
 #include <pthread.h>
+#include <signal.h>
 #endif
 
 #include <cstdio>
