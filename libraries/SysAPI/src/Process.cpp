@@ -175,11 +175,14 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   const var::PathString pwd = environment.find("PWD");
 
   int stdout_fd = dup(_fileno(stdout));
+  int stderr_fd = dup(_fileno(stderr));
 
   // change stdout and stderr to specify spawned process stdout, stderr
-  _dup2(m_pipe.write_file().fileno(), _fileno(stdout));
-  _dup2(_fileno(stdout), _fileno(stderr));
-  m_pipe.write_file() = fs::File();
+  _dup2(m_standard_output.pipe.write_file().fileno(), _fileno(stdout));
+  _dup2(m_standard_error.pipe.write_file().fileno(), _fileno(stderr));
+
+  m_standard_output.pipe.write_file() = fs::File();
+  m_standard_error.pipe.write_file() = fs::File();
 
   if (pwd.is_empty() == false) {
     _chdir(pwd.cstring());
@@ -194,6 +197,10 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   // restore stdout
   _dup2(stdout_fd, _fileno(stdout));
   _close(stdout_fd);
+
+  //restore stderr
+  _dup2(stderr_fd, _fileno(stderr));
+  _close(stderr_fd);
 
   if (pwd.is_empty() == false) {
     _chdir(cwd.cstring());
@@ -318,6 +325,9 @@ bool Process::is_running() {
 }
 
 Process &Process::read_output() {
+  //win32 uses threads to read the output/error
+  //because the pipes operate synchronously
+#if !defined __win32
   auto read_pipe = [&](const fs::FileObject &data, const fs::FileObject &pipe) {
     var::Array<char, 2048> buffer;
     fs::File::LocationScope location_scope(data);
@@ -334,21 +344,47 @@ Process &Process::read_output() {
 
   read_pipe(m_standard_output, m_pipe_output.read_file());
   read_pipe(m_standard_error, m_pipe_error.read_file());
+#endif
   return *this;
 }
 
 var::String Process::get_standard_output() {
   read_output();
   return var::String(var::StringView(
-    reinterpret_cast<const char*>(m_standard_output.data().data_u8()),
-    m_standard_output.data().size()));
+    reinterpret_cast<const char*>(m_standard_output.data_file.data().data_u8()),
+    m_standard_output.data_file.data().size()));
 }
 
 var::String Process::get_standard_error() {
   read_output();
   return var::String(var::StringView(
-    reinterpret_cast<const char*>(m_standard_error.data().data_u8()),
-    m_standard_error.data().size()));
+    reinterpret_cast<const char*>(m_standard_error.data_file.data().data_u8()),
+    m_standard_error.data_file.data().size()));
+}
+
+void Process::update_redirect(const RedirectOptions * options) {
+  //reads the pipe in a thread
+  var::Array<char, 2048> buffer;
+  auto & data_file = options->redirect->data_file;
+  auto & pipe = options->redirect->pipe;
+  auto & mutex = options->redirect->mutex;
+  api::ErrorScope error_scope;
+  options->redirect->data_file.seek(0, fs::File::Whence::end);
+  int bytes_read = 0;
+  do {
+    {
+      thread::Mutex::Scope mutex_scope(mutex);
+      fs::File::LocationScope location_scope(data_file);
+      {
+        api::ErrorScope error_scope;
+        bytes_read = pipe.read_file().read(buffer).return_value();
+        if (bytes_read > 0) {
+          data_file.write(var::View(buffer.data(), bytes_read));
+        }
+      }
+      chrono::wait(10_milliseconds);
+    }
+  } while (bytes_read > 0);
 }
 
 #endif

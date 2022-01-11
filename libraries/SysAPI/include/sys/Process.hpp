@@ -18,6 +18,8 @@
 #include "var/StackString.hpp"
 #include "fs/Path.hpp"
 #include "fs/DataFile.hpp"
+#include "thread/Mutex.hpp"
+#include "thread/Thread.hpp"
 
 #include "Pipe.hpp"
 
@@ -169,11 +171,11 @@ public:
   var::String get_standard_error();
 
   const fs::DataFile & standard_output() const {
-    return m_standard_output;
+    return m_standard_output.data_file;
   }
 
   const fs::DataFile & standard_error() const {
-    return m_standard_error;
+    return m_standard_error.data_file;
   }
 
 
@@ -181,17 +183,24 @@ private:
   pid_t m_pid = -1;
   int m_status = 0;
 
-  fs::DataFile m_standard_output;
-  fs::DataFile m_standard_error;
 
 
 #if defined __win32
   PROCESS_INFORMATION *m_process_information;
   HANDLE m_process;
-#else
-  Pipe m_pipe_output;
-  Pipe m_pipe_error;
+
 #endif
+
+  struct Redirect {
+    thread::Thread thread;
+    thread::Mutex mutex;
+    Pipe pipe;
+    fs::DataFile data_file;
+  };
+
+  Redirect m_standard_output;
+  Redirect m_standard_error;
+
 
   void swap(Process &a) {
     std::swap(m_pid, a.m_pid);
@@ -203,6 +212,20 @@ private:
     std::swap(m_pipe_error, a.m_pipe_error);
 #endif
   }
+
+  struct RedirectOptions {
+    Process * self;
+    Redirect * redirect;
+  };
+
+  static void * update_redirect_thread_function(void * args){
+    const auto options = reinterpret_cast<const RedirectOptions*>(args);
+    options->self->update_redirect(options);
+    return nullptr;
+  }
+
+  void update_redirect(const RedirectOptions * options);
+
 };
 
 } // namespace sys
