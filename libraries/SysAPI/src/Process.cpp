@@ -320,7 +320,9 @@ bool Process::is_running() {
 Process &Process::read_output() {
   auto read_pipe = [&](const fs::FileObject &data, const fs::FileObject &pipe) {
     var::Array<char, 2048> buffer;
+    fs::File::LocationScope location_scope(data);
     api::ErrorScope error_scope;
+    data.seek(0, fs::File::Whence::end);
     int bytes_read = 0;
     do {
       bytes_read = pipe.read(buffer).return_value();
