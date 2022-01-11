@@ -6,9 +6,10 @@
 #if defined __link
 
 #if defined __win32
+#include <winsock2.h>
+//don't let clang put windows.h or direct.h before winsock2
 #include <direct.h>
 #include <windows.h>
-#include <winsock2.h>
 #endif
 
 #include <sdk/types.h>
@@ -205,12 +206,16 @@ private:
     thread::Mutex mutex;
     Pipe pipe;
     fs::DataFile data_file;
+    volatile bool is_stop_requested = false;
 
     void start_thread(RedirectOptions *options);
-
     void wait_stop();
-
     var::String read();
+
+#if defined __win32
+    HANDLE thread_handle;
+#endif
+
   };
 
   Redirect m_standard_output;
@@ -222,12 +227,8 @@ private:
   void swap(Process &a) {
     std::swap(m_pid, a.m_pid);
     std::swap(m_status, a.m_status);
-#if defined __win32
-
-#else
     std::swap(m_standard_output, a.m_standard_output);
     std::swap(m_standard_error, a.m_standard_error);
-#endif
   }
 
   static void *update_redirect_thread_function(void *args);

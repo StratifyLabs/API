@@ -165,6 +165,8 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     API_RETURN_ASSIGN_ERROR("no executable was found", EINVAL);
   }
 
+  bool is_process_launched = false;
+
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};
@@ -212,6 +214,8 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     API_RETURN_ASSIGN_ERROR("failed to spawn", errno);
   }
 
+  is_process_launched = true;
+
 #else
 
   const auto pwd = environment.find("PWD");
@@ -246,9 +250,11 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     perror("failed to launch\n");
     exit(1);
   }
+
+  is_process_launched = m_pid > 0;
 #endif
 
-  if (m_pid > 0) {
+  if (is_process_launched) {
     m_standard_output_redirect_options
       = {.redirect = &m_standard_output, .self = this};
     m_standard_error_redirect_options
@@ -278,7 +284,8 @@ Process &Process::wait() {
 
   m_process = INVALID_HANDLE_VALUE;
   m_status = int(code);
-
+  m_standard_error.wait_stop();
+  m_standard_output.wait_stop();
   return *this;
 
 #else
@@ -318,6 +325,8 @@ bool Process::is_running() {
   }
 
   m_status = int(code);
+  m_standard_error.wait_stop();
+  m_standard_output.wait_stop();
   return false;
 #else
   if (m_pid < 0) {
@@ -362,12 +371,15 @@ var::String Process::read_standard_error() { return m_standard_error.read(); }
 
 void Process::update_redirect(const RedirectOptions *options) {
   // reads the pipe in a thread
+#if defined __win32
+  options->redirect->thread_handle = GetCurrentThread();
+#endif
   var::Array<char, 2048> buffer;
   auto &data_file = options->redirect->data_file;
   auto &pipe = options->redirect->pipe;
   auto &mutex = options->redirect->mutex;
   data_file.seek(0, fs::File::Whence::end);
-
+  bool is_stop_requested = options->redirect->is_stop_requested;
   do {
     api::ErrorScope error_scope;
     const auto bytes_read = pipe.read_file().read(buffer).return_value();
@@ -379,8 +391,10 @@ void Process::update_redirect(const RedirectOptions *options) {
         fs::File::LocationScope location_scope(data_file);
         data_file.write(var::View(buffer.data(), bytes_read));
       }
+      is_stop_requested = options->redirect->is_stop_requested;
+
     }
-  } while (1);
+  } while (!is_stop_requested);
 }
 
 void *Process::update_redirect_thread_function(void *args) {
@@ -413,9 +427,22 @@ var::String Process::Redirect::read() {
   return result;
 }
 
+#if defined __win32
+#undef _WIN32_WINNT
+#define _WIN32_WINNT 0x0600
+#include <ioapiset.h>
+#endif
+
 void Process::Redirect::wait_stop() {
-  thread::Mutex::Scope ms(mutex);
-  thread.cancel().join();
+  {
+    thread::Mutex::Scope ms(mutex);
+    is_stop_requested = true;
+  }
+
+  thread.cancel();
+  if( thread.is_joinable() ){
+    thread.join();
+  }
 }
 
 #endif
