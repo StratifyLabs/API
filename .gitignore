@@ -5,3 +5,4 @@ cmake*_arm/
 cmake*_link/
 build_*/
 tests/sl_report.txt
+doc/xml

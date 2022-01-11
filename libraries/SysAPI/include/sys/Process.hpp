@@ -7,9 +7,7 @@
 
 #if defined __win32
 #include <winsock2.h>
-
 #include <windows.h>
-
 #include <direct.h>
 #endif
 
@@ -18,6 +16,8 @@
 
 #include "api/api.hpp"
 #include "var/StackString.hpp"
+#include "fs/Path.hpp"
+#include "fs/DataFile.hpp"
 
 #include "Pipe.hpp"
 
@@ -53,10 +53,14 @@ public:
     Arguments(Arguments &&) = default;
     Arguments &operator=(Arguments &&) = default;
 
-    explicit Arguments(const var::StringView path) {
+    explicit Arguments(const var::StringView path) : m_path(path) {
       m_arguments.push_back(nullptr);
       if (path != "") {
+#if defined __win32
+        push(fs::Path::name(path));
+#else
         push(path);
+#endif
       }
     }
 
@@ -104,7 +108,9 @@ public:
     }
 
   private:
+    API_RAC(Arguments,var::PathString,path);
     void copy(const Arguments &arguments) {
+      m_path = arguments.path();
       m_arguments.push_back(nullptr);
       for (auto *value : arguments.m_arguments) {
         value &&push(value).is_success();
@@ -153,31 +159,59 @@ public:
   }
   ~Process();
 
-  const Pipe &pipe() const { return m_pipe; }
-
+  Process &read_output();
   Process &wait();
   bool is_running();
 
   Status status() { return Status(m_status); }
 
+  var::String get_standard_output();
+  var::String get_standard_error();
+
+  const fs::DataFile & standard_output() const {
+    return m_standard_output;
+  }
+
+  const fs::DataFile & standard_error() const {
+    return m_standard_error;
+  }
+
+
 private:
-  Pipe m_pipe;
   pid_t m_pid = -1;
   int m_status = 0;
+
+  fs::DataFile m_standard_output;
+  fs::DataFile m_standard_error;
+
 
 #if defined __win32
   PROCESS_INFORMATION *m_process_information;
   HANDLE m_process;
+#else
+  Pipe m_pipe_output;
+  Pipe m_pipe_error;
 #endif
 
   void swap(Process &a) {
     std::swap(m_pid, a.m_pid);
     std::swap(m_status, a.m_status);
-    m_pipe = std::move(a.m_pipe);
+#if defined __win32
+
+#else
+    std::swap(m_pipe_output, a.m_pipe_output);
+    std::swap(m_pipe_error, a.m_pipe_error);
+#endif
   }
 };
 
 } // namespace sys
+
+
+namespace printer {
+Printer & operator << (Printer & printer, const sys::Process::Arguments & arguments);
+Printer & operator << (Printer & printer, const sys::Process::Environment & env);
+}
 
 #endif
 

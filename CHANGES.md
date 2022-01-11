@@ -1,3 +1,18 @@
+# Version 1.3.0
+
+
+## New Features
+
+- `sys::Process` no longer provides a pipe. It gives an `fs::DataFile` for standard output and error.
+- Add `sys::System::launch_browser()` to open a link in the system browser
+- Add `api::catch_segmentation_fault()` to call `API_ASSERT()` when a segmentation fault happens (desktop)
+
+## Bug Fixes
+
+- House keeping on `Process` for linux and mac
+- Fix `Process` spawn on Windows when the path has a space. `argv[0]` is given just the executable name
+- Add correct move semantics to StackString
+
 # Version 1.2.0
 
 ## New Features

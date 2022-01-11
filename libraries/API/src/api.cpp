@@ -5,6 +5,7 @@
 #if defined __link
 #include <cxxabi.h>
 #include <pthread.h>
+#include <signal.h>
 #endif
 
 #include <cstdio>
@@ -138,4 +139,21 @@ const char *Demangler::demangle(const char *input) {
   m_last = abi::__cxa_demangle(input, m_buffer, &m_length, &m_status);
 #endif
   return m_last;
+}
+
+#if defined __link
+void signal_segmentation_fault(int){
+  static int count = 0;
+  if (count == 0) {
+    API_ASSERT(false);
+    count++;
+  }
+}
+
+#endif
+
+void api::catch_segmentation_fault(){
+#if defined __link
+  signal(11, signal_segmentation_fault);
+#endif
 }

@@ -2,10 +2,11 @@
 
 #if defined __link
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <unistd.h>
 
-#include <sys/types.h>
+#include "printer/Printer.hpp"
+
 #if !defined __win32
 #include <sys/wait.h>
 #else
@@ -23,6 +24,33 @@
 #include "sys/Process.hpp"
 
 extern "C" char **environ;
+
+namespace printer {
+Printer &
+operator<<(Printer &printer, const sys::Process::Arguments &arguments) {
+  size_t count = 0;
+  for (const auto &arg : arguments.arguments()) {
+    if (arg != nullptr) {
+      printer.key(var::NumberString(count, "[%04d]"), arg);
+      ++count;
+    }
+  }
+  return printer;
+}
+
+Printer &operator<<(Printer &printer, const sys::Process::Environment &env) {
+  for (const auto &variable : env.variables()) {
+    if (variable != nullptr) {
+      const auto value_list = var::StringView(variable).split("=");
+      if (value_list.count() > 1) {
+        printer.key(value_list.at(0), value_list.at(1));
+      }
+    }
+  }
+  return printer;
+}
+
+} // namespace printer
 
 using namespace sys;
 
@@ -49,9 +77,11 @@ Process::Environment &Process::Environment::set(
   const auto starts_with = name | "=";
   for (size_t i = 0; i < m_arguments.count(); i++) {
     char *current_value = m_arguments.at(i);
-    if (var::StringView(current_value).find(starts_with) == 0) {
-      replace(i, format(name, value));
-      return *this;
+    if (current_value != nullptr) {
+      if (var::StringView(current_value).find(starts_with) == 0) {
+        replace(i, format(name, value));
+        return *this;
+      }
     }
   }
 
@@ -89,18 +119,18 @@ var::PathString Process::which(const var::StringView executable) {
 
   const char *path = getenv("PATH");
   if (path == nullptr) {
-    return var::PathString();
+    return {};
   }
 
   const auto path_list = var::StringView(path).split(";:");
   for (const auto &entry : path_list) {
-    const auto path = entry / executable;
-    if (fs::FileSystem().exists(path)) {
-      return path;
+    const auto entry_path = entry / executable;
+    if (fs::FileSystem().exists(entry_path)) {
+      return entry_path;
     }
   }
 
-  return var::PathString();
+  return {};
 }
 
 u8 Process::Status::exit_status() const { return WEXITSTATUS(m_status_value); }
@@ -138,7 +168,7 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};
-  STARTUPINFOA startup_info = {};
+  STARTUPINFOA startup_info{};
 
   var::PathString cwd;
   _getcwd(cwd.data(), cwd.capacity());
@@ -155,11 +185,9 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     _chdir(pwd.cstring());
   }
 
-  // change working directory?
-
   m_process = HANDLE(_spawnvpe(
     P_NOWAIT,
-    arguments.get_value(0),
+    arguments.path().cstring(),
     arguments.m_arguments.data(),
     environment.m_arguments.data()));
 
@@ -171,9 +199,10 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     _chdir(cwd.cstring());
   }
 
-  if (m_process == nullptr) {
+  if (m_process == nullptr || m_process == INVALID_HANDLE_VALUE) {
+    printf("Last error %d\n", GetLastError());
     m_process = INVALID_HANDLE_VALUE;
-    API_RETURN_ASSIGN_ERROR("failed to spawn", EINVAL);
+    API_RETURN_ASSIGN_ERROR("failed to spawn", errno);
   }
 
 #else
@@ -188,16 +217,23 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 
     // this will run in the child process
     Arguments args(arguments);
-    Environment env(environment);
 
-    chdir(env.find("PWD"));
+    if (chdir(environment.find("PWD")) < 0) {
+      API_RETURN_ASSIGN_ERROR("failed to chdir to PWD", errno);
+    }
 
-    dup2(m_pipe.write_file().fileno(), STDOUT_FILENO);
+    dup2(m_pipe_output.write_file().fileno(), STDOUT_FILENO);
     // stdout will now write to the pipe -- this fileno isn't needed anymore
     // but doesn't necessarily have to be closed
-    m_pipe.write_file() = fs::File();
+    m_pipe_output.write_file() = fs::File();
+
+    dup2(m_pipe_error.write_file().fileno(), STDERR_FILENO);
+    // stdout will now write to the pipe -- this fileno isn't needed anymore
+    // but doesn't necessarily have to be closed
+    m_pipe_error.write_file() = fs::File();
+
     // replace the current process with the one specified
-    ::execve(args.m_arguments.at(0), args.m_arguments.data(), environ);
+    ::execve(args.path(), args.m_arguments.data(), environ);
     perror("failed to launch\n");
     exit(1);
   }
@@ -247,24 +283,18 @@ bool Process::is_running() {
   API_RETURN_VALUE_IF_ERROR(false);
 #if defined __win32
   if (m_process == INVALID_HANDLE_VALUE || m_process == nullptr) {
-    API_PRINTF_TRACE_LINE();
     return false;
   }
 
   DWORD code = STILL_ACTIVE;
   if (GetExitCodeProcess(m_process, &code) == 0) {
-    printf("error is %d\n", GetLastError());
-    API_PRINTF_TRACE_LINE();
     m_process = INVALID_HANDLE_VALUE;
     return false;
   }
 
   if (code == STILL_ACTIVE) {
-    API_PRINTF_TRACE_LINE();
-
     return true;
   }
-  API_PRINTF_TRACE_LINE();
 
   m_status = int(code);
   return false;
@@ -285,6 +315,38 @@ bool Process::is_running() {
 #endif
 
   return true;
+}
+
+Process &Process::read_output() {
+  auto read_pipe = [&](const fs::FileObject &data, const fs::FileObject &pipe) {
+    var::Array<char, 2048> buffer;
+    api::ErrorScope error_scope;
+    int bytes_read = 0;
+    do {
+      bytes_read = pipe.read(buffer).return_value();
+      if (bytes_read > 0) {
+        data.write(var::View(buffer.data(), bytes_read));
+      }
+    } while (bytes_read > 0);
+  };
+
+  read_pipe(m_standard_output, m_pipe_output.read_file());
+  read_pipe(m_standard_error, m_pipe_error.read_file());
+  return *this;
+}
+
+var::String Process::get_standard_output() {
+  read_output();
+  return var::String(var::StringView(
+    reinterpret_cast<const char*>(m_standard_output.data().data_u8()),
+    m_standard_output.data().size()));
+}
+
+var::String Process::get_standard_error() {
+  read_output();
+  return var::String(var::StringView(
+    reinterpret_cast<const char*>(m_standard_error.data().data_u8()),
+    m_standard_error.data().size()));
 }
 
 #endif

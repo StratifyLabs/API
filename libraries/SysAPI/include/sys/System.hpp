@@ -21,6 +21,10 @@ public:
   API_NO_DISCARD static bool is_linux();
   API_NO_DISCARD static bool is_stratify_os();
   API_NO_DISCARD static var::StringView user_data_path();
+
+#if defined __link
+  static void launch_browser(var::StringView url);
+#endif
 };
 
 } // namespace sys
