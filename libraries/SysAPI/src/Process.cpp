@@ -198,7 +198,7 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   _dup2(stdout_fd, _fileno(stdout));
   _close(stdout_fd);
 
-  //restore stderr
+  // restore stderr
   _dup2(stderr_fd, _fileno(stderr));
   _close(stderr_fd);
 
@@ -215,8 +215,10 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 #else
 
   const auto pwd = environment.find("PWD");
-  if( fs::FileSystem().directory_exists(pwd) == false ){
-    API_RETURN_ASSIGN_ERROR(("cannot change dir to `" | var::StringView(pwd)) | "`", errno);
+  if (fs::FileSystem().directory_exists(pwd) == false) {
+    API_RETURN_ASSIGN_ERROR(
+      ("cannot change dir to `" | var::StringView(pwd)) | "`",
+      errno);
   }
 
   m_pid = API_SYSTEM_CALL("fork()", fork());
@@ -229,15 +231,15 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
       API_RETURN_ASSIGN_ERROR("failed to chdir to PWD", errno);
     }
 
-    dup2(m_pipe_output.write_file().fileno(), STDOUT_FILENO);
+    dup2(m_standard_output.pipe.write_file().fileno(), STDOUT_FILENO);
     // stdout will now write to the pipe -- this fileno isn't needed anymore
     // but doesn't necessarily have to be closed
-    m_pipe_output.write_file() = fs::File();
+    m_standard_output.pipe.write_file() = fs::File();
 
-    dup2(m_pipe_error.write_file().fileno(), STDERR_FILENO);
-    // stdout will now write to the pipe -- this fileno isn't needed anymore
+    dup2(m_standard_error.pipe.write_file().fileno(), STDERR_FILENO);
+    // stderr will now write to the pipe -- this fileno isn't needed anymore
     // but doesn't necessarily have to be closed
-    m_pipe_error.write_file() = fs::File();
+    m_standard_error.pipe.write_file() = fs::File();
 
     // replace the current process with the one specified
     ::execve(args.path(), args.m_arguments.data(), environ);
@@ -245,6 +247,16 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     exit(1);
   }
 #endif
+
+  if (m_pid > 0) {
+    m_standard_output_redirect_options
+      = {.redirect = &m_standard_output, .self = this};
+    m_standard_error_redirect_options
+      = {.redirect = &m_standard_error, .self = this};
+
+    m_standard_output.start_thread(&m_standard_output_redirect_options);
+    m_standard_error.start_thread(&m_standard_error_redirect_options);
+  }
 }
 
 Process::~Process() {
@@ -280,6 +292,8 @@ Process &Process::wait() {
   if (result == m_pid) {
     m_pid = -1;
     m_status = status;
+    m_standard_error.wait_stop();
+    m_standard_output.wait_stop();
   }
 #endif
 
@@ -317,6 +331,9 @@ bool Process::is_running() {
   if (result == m_pid) {
     m_status = status;
     m_pid = -1;
+
+    m_standard_error.wait_stop();
+    m_standard_output.wait_stop();
     return false;
   }
 #endif
@@ -324,67 +341,81 @@ bool Process::is_running() {
   return true;
 }
 
-Process &Process::read_output() {
-  //win32 uses threads to read the output/error
-  //because the pipes operate synchronously
-#if !defined __win32
-  auto read_pipe = [&](const fs::FileObject &data, const fs::FileObject &pipe) {
-    var::Array<char, 2048> buffer;
-    fs::File::LocationScope location_scope(data);
-    api::ErrorScope error_scope;
-    data.seek(0, fs::File::Whence::end);
-    int bytes_read = 0;
-    do {
-      bytes_read = pipe.read(buffer).return_value();
-      if (bytes_read > 0) {
-        data.write(var::View(buffer.data(), bytes_read));
-      }
-    } while (bytes_read > 0);
-  };
-
-  read_pipe(m_standard_output, m_pipe_output.read_file());
-  read_pipe(m_standard_error, m_pipe_error.read_file());
-#endif
-  return *this;
-}
-
 var::String Process::get_standard_output() {
-  read_output();
+  thread::Mutex::Scope mutex_scope(m_standard_output.mutex);
   return var::String(var::StringView(
-    reinterpret_cast<const char*>(m_standard_output.data_file.data().data_u8()),
+    reinterpret_cast<const char *>(
+      m_standard_output.data_file.data().data_u8()),
     m_standard_output.data_file.data().size()));
 }
 
 var::String Process::get_standard_error() {
-  read_output();
+  thread::Mutex::Scope mutex_scope(m_standard_error.mutex);
   return var::String(var::StringView(
-    reinterpret_cast<const char*>(m_standard_error.data_file.data().data_u8()),
+    reinterpret_cast<const char *>(m_standard_error.data_file.data().data_u8()),
     m_standard_error.data_file.data().size()));
 }
 
-void Process::update_redirect(const RedirectOptions * options) {
-  //reads the pipe in a thread
+var::String Process::read_standard_output() { return m_standard_output.read(); }
+
+var::String Process::read_standard_error() { return m_standard_error.read(); }
+
+void Process::update_redirect(const RedirectOptions *options) {
+  // reads the pipe in a thread
   var::Array<char, 2048> buffer;
-  auto & data_file = options->redirect->data_file;
-  auto & pipe = options->redirect->pipe;
-  auto & mutex = options->redirect->mutex;
-  api::ErrorScope error_scope;
-  options->redirect->data_file.seek(0, fs::File::Whence::end);
-  int bytes_read = 0;
+  auto &data_file = options->redirect->data_file;
+  auto &pipe = options->redirect->pipe;
+  auto &mutex = options->redirect->mutex;
+  data_file.seek(0, fs::File::Whence::end);
+
   do {
+    api::ErrorScope error_scope;
+    const auto bytes_read = pipe.read_file().read(buffer).return_value();
     {
       thread::Mutex::Scope mutex_scope(mutex);
-      fs::File::LocationScope location_scope(data_file);
-      {
-        api::ErrorScope error_scope;
-        bytes_read = pipe.read_file().read(buffer).return_value();
-        if (bytes_read > 0) {
-          data_file.write(var::View(buffer.data(), bytes_read));
-        }
+      if (bytes_read > 0) {
+        // data file is write append, we want to preserve
+        // the file location for reading the data file
+        fs::File::LocationScope location_scope(data_file);
+        data_file.write(var::View(buffer.data(), bytes_read));
       }
-      chrono::wait(10_milliseconds);
+    }
+  } while (1);
+}
+
+void *Process::update_redirect_thread_function(void *args) {
+  const auto options = reinterpret_cast<const RedirectOptions *>(args);
+  options->self->update_redirect(options);
+  return nullptr;
+}
+
+void Process::Redirect::start_thread(Process::RedirectOptions *options) {
+  thread = thread::Thread(
+    thread::Thread::Attributes().set_joinable(),
+    options,
+    update_redirect_thread_function);
+}
+
+var::String Process::Redirect::read() {
+  thread::Mutex::Scope ms(mutex);
+  var::Array<char, 1024> buffer;
+  var::String result;
+  int bytes_read = 0;
+  do {
+    api::ErrorScope error_scope;
+    bytes_read = data_file.read(var::View(buffer.data(), buffer.count() - 1))
+                   .return_value();
+    if (bytes_read > 0) {
+      buffer.at(bytes_read) = 0;
+      result += buffer.data();
     }
   } while (bytes_read > 0);
+  return result;
+}
+
+void Process::Redirect::wait_stop() {
+  thread::Mutex::Scope ms(mutex);
+  thread.cancel().join();
 }
 
 #endif

@@ -26,7 +26,7 @@ Pipe::Pipe() {
   m_read_file = fs::File().set_fileno(fd[0]).move();
   m_write_file = fs::File().set_fileno(fd[1]).move();
 
-#if defined __win32
+#if defined __win32 || 1
 
 #else
   fcntl(

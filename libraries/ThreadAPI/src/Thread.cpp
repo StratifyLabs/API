@@ -2,12 +2,13 @@
 
 #include "thread/Thread.hpp"
 #include "chrono.hpp"
+#include "thread/Mutex.hpp"
 
 #include <cstdio>
 using namespace thread;
 
 #if defined __link
-#define THREAD_ATTRIBUTES_DEFAULT_STACK_SIZE (512*1024)
+#define THREAD_ATTRIBUTES_DEFAULT_STACK_SIZE (512 * 1024)
 #else
 #define THREAD_ATTRIBUTES_DEFAULT_STACK_SIZE (4096)
 #endif
@@ -42,37 +43,42 @@ int Thread::Attributes::get_stack_size() const {
 
 Thread::Attributes &Thread::Attributes::set_detach_state(DetachState value) {
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL("", pthread_attr_setdetachstate(&m_pthread_attr,
-                                                  static_cast<int>(value)));
+  API_SYSTEM_CALL(
+    "",
+    pthread_attr_setdetachstate(&m_pthread_attr, static_cast<int>(value)));
   return *this;
 }
 
 Thread::DetachState Thread::Attributes::get_detach_state() const {
   API_RETURN_VALUE_IF_ERROR(DetachState::detached);
   int detach_state = 0;
-  API_SYSTEM_CALL("",
-                  pthread_attr_getdetachstate(&m_pthread_attr, &detach_state));
+  API_SYSTEM_CALL(
+    "",
+    pthread_attr_getdetachstate(&m_pthread_attr, &detach_state));
   return static_cast<DetachState>(detach_state);
 }
 
 Thread::Attributes &Thread::Attributes::set_inherit_sched(IsInherit value) {
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL("", pthread_attr_setinheritsched(&m_pthread_attr,
-                                                   static_cast<int>(value)));
+  API_SYSTEM_CALL(
+    "",
+    pthread_attr_setinheritsched(&m_pthread_attr, static_cast<int>(value)));
   return *this;
 }
 Thread::IsInherit Thread::Attributes::get_inherit_sched() const {
   API_RETURN_VALUE_IF_ERROR(IsInherit::yes);
   int inherit_sched = 0;
-  API_SYSTEM_CALL("",
-                  pthread_attr_getinheritsched(&m_pthread_attr, &inherit_sched));
+  API_SYSTEM_CALL(
+    "",
+    pthread_attr_getinheritsched(&m_pthread_attr, &inherit_sched));
   return static_cast<IsInherit>(inherit_sched);
 }
 
 Thread::Attributes &Thread::Attributes::set_scope(ContentionScope value) {
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL(
-      "", pthread_attr_setscope(&m_pthread_attr, static_cast<int>(value)));
+    "",
+    pthread_attr_setscope(&m_pthread_attr, static_cast<int>(value)));
   return *this;
 }
 
@@ -86,7 +92,7 @@ Thread::ContentionScope Thread::Attributes::get_scope() const {
 Thread::Attributes &Thread::Attributes::set_sched_priority(int priority) {
   API_RETURN_VALUE_IF_ERROR(*this);
 #if defined __win32
-  //I am not sure if windows implements this
+  // I am not sure if windows implements this
 #else
   struct sched_param param = {};
   param.sched_priority = priority;
@@ -100,8 +106,9 @@ Thread::Attributes &Thread::Attributes::set_sched_policy(Sched::Policy value) {
   API_RETURN_VALUE_IF_ERROR(*this);
 #if defined __win32
 #else
-  API_SYSTEM_CALL("", pthread_attr_setschedpolicy(&m_pthread_attr,
-                                                  static_cast<int>(value)));
+  API_SYSTEM_CALL(
+    "",
+    pthread_attr_setschedpolicy(&m_pthread_attr, static_cast<int>(value)));
   set_inherit_sched(IsInherit::no);
 #endif
   return *this;
@@ -136,19 +143,21 @@ struct StartUp {
   void *argument = nullptr;
 };
 
-void Thread::construct(const Attributes &attributes, const Construct & options){
+void Thread::construct(const Attributes &attributes, const Construct &options) {
   API_RETURN_IF_ERROR();
   API_ASSERT(options.function() != nullptr);
 
-  //this can't be a member of Thread because if thread gets
-  //moved the address will be wrong
-  //this is deleted in the new thread OR below if creation fails
-  auto * startup = new StartUp{ .function = options.function(), .argument = options.argument() };
+  // this can't be a member of Thread because if thread gets
+  // moved the address will be wrong
+  // this is deleted in the new thread OR below if creation fails
+  auto *startup = new StartUp{
+    .function = options.function(),
+    .argument = options.argument()};
 
   // First create the thread
-  int result =
-    API_SYSTEM_CALL("pthread_create", pthread_create(&m_id, &attributes.m_pthread_attr,
-                                       handle_thread, startup));
+  int result = API_SYSTEM_CALL(
+    "pthread_create",
+    pthread_create(&m_id, &attributes.m_pthread_attr, handle_thread, startup));
   if (result < 0) {
     m_state = State::error;
     delete startup;
@@ -157,19 +166,25 @@ void Thread::construct(const Attributes &attributes, const Construct & options){
                 ? State::joinable
                 : State::detached;
   }
-
 }
 
 void *Thread::handle_thread(void *args) {
+  static Mutex error_creation_mutex;
   auto *startup_pointer = reinterpret_cast<StartUp *>(args);
   StartUp startup(*startup_pointer);
   delete startup_pointer;
+
+  {
+    //the first access to the error context needs to
+    //be mutually exclusive
+    Mutex::Scope ms(error_creation_mutex);
+    api::ExecutionContext::error();
+  }
 
   void *result = startup.function(startup.argument);
   free_context();
   return result;
 }
-
 
 Thread::~Thread() {
   api::ErrorScope error_scope;
@@ -186,7 +201,8 @@ Thread &Thread::set_sched_parameters(Sched::Policy policy, int priority) {
   struct sched_param param = {};
   param.sched_priority = priority;
   API_SYSTEM_CALL(
-      "", pthread_setschedparam(id(), static_cast<int>(policy), &param));
+    "",
+    pthread_setschedparam(id(), static_cast<int>(policy), &param));
   return *this;
 }
 
@@ -208,8 +224,8 @@ int Thread::get_sched_parameters(int &policy, int &priority) const {
   API_RETURN_VALUE_IF_ERROR(-1);
   API_ASSERT(is_valid());
   struct sched_param param = {};
-  int result =
-      API_SYSTEM_CALL("", pthread_getschedparam(id(), &policy, &param));
+  int result
+    = API_SYSTEM_CALL("", pthread_getschedparam(id(), &policy, &param));
   priority = param.sched_priority;
   return result;
 }
@@ -234,20 +250,21 @@ bool Thread::is_running() const {
   return false;
 }
 
-
 Thread::CancelType Thread::set_cancel_type(CancelType cancel_type) {
   API_RETURN_VALUE_IF_ERROR(CancelType::deferred);
   int old = int(CancelType::deferred);
-  API_SYSTEM_CALL("",
-                  pthread_setcanceltype(static_cast<int>(cancel_type), &old));
+  API_SYSTEM_CALL(
+    "",
+    pthread_setcanceltype(static_cast<int>(cancel_type), &old));
   return CancelType(old);
 }
 
-Thread::CancelState Thread::set_cancel_state(CancelState cancel_state){
+Thread::CancelState Thread::set_cancel_state(CancelState cancel_state) {
   API_RETURN_VALUE_IF_ERROR(CancelState::disable);
   int old = 0;
-  API_SYSTEM_CALL("",
-                  pthread_setcancelstate(static_cast<int>(cancel_state), &old));
+  API_SYSTEM_CALL(
+    "",
+    pthread_setcancelstate(static_cast<int>(cancel_state), &old));
   return CancelState(old);
 }
 
