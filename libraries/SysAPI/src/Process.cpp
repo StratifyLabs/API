@@ -176,6 +176,11 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 
 #else
 
+  const auto pwd = environment.find("PWD");
+  if( fs::FileSystem().directory_exists(pwd) == false ){
+    API_RETURN_ASSIGN_ERROR(("cannot change dir to `" | var::StringView(pwd)) | "`", errno);
+  }
+
   m_pid = API_SYSTEM_CALL("fork()", fork());
   if (m_pid == 0) {
 
