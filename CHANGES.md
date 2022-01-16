@@ -2,7 +2,7 @@
 
 
 ## New Features
-
+- Add static function for `sys::Pipe::make_fifo()` for linux and macOS
 - `sys::Process` no longer provides a pipe. It gives an `fs::DataFile` for standard output and error.
 - Add `sys::System::launch_browser()` to open a link in the system browser
 - Add `api::catch_segmentation_fault()` to call `API_ASSERT()` when a segmentation fault happens (desktop)

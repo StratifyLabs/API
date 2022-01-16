@@ -21,6 +21,8 @@
 using namespace sys;
 
 Pipe::Pipe() {
+  API_RETURN_IF_ERROR();
+
   int fd[2];
   API_SYSTEM_CALL("pipe()", posix_pipe(fd));
   m_read_file = fs::File().set_fileno(fd[0]).move();
@@ -33,6 +35,17 @@ Pipe::Pipe() {
     m_read_file.fileno(),
     F_SETFL,
     fcntl(m_read_file.fileno(), F_GETFL, 0) | O_NONBLOCK);
+#endif
+}
+
+void Pipe::make_fifo(var::StringView path, fs::Permissions permissions) {
+  API_RETURN_IF_ERROR();
+#if defined __win32
+
+#else
+  API_SYSTEM_CALL(
+    "mkfifo",
+    mkfifo(var::PathString(path).cstring(), permissions.permissions()));
 #endif
 }
 
