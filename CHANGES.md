@@ -9,6 +9,8 @@
 
 ## Bug Fixes
 
+- When creating a thread, the error context needs to be generated for the first time with a mutex
+- Ensure `PWD` exists for new process before starting the process
 - House keeping on `Process` for linux and mac
 - Fix `Process` spawn on Windows when the path has a space. `argv[0]` is given just the executable name
 - Add correct move semantics to StackString

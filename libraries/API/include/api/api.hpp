@@ -168,7 +168,7 @@ protected:
   void update_error_context(int result, int line, const char *message);
 
 private:
-  friend class ErrorGuard;
+  friend class ErrorScope;
   PrivateExecutionContext() : m_error(&(errno)) {}
   Error m_error;
   std::vector<Error> *m_error_list = nullptr;
@@ -214,19 +214,19 @@ public:
   static inline int return_value() { return m_private_context.value(); }
 
 private:
-  friend class ErrorGuard;
+  friend class ErrorScope;
   static PrivateExecutionContext m_private_context;
 };
 
-class ErrorGuard {
+class ErrorScope {
 public:
-  ErrorGuard()
+  ErrorScope()
     : m_error(ExecutionContext::m_private_context.m_error),
       m_error_number(errno) {
     m_is_guarded = ExecutionContext::m_private_context.m_error.is_guarded();
     ExecutionContext::reset_error();
   }
-  ~ErrorGuard() {
+  ~ErrorScope() {
     ExecutionContext::m_private_context.m_error = m_error;
     ExecutionContext::m_private_context.m_error.set_guarded(m_is_guarded);
     errno = m_error_number;
@@ -238,8 +238,8 @@ private:
   bool m_is_guarded;
 };
 
-using ErrorContext = ErrorGuard;
-using ErrorScope = ErrorGuard;
+using ErrorContext = ErrorScope;
+using ErrorGuard = ErrorScope;
 
 class ThreadExecutionContext {
 public:

@@ -7,17 +7,21 @@
 
 #if defined __win32
 #include <winsock2.h>
-#include <windows.h>
+//don't let clang put windows.h or direct.h before winsock2
 #include <direct.h>
+#include <windows.h>
 #endif
 
 #include <sdk/types.h>
 #include <type_traits>
 
 #include "api/api.hpp"
-#include "var/StackString.hpp"
-#include "fs/Path.hpp"
 #include "fs/DataFile.hpp"
+#include "fs/Path.hpp"
+#include "thread/Cond.hpp"
+#include "thread/Mutex.hpp"
+#include "thread/Thread.hpp"
+#include "var/StackString.hpp"
 
 #include "Pipe.hpp"
 
@@ -108,7 +112,7 @@ public:
     }
 
   private:
-    API_RAC(Arguments,var::PathString,path);
+    API_RAC(Arguments, var::PathString, path);
     void copy(const Arguments &arguments) {
       m_path = arguments.path();
       m_arguments.push_back(nullptr);
@@ -159,7 +163,6 @@ public:
   }
   ~Process();
 
-  Process &read_output();
   Process &wait();
   bool is_running();
 
@@ -168,50 +171,76 @@ public:
   var::String get_standard_output();
   var::String get_standard_error();
 
-  const fs::DataFile & standard_output() const {
-    return m_standard_output;
+  var::String read_standard_output();
+  var::String read_standard_error();
+
+  const fs::DataFile &standard_output() const {
+    return m_standard_output.data_file;
   }
 
-  const fs::DataFile & standard_error() const {
-    return m_standard_error;
+  const fs::DataFile &standard_error() const {
+    return m_standard_error.data_file;
   }
 
+  thread::Mutex &standard_output_mutex() { return m_standard_output.mutex; }
+
+  thread::Mutex &standard_error_mutex() { return m_standard_error.mutex; }
 
 private:
   pid_t m_pid = -1;
   int m_status = 0;
 
-  fs::DataFile m_standard_output;
-  fs::DataFile m_standard_error;
-
-
 #if defined __win32
   PROCESS_INFORMATION *m_process_information;
   HANDLE m_process;
-#else
-  Pipe m_pipe_output;
-  Pipe m_pipe_error;
 #endif
+
+  struct Redirect;
+  struct RedirectOptions {
+    Redirect *redirect;
+    Process *self;
+  };
+
+  struct Redirect {
+    thread::Thread thread;
+    thread::Mutex mutex;
+    Pipe pipe;
+    fs::DataFile data_file;
+    volatile bool is_stop_requested = false;
+
+    void start_thread(RedirectOptions *options);
+    void wait_stop();
+    var::String read();
+
+#if defined __win32
+    HANDLE thread_handle;
+#endif
+
+  };
+
+  Redirect m_standard_output;
+  Redirect m_standard_error;
+
+  RedirectOptions m_standard_output_redirect_options;
+  RedirectOptions m_standard_error_redirect_options;
 
   void swap(Process &a) {
     std::swap(m_pid, a.m_pid);
     std::swap(m_status, a.m_status);
-#if defined __win32
-
-#else
-    std::swap(m_pipe_output, a.m_pipe_output);
-    std::swap(m_pipe_error, a.m_pipe_error);
-#endif
+    std::swap(m_standard_output, a.m_standard_output);
+    std::swap(m_standard_error, a.m_standard_error);
   }
+
+  static void *update_redirect_thread_function(void *args);
+  void update_redirect(const RedirectOptions *options);
 };
 
 } // namespace sys
 
-
 namespace printer {
-Printer & operator << (Printer & printer, const sys::Process::Arguments & arguments);
-Printer & operator << (Printer & printer, const sys::Process::Environment & env);
-}
+Printer &operator<<(Printer &printer, const sys::Process::Arguments &arguments);
+Printer &operator<<(Printer &printer, const sys::Process::Environment &env);
+} // namespace printer
 
 #endif
 
