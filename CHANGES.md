@@ -2,6 +2,8 @@
 
 
 ## New Features
+
+- Add `double` detection for `var::NumberString` for `__link` builds
 - Add static function for `sys::Pipe::make_fifo()` for linux and macOS
 - `sys::Process` no longer provides a pipe. It gives an `fs::DataFile` for standard output and error.
 - Add `sys::System::launch_browser()` to open a link in the system browser

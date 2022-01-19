@@ -10,9 +10,6 @@ namespace var {
 
 template <class Derived, int Size> class StackString {
 public:
-
-
-
   using Base = StringView::Base;
   Derived &clear() {
     m_buffer[0] = 0;
@@ -88,7 +85,6 @@ public:
     return string_view() > a.string_view();
   }
 
-
   API_NO_DISCARD char at(size_t offset) const {
     if (offset < Size) {
       return m_buffer[offset];
@@ -133,7 +129,7 @@ public:
     return static_cast<Derived &>(*this);
   }
 
-  Derived &truncate(size_t new_length){
+  Derived &truncate(size_t new_length) {
     const auto current_length = length();
     const auto end = current_length > new_length ? new_length : current_length;
     m_buffer[new_length] = 0;
@@ -158,18 +154,15 @@ public:
     return replace(options);
   }
 
-  StackString<Derived,Size>(const StackString&) = default;
-  StackString<Derived,Size>& operator=(const StackString&) = default;
+  StackString<Derived, Size>(const StackString &) = default;
+  StackString<Derived, Size> &operator=(const StackString &) = default;
 
-  StackString<Derived,Size>(StackString&&a){
-    move(a);
-  }
+  StackString<Derived, Size>(StackString &&a) { move(a); }
 
-  StackString<Derived,Size>& operator=(StackString&&a){
+  StackString<Derived, Size> &operator=(StackString &&a) {
     move(a);
     return *this;
   }
-
 
 protected:
   StackString() { m_buffer[0] = 0; }
@@ -192,7 +185,7 @@ protected:
   char m_buffer[Size];
 
 private:
-  void move(StackString & a){
+  void move(StackString &a) {
     char tmp[Size];
     strncpy(tmp, a.m_buffer, capacity());
     strncpy(a.m_buffer, m_buffer, capacity());
@@ -300,8 +293,11 @@ public:
           ? "%u"
         : std::is_same<T, unsigned long>::value      ? "%lu"
         : std::is_same<T, unsigned long long>::value ? "%lld"
-        : std::is_same<T, float>::value              ? "%f"
-                                                     : nullptr;
+#if defined __link
+        : std::is_same<T, double>::value ? "%f"
+#endif
+        : std::is_same<T, float>::value ? "%f"
+                                        : nullptr;
     static_assert(fmt != nullptr, "NumberString can't handle type");
 
     snprintf(m_buffer, capacity(), fmt, value);
