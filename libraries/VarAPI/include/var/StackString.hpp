@@ -201,6 +201,17 @@ public:
   // implicit conversion
   operator const char *() const { return m_buffer; }
 };
+using StackString24 = IdString;
+
+class KeyString : public StackString<KeyString, 48> {
+public:
+  KeyString() = default;
+  KeyString(const StringView a) : StackString(a) {}
+  KeyString(const char *a) : StackString(a) {}
+  // implicit conversion
+  operator const char *() const { return m_buffer; }
+};
+using StackString48 = IdString;
 
 class NameString : public StackString<NameString, NAME_MAX + 1> {
 public:
@@ -212,14 +223,6 @@ public:
   operator const char *() const { return m_buffer; }
 };
 
-class KeyString : public StackString<KeyString, 48> {
-public:
-  KeyString() = default;
-  KeyString(const StringView a) : StackString(a) {}
-  KeyString(const char *a) : StackString(a) {}
-  // implicit conversion
-  operator const char *() const { return m_buffer; }
-};
 
 #if defined __win32
 // on windows PATH_MAX is too small (261 chars)

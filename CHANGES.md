@@ -3,6 +3,7 @@
 
 ## New Features
 
+- Add aliases to `StackString` types with the max length of the string (e.g. `StackString24`)
 - Add `double` detection for `var::NumberString` for `__link` builds
 - Add static function for `sys::Pipe::make_fifo()` for linux and macOS
 - `sys::Process` no longer provides a pipe. It gives an `fs::DataFile` for standard output and error.
