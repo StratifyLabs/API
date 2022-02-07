@@ -7,7 +7,8 @@
 
 namespace fs {
 
-using PathList = var::Vector<var::PathString>;
+using PathContainer = var::Vector<var::PathString>;
+using PathList = PathContainer;
 
 class FileSystem : public api::ExecutionContext {
 public:
@@ -46,7 +47,7 @@ public:
     var::StringView path,
     IsRecursive is_recursive = IsRecursive::no) const;
 
-  API_NO_DISCARD PathList read_directory(
+  API_NO_DISCARD PathContainer read_directory(
     var::StringView path,
     IsRecursive is_recursive = IsRecursive::no,
     ExcludeCallback exclude = nullptr,
@@ -89,7 +90,7 @@ private:
 
 namespace printer {
 class Printer;
-Printer &operator<<(Printer &printer, const fs::PathList &a);
+Printer &operator<<(Printer &printer, const fs::PathContainer &a);
 } // namespace printer
 
 #endif // FSAPI_FS_FILESYSTEM_HPP

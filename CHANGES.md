@@ -9,6 +9,7 @@
 - `sys::Process` no longer provides a pipe. It gives an `fs::DataFile` for standard output and error.
 - Add `sys::System::launch_browser()` to open a link in the system browser
 - Add `api::catch_segmentation_fault()` to call `API_ASSERT()` when a segmentation fault happens (desktop)
+- Use `fs::PathContainer` instead of `fs::PathList`. `fs::PathList` will be deprecated. `Container` is a more accurate description.
 
 ## Bug Fixes
 
@@ -17,6 +18,7 @@
 - House keeping on `Process` for linux and mac
 - Fix `Process` spawn on Windows when the path has a space. `argv[0]` is given just the executable name
 - Add correct move semantics to StackString
+- Fix `Process` threads that monitor stdout and stderr
 
 # Version 1.2.0
 

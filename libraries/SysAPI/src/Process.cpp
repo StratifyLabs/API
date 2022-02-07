@@ -167,6 +167,9 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 
   bool is_process_launched = false;
 
+  m_standard_output = new Redirect();
+  m_standard_error = new Redirect();
+
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};
@@ -235,15 +238,18 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
       API_RETURN_ASSIGN_ERROR("failed to chdir to PWD", errno);
     }
 
-    dup2(m_standard_output.pipe.write_file().fileno(), STDOUT_FILENO);
+    dup2(m_standard_output->pipe.write_file().fileno(), STDOUT_FILENO);
     // stdout will now write to the pipe -- this fileno isn't needed anymore
     // but doesn't necessarily have to be closed
-    m_standard_output.pipe.write_file() = fs::File();
+    m_standard_output->pipe.write_file() = fs::File();
 
-    dup2(m_standard_error.pipe.write_file().fileno(), STDERR_FILENO);
+    dup2(m_standard_error->pipe.write_file().fileno(), STDERR_FILENO);
     // stderr will now write to the pipe -- this fileno isn't needed anymore
     // but doesn't necessarily have to be closed
-    m_standard_error.pipe.write_file() = fs::File();
+    m_standard_error->pipe.write_file() = fs::File();
+
+    //delete m_standard_output;
+    //delete m_standard_error;
 
     // replace the current process with the one specified
     ::execve(args.path(), args.m_arguments.data(), environ);
@@ -255,19 +261,24 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 #endif
 
   if (is_process_launched) {
-    m_standard_output_redirect_options
-      = {.redirect = &m_standard_output, .self = this};
-    m_standard_error_redirect_options
-      = {.redirect = &m_standard_error, .self = this};
+    m_standard_output->self = this;
+    m_standard_error->self = this;
 
-    m_standard_output.start_thread(&m_standard_output_redirect_options);
-    m_standard_error.start_thread(&m_standard_error_redirect_options);
+    m_standard_output->start_thread();
+    m_standard_error->start_thread();
   }
 }
 
 Process::~Process() {
   // if process is NOT detached -- wait for it to complete
   wait();
+
+  if (m_standard_output != nullptr) {
+    delete m_standard_output;
+  }
+  if (m_standard_error != nullptr) {
+    delete m_standard_error;
+  }
 }
 
 Process &Process::wait() {
@@ -299,8 +310,8 @@ Process &Process::wait() {
   if (result == m_pid) {
     m_pid = -1;
     m_status = status;
-    m_standard_error.wait_stop();
-    m_standard_output.wait_stop();
+    m_standard_error->wait_stop();
+    m_standard_output->wait_stop();
   }
 #endif
 
@@ -341,8 +352,8 @@ bool Process::is_running() {
     m_status = status;
     m_pid = -1;
 
-    m_standard_error.wait_stop();
-    m_standard_output.wait_stop();
+    m_standard_error->wait_stop();
+    m_standard_output->wait_stop();
     return false;
   }
 #endif
@@ -351,62 +362,77 @@ bool Process::is_running() {
 }
 
 var::String Process::get_standard_output() {
-  thread::Mutex::Scope mutex_scope(m_standard_output.mutex);
+  thread::Mutex::Scope mutex_scope(m_standard_output->mutex);
   return var::String(var::StringView(
     reinterpret_cast<const char *>(
-      m_standard_output.data_file.data().data_u8()),
-    m_standard_output.data_file.data().size()));
+      m_standard_output->data_file.data().data_u8()),
+    m_standard_output->data_file.data().size()));
 }
 
 var::String Process::get_standard_error() {
-  thread::Mutex::Scope mutex_scope(m_standard_error.mutex);
+  thread::Mutex::Scope mutex_scope(m_standard_error->mutex);
   return var::String(var::StringView(
-    reinterpret_cast<const char *>(m_standard_error.data_file.data().data_u8()),
-    m_standard_error.data_file.data().size()));
+    reinterpret_cast<const char *>(
+      m_standard_error->data_file.data().data_u8()),
+    m_standard_error->data_file.data().size()));
 }
 
-var::String Process::read_standard_output() { return m_standard_output.read(); }
+var::String Process::read_standard_output() {
+  API_ASSERT(m_standard_output != nullptr);
+  return m_standard_output->read();
+}
 
-var::String Process::read_standard_error() { return m_standard_error.read(); }
+var::String Process::read_standard_error() {
+  API_ASSERT(m_standard_error != nullptr);
+  return m_standard_error->read();
+}
 
-void Process::update_redirect(const RedirectOptions *options) {
+void Process::update_redirect(Redirect *redirect) {
   // reads the pipe in a thread
+  API_ASSERT(redirect != nullptr);
+
 #if defined __win32
   options->redirect->thread_handle = GetCurrentThread();
 #endif
   var::Array<char, 2048> buffer;
-  auto &data_file = options->redirect->data_file;
-  auto &pipe = options->redirect->pipe;
-  auto &mutex = options->redirect->mutex;
-  data_file.seek(0, fs::File::Whence::end);
-  bool is_stop_requested = options->redirect->is_stop_requested;
+  auto &data_file = redirect->data_file;
+  auto &pipe = redirect->pipe;
+  auto &mutex = redirect->mutex;
+  {
+    thread::Mutex::Scope mutex_scope(mutex);
+    data_file.seek(0, fs::File::Whence::end);
+  }
+  bool is_stop_requested;
   do {
-    api::ErrorScope error_scope;
-    const auto bytes_read = pipe.read_file().read(buffer).return_value();
     {
-      thread::Mutex::Scope mutex_scope(mutex);
+      api::ErrorScope error_scope;
+      const auto bytes_read = pipe.read_file().read(buffer).return_value();
       if (bytes_read > 0) {
+        thread::Mutex::Scope mutex_scope(mutex);
         // data file is write append, we want to preserve
         // the file location for reading the data file
         fs::File::LocationScope location_scope(data_file);
         data_file.write(var::View(buffer.data(), bytes_read));
       }
-      is_stop_requested = options->redirect->is_stop_requested;
+    }
 
+    {
+      thread::Mutex::Scope mutex_scope(mutex);
+      is_stop_requested = redirect->is_stop_requested;
     }
   } while (!is_stop_requested);
 }
 
 void *Process::update_redirect_thread_function(void *args) {
-  const auto options = reinterpret_cast<const RedirectOptions *>(args);
+  auto *options = reinterpret_cast<Redirect *>(args);
   options->self->update_redirect(options);
   return nullptr;
 }
 
-void Process::Redirect::start_thread(Process::RedirectOptions *options) {
+void Process::Redirect::start_thread() {
   thread = thread::Thread(
-    thread::Thread::Attributes().set_joinable(),
-    options,
+    thread::Thread::Attributes().set_stack_size(512 * 1024).set_joinable(),
+    this,
     update_redirect_thread_function);
 }
 
@@ -440,7 +466,7 @@ void Process::Redirect::wait_stop() {
   }
 
   thread.cancel();
-  if( thread.is_joinable() ){
+  if (thread.is_joinable()) {
     thread.join();
   }
 }
