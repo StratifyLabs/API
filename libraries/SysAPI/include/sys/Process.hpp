@@ -7,7 +7,7 @@
 
 #if defined __win32
 #include <winsock2.h>
-//don't let clang put windows.h or direct.h before winsock2
+// don't let clang put windows.h or direct.h before winsock2
 #include <direct.h>
 #include <windows.h>
 #endif
@@ -175,16 +175,24 @@ public:
   var::String read_standard_error();
 
   const fs::DataFile &standard_output() const {
-    return m_standard_output.data_file;
+    API_ASSERT(m_standard_output != nullptr);
+    return m_standard_output->data_file;
   }
 
   const fs::DataFile &standard_error() const {
-    return m_standard_error.data_file;
+    API_ASSERT(m_standard_error != nullptr);
+    return m_standard_error->data_file;
   }
 
-  thread::Mutex &standard_output_mutex() { return m_standard_output.mutex; }
+  thread::Mutex &standard_output_mutex() {
+    API_ASSERT(m_standard_output != nullptr);
+    return m_standard_output->mutex;
+  }
 
-  thread::Mutex &standard_error_mutex() { return m_standard_error.mutex; }
+  thread::Mutex &standard_error_mutex() {
+    API_ASSERT(m_standard_error != nullptr);
+    return m_standard_error->mutex;
+  }
 
 private:
   pid_t m_pid = -1;
@@ -195,34 +203,25 @@ private:
   HANDLE m_process;
 #endif
 
-  struct Redirect;
-  struct RedirectOptions {
-    Redirect *redirect;
-    Process *self;
-  };
-
   struct Redirect {
     thread::Thread thread;
     thread::Mutex mutex;
     Pipe pipe;
     fs::DataFile data_file;
     volatile bool is_stop_requested = false;
+    Process *self;
 
-    void start_thread(RedirectOptions *options);
+    void start_thread();
     void wait_stop();
     var::String read();
 
 #if defined __win32
     HANDLE thread_handle;
 #endif
-
   };
 
-  Redirect m_standard_output;
-  Redirect m_standard_error;
-
-  RedirectOptions m_standard_output_redirect_options;
-  RedirectOptions m_standard_error_redirect_options;
+  Redirect *m_standard_output = nullptr;
+  Redirect *m_standard_error = nullptr;
 
   void swap(Process &a) {
     std::swap(m_pid, a.m_pid);
@@ -232,7 +231,7 @@ private:
   }
 
   static void *update_redirect_thread_function(void *args);
-  void update_redirect(const RedirectOptions *options);
+  void update_redirect(Redirect *options);
 };
 
 } // namespace sys

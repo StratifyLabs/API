@@ -11,7 +11,7 @@
 #include "fs/Path.hpp"
 
 printer::Printer &
-printer::operator<<(printer::Printer &printer, const fs::PathList &a) {
+printer::operator<<(printer::Printer &printer, const fs::PathContainer &a) {
   size_t i = 0;
   for (const auto &item : a) {
     printer.key(var::NumberString(i++), item.string_view());
