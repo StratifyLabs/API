@@ -12,8 +12,7 @@ namespace chrono {
 
 class DateTime {
 public:
-  DateTime();
-
+  DateTime() = default;
   explicit DateTime(time_t t) : m_ctime(t) {}
 
   class Construct {
@@ -68,7 +67,7 @@ public:
   API_NO_DISCARD u32 hour() const;
 
 private:
-  time_t m_ctime;
+  time_t m_ctime = 0;
 };
 
 class Date {
@@ -107,6 +106,8 @@ public:
     december API_MAYBE_UNUSED
   };
 
+  static const char * to_cstring(Month value);
+
   API_NO_DISCARD int day() const { return m_tm.tm_mday; }
   API_NO_DISCARD int weekday() const { return m_tm.tm_wday; }
   API_NO_DISCARD  API_MAYBE_UNUSED int yearday() const { return m_tm.tm_yday; }
@@ -140,6 +141,7 @@ inline chrono::DateTime operator"" _minutes(unsigned long long int value) {
 namespace printer {
 class Printer;
 Printer &operator<<(Printer &printer, const chrono::DateTime &a);
+Printer &operator<<(Printer &printer, const chrono::Date &a);
 } // namespace printer
 
 #endif /* CHRONO_API_CHRONO_TIME_HPP_ */

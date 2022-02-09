@@ -3,6 +3,7 @@
 
 ## New Features
 
+- Add operator for printing `Date` as an object
 - Add aliases to `StackString` types with the max length of the string (e.g. `StackString24`)
 - Add `double` detection for `var::NumberString` for `__link` builds
 - Add static function for `sys::Pipe::make_fifo()` for linux and macOS
