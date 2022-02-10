@@ -20,6 +20,7 @@
 - Fix `Process` spawn on Windows when the path has a space. `argv[0]` is given just the executable name
 - Add correct move semantics to StackString
 - Fix `Process` threads that monitor stdout and stderr
+- Don't set system time in `Date().set_system_time()` if there is an error
 
 # Version 1.2.0
 

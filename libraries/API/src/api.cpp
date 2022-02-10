@@ -142,7 +142,7 @@ const char *Demangler::demangle(const char *input) {
 }
 
 #if defined __link
-void signal_segmentation_fault(int){
+void signal_segmentation_fault(int) {
   static int count = 0;
   if (count == 0) {
     API_ASSERT(false);
@@ -152,7 +152,7 @@ void signal_segmentation_fault(int){
 
 #endif
 
-void api::catch_segmentation_fault(){
+void api::catch_segmentation_fault() {
 #if defined __link
   signal(11, signal_segmentation_fault);
 #endif

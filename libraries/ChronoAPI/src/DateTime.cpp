@@ -107,6 +107,7 @@ DateTime DateTime::get_system_time() {
 }
 
 DateTime &DateTime::set_system_time() {
+  API_RETURN_VALUE_IF_ERROR(*this);
 #if !defined __link
   struct timeval tp {};
   struct timezone tz {};
@@ -123,7 +124,7 @@ u32 DateTime::minute() const { return (m_ctime % 3600) / 60; }
 u32 DateTime::hour() const { return m_ctime / 3600 % 24; }
 
 Date::Date(const DateTime &date_time, const Construct &options) {
-  time_t ctime = date_time.ctime() + options.is_daylight_savings() * 3600
+  const time_t ctime = date_time.ctime() + options.is_daylight_savings() * 3600
                  + options.time_zone() * 3600;
 #if defined __win32
   struct tm *ptr;
