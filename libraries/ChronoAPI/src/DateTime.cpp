@@ -53,21 +53,34 @@ printer::operator<<(printer::Printer &printer, const chrono::Date &a) {
 
 using namespace chrono;
 
-const char * Date::to_cstring(Month value){
-  switch(value){
-  case Month::null: return "null";
-  case Month::january: return "january";
-  case Month::february: return "february";
-  case Month::march: return "march";
-  case Month::april: return "april";
-  case Month::may: return "may";
-  case Month::june: return "june";
-  case Month::july: return "july";
-  case Month::august: return "august";
-  case Month::september: return "september";
-  case Month::october: return "october";
-  case Month::november: return "november";
-  case Month::december: return "december";
+const char *Date::to_cstring(Month value) {
+  switch (value) {
+  case Month::null:
+    return "null";
+  case Month::january:
+    return "january";
+  case Month::february:
+    return "february";
+  case Month::march:
+    return "march";
+  case Month::april:
+    return "april";
+  case Month::may:
+    return "may";
+  case Month::june:
+    return "june";
+  case Month::july:
+    return "july";
+  case Month::august:
+    return "august";
+  case Month::september:
+    return "september";
+  case Month::october:
+    return "october";
+  case Month::november:
+    return "november";
+  case Month::december:
+    return "december";
   }
   return "unknown";
 }
@@ -122,10 +135,21 @@ u32 DateTime::second() const { return m_ctime % 60; }
 u32 DateTime::minute() const { return (m_ctime % 3600) / 60; }
 
 u32 DateTime::hour() const { return m_ctime / 3600 % 24; }
+var::NumberString DateTime::to_string() const {
+  const auto date = Date(*this);
+  return var::NumberString().format(
+    "%04u-%02u-%02u %02d:%02d:%02d",
+    date.year(),
+    date.month(),
+    date.day(),
+    date.hour(),
+    date.minute(),
+    date.second());
+}
 
 Date::Date(const DateTime &date_time, const Construct &options) {
   const time_t ctime = date_time.ctime() + options.is_daylight_savings() * 3600
-                 + options.time_zone() * 3600;
+                       + options.time_zone() * 3600;
 #if defined __win32
   struct tm *ptr;
   ptr = gmtime(&ctime);

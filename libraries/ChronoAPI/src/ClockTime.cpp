@@ -2,8 +2,8 @@
 
 #include "printer/Printer.hpp"
 
-#include "chrono/MicroTime.hpp"
 #include "chrono/ClockTime.hpp"
+#include "chrono/MicroTime.hpp"
 
 printer::Printer &
 printer::operator<<(printer::Printer &printer, const chrono::ClockTime &a) {
@@ -33,8 +33,9 @@ using namespace chrono;
 ClockTime ClockTime::get_system_time(ClockId clock_id) {
   API_RETURN_VALUE_IF_ERROR(ClockTime());
   ClockTime clock_time;
-  API_SYSTEM_CALL("",
-                  clock_gettime(static_cast<clockid_t>(clock_id), clock_time));
+  API_SYSTEM_CALL(
+    "",
+    clock_gettime(static_cast<clockid_t>(clock_id), clock_time));
   return clock_time;
 }
 
@@ -44,13 +45,24 @@ ClockTime ClockTime::get_system_resolution(ClockId clock_id) {
   ClockTime resolution = ClockTime().set_nanoseconds(1000);
 #else
   ClockTime resolution;
-  API_SYSTEM_CALL("",
-                  clock_getres(static_cast<clockid_t>(clock_id), resolution));
+  API_SYSTEM_CALL(
+    "",
+    clock_getres(static_cast<clockid_t>(clock_id), resolution));
 #endif
   return resolution;
 }
 
 ClockTime ClockTime::get_age() const { return get_system_time() - *this; }
+
+ClockTime ClockTime::from_string(var::StringView value) {
+  const auto elements = value.split(".");
+  if (elements.count() == 2) {
+    return ClockTime()
+      .set_seconds(elements.at(0).to_unsigned_long())
+      .set_nanoseconds(elements.at(1).to_unsigned_long());
+  }
+  return {};
+}
 
 ClockTime::ClockTime(const MicroTime &micro_time) {
   m_value.tv_sec = micro_time.seconds();

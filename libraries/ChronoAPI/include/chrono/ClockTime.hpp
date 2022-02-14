@@ -28,6 +28,8 @@ public:
     return ClockTime().set_seconds(seconds);
   }
 
+  static ClockTime from_string(var::StringView value);
+
   ClockTime &reset() {
     m_value.tv_sec = 0;
     m_value.tv_nsec = 0;

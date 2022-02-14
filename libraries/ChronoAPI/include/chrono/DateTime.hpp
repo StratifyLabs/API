@@ -47,6 +47,7 @@ public:
   bool operator>=(const DateTime &a) const { return m_ctime >= a.m_ctime; }
   bool operator<=(const DateTime &a) const { return m_ctime <= a.m_ctime; }
 
+  API_NO_DISCARD var::NumberString to_string() const;
   API_NO_DISCARD DateTime age() const { return DateTime::get_system_time() - *this; }
 
   DateTime &operator+=(const DateTime &a);
