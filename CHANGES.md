@@ -3,6 +3,7 @@
 
 ## New Features
 
+- Add function to access `Process::pid()`
 - Add `to_string()` and `from_string()` to `chrono::ClockTime`
 - Add operator for printing `Date` as an object
 - Add aliases to `StackString` types with the max length of the string (e.g. `StackString24`)
