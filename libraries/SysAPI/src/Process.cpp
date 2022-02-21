@@ -183,11 +183,11 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   int stderr_fd = dup(_fileno(stderr));
 
   // change stdout and stderr to specify spawned process stdout, stderr
-  _dup2(m_standard_output.pipe.write_file().fileno(), _fileno(stdout));
-  _dup2(m_standard_error.pipe.write_file().fileno(), _fileno(stderr));
+  _dup2(m_standard_output->pipe.write_file().fileno(), _fileno(stdout));
+  _dup2(m_standard_error->pipe.write_file().fileno(), _fileno(stderr));
 
-  m_standard_output.pipe.write_file() = fs::File();
-  m_standard_error.pipe.write_file() = fs::File();
+  m_standard_output->pipe.write_file() = fs::File();
+  m_standard_error->pipe.write_file() = fs::File();
 
   if (pwd.is_empty() == false) {
     _chdir(pwd.cstring());
@@ -300,8 +300,8 @@ Process &Process::wait() {
 
   m_process = INVALID_HANDLE_VALUE;
   m_status = int(code);
-  m_standard_error.wait_stop();
-  m_standard_output.wait_stop();
+  m_standard_error->wait_stop();
+  m_standard_output->wait_stop();
   return *this;
 
 #else
@@ -341,8 +341,8 @@ bool Process::is_running() {
   }
 
   m_status = int(code);
-  m_standard_error.wait_stop();
-  m_standard_output.wait_stop();
+  m_standard_error->wait_stop();
+  m_standard_output->wait_stop();
   return false;
 #else
   if (m_pid < 0) {
@@ -397,7 +397,7 @@ void Process::update_redirect(Redirect *redirect) {
   API_ASSERT(redirect != nullptr);
 
 #if defined __win32
-  options->redirect->thread_handle = GetCurrentThread();
+  redirect->thread_handle = GetCurrentThread();
 #endif
   var::Array<char, 2048> buffer;
   auto &data_file = redirect->data_file;
