@@ -248,8 +248,8 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     // but doesn't necessarily have to be closed
     m_standard_error->pipe.write_file() = fs::File();
 
-    //delete m_standard_output;
-    //delete m_standard_error;
+    // delete m_standard_output;
+    // delete m_standard_error;
 
     // replace the current process with the one specified
     ::execve(args.path(), args.m_arguments.data(), environ);
@@ -266,6 +266,11 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 
     m_standard_output->start_thread();
     m_standard_error->start_thread();
+  } else {
+    delete m_standard_output;
+    m_standard_output = nullptr;
+    delete m_standard_error;
+    m_standard_error = nullptr;
   }
 }
 

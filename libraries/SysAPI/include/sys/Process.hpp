@@ -165,6 +165,9 @@ public:
 
   Process &wait();
   bool is_running();
+  pid_t pid() const {
+    return m_pid;
+  }
 
   Status status() { return Status(m_status); }
 
