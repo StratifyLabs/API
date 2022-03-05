@@ -3,6 +3,9 @@
 
 ## New Features
 
+- Add `var::ReplaceCharacter` and `var::ReplaceString` structs
+  - `var::String::Replace` is now an alias of `var::ReplaceString`
+  - `var::StackString::Replace` is now an alias of `var::ReplaceCharacter`
 - Add function to access `Process::pid()`
 - Add `to_string()` and `from_string()` to `chrono::ClockTime`
 - Add operator for printing `Date` as an object

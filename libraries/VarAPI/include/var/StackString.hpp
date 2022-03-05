@@ -8,6 +8,11 @@
 
 namespace var {
 
+struct ReplaceCharacter {
+  API_PMAZ(new_character, ReplaceCharacter, char, 0);
+  API_PMAZ(old_character, ReplaceCharacter, char, 0);
+};
+
 template <class Derived, int Size> class StackString {
 public:
   using Base = StringView::Base;
@@ -136,15 +141,19 @@ public:
     return static_cast<Derived &>(*this);
   }
 
+#if 0
   class Replace {
     API_AF(Replace, char, old_character, 0);
     API_AF(Replace, char, new_character, 0);
   };
+#endif
+
+  using Replace = ReplaceCharacter;
 
   Derived &replace(const Replace &options) {
     for (size_t i = 0; i < capacity(); i++) {
-      if (m_buffer[i] == options.old_character()) {
-        m_buffer[i] = options.new_character();
+      if (m_buffer[i] == options.old_character) {
+        m_buffer[i] = options.new_character;
       }
     }
     return static_cast<Derived &>(*this);
