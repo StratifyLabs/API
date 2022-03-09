@@ -24,6 +24,7 @@ public:
 
 #if defined __link
   static void launch_browser(var::StringView url);
+  static const char * get_executable_suffix();
 #endif
 };
 

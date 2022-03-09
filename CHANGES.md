@@ -3,6 +3,7 @@
 
 ## New Features
 
+- Add `sys::System::get_executable_suffix()` for desktop builds
 - Add `fs::AssetFileSystem` for use on desktop builds to manage bundled assets
 - Add `var::ReplaceCharacter` and `var::ReplaceString` structs
   - `var::String::Replace` is now an alias of `var::ReplaceString`
