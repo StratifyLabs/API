@@ -1,5 +1,6 @@
 
 set(SOURCES
+  AssetFileSystem.cpp
   Dir.cpp
   File.cpp
   DataFile.cpp

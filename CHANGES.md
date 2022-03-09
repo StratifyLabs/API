@@ -3,6 +3,7 @@
 
 ## New Features
 
+- Add `fs::AssetFileSystem` for use on desktop builds to manage bundled assets
 - Add `var::ReplaceCharacter` and `var::ReplaceString` structs
   - `var::String::Replace` is now an alias of `var::ReplaceString`
   - `var::StackString::Replace` is now an alias of `var::ReplaceCharacter`

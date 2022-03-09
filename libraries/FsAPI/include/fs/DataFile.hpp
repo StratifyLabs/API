@@ -1,7 +1,7 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#ifndef SAPI_FS_DATA_FILE_HPP_
-#define SAPI_FS_DATA_FILE_HPP_
+#ifndef FSAPI_FS_DATA_FILE_HPP
+#define FSAPI_FS_DATA_FILE_HPP
 
 #include "File.hpp"
 #include "var/Data.hpp"
@@ -63,4 +63,4 @@ private:
 
 } // namespace fs
 
-#endif /* SAPI_FS_DATA_FILE_HPP_ */
+#endif /* FSAPI_FS_DATA_FILE_HPP */
