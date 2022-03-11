@@ -52,7 +52,8 @@ public:
   };
 
   API_MAYBE_UNUSED const Cli &show_help(const ShowHelp &options) const;
-  API_MAYBE_UNUSED const Cli &show_version(const ShowHelp &options) const;
+  using ShowVersion = ShowHelp;
+  API_MAYBE_UNUSED const Cli &show_version(const ShowVersion &options) const;
 
 private:
   u16 m_argc = 0;

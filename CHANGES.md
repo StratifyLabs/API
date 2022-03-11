@@ -22,6 +22,7 @@
 
 ## Bug Fixes
 
+- The function `sys::Cli::show_version` was not implemented (it is now)
 - Remove relative links in `README.md`
 - Minor (SonarLint) fixes in `printer::MarkdownPrinter`
 - Make `printer::Printer::~Printer` virtual

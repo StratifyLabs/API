@@ -133,3 +133,21 @@ const Cli &Cli::show_help(const ShowHelp &options) const {
   }
   return *this;
 }
+
+const Cli &Cli::show_version(const ShowVersion &options) const {
+  printer::Printer simple_printer;
+  auto *printer
+    = options.printer() == nullptr ? &simple_printer : options.printer();
+
+  printer->key("name", get_name());
+
+  if (!options.publisher().is_empty()) {
+    printer->key("publisher", options.publisher());
+  }
+
+  if (!options.version().is_empty()) {
+    printer->key("version", options.version());
+  }
+
+  return *this;
+}
