@@ -12,7 +12,7 @@ The API library is the base library for all `*API` libraries. It includes:
 
 This is a simple static class to track the version and git hash of the library:
 
-```c++
+```cpp
 #include <api.hpp>
 
 printf(
@@ -31,7 +31,7 @@ ensure proper error management:
 The API library provides macros for error managing error handling. For system calls (that affect errno), use this
 sequence:
 
-```c++
+```cpp
 File& File::open(const char * path){
     //abort if the context error is already set
   API_RETURN_VALUE_IF_ERROR(-1); 
@@ -64,7 +64,7 @@ error context to quickly find and fix errors.
 Sometimes there is a need to ignore errors or to execute a system call even if the context has an error.
 The `api::ErrorGuard` class saves/restores the error context on construction/deconstruction.
 
-```c++
+```cpp
 File::~File(){
   if( fileno() > 0 ){
     //if the file is open, we want to close it even

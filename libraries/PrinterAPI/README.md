@@ -6,9 +6,9 @@ The default `Printer` class is yaml-like but not structured. The `JsonPrinter` c
 
 The `print_final()` is virtual and can be overridden. By default, it writes to the standard output but could be modified to write to a file or web socket or anything.
 
-The `Printer` class makes heavy usage of the `<<` operator. It provides operators for upstream types such as those defined in [VarAPI]().
+The `Printer` class makes heavy usage of the `<<` operator. It provides operators for upstream types such as those defined in VarAPI.
 
-```c++
+```cpp
 #include <printer.hpp>
 #include <var.hpp>
 
@@ -27,7 +27,7 @@ p.array("dataArray", data);
 
 Downstream classes can define the `<<` operator to seamlessly integrate with the printer class.  The ChronoAPI does this to print `chrono::ClockTime`.
 
-```c++
+```cpp
 namespace printer {
 Printer & operator<<(Printer &printer, const chrono::ClockTime &a){
   printer.key("seconds", var::NumberString(a.seconds())

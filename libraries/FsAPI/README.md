@@ -7,15 +7,15 @@ The `FsAPI` defines a C++ abstraction layer for accessing the filesystem and oth
 The `FileObject` is an integral part `API` framework. It defines a pure virtual class for accessing files and file-like
 constructs. Many other classes use `FileObject`s to manage data.
 
-- The [File](include/fs/File.hpp) class provides access to a standard file.
-- The [DataFile](include/fs/DataFile.hpp) class creates a file like storage object on the heap
-- The [ViewFile](include/fs/ViewFile.hpp) lets any variable serve as a fixed size file
-- The [LambdaFile](include/fs/LambdaFile.hpp) manages file contents using callbacks
+- The File class provides access to a standard file.
+- The DataFile class creates a file like storage object on the heap
+- The ViewFile lets any variable serve as a fixed size file
+- The LambdaFile manages file contents using callbacks
 
 `FileObject` contains a method allowing you to write a file from the contents of another file. Here are some useful
 examples:
 
-```c++
+```cpp
 //load a file from the disk
 DataFile().write(File("myfile.txt"));
 
@@ -32,9 +32,9 @@ ViewFile(View(my_header)).write(File("header.bin").seek(location_of_header));
 File("header.bin").seek(location_of_header).read(View(header));
 ```
 
-You can also perform file operations using a [View](../VarAPI/README.md) object.
+You can also perform file operations using a View object.
 
-```c++
+```cpp
 #include <fs.hpp>
 #include <var.hpp>
 

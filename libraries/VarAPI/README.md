@@ -4,16 +4,16 @@ The `VarAPI` library manages data objects for the `API` framework.
 
 ## Binary Data Management
 
-- [View](include/var/View.hpp): View of any data on the stack/heap/static
-- [Data](include/var/Data.hpp): Dynamic heap data
+- View: View of any data on the stack/heap/static
+- Data: Dynamic heap data
 
 A `View` can only refer to data that already exists. It doesn't allocate memory in any way. It infers the size of the
 target where possible. It can be implicitly constructed from `Data`, `String`, `StringView`, and `const char *` (c-style
 string). A `View` can be explicitly constructed from fundamental types where the size is known at compile time.
 
-> A `View` is used when passing data to [file operations](../fsAPI/README.md)
+> A `View` is used when passing data to file operations.
 
-```c++
+```cpp
 #include <fs.hpp>
 #include <var.hpp>
 
@@ -34,7 +34,7 @@ File("path.data").read(View(header));
 A `View` cannot be constructed from a class or any type where the size is not known at compile-time. The following won't
 compile:
 
-```c++
+```cpp
 #include <var.hpp>
 
 int my_function(int size){
@@ -52,7 +52,7 @@ int my_function(int size){
 The `Data` class uses the heap to dynamically allocate memory. Generally, it should be used sparingly if you are trying
 to maximize performance.
 
-```c++
+```cpp
 #include <var.hpp>
 
 //converts the string to 16 bytes of data
@@ -65,11 +65,11 @@ These classes are all API-style wrappers for the equivalent `std::container`.
 
 > Other than `Array` these use `malloc`/`free` under the hood.
 
-- [Vector](include/var/Vector.hpp)
-- [Array](include/var/Array.hpp)
-- [Queue](include/var/Queue.hpp)
-- [Stack](include/var/Stack.hpp)
-- [Deque](include/var/Deque.hpp)
+- Vector: wrapper for std::vector
+- Array: wrapper for std::array
+- Queue: wrapper for std::deque (one sided)
+- Stack: wrapper for std::stack
+- Deque: wrapper for std::deque
 
 ## Strings
 
@@ -115,7 +115,7 @@ There are several standard `StackString` declarations for common usage:
 
 Here are the `StackString` examples:
 
-```c++
+```cpp
 #include <fs.hpp>
 #include <var.hpp>
 #include <chrono.hpp>
@@ -161,7 +161,7 @@ implicitly. `StringView::to_string()` will promote just about anything to `Strin
 
 `String` is always null-terminated and provides a `cstring()` method to access a `const char *`.
 
-```c++
+```cpp
 
 #include <var.hpp>
 
