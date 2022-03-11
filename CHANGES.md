@@ -22,6 +22,7 @@
 
 ## Bug Fixes
 
+- Remove relative links in `README.md`
 - Minor (SonarLint) fixes in `printer::MarkdownPrinter`
 - Make `printer::Printer::~Printer` virtual
 - Assign `Dir::m_dirp` to `nullptr` after the object is closed

@@ -8,7 +8,7 @@ The `ThreadAPI` library has classes to manage threads and the associated synchro
 
 Thread creation and destruction follow RAII principles. A thread starts executing when it is constructed and stops when it is destructed.
 
-```c++
+```cpp
 #include <thread.hpp>
 
 //Construct, execute and join a do nothing thread
@@ -21,7 +21,7 @@ Thread(
 
 A mutex is ready to use once it has been constructed. The best way to lock/unlock mutexes is using the `Mutex::Scope` class which will lock/unlock on construction/deconstruction.
 
-```c++
+```cpp
 #include <thread.hpp>
 
 Mutex mutex;
@@ -37,7 +37,7 @@ Mutex mutex;
 
 The `thread::Cond` class is a wrapper for `pthread_cond` style condition variables. The class needs a reference to the associated mutex.
 
-```c++
+```cpp
 #include <thread.hpp>
 
 Mutex mutex;
@@ -59,7 +59,7 @@ cond.lock().signal().unlock();
 
 The `Sched` class wraps posix-style `sched_` functions which allow you to change the calling thread's priority and scheduling policy.
 
-```c++
+```cpp
 
 #include <thread.hpp>
 
@@ -76,7 +76,7 @@ Sched().set_scheduler(Sched::SetScheduler()
 
 The `Signal` and `SignalHandler` classes can be used to install process level signal handling functions. These classes are wrappers for posix-style signals.
 
-```c++
+```cpp
 #include <thread.hpp>
 
 void interrupt_signal_handler(int a){

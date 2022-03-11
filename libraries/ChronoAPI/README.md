@@ -6,16 +6,16 @@ The ChronoAPI is for managing clock time (clock as in system oscillator) and cal
 
 Classes:
 
-- [ClockTime](include/chrono/ClockTime.hpp): for reading the system oscillator clock time
-- [ClockTimer](include/chrono/ClockTimer.hpp): For real-time tracking of [ClockTime](include/chrono/ClockTime.hpp)
-- [DateTime](include/chrono/DateTime.hpp): for managing calendar time (down to the second)
-- [MicroTime](include/chrono/MicroTime.hpp): for managing short durations of time (less than 30 minutes) using sub-second accuracy.
+- ClockTime: for reading the system oscillator clock time
+- ClockTimer: For real-time tracking of ClockTime
+- DateTime: for managing calendar time (down to the second)
+- MicroTime: for managing short durations of time (less than 30 minutes) using sub-second accuracy.
 
 ## Clock Time
 
 The primary way to make use of the system oscillator clock is using the `ClockTimer` class.
 
-```c++
+```cpp
 #include <chrono.hpp>
 
 ClockTimer timer;
@@ -45,7 +45,7 @@ The `MicroTime` class base unit of storage is a 32-bit value representing micros
 
 The `MicroTime` class also provides operators for time conversion between `seconds`, `milliseconds`, `microseconds` and `nanoseconds`;
 
-```c++
+```cpp
 #include <chrono.hpp>
 
 const u32 x_milliseconds;
