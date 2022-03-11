@@ -5,8 +5,7 @@
 using namespace var;
 using namespace printer;
 
-MarkdownPrinter::MarkdownPrinter() {
-  m_is_last_close = false;
+MarkdownPrinter::MarkdownPrinter() : m_is_last_close(false) {
   container_list().push_back(Container(Level::info, ContainerType::top));
   m_directive = Directive::no_directive;
 }
@@ -259,11 +258,9 @@ MarkdownPrinter &MarkdownPrinter::close_blockquote() {
     container_list().pop_back();
     is_blockquote = true;
   }
-  if (is_blockquote) {
-    if (!m_is_last_close) {
-      m_is_last_close = true;
-      // print("\n");
-    }
+  if (is_blockquote && !m_is_last_close) {
+    m_is_last_close = true;
+    // print("\n");
   }
   return *this;
 }
@@ -323,11 +320,11 @@ MarkdownPrinter::append_pretty_table_row(const var::StringList &row) {
   m_pretty_table.push_back(row);
 
   // ensure the new row is the same size as the first row
-  if (m_pretty_table.count() > 1) {
-    if (row.count() != m_pretty_table.front().count()) {
+  if (
+    m_pretty_table.count() > 1
+    && row.count() != m_pretty_table.front().count()) {
       m_pretty_table.back().resize(m_pretty_table.front().count());
     }
-  }
   return *this;
 }
 

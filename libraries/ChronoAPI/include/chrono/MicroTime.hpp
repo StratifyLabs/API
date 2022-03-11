@@ -9,7 +9,6 @@
 #include "api/macros.hpp"
 
 namespace chrono {
-#include "chrono/MicroTime.hpp"
 
 typedef u32 micro_time_t;
 

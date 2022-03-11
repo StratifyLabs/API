@@ -83,6 +83,7 @@ Dir &Dir::close() {
   API_RETURN_VALUE_IF_ERROR(*this);
   if (m_dirp) {
     API_SYSTEM_CALL(path().cstring(), ::closedir(m_dirp));
+    m_dirp = nullptr;
   }
 
   set_path("");

@@ -21,6 +21,13 @@
 
 ## Bug Fixes
 
+- Minor (SonarLint) fixes in `printer::MarkdownPrinter`
+- Make `printer::Printer::~Printer` virtual
+- Assign `Dir::m_dirp` to `nullptr` after the object is closed
+- Fix various minor issues with `fs::FileInfo`
+- Remove redundant base functions from `fs::DirObject`
+- Make `fs::DirObject::~DirObject` virtual and default
+- Remove `#include "chrono/MicroTime.hpp"` from `chrono::MicroTime.hpp`
 - When creating a thread, the error context needs to be generated for the first time with a mutex
 - Ensure `PWD` exists for new process before starting the process
 - House keeping on `Process` for linux and mac

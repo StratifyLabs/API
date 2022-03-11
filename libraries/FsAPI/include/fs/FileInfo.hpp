@@ -85,9 +85,8 @@ API_OR_NAMED_FLAGS_OPERATOR(FileInfoFlags, TypeFlags)
 
 class Permissions : public FileInfoFlags {
 public:
-  explicit Permissions(int mode = 0666) {
-    m_permissions = static_cast<PermissionFlags>(mode);
-  }
+  explicit Permissions(int mode = 0666)
+    : m_permissions(PermissionFlags(mode)) {}
 
   API_NO_DISCARD API_MAYBE_UNUSED static Permissions all_access() {
     return Permissions(0777);
@@ -160,7 +159,7 @@ class OpenMode : public FileInfoFlags {
 public:
   OpenMode() { m_flags = OpenFlags::null; }
   explicit OpenMode(OpenFlags flags) {
-    m_flags = static_cast<OpenFlags>(flags) | OpenFlags::binary;
+    m_flags = flags | OpenFlags::binary;
   }
 
   static OpenMode create() {
@@ -261,9 +260,8 @@ class Access : public FileInfoFlags {
 public:
   explicit Access(
     AccessFlags access = AccessFlags::read_ok | AccessFlags::write_ok
-                         | AccessFlags::file_ok | AccessFlags::execute_ok) {
-    m_access = access;
-  }
+                         | AccessFlags::file_ok | AccessFlags::execute_ok)
+    : m_access(access) {}
 
   API_NO_DISCARD bool is_read_ok() const {
     return (m_access & AccessFlags::read_ok);
@@ -303,7 +301,7 @@ private:
 
 class FileInfo : public OpenMode {
 public:
-  FileInfo();
+  FileInfo() = default;
   explicit FileInfo(
     const struct stat &st) // cppcheck-suppress[noExplicitConstructor]
     : m_stat(st) {}
@@ -316,7 +314,7 @@ public:
   API_NO_DISCARD bool is_character_device() const;
   API_NO_DISCARD bool is_socket() const;
   API_NO_DISCARD bool is_fifo() const;
-  API_NO_DISCARD u32 size() const;
+  API_NO_DISCARD size_t size() const;
 
   API_NO_DISCARD Permissions permissions() const {
     return Permissions(m_stat.st_mode);
@@ -326,7 +324,7 @@ public:
   API_NO_DISCARD int group() const { return m_stat.st_gid; }
 
 private:
-  struct stat m_stat;
+  struct stat m_stat = {};
 };
 
 } /* namespace fs */

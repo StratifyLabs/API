@@ -38,11 +38,10 @@ public:
   enum class IsRecursive { no, yes };
 
   DirObject() = default;
+  virtual ~DirObject() = default;
 
   DirObject(const DirObject &dir) = delete;
   DirObject &operator=(const DirObject &dir) = delete;
-  DirObject(DirObject &&dir) = default;
-  DirObject &operator=(DirObject &&dir) = default;
 
   static var::PathString filter_hidden(const var::PathString &entry) {
     if (!entry.is_empty() && entry.string_view().front() == '.') {
@@ -54,26 +53,8 @@ public:
   const char *read() const;
   API_NO_DISCARD var::PathString get_entry() const;
   API_NO_DISCARD const char *entry_name() const { return m_entry.d_name; }
-  API_NO_DISCARD int ino() const { return m_entry.d_ino; }
+  API_NO_DISCARD ssize_t ino() const { return m_entry.d_ino; }
   API_NO_DISCARD int count() const;
-
-  const DirObject &rewind() const {
-    API_RETURN_VALUE_IF_ERROR(*this);
-    interface_rewinddir();
-    return *this;
-  }
-
-  DirObject &rewind() { return API_CONST_CAST_SELF(DirObject, rewind); }
-
-  const DirObject &seek(size_t location) const {
-    API_RETURN_VALUE_IF_ERROR(*this);
-    interface_seekdir(location);
-    return *this;
-  }
-
-  DirObject &seek(size_t location) {
-    return API_CONST_CAST_SELF(DirObject, seek, location);
-  }
 
   inline long tell() const {
     API_RETURN_VALUE_IF_ERROR(-1);
@@ -98,17 +79,23 @@ private:
 template <class Derived> class DirAccess : public DirObject {
 public:
   const Derived &rewind() const {
-    return static_cast<const Derived &>(DirObject::rewind());
+    API_RETURN_VALUE_IF_ERROR(static_cast<const Derived &>(*this));
+    interface_rewinddir();
+    return static_cast<const Derived &>(*this);
   }
 
-  Derived &rewind() { return static_cast<Derived &>(DirObject::rewind()); }
+  Derived &rewind() {
+    return API_CONST_CAST_SELF(Derived, rewind);
+  }
 
   const Derived &seek(size_t location) const {
-    return static_cast<const Derived &>(DirObject::seek(location));
+    API_RETURN_VALUE_IF_ERROR(static_cast<const Derived &>(*this));
+    interface_seekdir(location);
+    return static_cast<const Derived &>(*this);
   }
 
   Derived &seek(size_t location) {
-    return static_cast<Derived &>(DirObject::seek(location));
+    return API_CONST_CAST_SELF(Derived, seek, location);
   }
 };
 
@@ -117,12 +104,15 @@ public:
   explicit Dir(var::StringView path);
   Dir(const Dir &dir) = delete;
   Dir &operator=(const Dir &dir) = delete;
+
   Dir(Dir &&dir) noexcept { std::swap(m_dirp, dir.m_dirp); }
-  Dir &operator=(Dir &&dir) {
+  Dir &operator=(Dir &&dir) noexcept {
     std::swap(m_dirp, dir.m_dirp);
     return *this;
   }
-  ~Dir();
+
+  ~Dir() override;
+
   bool is_open() const { return m_dirp != nullptr; }
   int count() const;
 

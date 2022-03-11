@@ -101,7 +101,7 @@ private:
 class Printer : public api::ExecutionContext, public PrinterFlags {
 public:
   Printer();
-  ~Printer();
+  virtual ~Printer();
 
   static ColorCode color_code(var::StringView color);
 
