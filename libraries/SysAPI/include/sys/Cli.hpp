@@ -48,6 +48,7 @@ public:
   class ShowHelp {
     API_AF(ShowHelp, var::StringView, publisher, "");
     API_AF(ShowHelp, var::StringView, version, "");
+    API_AF(ShowHelp, printer::Printer*, printer, nullptr);
   };
 
   API_MAYBE_UNUSED const Cli &show_help(const ShowHelp &options) const;

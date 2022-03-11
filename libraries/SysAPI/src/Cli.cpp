@@ -61,7 +61,7 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
   u32 args;
 
   if (!help.is_empty()) {
-    m_help_list.push_back(name & ": " & help);
+    m_help_list.push_back(name & ":" & help);
   }
 
   for (args = 1; args < count(); args++) {
@@ -110,18 +110,26 @@ var::StringView Cli::get_path() const {
 }
 
 const Cli &Cli::show_help(const ShowHelp &options) const {
+  printer::Printer simple_printer;
+  auto *printer
+    = options.printer() == nullptr ? &simple_printer : options.printer();
   if (!options.publisher().is_empty()) {
-    printf("publisher: %s\n", var::PathString(options.publisher()).cstring());
+    printer->key("publisher", options.publisher());
   }
 
   if (!options.version().is_empty()) {
-    printf("version: %s\n", var::PathString(options.version()).cstring());
+    printer->key("version", options.version());
   }
 
-  printf("%s options:\n", var::PathString(get_name()).cstring());
+  printer::Printer::Object po(*printer, get_name() | " options");
 
   for (const auto &help_item : m_help_list) {
-    printf("- %s\n", help_item.cstring());
+    const auto part_container = var::Tokenizer(
+      help_item,
+      var::Tokenizer::Construct().set_maximum_delimeter_count(1).set_delimeters(":"));
+    if( part_container.count() > 1 ){
+      printer->key(part_container.at(0), part_container.at(1));
+    }
   }
   return *this;
 }
