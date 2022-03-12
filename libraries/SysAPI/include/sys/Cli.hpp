@@ -6,6 +6,10 @@
 #include "var/String.hpp"
 #include "var/StringView.hpp"
 
+namespace printer {
+class Printer;
+}
+
 namespace sys {
 
 class Cli : public api::ExecutionContext {
