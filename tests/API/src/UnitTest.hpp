@@ -123,6 +123,48 @@ public:
 
     TEST_ASSERT(is_success());
 
+    {
+      const u16 last = 200;
+      int value = 0;
+      for(auto i: api::Index(last)) {
+        TEST_ASSERT(sizeof(i) == sizeof(u16));
+        value+=i;
+      }
+      printer().key("indexValueU16", NumberString(value));
+    }
+
+    {
+      const size_t last = 200;
+      int value = 0;
+      for(auto i: api::Index(last)) {
+        TEST_ASSERT(sizeof(i) == sizeof(size_t));
+        value+=i;
+      }
+      printer().key("indexValueSize", NumberString(value));
+    }
+
+    {
+      const u16 first = 50;
+      const u16 last = 200;
+      int value = 0;
+      for(auto i: api::Range(first, last)) {
+        TEST_ASSERT(sizeof(i) == sizeof(u16));
+        value+=i;
+      }
+      printer().key("rangeValueU16", NumberString(value));
+    }
+
+    {
+      const size_t first = 50;
+      const size_t last = 200;
+      int value = 0;
+      for(auto i: api::Range(first,last)) {
+        TEST_ASSERT(sizeof(i) == sizeof(size_t));
+        value+=i;
+      }
+      printer().key("rangeValueSize", NumberString(value));
+    }
+
     return true;
   }
 

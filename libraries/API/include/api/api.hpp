@@ -33,39 +33,76 @@ public:
   /*! \details Gets the version as a c-style string. The version
    * uses semantic version format.
    *
-   * @return <major>.<minor>.<patch>
+   * @return `<major>.<minor>.<patch>`
    */
   static const char *version();
+
+  /*! \details Gets the git hash as a c-style string.
+   *
+   * This can be useful when debugging development builds
+   *
+   */
   static const char *git_hash();
 
+  /*! \details Gets the initial size of a malloc chunck.
+   *
+   * This function is really only useful when using Stratify OS.
+   * It lets you optimize some buffers to malloc boundaries.
+   *
+   */
   static constexpr u32 malloc_start_chunk_size() {
     return API_MINIMUM_CHUNK_SIZE;
   }
 
+  /*! \details Gets the standard size of a malloc chunk.
+   *
+   * This function is really only useful when using Stratify OS.
+   * It lets you optimize some buffers to malloc boundaries.
+   *
+   */
   static constexpr u32 malloc_chunk_size() { return API_MALLOC_CHUNK_SIZE; }
 };
 
 #if defined __link
-template <typename A, const A *initial_value> class Api {
+/*! \details
+ *
+ * This class is used for creating abstractions to C libraries.
+ *
+ * It is primarily useful when creating shared libraries on
+ * Stratify OS. For desktop builds, it just uses a function
+ * table for 3rd party libraries. This repo doesn't use
+ * any 3rd party libraries. Check out [JsonAPI](https://github.com/StratifyLabs/JsonAPI) or
+ * [InetAPI](https://github.com/StratifyLabs/InetAPI).
+ * for more examples
+ *
+ * @tparam FunctionTable The c-style function table
+ * @tparam initial_value The initial value to assign to the table. In StratifyOS,
+ * you use a kernel request to get the pointer to the function table.
+ *
+ */
+template <typename FunctionTable, const FunctionTable *initial_value> class Api {
 #else
 extern "C" const void *kernel_request_api(u32 request);
-template <typename A, u32 request> class Api {
+template <typename FunctionTable, u32 request> class Api {
 #endif
 public:
   Api() { initialize(); }
 
+  /*! \details Checks to see if the API is valid and available.
+   *
+   * @return `true` if the API is available.
+   */
   bool is_valid() {
-    initialize();
     return m_api != nullptr;
   }
 
-  Api &operator=(const A *value) {
+  Api &operator=(const FunctionTable *value) {
     m_api = value;
     return *this;
   }
 
-  const A *operator->() const { return m_api; }
-  const A *api() const { return m_api; }
+  const FunctionTable *operator->() const { return m_api; }
+  const FunctionTable *api() const { return m_api; }
 
 private:
   void initialize() {
@@ -73,15 +110,61 @@ private:
 #if defined __link
       m_api = initial_value;
 #else
-      m_api = (const A *)kernel_request_api(request);
+      m_api = (const FunctionTable *)kernel_request_api(request);
 #endif
     }
   }
-  const A *m_api = nullptr;
+  const FunctionTable *m_api = nullptr;
 };
 
+
+/*! \details
+ * This class contains the thread-local error object.
+ *
+ * The API framework is designed to keep track of errors
+ * on a thread-by-thread basis. If the thread has an error,
+ * the API framework will not call any code that affects
+ * the error context.
+ *
+ * For example:
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ *
+ * File file("does_not_exist.txt");
+ * file.write("Hello");
+ * ```
+ *
+ * In the snippet above, the code will try to open `does_not_exist.txt`. It will
+ * fail and set the threads error context. `file.write()` will not attempt
+ * to write to the file because the thread has an error. The first error encountered
+ * is preserved until it is cleared.
+ *
+ * This approach allows you to chain together complex operations and then precisely
+ * debug the error. This code copies a file:
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ * File(File::IsOverwrite::yes, "new_file.txt").write(File("probably_exists.txt"));
+ * if( api::ExecutionContext::is_error() ){
+ *   //at this point, the first error is preserved and shown
+ *   printf("Error: %s\n", error().message());
+ * }
+ * ```
+ *
+ *
+ */
 class Error {
 public:
+
+  /*! \details
+   *
+   * This class stores a symbol backtrace whenever an error happens.
+   *
+   * The backtrace is only available on systems that support the
+   * `backtrace_symbols()` function.
+   *
+   */
   class Backtrace {
   public:
     explicit Backtrace(const Error &context)
@@ -227,6 +310,37 @@ private:
   static PrivateExecutionContext m_private_context;
 };
 
+
+/*! \details
+ *
+ * This class saves a copy of the error context on the stack and sets the
+ * current `Error` to a fresh value (no error). Upon
+ * destruction, the original error scope is restored.
+ *
+ * This is helpful in two situations,
+ *
+ * 1. You know an error might happen
+ * 2. An error may have happened, but you want to execute code in an error-free
+ * context.
+ *
+ * For example:
+ *
+ * ```cpp
+ *
+ *   File new_file(File::IsOverwrite::yes, "new_file.txt");
+ *  {
+ *    api::ErrorScope error_scope;
+ *    File maybe_file("maybe_exists.txt");
+ *    if( file.is_success() ){
+ *      new_file.write(file);
+ *    }
+ *  }
+ *  //if maybe_exists.txt was opened, it's contents were copied to new_file
+ *  //either way, the context is error free
+ *  new_file.write("Hello World\n");
+ * ```
+ *
+ */
 class ErrorScope {
 public:
   ErrorScope() { ExecutionContext::reset_error(); }
@@ -244,8 +358,10 @@ private:
   bool m_is_guarded = ExecutionContext::m_private_context.m_error.is_guarded();
 };
 
+/*! \cond */
 using ErrorContext = ErrorScope;
 using ErrorGuard = ErrorScope;
+/*! \endcond */
 
 class ThreadExecutionContext {
 public:
@@ -417,6 +533,7 @@ private:
   API_AF(ProgressCallback, void *, context, nullptr);
 };
 
+/*! \sa Range */
 template <typename Type> class RangeIterator {
 public:
   using TransformCallback = Type (*)(const Type &, const Type &);
@@ -446,7 +563,35 @@ private:
   TransformCallback m_transform;
 };
 
-template <typename Type = int> class Range {
+/*! \details
+ *
+ * This class is used to create range based loops from integer types.
+ *
+ * @tparam Type The integer type to use.
+ *
+ * For example:
+ *
+ * ```cpp
+ *
+ * for(int i=5; i < 10; ++i){}
+ *
+ * //becomes
+ * for(auto i: api::Range(5,10)){}
+ * ```
+ *
+ * Using range based loops is less error prone than tradition `for` loops
+ * and the compiler can deduct the type. For example:
+ *
+ * ```cpp
+ * const u16 first = 200;
+ * const u16 last = 200;
+ *
+ * for(auto i: api::Range(first,last)){}
+ *
+ * ```
+ *
+ */
+template <typename Type> class Range {
 public:
   static Type forward(const Type &a, const Type &) { return a; }
   static Type reverse(const Type &a, const Type &b) { return b - a - 1; }
@@ -488,6 +633,7 @@ private:
   typename RangeIterator<Type>::TransformCallback m_transform;
 };
 
+/*! \sa Index */
 template <typename Type> class IndexIterator {
 public:
   explicit IndexIterator(Type value) : m_value(value) {}
@@ -512,7 +658,40 @@ private:
   Type m_value;
 };
 
-template <typename Type = int> class Index {
+/*! \details
+ *
+ *
+ * This class is used to create range based loops from zero to some value.
+ *
+ * @tparam Type The integer type to use. This is usually deduced automatically
+ * by the compiler and does not need to be specified.
+ *
+ * For example:
+ *
+ * ```cpp
+ *
+ * for(int i=0; i < 10; ++i){}
+ * //becomes:
+ * for(auto i: api::Index(10)){}
+ *
+ * //tell the compiler what number type to user
+ * for(auto i: api::Index<size_t>(10)){}
+ * ```
+ *
+ * Using range based loops is less error prone than tradition `for` loops
+ * and the compiler can deduct the type. For example:
+ *
+ * ```cpp
+ * u16 last = 200;
+ *
+ * for(auto i: api::Index(last)){}
+ *
+ * const auto size = File("file.txt").size();
+ * for(auto i: api::Index(size)){}
+ * ```
+ *
+ */
+template <typename Type> class Index {
 public:
   constexpr Index(const Type &start, const Type &finish)
     : m_start(start), m_finish(finish) {}
@@ -532,6 +711,16 @@ private:
   const Type m_finish = 0;
 };
 
+
+/*! \details
+ *
+ * This function will setup the system to trace an error
+ * associated with a segmentation fault.
+ *
+ * You can call it at the beginning of main to debug segmentation
+ * faults.
+ *
+ */
 void catch_segmentation_fault();
 
 } // namespace api
