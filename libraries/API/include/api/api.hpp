@@ -21,8 +21,20 @@ extern "C" int sos_trace_stack(u32 count);
 
 namespace api {
 
+/*! \details
+ *
+ * This class contains basic functions to access information
+ * about the Api build.
+ *
+ */
 class ApiInfo {
 public:
+
+  /*! \details Gets the version as a c-style string. The version
+   * uses semantic version format.
+   *
+   * @return <major>.<minor>.<patch>
+   */
   static const char *version();
   static const char *git_hash();
 
