@@ -15,13 +15,12 @@ public:
 
   bool execute_class_api_case() {
     TEST_ASSERT_RESULT(markdown_printer_test());
+    TEST_ASSERT_RESULT(api_case());
     return true;
   }
 
   bool markdown_printer_test() {
-
     MarkdownPrinter md;
-
     {
       MarkdownPrinter::Header h(md, "Header");
 
@@ -45,17 +44,19 @@ public:
 
     TEST_ASSERT(error().signature() == static_cast<const void *>(&(errno)));
 
-    errno = EINVAL;
-    const int line_error = __LINE__ + 1;
-    API_SYSTEM_CALL("message", -1);
+    {
+      api::ErrorScope error_scope;
+      errno = EINVAL;
+      const int line_error = __LINE__ + 1;
+      API_SYSTEM_CALL("message", -1);
+      printer().object("error", error());
 
-    printer().object("error", error());
-
-    TEST_ASSERT(error().error_number() == EINVAL);
-    TEST_ASSERT(error().line_number() == line_error);
-    TEST_ASSERT(StringView(error().message()) == "message");
-    TEST_ASSERT(return_value() < 0);
-    API_RESET_ERROR();
+      TEST_ASSERT(error().error_number() == EINVAL);
+      TEST_ASSERT(error().line_number() == line_error);
+      TEST_ASSERT(StringView(error().message()) == "message");
+      TEST_ASSERT(return_value() < 0);
+      API_RESET_ERROR();
+    }
 
     TEST_ASSERT(return_value() == 0);
     TEST_ASSERT(context_count() == 1);
@@ -87,8 +88,6 @@ public:
       "thread signature",
       String().format("%p", thread_error_signature));
 
-    printer().key("message", StringView(error().message()));
-    TEST_ASSERT(StringView(error().message()) == "message");
     TEST_ASSERT(context_count() == 2);
 
     auto print_progress = [this]() {
@@ -97,7 +96,7 @@ public:
 
         printer().set_progress_key("progressing");
         for (u32 i = 0; i < 50; i++) {
-          wait(25_milliseconds);
+          wait(5_milliseconds);
           printer().progress_callback()->update(i + 1, 50);
         }
         printer().progress_callback()->update(0, 0);
@@ -107,7 +106,7 @@ public:
         Printer::Object po(printer(), "spin");
         printer().set_progress_key("spinning");
         for (u32 i = 0; i < 10; i++) {
-          wait(50_milliseconds);
+          wait(10_milliseconds);
           printer().progress_callback()->update(
             i + 1,
             api::ProgressCallback::indeterminate_progress_total());

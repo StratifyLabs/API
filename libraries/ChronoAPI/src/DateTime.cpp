@@ -1,4 +1,5 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
+#include <array>
 
 #if defined __StratifyOS__
 #include <sos/dev/rtc.h>
@@ -148,7 +149,8 @@ var::NumberString DateTime::to_string() const {
 }
 
 Date::Date(const DateTime &date_time, const Construct &options) {
-  const time_t ctime = date_time.ctime() + options.is_daylight_savings() * 3600
+  const time_t ctime = date_time.ctime()
+                       + int(options.is_daylight_savings()) * 3600
                        + options.time_zone() * 3600;
 #if defined __win32
   struct tm *ptr;
@@ -163,12 +165,16 @@ Date::Date(const DateTime &date_time, const Construct &options) {
 
 var::GeneralString Date::to_string(var::StringView format) const {
   API_RETURN_VALUE_IF_ERROR(var::GeneralString());
-  char buffer[64] = {};
-  size_t result
-    = strftime(buffer, 63, var::StackString64(format).cstring(), &m_tm);
-  if (result == 0) {
+  std::array<char, 64> buffer;
+
+  if (size_t result = strftime(
+        buffer.data(),
+        buffer.size() - 1,
+        var::StackString64(format).cstring(),
+        &m_tm);
+      result == 0) {
     API_SYSTEM_CALL("format time", -1);
     return {};
   }
-  return {buffer};
+  return {buffer.data()};
 }

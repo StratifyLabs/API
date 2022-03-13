@@ -104,7 +104,6 @@ public:
 
   protected:
     friend Process;
-    var::Vector<char *> m_arguments;
 
     void replace(size_t offset, const var::StringView argument) {
       free(m_arguments.at(offset));
@@ -112,12 +111,13 @@ public:
     }
 
   private:
+    var::Vector<char *> m_arguments;
     API_RAC(Arguments, var::PathString, path);
     void copy(const Arguments &arguments) {
       m_path = arguments.path();
       m_arguments.push_back(nullptr);
-      for (auto *value : arguments.m_arguments) {
-        value &&push(value).is_success();
+      for (const auto *value : arguments.m_arguments) {
+        value && push(value).is_success();
       }
     }
 
@@ -156,8 +156,8 @@ public:
   Process(const Arguments &arguments, const Environment &environment);
   Process(const Process &) = delete;
   Process &operator=(const Process &) = delete;
-  Process(Process &&a) { swap(a); }
-  Process &operator=(Process &&a) {
+  Process(Process &&a) noexcept { swap(a); }
+  Process &operator=(Process &&a) noexcept {
     swap(a);
     return *this;
   }
@@ -165,9 +165,7 @@ public:
 
   Process &wait();
   bool is_running();
-  pid_t pid() const {
-    return m_pid;
-  }
+  pid_t pid() const { return m_pid; }
 
   Status status() { return Status(m_status); }
 
@@ -226,7 +224,7 @@ private:
   Redirect *m_standard_output = nullptr;
   Redirect *m_standard_error = nullptr;
 
-  void swap(Process &a) {
+  void swap(Process &a) noexcept {
     std::swap(m_pid, a.m_pid);
     std::swap(m_status, a.m_status);
     std::swap(m_standard_output, a.m_standard_output);

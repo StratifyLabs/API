@@ -16,37 +16,21 @@ public:
 
   class Attributes : public api::ExecutionContext {
   public:
-    Attributes() {
-      API_RETURN_IF_ERROR();
-      API_SYSTEM_CALL("", pthread_condattr_init(&m_attributes));
-    }
+    Attributes();
 
-    ~Attributes() { pthread_condattr_destroy(&m_attributes); }
+    Attributes(const Attributes &) = delete;
+    Attributes &operator=(const Attributes &) = delete;
+    ~Attributes();
+    Attributes(Attributes &&a) noexcept;
+    Attributes &operator=(Attributes &&a) noexcept;
 
+    Attributes &set_pshared(ProcessShared pshared);
     Attributes &set_pshared(bool value = true) {
-      const auto pshared =
-          value ? ProcessShared::shared : ProcessShared::private_;
-      pthread_condattr_setpshared(&m_attributes, int(pshared));
-      return *this;
+      return set_pshared(
+        value ? ProcessShared::shared : ProcessShared::private_);
     }
-
-    Attributes &set_pshared(ProcessShared pshared) {
-      API_SYSTEM_CALL("",
-                      pthread_condattr_setpshared(&m_attributes, int(pshared)));
-      return *this;
-    }
-
-    API_NO_DISCARD bool get_is_pshared() const {
-      int pshared = 0;
-      pthread_condattr_getpshared(&m_attributes, &pshared);
-      return pshared == int(ProcessShared::shared);
-    }
-
-    API_NO_DISCARD ProcessShared get_pshared() const {
-      int pshared = 0;
-      pthread_condattr_getpshared(&m_attributes, &pshared);
-      return ProcessShared(pshared);
-    }
+    API_NO_DISCARD bool get_is_pshared() const;
+    API_NO_DISCARD ProcessShared get_pshared() const;
 
   private:
     friend class Cond;

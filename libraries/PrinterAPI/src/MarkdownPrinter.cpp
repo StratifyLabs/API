@@ -5,9 +5,8 @@
 using namespace var;
 using namespace printer;
 
-MarkdownPrinter::MarkdownPrinter() : m_is_last_close(false) {
+MarkdownPrinter::MarkdownPrinter() {
   container_list().push_back(Container(Level::info, ContainerType::top));
-  m_directive = Directive::no_directive;
 }
 
 void MarkdownPrinter::print_open_object(Level level, const StringView key) {
@@ -148,7 +147,6 @@ bool MarkdownPrinter::close_type(ContainerType type) {
     container_list().pop_back();
     if (!m_is_last_close && (level <= verbose_level())) {
       m_is_last_close = true;
-      // print_final("\n");
       return true;
     }
   }
@@ -247,7 +245,6 @@ MarkdownPrinter &MarkdownPrinter::close_code() {
 MarkdownPrinter &MarkdownPrinter::open_blockquote(Level level) {
   container_list().push_back(Container(level, ContainerType::blockquote));
   m_is_last_close = false;
-  // print("\n");
   return *this;
 }
 
@@ -260,7 +257,6 @@ MarkdownPrinter &MarkdownPrinter::close_blockquote() {
   }
   if (is_blockquote && !m_is_last_close) {
     m_is_last_close = true;
-    // print("\n");
   }
   return *this;
 }

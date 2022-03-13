@@ -83,7 +83,6 @@ protected:
   API_NO_DISCARD int
   interface_rename(const char *old_name, const char *new_name) const;
 
-private:
 };
 
 } // namespace fs

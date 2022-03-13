@@ -34,8 +34,8 @@ public:
 
   MarkdownPrinter &horizontal_line();
 
-  MarkdownPrinter &open_object(const var::StringView key,
-                               Level level = Level::fatal) {
+  MarkdownPrinter &
+  open_object(const var::StringView key, Level level = Level::fatal) {
     open_header(key, level);
     return open_list(ListType::unordered, level);
   }
@@ -50,8 +50,8 @@ public:
     return close_header();
   }
 
-  MarkdownPrinter &open_array(const var::StringView key,
-                              Level level = Level::fatal) {
+  MarkdownPrinter &
+  open_array(const var::StringView key, Level level = Level::fatal) {
     open_header(key, level);
     return open_list(ListType::ordered, level);
   }
@@ -62,8 +62,8 @@ public:
   }
 
   // increase header level -- can be nested
-  MarkdownPrinter &open_header(const var::StringView key,
-                               Level level = Level::info);
+  MarkdownPrinter &
+  open_header(const var::StringView key, Level level = Level::info);
   MarkdownPrinter &close_header();
 
   MarkdownPrinter &open_paragraph(Level level = Level::info);
@@ -102,14 +102,13 @@ public:
     return m_pretty_table.count() && m_pretty_table.front().count();
   }
 
-  API_NO_DISCARD const var::Vector<var::Vector<var::String>> &pretty_table() const {
+  API_NO_DISCARD const var::Vector<var::Vector<var::String>> &
+  pretty_table() const {
     return m_pretty_table;
   }
 
-  MarkdownPrinter &hyperlink(var::StringView text,
-                             var::StringView link);
-  MarkdownPrinter &image(var::StringView text,
-                         var::StringView link);
+  MarkdownPrinter &hyperlink(var::StringView text, var::StringView link);
+  MarkdownPrinter &image(var::StringView text, var::StringView link);
 
   class Header {
   public:
@@ -122,9 +121,9 @@ public:
     }
 
     Header(const Header &) = delete;
-    Header& operator=(const Header&) = delete;
-    Header(Header&&) = delete;
-    Header& operator=(Header&&) = delete;
+    Header &operator=(const Header &) = delete;
+    Header(Header &&) = delete;
+    Header &operator=(Header &&) = delete;
 
     ~Header() { m_printer.close_header(); }
 
@@ -143,9 +142,9 @@ public:
     }
 
     Code(const Code &) = delete;
-    Code& operator=(const Code&) = delete;
-    Code(Code&&) = delete;
-    Code& operator=(Code&&) = delete;
+    Code &operator=(const Code &) = delete;
+    Code(Code &&) = delete;
+    Code &operator=(Code &&) = delete;
 
     ~Code() { m_printer.close_code(); }
 
@@ -161,9 +160,9 @@ public:
     }
 
     BlockQuote(const BlockQuote &) = delete;
-    BlockQuote& operator=(const BlockQuote&) = delete;
-    BlockQuote(BlockQuote&&) = delete;
-    BlockQuote& operator=(BlockQuote&&) = delete;
+    BlockQuote &operator=(const BlockQuote &) = delete;
+    BlockQuote(BlockQuote &&) = delete;
+    BlockQuote &operator=(BlockQuote &&) = delete;
 
     ~BlockQuote() { m_printer.close_blockquote(); }
 
@@ -179,9 +178,9 @@ public:
     }
 
     Paragraph(const Paragraph &) = delete;
-    Paragraph& operator=(const Paragraph&) = delete;
-    Paragraph(Paragraph&&) = delete;
-    Paragraph& operator=(Paragraph&&) = delete;
+    Paragraph &operator=(const Paragraph &) = delete;
+    Paragraph(Paragraph &&) = delete;
+    Paragraph &operator=(Paragraph &&) = delete;
 
     ~Paragraph() { m_printer.close_paragraph(); }
 
@@ -197,9 +196,9 @@ public:
     }
 
     List(const List &) = delete;
-    List& operator=(const List&) = delete;
-    List(List&&) = delete;
-    List& operator=(List&&) = delete;
+    List &operator=(const List &) = delete;
+    List(List &&) = delete;
+    List &operator=(List &&) = delete;
 
     ~List() { m_printer.close_list(); }
 
@@ -218,9 +217,9 @@ public:
     }
 
     PrettyTable(const PrettyTable &) = delete;
-    PrettyTable& operator=(const PrettyTable&) = delete;
-    PrettyTable(PrettyTable&&) = delete;
-    PrettyTable& operator=(PrettyTable&&) = delete;
+    PrettyTable &operator=(const PrettyTable &) = delete;
+    PrettyTable(PrettyTable &&) = delete;
+    PrettyTable &operator=(PrettyTable &&) = delete;
 
     ~PrettyTable() { m_printer->close_pretty_table(); }
 
@@ -257,8 +256,8 @@ private:
 
   using Container = ContainerAccess<ContainerType>;
   var::Vector<Container> m_container_list;
-  bool m_is_last_close;
-  Directive m_directive;
+  bool m_is_last_close = false;
+  Directive m_directive = Directive::no_directive;
   var::Vector<var::Vector<var::String>> m_pretty_table;
 
   var::Vector<Container> &container_list() { return m_container_list; }
@@ -277,7 +276,9 @@ private:
 
   Container &container() { return m_container_list.back(); }
 
-  API_NO_DISCARD const Container &container() const { return m_container_list.back(); }
+  API_NO_DISCARD const Container &container() const {
+    return m_container_list.back();
+  }
 
   bool pop_container(ContainerType type) {
     bool has_type = false;

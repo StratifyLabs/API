@@ -92,17 +92,14 @@ const FileSystem &FileSystem::remove_directory(
       var::PathString entry_path = path / entry;
       FileInfo info = get_info(entry_path);
       if (info.is_directory()) {
-        const var::StringView entry_view(entry);
-        if (entry_view != "." && entry_view != "..") {
-          if (remove_directory(entry_path, recursive).is_error()) {
-            return *this;
-          }
-        }
-
-      } else {
-        if (remove(entry_path).is_error()) {
+        if (const var::StringView entry_view(entry);
+            entry_view != "." && entry_view != ".."
+            && remove_directory(entry_path, recursive).is_error()) {
           return *this;
         }
+
+      } else if (remove(entry_path).is_error()) {
+        return *this;
       }
     }
   }
@@ -172,12 +169,10 @@ PathList FileSystem::read_directory(
 
       if (is_recursive == IsRecursive::yes) {
 
-        const var::PathString entry_path
-          = var::PathString(directory.path()) / entry.string_view();
-        FileInfo info = get_info(entry_path.cstring());
-
-        if (info.is_directory()) {
-          const PathList intermediate_result
+        if (const var::PathString entry_path
+            = var::PathString(directory.path()) / entry.string_view();
+            get_info(entry_path).is_directory()) {
+          const auto intermediate_result
             = read_directory(entry_path, is_recursive, exclude, context);
 
           for (const auto &intermediate_entry : intermediate_result) {
@@ -190,6 +185,7 @@ PathList FileSystem::read_directory(
         result.push_back(entry);
       }
     }
+
   } while (!is_the_end);
 
   return result;

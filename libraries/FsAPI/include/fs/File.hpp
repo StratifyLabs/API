@@ -27,7 +27,7 @@ public:
   FileObject(FileObject &&a) = default;
   FileObject &operator=(FileObject &&a) = default;
 
-  // virtual ~FileObject() {}
+  virtual ~FileObject() = default;
 
   API_NO_DISCARD size_t size() const;
   API_NO_DISCARD ssize_t size_signed() const {
@@ -424,7 +424,7 @@ private:
 
 class File : public FileAccess<File> {
 public:
-  File() {}
+  File() = default;
 
   explicit File(var::StringView name, OpenMode flags = OpenMode::read_only());
 

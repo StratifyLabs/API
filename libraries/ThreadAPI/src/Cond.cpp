@@ -4,6 +4,40 @@
 
 using namespace thread;
 
+Cond::Attributes::Attributes() {
+  API_RETURN_IF_ERROR();
+  API_SYSTEM_CALL("", pthread_condattr_init(&m_attributes));
+}
+
+Cond::Attributes::~Attributes() { pthread_condattr_destroy(&m_attributes); }
+
+Cond::Attributes::Attributes(Cond::Attributes &&a) noexcept {
+  std::swap(m_attributes, a.m_attributes);
+}
+
+Cond::Attributes &Cond::Attributes::operator=(Cond::Attributes &&a) noexcept {
+  std::swap(m_attributes, a.m_attributes);
+  return *this;
+}
+
+Cond::Attributes &Cond::Attributes::set_pshared(Cond::ProcessShared pshared) {
+  API_SYSTEM_CALL("",
+                  pthread_condattr_setpshared(&m_attributes, int(pshared)));
+  return *this;
+}
+
+bool Cond::Attributes::get_is_pshared() const {
+  int pshared = 0;
+  pthread_condattr_getpshared(&m_attributes, &pshared);
+  return pshared == int(ProcessShared::shared);
+}
+
+Cond::ProcessShared Cond::Attributes::get_pshared() const {
+  int pshared = 0;
+  pthread_condattr_getpshared(&m_attributes, &pshared);
+  return ProcessShared(pshared);
+}
+
 Cond::Cond(Mutex &mutex) : m_mutex(&mutex) {
   API_RETURN_IF_ERROR();
   Attributes attr;

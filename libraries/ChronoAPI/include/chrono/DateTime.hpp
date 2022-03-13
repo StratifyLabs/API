@@ -17,10 +17,7 @@ public:
 
   class Construct {
     API_AC(Construct, var::StringView, time);
-    API_AC(Construct, var::StringView, format);
-
-  public:
-    Construct() : m_format("%Y-%m-%d %H:%M:%S") {}
+    API_AF(Construct, var::StringView, format, "%Y-%m-%d %H:%M:%S");
   };
 
   explicit DateTime(const Construct &options);
@@ -78,7 +75,7 @@ public:
     API_AF(Construct, int, time_zone, 0);
 
   public:
-    Construct() : m_is_daylight_savings(false), m_time_zone(0) {}
+    Construct() : m_is_daylight_savings(false) {}
   };
 
   explicit Date(

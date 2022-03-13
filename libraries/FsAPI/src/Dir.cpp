@@ -29,20 +29,18 @@ var::PathString DirObject::get_entry() const {
     .append(entry);
 }
 
-Dir::Dir(var::StringView path) { open(path); }
+Dir::Dir(var::StringView path) : m_dirp(open(path), &dir_deleter) {}
 
-Dir::~Dir() { close(); }
-
-Dir &Dir::open(var::StringView path) {
-  API_RETURN_VALUE_IF_ERROR(*this);
+DIR *Dir::open(var::StringView path) {
+  API_RETURN_VALUE_IF_ERROR(nullptr);
   var::PathString path_string(path);
-  m_dirp = API_SYSTEM_CALL_NULL(
+  DIR *result = API_SYSTEM_CALL_NULL(
     path_string.cstring(),
-    internal_opendir(path_string.cstring()));
-  if (m_dirp) {
+    reinterpret_cast<DIR *>(::opendir(path_string.cstring())));
+  if (result) {
     set_path(path_string);
   }
-  return *this;
+  return result;
 }
 
 #if !defined __link
@@ -79,26 +77,11 @@ int Dir::count() const {
 
 #endif
 
-Dir &Dir::close() {
-  API_RETURN_VALUE_IF_ERROR(*this);
-  if (m_dirp) {
-    API_SYSTEM_CALL(path().cstring(), ::closedir(m_dirp));
-    m_dirp = nullptr;
-  }
-
-  set_path("");
-  return *this;
-}
-
-DIR *Dir::internal_opendir(const char *path) {
-  return reinterpret_cast<DIR *>(::opendir(path));
-}
-
 int Dir::interface_readdir_r(struct dirent *result, struct dirent **resultp)
   const {
 #if defined __link
-  struct dirent *result_dirent = readdir(m_dirp);
-  if (result_dirent) {
+  if (const struct dirent *result_dirent = readdir(m_dirp.get());
+      result_dirent) {
     *result = *result_dirent;
     if (resultp != nullptr) {
       *resultp = result;
@@ -111,10 +94,16 @@ int Dir::interface_readdir_r(struct dirent *result, struct dirent **resultp)
 #endif
 }
 
-int Dir::interface_telldir() const { return ::telldir(m_dirp); }
+long Dir::interface_telldir() const { return ::telldir(m_dirp.get()); }
 
 void Dir::interface_seekdir(size_t location) const {
-  ::seekdir(m_dirp, location);
+  ::seekdir(m_dirp.get(), location);
 }
 
-void Dir::interface_rewinddir() const { ::rewinddir(m_dirp); }
+void Dir::interface_rewinddir() const { ::rewinddir(m_dirp.get()); }
+
+void Dir::dir_deleter(DIR *dirp) {
+  if (dirp != nullptr) {
+    closedir(dirp);
+  }
+}

@@ -166,6 +166,12 @@ public:
     TEST_ASSERT(D(HOME_FOLDER "/tmp").is_success());
 
     {
+      //check that the compiler can move Dir
+      const auto d = [] { return D(HOME_FOLDER "/tmp"); }();
+      d.read();
+    }
+
+    {
       Vector<var::PathString> dir_list
         = FS().read_directory(HOME_FOLDER "/tmp");
       printer().object("list", dir_list);

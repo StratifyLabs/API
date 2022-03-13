@@ -10,7 +10,7 @@
 
 namespace chrono {
 
-typedef u32 micro_time_t;
+using micro_time_t = u32;
 
 class MicroTime {
 public:

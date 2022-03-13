@@ -124,7 +124,7 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
 
   const size_t page_size_with_boundary
     = (options.transformer() == nullptr)
-        ? (effective_page_size)
+        ? effective_page_size
         : (
           (effective_page_size / options.transformer()->page_size_boundary())
           * options.transformer()->page_size_boundary());
@@ -138,15 +138,14 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
   clock_timer.start();
   do {
     const size_t remaining_size = file_size - size_processed;
-    const size_t page_size = ((remaining_size) < read_buffer_size)
-                               ? remaining_size
-                               : read_buffer_size;
+    const size_t page_size
+      = (remaining_size < read_buffer_size) ? remaining_size : read_buffer_size;
 
     file_read_buffer[0] = 0;
-    const int bytes_read
-      = source_file.read(file_read_buffer, page_size).return_value();
 
-    if (bytes_read > 0) {
+    if (const int bytes_read
+        = source_file.read(file_read_buffer, page_size).return_value();
+        bytes_read > 0) {
       if (options.transformer()) {
         const size_t transform_size
           = options.transformer()->get_output_size(page_size);
@@ -193,15 +192,14 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
       }
     }
 
-    if (options.progress_callback()) {
-      // abort the transaction
-      if (options.progress_callback()->update(
-            static_cast<int>(size_processed),
-            static_cast<int>(file_size))) {
-        options.progress_callback()->update(0, 0);
-        API_SYSTEM_CALL("aborted", size_processed);
-        return *this;
-      }
+    if (
+      options.progress_callback()
+      && options.progress_callback()->update(
+        int(size_processed),
+        int(file_size))) {
+      options.progress_callback()->update(0, 0);
+      API_SYSTEM_CALL("aborted", size_processed);
+      return *this;
     }
 
   } while ((source_file.return_value() > 0) && (file_size > size_processed));
@@ -252,9 +250,9 @@ bool FileObject::verify(const FileObject &source_file, const Verify &options)
     var::View this_file_view(this_file_buffer, current_page_size);
 
     const int source_result = source_file.read(source_file_view).return_value();
-    const int this_result = read(this_file_view).return_value();
 
-    if (source_result != this_result) {
+    if (const int this_result = read(this_file_view).return_value();
+        source_result != this_result) {
       if (options.progress_callback()) {
         options.progress_callback()->update(0, 0);
       }
@@ -270,15 +268,14 @@ bool FileObject::verify(const FileObject &source_file, const Verify &options)
 
     size_processed += current_page_size;
 
-    if (options.progress_callback()) {
-      // abort the transaction
-      if (options.progress_callback()->update(
-            static_cast<int>(size_processed),
-            static_cast<int>(verify_size))) {
-        options.progress_callback()->update(0, 0);
-        API_SYSTEM_CALL("aborted", size_processed);
-        return false;
-      }
+    if (
+      options.progress_callback()
+      && options.progress_callback()->update(
+        int(size_processed),
+        int(verify_size))) {
+      options.progress_callback()->update(0, 0);
+      API_SYSTEM_CALL("aborted", size_processed);
+      return false;
     }
 
   } while (size_processed < verify_size);

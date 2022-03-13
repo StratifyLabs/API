@@ -15,10 +15,8 @@
 #if !defined __win32
 #include <execinfo.h>
 #endif
-#define API_BACKTRACE_SIZE 512
 #else
 extern "C" int sos_trace_stack(u32 count);
-#define API_BACKTRACE_SIZE 32
 #endif
 
 namespace api {
@@ -74,34 +72,27 @@ class Error {
 public:
   class Backtrace {
   public:
-    explicit Backtrace(const Error &context) {
-#if defined __link
-#if !defined __win32
-      m_entry_count = context.m_backtrace_count;
-      m_symbol_pointer
-        = backtrace_symbols(context.m_backtrace_buffer, m_entry_count);
+    explicit Backtrace(const Error &context)
+#if defined __link && !defined __win32
+      : m_entry_count(context.m_backtrace_count),
+        m_symbol_pointer(
+          backtrace_symbols(context.m_backtrace_buffer, m_entry_count),
+          &symbol_deleter)
 #endif
-#else
-
-#endif
+    {
     }
 
-    const char *at(size_t offset) {
+    const char *at(size_t offset) const {
       if (offset < m_entry_count) {
-        return m_symbol_pointer[offset];
+        return m_symbol_pointer.get()[offset];
       }
       return nullptr;
     }
 
-    ~Backtrace() {
-      if (m_symbol_pointer != nullptr) {
-        ::free(m_symbol_pointer);
-      }
-    }
-
   private:
-    char **m_symbol_pointer{};
+    static void symbol_deleter(char **x) { ::free(x); };
     API_RAF(Backtrace, size_t, entry_count, 0);
+    std::unique_ptr<char *, decltype(&symbol_deleter)> m_symbol_pointer;
   };
 
   API_NO_DISCARD const char *message() const { return m_message; }
@@ -120,11 +111,17 @@ public:
   void set_guarded(bool value = true) { m_is_guarded = value; }
 
 private:
+#if defined __link
+  static constexpr size_t api_backtrace_size = 512;
+#else
+  static constexpr size_t api_backtrace_size = 32;
+#endif
+
   explicit Error(void *signature) : m_signature(signature) {}
   friend class PrivateExecutionContext;
   friend class BacktraceSymbols;
   static constexpr size_t m_message_size = PATH_MAX;
-  static constexpr size_t m_backtrace_buffer_size = API_BACKTRACE_SIZE;
+  static constexpr size_t m_backtrace_buffer_size = api_backtrace_size;
 
   void *m_signature{};
   int m_error_number = 0;
@@ -169,8 +166,8 @@ protected:
 
 private:
   friend class ErrorScope;
-  PrivateExecutionContext() : m_error(&(errno)) {}
-  Error m_error;
+  PrivateExecutionContext() = default;
+  Error m_error = Error(&errno);
   std::vector<Error> *m_error_list = nullptr;
 };
 
@@ -220,12 +217,9 @@ private:
 
 class ErrorScope {
 public:
-  ErrorScope()
-    : m_error(ExecutionContext::m_private_context.m_error),
-      m_error_number(errno) {
-    m_is_guarded = ExecutionContext::m_private_context.m_error.is_guarded();
-    ExecutionContext::reset_error();
-  }
+  ErrorScope() { ExecutionContext::reset_error(); }
+  ErrorScope(const ErrorScope&) = delete;
+  ErrorScope& operator=(const ErrorScope&) = delete;
   ~ErrorScope() {
     ExecutionContext::m_private_context.m_error = m_error;
     ExecutionContext::m_private_context.m_error.set_guarded(m_is_guarded);
@@ -233,9 +227,9 @@ public:
   }
 
 private:
-  Error m_error;
-  int m_error_number;
-  bool m_is_guarded;
+  Error m_error = Error(ExecutionContext::m_private_context.m_error);
+  int m_error_number = errno;
+  bool m_is_guarded = ExecutionContext::m_private_context.m_error.is_guarded();
 };
 
 using ErrorContext = ErrorScope;
@@ -243,6 +237,10 @@ using ErrorGuard = ErrorScope;
 
 class ThreadExecutionContext {
 public:
+  ThreadExecutionContext(const ThreadExecutionContext &) = delete;
+  ThreadExecutionContext& operator=(const ThreadExecutionContext &) = delete;
+  ThreadExecutionContext(ThreadExecutionContext &&) = delete;
+  ThreadExecutionContext& operator=(ThreadExecutionContext &&) = delete;
   ~ThreadExecutionContext() { ExecutionContext::free_context(); }
 };
 
@@ -381,7 +379,7 @@ public:
    * shown as indeterminate.
    *
    */
-  typedef bool (*callback_t)(void *, int, int);
+   using callback_t = bool (*)(void*, int, int);
 
   /*! \details Constructs an empty object. */
   ProgressCallback();

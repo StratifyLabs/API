@@ -70,7 +70,6 @@ private:
 } /* namespace sys */
 
 namespace printer {
-class Printer;
 Printer &operator<<(Printer &printer, const sys::Cli &a);
 } // namespace printer
 
