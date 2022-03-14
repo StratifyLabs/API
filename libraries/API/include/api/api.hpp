@@ -7,6 +7,7 @@
 #include <climits>
 #include <cstring>
 
+#include <memory>
 #include <vector>
 
 #include "macros.hpp"
@@ -174,7 +175,7 @@ public:
           backtrace_symbols(context.m_backtrace_buffer, m_entry_count),
           &symbol_deleter)
 #endif
-    {
+    : m_symbol_pointer(nullptr, &symbol_deleter){
     }
 
     const char *at(size_t offset) const {
