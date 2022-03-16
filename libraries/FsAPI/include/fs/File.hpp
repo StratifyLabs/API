@@ -54,19 +54,19 @@ protected:
   API_NO_DISCARD int interface_fsync() const override;
 
 private:
-  static void file_descriptor_deleter(int * fd_ptr);
+  static void file_descriptor_deleter(const int * fd_ptr);
   using FileDescriptor = api::SystemResource<int, decltype(&file_descriptor_deleter)>;
   FileDescriptor m_fd = FileDescriptor(-1);
 
   API_NO_DISCARD int fstat(struct stat *st) const;
 
-  int internal_create(
+  static int internal_create(
     IsOverwrite is_overwrite,
     var::StringView path,
     OpenMode open_mode,
     Permissions perms);
 
-  int open(
+  static int open(
     var::StringView name,
     OpenMode flags = OpenMode::read_write(),
     Permissions perms = Permissions(0666));

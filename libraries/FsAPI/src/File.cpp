@@ -26,7 +26,6 @@
 #define posix_nbyte_t int
 #endif
 
-#include "chrono/ClockTimer.hpp"
 #include "fs/File.hpp"
 #include "var/StackString.hpp"
 
@@ -63,7 +62,7 @@ int File::flags() const {
     API_SYSTEM_CALL("", -1);
     return return_value();
   }
-  return _global_impure_ptr->procmem_base->open_file[m_fd].flags;
+  return _global_impure_ptr->procmem_base->open_file[m_fd.value()].flags;
 #endif
 }
 
@@ -108,7 +107,7 @@ int File::interface_fsync() const {
 #if defined __link
   return 0;
 #else
-  return ::fsync(m_system_resource.value());
+  return ::fsync(m_fd.value());
 #endif
 }
 
@@ -142,7 +141,7 @@ int File::internal_create(
   return open(path, flags, perms);
 }
 
-void File::file_descriptor_deleter(int *fd_ptr) {
+void File::file_descriptor_deleter(const int *fd_ptr) {
   const auto fd = *fd_ptr;
   if( fd >= 0 ) {
     internal_close(fd);
