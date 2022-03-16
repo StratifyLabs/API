@@ -39,15 +39,6 @@ public:
 
   explicit Cond(Mutex &mutex);
   Cond(Mutex &mutex, const Attributes &attr);
-  Cond(const Cond &Cond) = delete;
-  Cond &operator=(const Cond &) = delete;
-  Cond(Cond &&a) noexcept : m_mutex(a.m_mutex) { std::swap(m_cond, a.m_cond); }
-  Cond &operator=(Cond &&a) noexcept {
-    std::swap(m_cond, a.m_cond);
-    std::swap(m_mutex, a.m_mutex);
-    return *this;
-  }
-  ~Cond();
 
   Cond &lock();
   Cond &unlock();
@@ -64,9 +55,15 @@ public:
   API_NO_DISCARD const Mutex &mutex() const { return *m_mutex; }
 
 private:
+  static void cond_deleter(pthread_cond_t * cond);
+  static constexpr pthread_cond_t null_condition = {};
+  using CondSystemResource = api::SystemResource<pthread_cond_t, decltype(&cond_deleter)>;
+
   Mutex *m_mutex = nullptr;
-  pthread_cond_t m_cond = {};
+  CondSystemResource m_cond = CondSystemResource(null_condition);
   API_AB(Cond, asserted, false);
+
+  static pthread_cond_t initialize_cond(const pthread_condattr_t * attr);
 };
 
 } // namespace thread

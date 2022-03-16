@@ -29,7 +29,6 @@ namespace api {
  */
 class ApiInfo {
 public:
-
   /*! \details Gets the version as a c-style string. The version
    * uses semantic version format.
    *
@@ -71,16 +70,19 @@ public:
  * It is primarily useful when creating shared libraries on
  * Stratify OS. For desktop builds, it just uses a function
  * table for 3rd party libraries. This repo doesn't use
- * any 3rd party libraries. Check out [JsonAPI](https://github.com/StratifyLabs/JsonAPI) or
+ * any 3rd party libraries. Check out
+ * [JsonAPI](https://github.com/StratifyLabs/JsonAPI) or
  * [InetAPI](https://github.com/StratifyLabs/InetAPI).
  * for more examples
  *
  * @tparam FunctionTable The c-style function table
- * @tparam initial_value The initial value to assign to the table. In StratifyOS,
- * you use a kernel request to get the pointer to the function table.
+ * @tparam initial_value The initial value to assign to the table. In
+ * StratifyOS, you use a kernel request to get the pointer to the function
+ * table.
  *
  */
-template <typename FunctionTable, const FunctionTable *initial_value> class Api {
+template <typename FunctionTable, const FunctionTable *initial_value>
+class Api {
 #else
 extern "C" const void *kernel_request_api(u32 request);
 template <typename FunctionTable, u32 request> class Api {
@@ -92,9 +94,7 @@ public:
    *
    * @return `true` if the API is available.
    */
-  bool is_valid() {
-    return m_api != nullptr;
-  }
+  bool is_valid() { return m_api != nullptr; }
 
   Api &operator=(const FunctionTable *value) {
     m_api = value;
@@ -117,7 +117,6 @@ private:
   const FunctionTable *m_api = nullptr;
 };
 
-
 /*! \details
  * This class contains the thread-local error object.
  *
@@ -137,16 +136,17 @@ private:
  *
  * In the snippet above, the code will try to open `does_not_exist.txt`. It will
  * fail and set the threads error context. `file.write()` will not attempt
- * to write to the file because the thread has an error. The first error encountered
- * is preserved until it is cleared.
+ * to write to the file because the thread has an error. The first error
+ * encountered is preserved until it is cleared.
  *
- * This approach allows you to chain together complex operations and then precisely
- * debug the error. This code copies a file:
+ * This approach allows you to chain together complex operations and then
+ * precisely debug the error. This code copies a file:
  *
  * ```cpp
  * #include <fs.hpp>
- * File(File::IsOverwrite::yes, "new_file.txt").write(File("probably_exists.txt"));
- * if( api::ExecutionContext::is_error() ){
+ * File(File::IsOverwrite::yes,
+ * "new_file.txt").write(File("probably_exists.txt")); if(
+ * api::ExecutionContext::is_error() ){
  *   //at this point, the first error is preserved and shown
  *   printf("Error: %s\n", error().message());
  * }
@@ -156,7 +156,6 @@ private:
  */
 class Error {
 public:
-
   /*! \details
    *
    * This class stores a symbol backtrace whenever an error happens.
@@ -310,7 +309,6 @@ private:
   static PrivateExecutionContext m_private_context;
 };
 
-
 /*! \details
  *
  * This class saves a copy of the error context on the stack and sets the
@@ -344,8 +342,8 @@ private:
 class ErrorScope {
 public:
   ErrorScope() { ExecutionContext::reset_error(); }
-  ErrorScope(const ErrorScope&) = delete;
-  ErrorScope& operator=(const ErrorScope&) = delete;
+  ErrorScope(const ErrorScope &) = delete;
+  ErrorScope &operator=(const ErrorScope &) = delete;
   ~ErrorScope() {
     ExecutionContext::m_private_context.m_error = m_error;
     ExecutionContext::m_private_context.m_error.set_guarded(m_is_guarded);
@@ -366,9 +364,9 @@ using ErrorGuard = ErrorScope;
 class ThreadExecutionContext {
 public:
   ThreadExecutionContext(const ThreadExecutionContext &) = delete;
-  ThreadExecutionContext& operator=(const ThreadExecutionContext &) = delete;
+  ThreadExecutionContext &operator=(const ThreadExecutionContext &) = delete;
   ThreadExecutionContext(ThreadExecutionContext &&) = delete;
-  ThreadExecutionContext& operator=(ThreadExecutionContext &&) = delete;
+  ThreadExecutionContext &operator=(ThreadExecutionContext &&) = delete;
   ~ThreadExecutionContext() { ExecutionContext::free_context(); }
 };
 
@@ -507,7 +505,7 @@ public:
    * shown as indeterminate.
    *
    */
-   using callback_t = bool (*)(void*, int, int);
+  using callback_t = bool (*)(void *, int, int);
 
   /*! \details Constructs an empty object. */
   ProgressCallback();
@@ -711,6 +709,64 @@ private:
   const Type m_finish = 0;
 };
 
+
+/*! \details
+ *
+ * This class is used to manage system resources. It implements the rule of 5
+ * and holds an arbitrary data member that is custom-deleted upon destruction.
+ *
+ * For example, a file descriptor (`int`) can be wrapped in a SystemResource.
+ * The SystemResource will close the file when the destructor is called.
+ *
+ * @tparam Type Type of the member (e.g., pthread_mutex_t, sem_t, int)
+ * @tparam Deleter The function to call when the destructor is called.
+ *
+ * \sa File
+ */
+template <typename Type, typename Deleter> class SystemResource {
+public:
+  SystemResource(const Type &invalid_value = {}) : m_value(invalid_value) {}
+  SystemResource(const Type &initial_value, const Deleter &deleter)
+    : m_value(initial_value), m_deleter(deleter) {}
+
+  SystemResource(const SystemResource &) = delete;
+  SystemResource &operator=(const SystemResource &) = delete;
+
+  SystemResource(SystemResource &&a) noexcept { swap(a); }
+  SystemResource &operator=(SystemResource &&a) noexcept {
+    swap(a);
+    return *this;
+  }
+
+  ~SystemResource() {
+    if (m_deleter != nullptr) {
+      m_deleter(&m_value);
+    }
+  };
+
+  SystemResource &set_value(const Type &value) {
+    m_value = value;
+    return *this;
+  }
+  const Type &value() const { return m_value; }
+
+  Type * pointer_to_value(){
+    return &m_value;
+  }
+
+  const Type * pointer_to_value() const{
+    return &m_value;
+  }
+
+private:
+  Type m_value = {};
+  Deleter m_deleter = nullptr;
+
+  void swap(SystemResource &a) {
+    std::swap(m_value, a.m_value);
+    std::swap(m_deleter, a.m_deleter);
+  }
+};
 
 /*! \details
  *

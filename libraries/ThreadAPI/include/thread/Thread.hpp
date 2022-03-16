@@ -146,12 +146,7 @@ private:
 
   volatile State m_state = State::null;
 
-  pthread_t m_id =
-#if defined __link
-      {};
-#else
-      0;
-#endif
+  pthread_t m_id = {};
 
   void swap(Thread &&a) {
     std::swap(m_id, a.m_id);

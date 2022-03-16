@@ -66,29 +66,36 @@ void Semaphore::unlink(var::StringView name) {
 
 UnnamedSemaphore::UnnamedSemaphore(
   API_MAYBE_UNUSED ProcessShared process_shared,
+  API_MAYBE_UNUSED unsigned int value) : m_sem(initialize_semaphore(process_shared, value), &sem_deleter){
+  m_handle = m_sem.pointer_to_value();
+}
+
+sem_t UnnamedSemaphore::initialize_semaphore(
+  API_MAYBE_UNUSED UnnamedSemaphore::ProcessShared process_shared,
   API_MAYBE_UNUSED unsigned int value) {
 #if defined __macosx
-  API_RETURN_ASSIGN_ERROR(
+  API_RETURN_VALUE_ASSIGN_ERROR(null_sem,
     "macosx doesn't supported unnamed semaphores",
     ENOTSUP);
 #else
   API_RETURN_IF_ERROR();
-  m_handle = &m_sem;
+  sem_t result;
   API_SYSTEM_CALL(
     "",
-    sem_init(&m_sem, static_cast<int>(process_shared), value));
+    sem_init(&result, static_cast<int>(process_shared), value));
+  return result;
 #endif
 }
 
-UnnamedSemaphore::~UnnamedSemaphore()
+void UnnamedSemaphore::sem_deleter(sem_t *sem) {
 #if !defined __macosx
-{
-  API_RETURN_IF_ERROR();
-  API_SYSTEM_CALL("", sem_destroy(m_handle));
-}
-#else
-  = default;
+  {
+    API_RETURN_IF_ERROR();
+    API_SYSTEM_CALL("", sem_destroy(sem));
+  }
 #endif
+}
+
 
 Semaphore::Semaphore(var::StringView name) {
   open(-1, name, 0, fs::Permissions(0666));
@@ -107,28 +114,32 @@ Semaphore::Semaphore(
     o_flags |= O_EXCL;
   }
 
-  open(value, name, o_flags, perms);
+  m_unique_pointer.reset(open(value, name, o_flags, perms));
+  m_handle = m_unique_pointer.get();
 }
 
+#if 0
 Semaphore::~Semaphore() {
   API_RETURN_IF_ERROR();
   if (m_handle != SEM_FAILED) {
     API_SYSTEM_CALL("", sem_close(m_handle));
   }
 }
+#endif
 
-void Semaphore::open(
+sem_t * Semaphore::open(
   int value,
   var::StringView name,
   int o_flags,
   fs::Permissions perms) {
-  API_RETURN_IF_ERROR();
+  API_RETURN_VALUE_IF_ERROR(nullptr);
+  sem_t * result = SEM_FAILED;
   const var::KeyString name_string(name);
   if (value > 0) {
-    m_handle
+    result
       = sem_open(name_string.cstring(), o_flags, perms.permissions(), value);
   } else {
-    m_handle = sem_open(
+    result = sem_open(
       name_string.cstring(),
       o_flags
 #if defined __win32
@@ -138,9 +149,16 @@ void Semaphore::open(
 #endif
     );
   }
-  if (m_handle == SEM_FAILED) {
-    API_RETURN_ASSIGN_ERROR(name_string.cstring(), errno);
+  if (result == SEM_FAILED) {
+    API_RETURN_VALUE_ASSIGN_ERROR(nullptr, name_string.cstring(), errno);
   } else {
     m_name = name_string;
+  }
+  return result;
+}
+
+void Semaphore::sem_deleter(sem_t *sem) {
+  if( sem && (sem != SEM_FAILED) ){
+    sem_close(sem);
   }
 }

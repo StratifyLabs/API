@@ -453,8 +453,8 @@ public:
 
       TEST_ASSERT(F(file1_name).verify(data1_file.seek(0)));
       TEST_ASSERT(F(file2_name).verify(data2_file.seek(0)));
-      TEST_ASSERT(F(file1_name).verify(File(file1_name)));
-      TEST_ASSERT(F(file1_name).verify(File(file2_name)) == false);
+      TEST_ASSERT(F(file1_name).verify(F(file1_name)));
+      TEST_ASSERT(F(file1_name).verify(F(file2_name)) == false);
       TEST_ASSERT(F(file1_name).verify(data2_file.seek(0)) == false);
       TEST_ASSERT(F(file2_name).verify(data1_file.seek(0)) == false);
       TEST_ASSERT(data1_file.seek(0).verify(data2_file.seek(0)) == false);
