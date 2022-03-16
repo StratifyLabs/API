@@ -78,8 +78,8 @@ sem_t UnnamedSemaphore::initialize_semaphore(
     "macosx doesn't supported unnamed semaphores",
     ENOTSUP);
 #else
-  API_RETURN_IF_ERROR();
-  sem_t result;
+  sem_t result{};
+  API_RETURN_VALUE_IF_ERROR(result);
   API_SYSTEM_CALL(
     "",
     sem_init(&result, static_cast<int>(process_shared), value));
