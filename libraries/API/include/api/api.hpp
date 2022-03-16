@@ -173,9 +173,10 @@ public:
         m_symbol_pointer(
           backtrace_symbols(context.m_backtrace_buffer, m_entry_count),
           &symbol_deleter)
+#else
+    : m_symbol_pointer(nullptr, &symbol_deleter)
 #endif
-    : m_symbol_pointer(nullptr, &symbol_deleter){
-    }
+    {}
 
     const char *at(size_t offset) const {
       if (offset < m_entry_count) {
