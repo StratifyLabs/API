@@ -42,7 +42,7 @@ ClockTime ClockTime::get_system_time(ClockId clock_id) {
   return clock_time;
 }
 
-ClockTime ClockTime::get_system_resolution(ClockId) {
+ClockTime ClockTime::get_system_resolution(API_MAYBE_UNUSED ClockId clock_id) {
   API_RETURN_VALUE_IF_ERROR(ClockTime());
 #if defined __macosx
   ClockTime resolution = ClockTime().set_nanoseconds(1000);

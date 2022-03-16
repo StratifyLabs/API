@@ -78,21 +78,23 @@ private:
 
 template <class Derived> class DirAccess : public DirObject {
 public:
-  Derived &rewind() {
-    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
+  const Derived &rewind() const {
+    API_RETURN_VALUE_IF_ERROR(static_cast<const Derived &>(*this));
     interface_rewinddir();
-    return static_cast<Derived &>(*this);
+    return static_cast<const Derived &>(*this);
   }
 
-  const Derived &rewind() const { return API_CONST_CAST_SELF(Derived, rewind); }
-
-  Derived &seek(size_t location) {
-    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
-    interface_seekdir(location);
-    return static_cast<Derived &>(*this);
+  Derived &rewind() {
+    return API_CONST_CAST_SELF(Derived, rewind);
   }
 
   const Derived &seek(size_t location) const {
+    API_RETURN_VALUE_IF_ERROR(static_cast<const Derived &>(*this));
+    interface_seekdir(location);
+    return static_cast<const Derived &>(*this);
+  }
+
+  Derived &seek(size_t location) {
     return API_CONST_CAST_SELF(Derived, seek, location);
   }
 };
@@ -105,17 +107,16 @@ public:
   int count() const;
 
 protected:
-
   int interface_readdir_r(dirent *result, dirent **resultp) const override;
   long interface_telldir() const override;
   void interface_seekdir(size_t location) const override;
   void interface_rewinddir() const override;
 
 private:
-  static void dir_deleter(DIR * dirp);
+  static void dir_deleter(DIR *dirp);
   std::unique_ptr<DIR, decltype(&dir_deleter)> m_dirp;
 
-  DIR * open(var::StringView path);
+  DIR *open(var::StringView path);
 };
 
 } // namespace fs

@@ -90,7 +90,7 @@ int Dir::interface_readdir_r(struct dirent *result, struct dirent **resultp)
   }
   return -1;
 #else
-  return ::readdir_r(m_dirp, result, resultp);
+  return ::readdir_r(m_dirp.get(), result, resultp);
 #endif
 }
 
