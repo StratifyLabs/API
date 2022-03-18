@@ -10,6 +10,13 @@
 
 namespace chrono {
 
+
+/*! \details
+ *
+ * This class is a wrapper for `time_t` and
+ * its associated C/POSIX functions.
+ *
+ */
 class DateTime {
 public:
   DateTime() = default;
@@ -68,6 +75,13 @@ private:
   time_t m_ctime = 0;
 };
 
+
+/*! \details
+ *
+ * This class is a wrapper for `struct tm` and
+ * its associated C/POSIX functions.
+ *
+ */
 class Date {
 public:
   class Construct {

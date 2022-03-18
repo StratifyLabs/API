@@ -7,6 +7,29 @@
 
 namespace fs {
 
+/*! \details
+ *
+ * This class manages access to a regular
+ * file.
+ *
+ * Here are a few examples:
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ *
+ * File read_only("path_to_file.txt");
+ * File create_file(File::IsOverwrite::yes, "create_overwrite.txt");
+ * File read_write("path_to_mutable.txt", OpenMode::read_write());
+ *
+ * //write the contents of read_only to create_file
+ * create_file.write(read_only);
+ *
+ * //copy a file, more concisely
+ * File(File::IsOverwrite::yes, "new_file.txt").write(File("source_file.txt"));
+ * ```
+ *
+ *
+ */
 class File : public FileAccess<File> {
 public:
   File() = default;
@@ -34,14 +57,14 @@ public:
     }
 
     DescriptorScope(const DescriptorScope &) = delete;
-    DescriptorScope& operator =(const DescriptorScope &) = delete;
+    DescriptorScope &operator=(const DescriptorScope &) = delete;
     DescriptorScope(DescriptorScope &&) = delete;
-    DescriptorScope& operator =(DescriptorScope &&) = delete;
+    DescriptorScope &operator=(DescriptorScope &&) = delete;
 
     ~DescriptorScope() { m_file->set_fileno(-1); }
 
   private:
-    File * m_file = nullptr;
+    File *m_file = nullptr;
   };
 
 protected:
@@ -54,8 +77,9 @@ protected:
   API_NO_DISCARD int interface_fsync() const override;
 
 private:
-  static void file_descriptor_deleter(const int * fd_ptr);
-  using FileDescriptor = api::SystemResource<int, decltype(&file_descriptor_deleter)>;
+  static void file_descriptor_deleter(const int *fd_ptr);
+  using FileDescriptor
+    = api::SystemResource<int, decltype(&file_descriptor_deleter)>;
   FileDescriptor m_fd = FileDescriptor(-1);
 
   API_NO_DISCARD int fstat(struct stat *st) const;
@@ -77,6 +101,18 @@ private:
   internal_open(const char *path, int flags, int mode);
 };
 
+
+/*! \details
+ *
+ * This class discards data that is written
+ * to it. If the file has a size, you can
+ * read from it. All data read from the file
+ * is zero.
+ *
+ * This is not associated with any device (like `/dev/zero`)
+ * but it has similar functionality.
+ *
+ */
 class NullFile : public FileAccess<NullFile> {
 public:
   explicit NullFile(size_t size = 0) : m_size(size) {}

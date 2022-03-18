@@ -149,7 +149,6 @@ void File::file_descriptor_deleter(const int *fd_ptr) {
 }
 
 int NullFile::interface_read(void *buf, int nbyte) const {
-  MCU_UNUSED_ARGUMENT(buf);
   int size_ready = m_size - m_location;
   if (size_ready > nbyte) {
     size_ready = nbyte;
@@ -158,6 +157,8 @@ int NullFile::interface_read(void *buf, int nbyte) const {
   if (size_ready < 0) {
     return -1;
   }
+
+  var::View(buf, size_ready).fill<u8>(0);
 
   m_location += size_ready;
   return size_ready;

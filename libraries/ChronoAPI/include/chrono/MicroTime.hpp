@@ -12,6 +12,28 @@ namespace chrono {
 
 using micro_time_t = u32;
 
+/*! \details
+ *
+ * This class is the basis for short duration
+ * timing units in the API framework. It is a
+ * 32-bit value representing microseconds. The
+ * maximum period it can represent is about 71.58 minutes.
+ *
+ * It is best for dealing with small wait times or timing
+ * the performance of computing operations. For longer
+ * times, use chrono::ClockTime.
+ *
+ * `MicroTime` can be construction using string literal operators:
+ *
+ * ```cpp
+ * #include <chrono.hpp>
+ *
+ * wait(2_seconds);
+ * wait(100_milliseconds);
+ * wait(100_microseconds);
+ * ```
+ *
+ */
 class MicroTime {
 public:
   explicit MicroTime(u32 microseconds = 0)
@@ -92,6 +114,19 @@ private:
 
 using Microseconds = MicroTime;
 
+/*! \details
+ *
+ * This function waits using `usleep()` and `sleep()`
+ * as needed.
+ *
+ * @param duration The amount of time to sleep.
+ *
+ * ```cpp
+ * wait(1_milliseconds);
+ * wait(MicroTime(1000));
+ * ```
+ * 
+ */
 void wait(const MicroTime &duration);
 
 inline MicroTime operator*(u32 lhs, MicroTime rhs) {

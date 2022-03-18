@@ -83,6 +83,12 @@ API_OR_NAMED_FLAGS_OPERATOR(FileInfoFlags, PermissionFlags)
 API_OR_NAMED_FLAGS_OPERATOR(FileInfoFlags, AccessFlags)
 API_OR_NAMED_FLAGS_OPERATOR(FileInfoFlags, TypeFlags)
 
+/*! \details
+ *
+ * This class manages the integer value
+ * that represents permissions.
+ *
+ */
 class Permissions : public FileInfoFlags {
 public:
   explicit Permissions(int mode = 0666)
@@ -155,6 +161,24 @@ private:
   PermissionFlags m_permissions;
 };
 
+/*! \details
+ *
+ * This class manages the integer value
+ * that controls access when opening a file.
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ *
+ * File("read_only.txt", OpenMode::read_only());
+ * ```
+ *
+ * For a device that supports it:
+ *
+ * ```cpp
+ * File("/dev/uart0", OpenMode::read_write().set_non_blocking());
+ * ```
+ *
+ */
 class OpenMode : public FileInfoFlags {
 public:
   OpenMode() { m_flags = OpenFlags::null; }
@@ -256,6 +280,14 @@ private:
   OpenFlags m_flags = OpenFlags::null;
 };
 
+/*! \details
+ *
+ * This class manages the integer that
+ * represents file access in POSIX.
+ *
+ *
+ *
+ */
 class Access : public FileInfoFlags {
 public:
   explicit Access(
@@ -299,6 +331,20 @@ private:
   AccessFlags m_access;
 };
 
+/*! \details
+ *
+ * This class is a wrapper for `struct st` (the C/POSIX
+ * structure for file info).
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ * #include <printer.hpp>
+ *
+ * const auto info = File("my_file.txt").get_info();
+ * Printer().object("fileInfo", info);
+ * ```
+ *
+ */
 class FileInfo : public OpenMode {
 public:
   FileInfo() = default;
