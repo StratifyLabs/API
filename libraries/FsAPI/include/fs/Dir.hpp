@@ -40,9 +40,6 @@ public:
   DirObject() = default;
   virtual ~DirObject() = default;
 
-  DirObject(const DirObject &dir) = delete;
-  DirObject &operator=(const DirObject &dir) = delete;
-
   static var::PathString filter_hidden(const var::PathString &entry) {
     if (!entry.is_empty() && entry.string_view().front() == '.') {
       return {};
@@ -72,7 +69,7 @@ protected:
   virtual void interface_rewinddir() const = 0;
 
 private:
-  mutable struct dirent m_entry = {0};
+  mutable struct dirent m_entry = {};
   var::PathString m_path;
 };
 
