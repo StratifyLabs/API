@@ -10,6 +10,11 @@
 
 namespace var {
 
+/*! \details
+ *
+ * This class is a wrapper for `std::list`.
+ *
+ */
 template <typename T>
 class List : public ContainerObject<List<T>, std::list<T>, T> {
   using Base = ContainerObject<List<T>, std::list<T>, T>;
