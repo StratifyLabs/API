@@ -21,8 +21,6 @@ printer::operator<<(printer::Printer &printer, const fs::PathContainer &a) {
 
 using namespace fs;
 
-FileSystem::FileSystem() = default;
-
 const FileSystem &FileSystem::remove(var::StringView path) const {
   API_RETURN_VALUE_IF_ERROR(*this);
   const var::PathString path_string(path);
@@ -61,6 +59,74 @@ bool FileSystem::exists(var::StringView path) const {
   bool result = info.is_valid() && is_success();
   reset_error();
   return result;
+}
+
+bool FileSystem::is_create_file_ok(
+  var::StringView path,
+  IsOverwrite is_overwrite) const {
+
+  const auto parent = Path::parent_directory(path);
+  if (!parent.is_empty()) {
+    if (exists(parent)) {
+      if (!get_info(parent).is_directory()) {
+        API_RETURN_VALUE_ASSIGN_ERROR(
+          false,
+          "Parent exists but is not a directory",
+          EEXIST);
+      }
+    } else {
+      API_RETURN_VALUE_ASSIGN_ERROR(
+        false,
+        "Parent directory does not exist",
+        EINVAL);
+    }
+  }
+
+  if (exists(path)) {
+    if (is_overwrite == IsOverwrite::no) {
+      API_RETURN_VALUE_ASSIGN_ERROR(
+        false,
+        "Cannot overwrite existing file",
+        EEXIST);
+    } else if (!get_info(path).is_file()) {
+      API_RETURN_VALUE_ASSIGN_ERROR(
+        false,
+        "Cannot overwrite destination (not a file)",
+        EEXIST);
+    }
+  }
+
+  return true;
+}
+
+bool FileSystem::is_create_directory_ok(
+  var::StringView path) const {
+
+  const auto parent = Path::parent_directory(path);
+  if (!parent.is_empty()) {
+    if (exists(parent)) {
+      if (!get_info(parent).is_directory()) {
+        API_RETURN_VALUE_ASSIGN_ERROR(
+          false,
+          "Parent exists but is not a directory",
+          EEXIST);
+      }
+    } else {
+      API_RETURN_VALUE_ASSIGN_ERROR(
+        false,
+        "Parent directory does not exist",
+        EINVAL);
+    }
+  }
+
+  if (exists(path) && !get_info(path).is_directory()) {
+    API_RETURN_VALUE_ASSIGN_ERROR(
+      false,
+      "Cannot create directory (conflict with existing file)",
+      EINVAL);
+  }
+
+  return true;
 }
 
 FileInfo FileSystem::get_info(var::StringView path) const {

@@ -8,6 +8,13 @@
 
 namespace sys {
 
+/*! \details
+ *
+ * This class provides a group of functions that tell
+ * you about the system you are running on.
+ *
+ *
+ */
 class System {
 public:
   API_NO_DISCARD static var::StringView operating_system_name();

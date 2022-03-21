@@ -14,6 +14,28 @@
 
 namespace fs {
 
+/*! \details
+ *
+ * This class is a pure virtual base class
+ * for managing file-like objects.
+ *
+ * The API framework can treat almost anything like a file
+ * using this class. This makes it easy to read and write
+ * all kinds of data structures.
+ *
+ * For example, a DataFile treats memory allocated on
+ * the heap as a file like object. So you can easily read the contents
+ * of a file from disk into memory.
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ * #include <var.hpp>
+ *
+ * DataFile data_file(File("load_me.txt"));
+ * const auto line = data_file.gets<String>();
+ * ```
+ *
+ */
 class FileObject : public api::ExecutionContext, public FileInfoFlags {
 public:
   enum class IsOverwrite { no, yes };
@@ -22,12 +44,6 @@ public:
   enum class Whence { set = SEEK_SET, current = SEEK_CUR, end = SEEK_END };
 
   FileObject() = default;
-  FileObject(const FileObject &a) = delete;
-  FileObject &operator=(const FileObject &a) = delete;
-
-  FileObject(FileObject &&a) = default;
-  FileObject &operator=(FileObject &&a) = default;
-
   virtual ~FileObject() = default;
 
   API_NO_DISCARD size_t size() const;

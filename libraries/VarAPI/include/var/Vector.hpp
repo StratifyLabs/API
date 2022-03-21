@@ -8,21 +8,17 @@
 #include <numeric>
 #include <vector>
 
-#include "api/api.hpp"
+#include "ContainerObject.hpp"
 
 namespace var {
 
-template <typename T> class Vector : public api::ExecutionContext {
+template <typename T>
+class Vector : public ContainerObject<Vector<T>, std::vector<T>, T> {
+  using Base = ContainerObject<Vector<T>, std::vector<T>, T>;
 public:
   Vector() = default;
-
-  explicit Vector(size_t count) { m_vector.resize(count); }
-
-  Vector(std::initializer_list<T> il) : m_vector(il) {}
-  Vector &operator=(std::initializer_list<T> il) {
-    m_vector = il;
-    return *this;
-  }
+  explicit Vector(size_t count) { this->m_container.resize(count); }
+  Vector(std::initializer_list<T> il) : Base(il) {}
 
   Vector<T> &operator<<(const T &a) { return push_back(a); }
 
@@ -32,48 +28,32 @@ public:
   using const_reverse_iterator =
     typename std::vector<T>::const_reverse_iterator;
 
-  const_iterator begin() const noexcept { return m_vector.begin(); }
-  iterator begin() noexcept { return m_vector.begin(); }
 
-  const_iterator end() const noexcept { return m_vector.end(); }
-  iterator end() noexcept { return m_vector.end(); }
-
-  const_iterator cbegin() const noexcept { return m_vector.cbegin(); }
-  const_iterator cend() const noexcept { return m_vector.cend(); }
-
-  const_reverse_iterator rbegin() const noexcept { return m_vector.rbegin(); }
-  reverse_iterator rbegin() noexcept { return m_vector.rbegin(); }
-
-  const_reverse_iterator rend() const noexcept { return m_vector.rend(); }
-  reverse_iterator rend() noexcept { return m_vector.rend(); }
-
-  const_reverse_iterator crbegin() const noexcept { return m_vector.crbegin(); }
-  const_reverse_iterator crend() const noexcept { return m_vector.crend(); }
 
   iterator insert(const_iterator position, const T &value) {
-    return m_vector.insert(position, value);
+    return this->m_container.insert(position, value);
   }
 
   Vector<T> &insert(size_t position, const T &value) {
-    insert(begin() + position, value);
+    insert(this->begin() + position, value);
     return *this;
   }
 
   iterator insert(const_iterator position, size_t n, const T &value) {
-    return m_vector.insert(position, n, value);
+    return this->m_container.insert(position, n, value);
   }
 
   iterator insert(const_iterator position, T &&value) {
-    return m_vector(position, value);
+    return this->m_container(position, value);
   }
 
   Vector<T> &insert(size_t position, T &&value) {
-    insert(begin() + position, value);
+    insert(this->begin() + position, value);
     return *this;
   }
 
   iterator insert(const_iterator position, std::initializer_list<T> il) {
-    return m_vector.insert(position, il);
+    return this->m_container.insert(position, il);
   }
 
   Vector<T> &operator<<(const Vector<T> &a) {
@@ -83,29 +63,18 @@ public:
     return *this;
   }
 
-  API_NO_DISCARD T &at(size_t position) { return m_vector.at(position); }
-  API_NO_DISCARD const T &at(size_t position) const {
-    return m_vector.at(position);
-  }
-
-  API_NO_DISCARD T &back() { return m_vector.back(); }
-  API_NO_DISCARD const T &back() const { return m_vector.back(); }
-
-  API_NO_DISCARD T &front() { return m_vector.front(); }
-  API_NO_DISCARD const T &front() const { return m_vector.front(); }
-
   Vector<T> &push_back(const T &a) {
-    m_vector.push_back(a);
+    this->m_container.push_back(a);
     return *this;
   }
 
   Vector<T> &pop_back() {
-    m_vector.pop_back();
+    this->m_container.pop_back();
     return *this;
   }
 
   Vector &shrink_to_fit() {
-    m_vector.shrink_to_fit();
+    this->m_container.shrink_to_fit();
     return *this;
   }
 
@@ -115,9 +84,9 @@ public:
   };
 
   Vector &erase(const Erase &options) {
-    m_vector.erase(
-      m_vector.begin() + options.position(),
-      m_vector.begin() + options.position() + options.count());
+    this->m_container.erase(
+      this->m_container.begin() + options.position(),
+      this->m_container.begin() + options.position() + options.count());
     return *this;
   }
 
@@ -126,56 +95,39 @@ public:
   Vector &remove(u32 pos) { return erase(Erase().set_position(pos)); }
 
   API_NO_DISCARD const T &operator[](size_t offset) const {
-    return m_vector[offset];
+    return this->m_container[offset];
   }
-  API_NO_DISCARD T &operator[](size_t offset) { return m_vector[offset]; }
-
-  API_NO_DISCARD size_t find_offset(const T &a) const {
-    return std::find(begin(), end(), a) - begin();
-  }
-
-  API_NO_DISCARD const T &find(const T &a, const T &not_found = T()) const {
-    const size_t offset = find_offset(a);
-    if (offset == count()) {
-      return not_found;
-    }
-    return at(offset);
-  }
+  API_NO_DISCARD T &operator[](size_t offset) { return this->m_container[offset]; }
 
   API_NO_DISCARD T *search(const T &a) {
     return reinterpret_cast<T *>(
-      bsearch(&a, std::vector<T>::data(), count(), sizeof(T), ascending));
+      bsearch(&a, std::vector<T>::data(), this->count(), sizeof(T), Base::ascending));
   }
 
   API_NO_DISCARD T *
   search(const T &a, int (*compare)(const void *, const void *)) {
     return reinterpret_cast<T *>(
-      bsearch(&a, std::vector<T>::data(), count(), sizeof(T), compare));
-  }
-
-  Vector<T> &fill(const T &value) {
-    std::fill(begin(), end(), value);
-    return *this;
+      bsearch(&a, std::vector<T>::data(), this->count(), sizeof(T), compare));
   }
 
   Vector<T> &resize(size_t count) {
-    m_vector.resize(count);
+    this->m_container.resize(count);
     return *this;
   }
 
   Vector<T> &reserve(size_t count) {
-    m_vector.reserve(count);
+    this->m_container.reserve(count);
     return *this;
   }
 
   Vector<T> &free() {
-    m_vector = Vector<T>();
+    this->m_container = Vector<T>();
     return *this;
   }
 
   template <typename ConvertedType> Vector<ConvertedType> convert() const {
     Vector<ConvertedType> result;
-    result.reserve(count());
+    result.reserve(this->count());
     for (const auto &item : *this) {
       result.push_back(item);
     }
@@ -186,23 +138,12 @@ public:
   Vector<ConvertedType>
   convert(ConvertedType (*convert_function)(const T &value)) const {
     Vector<ConvertedType> result;
-    result.reserve(count());
+    result.reserve(this->count());
     for (const auto &item : *this) {
       result.push_back(convert_function(item));
     }
     return result;
   }
-
-  static bool ascending(const T &a, const T &b) { return a < b; }
-  static bool descending(const T &a, const T &b) { return b < a; }
-  typedef bool (*sort_compartor_t)(const T &a, const T &b);
-
-  Vector<T> &sort(sort_compartor_t compare_function) {
-    std::sort(begin(), end(), compare_function);
-    return *this;
-  }
-
-  API_NO_DISCARD u32 count() const { return m_vector.size(); }
 
   Vector<T> operator+(const Vector<T> &a) const { return operate(a, add); }
   Vector<T> operator-(const Vector<T> &a) const { return operate(a, subtract); }
@@ -215,10 +156,10 @@ public:
 
   Vector<T> operator<<(u32 a) const {
     Vector<T> result;
-    result.resize(count());
-    if (a < count()) {
-      for (u32 i = 0; i < count() - a; i++) {
-        result.at(i) = at(i + a);
+    result.resize(this->count());
+    if (a < this->count()) {
+      for (u32 i = 0; i < this->count() - a; i++) {
+        result.at(i) = this->at(i + a);
       }
     }
     return result;
@@ -226,55 +167,37 @@ public:
 
   Vector<T> operator>>(u32 a) const {
     Vector<T> result;
-    result.resize(count());
-    if (a < count()) {
-      for (u32 i = 0; i < count() - a; i++) {
-        result.at(i + a) = at(i);
+    result.resize(this->count());
+    if (a < this->count()) {
+      for (u32 i = 0; i < this->count() - a; i++) {
+        result.at(i + a) = this->at(i);
       }
     }
     return result;
   }
 
   Vector<T> &clear() {
-    m_vector.clear();
+    this->m_container.clear();
     return *this;
   }
 
-  API_NO_DISCARD bool is_empty() const { return m_vector.empty(); }
+  API_NO_DISCARD bool is_empty() const { return this->m_container.empty(); }
 
-  API_NO_DISCARD std::vector<T> &vector() { return m_vector; }
-  API_NO_DISCARD const std::vector<T> &vector() const { return m_vector; }
+  API_NO_DISCARD std::vector<T> &vector() { return this->m_container; }
+  API_NO_DISCARD const std::vector<T> &vector() const { return this->m_container; }
 
-  API_NO_DISCARD const T *data() const { return m_vector.data(); }
-  API_NO_DISCARD T *data() { return m_vector.data(); }
+  API_NO_DISCARD const T *data() const { return this->m_container.data(); }
+  API_NO_DISCARD T *data() { return this->m_container.data(); }
 
-  API_NO_DISCARD void *to_void() { return (void *)m_vector.data(); }
+  API_NO_DISCARD void *to_void() { return (void *)this->m_container.data(); }
   API_NO_DISCARD const void *to_const_void() const {
-    return (const void *)m_vector.data();
+    return (const void *)this->m_container.data();
   }
 
-  API_NO_DISCARD T accumulate(T initial_value = T()) const {
-    return std::accumulate(begin(), end(), initial_value);
-  }
-
-  API_NO_DISCARD T sum() const { return std::accumulate(begin(), end(), T()); }
-  API_NO_DISCARD T mean() const { return sum() / count(); }
-  API_NO_DISCARD T variance() const {
-    T local_mean = this->mean();
-    T result = std::accumulate(
-      begin(),
-      end(),
-      T(),
-      [local_mean](const T &a, const T &b) {
-        return a + (b - local_mean) * (b - local_mean);
-      });
-    return result / count();
-  }
-
-protected:
+private:
   Vector<T> operate(const Vector<T> &a, T (*fn)(const T &, const T &)) const {
     Vector<T> result;
-    u32 c = a.count() < count() ? a.count() : count();
+    u32 c = a.count() < this->count() ? a.count() : this->count();
     for (u32 i = 0; i < c; i++) {
       result.push_back(fn(this->at(i), a.at(i)));
     }
@@ -283,7 +206,7 @@ protected:
 
   Vector<T> operate_single(const T &a, T (*fn)(const T &, const T &)) const {
     Vector<T> result;
-    u32 c = count();
+    u32 c = this->count();
     for (u32 i = 0; i < c; i++) {
       result.push_back(fn(this->at(i), a));
     }
@@ -308,8 +231,6 @@ protected:
     return true;
   }
 
-private:
-  std::vector<T> m_vector;
 };
 
 } // namespace var

@@ -1,11 +1,6 @@
 /*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see
              // LICENSE.md for rights.
-/*
- * Ring.hpp
- *
- *  Created on: Apr 11, 2017
- *      Author: tgil
- */
+
 
 #ifndef VAR_API_RING_HPP_
 #define VAR_API_RING_HPP_
@@ -16,9 +11,9 @@
 
 namespace var {
 
-template <typename T, size_t item_count> class Ring {
+template <typename T, size_t ItemCount> class Ring {
 public:
-  using Buffer = Array<T, item_count>;
+  using Buffer = Array<T, ItemCount>;
 
   Ring() = default;
 
@@ -52,12 +47,12 @@ public:
 
   T &at(size_t position) {
     u32 offset = m_head + position;
-    return m_buffer.at(offset % item_count);
+    return m_buffer.at(offset % ItemCount);
   }
 
   const T &at(size_t position) const {
     u32 offset = m_head + position;
-    return m_buffer.at(offset % item_count);
+    return m_buffer.at(offset % ItemCount);
   }
 
   T &back() {
@@ -130,10 +125,10 @@ public:
     return *this;
   }
 
-  API_NO_DISCARD Array<T, item_count> to_linear_data() const {
-    Array<T, item_count> result;
+  API_NO_DISCARD Array<T, ItemCount> to_linear_data() const {
+    Array<T, ItemCount> result;
     // this needs to be constructed
-    for (size_t i = 0; i < item_count; i++) {
+    for (size_t i = 0; i < ItemCount; i++) {
       result.at(i) = at(i);
     }
     return result;

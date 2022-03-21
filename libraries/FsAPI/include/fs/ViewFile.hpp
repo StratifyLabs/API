@@ -9,9 +9,14 @@
 
 namespace fs {
 
+/*! \details
+ *
+ * This class lets you convert any var::View object
+ * into a file-like object.
+ *
+ */
 class ViewFile : public FileAccess<ViewFile> {
 public:
-  /*! \details Constructs a data file. */
 
   ViewFile(ViewFile &&view_file) = default;
   ViewFile &operator=(ViewFile &&view_file) = default;

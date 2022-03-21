@@ -83,5 +83,5 @@ size_t View::find(const View &view, size_t alignment) const {
 }
 
 bool View::operator==(const View &a) const {
-    return a.size() == size() && memcmp(data(), a.data(), size()) == 0;
+  return (a.size() == size()) && memcmp(data(), a.data(), size()) == 0;
 }

@@ -56,7 +56,9 @@ var::StringView Path::no_suffix(const StringView path) {
 }
 
 bool Path::is_hidden(const StringView path) {
-  if (name(path).find(".") == 0) {
+  if (const auto path_name = name(path); path_name.length() > 1
+                                         && path_name.find(".") == 0
+                                         && path_name.find("..") != 0) {
     return true;
   }
 

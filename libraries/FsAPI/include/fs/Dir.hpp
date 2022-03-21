@@ -85,7 +85,9 @@ public:
   }
 
   Derived &rewind() {
-    return API_CONST_CAST_SELF(Derived, rewind);
+    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
+    interface_rewinddir();
+    return static_cast<Derived &>(*this);
   }
 
   const Derived &seek(size_t location) const {
@@ -95,10 +97,19 @@ public:
   }
 
   Derived &seek(size_t location) {
-    return API_CONST_CAST_SELF(Derived, seek, location);
+    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
+    interface_seekdir(location);
+    return static_cast<Derived &>(*this);
   }
 };
 
+
+/*! \details
+ *
+ * This class is a wrapper for POSIX directory
+ * access functions opendir(), readdir(), closedir().
+ *
+ */
 class Dir : public DirAccess<Dir> {
 public:
   explicit Dir(var::StringView path);

@@ -10,102 +10,72 @@
 
 #include "api/api.hpp"
 
+#include "ContainerObject.hpp"
+
 namespace var {
 
-template <typename T, size_t SizeValue> class Array {
+/*! \details
+ *
+ * This class is a wrapper for std::array. The functions
+ * are API framework friendly and simplified compared to
+ * std::array.
+ *
+ * @tparam T The underlying type to store
+ * @tparam SizeValue The number of T to store in the array
+ *
+ *
+ * ```cpp
+ * #include <var.hpp>
+ *
+ * Array<u32, 5> values;
+ *
+ *
+ *
+ * ```
+ *
+ */
+template <typename T, size_t SizeValue>
+class Array
+  : public ContainerObject<Array<T, SizeValue>, std::array<T, SizeValue>, T> {
+  using Base
+    = ContainerObject<Array<T, SizeValue>, std::array<T, SizeValue>, T>;
+
 public:
   Array() = default;
-  Array(const std::array<T, SizeValue> &array) : m_array(array) {}
-  Array(std::array<T, SizeValue> &&array) : m_array(std::move(array)) {}
-  Array(std::initializer_list<T> il) : m_array{{il}} {}
-  // Array &operator=(std::initializer_list<T> il) { m_array = {il}; }
+  Array(const std::array<T, SizeValue> &array) : Base(array) {}
+  Array(std::array<T, SizeValue> &&array) : Base(std::move(array)) {}
+  Array(std::initializer_list<T> il) : Base(il) {}
 
-  typename std::array<T, SizeValue>::const_iterator begin() const noexcept {
-    return m_array.begin();
-  }
-  typename std::array<T, SizeValue>::iterator begin() noexcept {
-    return m_array.begin();
+  T &operator[](size_t position) { return this->m_container[position]; }
+  const T &operator[](size_t position) const {
+    return this->m_container[position];
   }
 
-  typename std::array<T, SizeValue>::const_iterator end() const noexcept {
-    return m_array.end();
-  }
-  typename std::array<T, SizeValue>::iterator end() noexcept {
-    return m_array.end();
+  bool operator==(const Array &a) const {
+    return this->m_container == a.m_container;
   }
 
-  typename std::array<T, SizeValue>::const_iterator cbegin() const noexcept {
-    return m_array.cbegin();
-  }
-  typename std::array<T, SizeValue>::const_iterator cend() const noexcept {
-    return m_array.cend();
-  }
+  T &front() { return this->m_container.front(); }
+  T &back() { return this->m_container.back(); }
+  const T &front() const { return this->m_container.front(); }
+  const T &back() const { return this->m_container.back(); }
 
-  typename std::array<T, SizeValue>::const_reverse_iterator
-  rbegin() const noexcept {
-    return m_array.rbegin();
-  }
-  typename std::array<T, SizeValue>::reverse_iterator rbegin() noexcept {
-    return m_array.rbegin();
-  }
+  API_NO_DISCARD size_t count() const { return this->m_container.size(); }
+  API_NO_DISCARD bool is_empty() const { return this->m_container.empty(); }
 
-  typename std::array<T, SizeValue>::const_reverse_iterator
-  rend() const noexcept {
-    return m_array.rend();
-  }
-  typename std::array<T, SizeValue>::reverse_iterator rend() noexcept {
-    return m_array.rend();
-  }
+  std::array<T, SizeValue> &array() { return this->m_container; }
+  const std::array<T, SizeValue> &array() const { return this->m_container; }
 
-  typename std::array<T, SizeValue>::const_reverse_iterator
-  crbegin() const noexcept {
-    return m_array.crbegin();
-  }
-  typename std::array<T, SizeValue>::const_reverse_iterator
-  crend() const noexcept {
-    return m_array.crend();
-  }
+  API_NO_DISCARD const T *data() const { return this->m_container.data(); }
+  API_NO_DISCARD T *data() { return this->m_container.data(); }
 
-  API_NO_DISCARD T &at(size_t position) { return m_array.at(position); }
-  API_NO_DISCARD const T &at(size_t position) const {
-    return m_array.at(position);
-  }
-
-  T &operator[](size_t position) { return m_array[position]; }
-  const T &operator[](size_t position) const { return m_array[position]; }
-
-  bool operator==(const Array &a) const { return m_array == a.m_array; }
-
-  T &front() { return m_array.front(); }
-  T &back() { return m_array.back(); }
-  const T &front() const { return m_array.front(); }
-  const T &back() const { return m_array.back(); }
-
-  API_NO_DISCARD size_t count() const { return m_array.size(); }
-  API_NO_DISCARD bool is_empty() const { return m_array.empty(); }
-
-  Array &fill(const T &value) {
-    std::fill(begin(), end(), value);
-    return *this;
-  }
-
-  API_NO_DISCARD T accumulate(T initial_value = T()) const {
-    return std::accumulate(m_array.begin(), m_array.end(), initial_value);
-  }
-
-  std::array<T, SizeValue> &array() { return m_array; }
-  const std::array<T, SizeValue> &array() const { return m_array; }
-
-  API_NO_DISCARD const T *data() const { return m_array.data(); }
-  API_NO_DISCARD T *data() { return m_array.data(); }
-
-  API_NO_DISCARD void *to_void() { return (void *)m_array.data(); }
+  API_NO_DISCARD void *to_void() { return (void *)this->m_container.data(); }
   API_NO_DISCARD const void *to_const_void() const {
-    return (const void *)m_array.data();
+    return (const void *)this->m_container.data();
   }
 
 private:
-  std::array<T, SizeValue> m_array;
+  // std::array<T, SizeValue> this->m_container;
 };
 
 template <typename T> class Pair : public Array<T, 2> {
