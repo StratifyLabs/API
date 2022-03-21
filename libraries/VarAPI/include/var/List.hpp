@@ -12,7 +12,8 @@ namespace var {
 
 /*! \details
  *
- * This class is a wrapper for `std::list`.
+ * This class is a wrapper for `std::list` using
+ * the API framework to manage containers.
  *
  */
 template <typename T>
