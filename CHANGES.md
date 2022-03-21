@@ -3,6 +3,7 @@
 
 ## New Features
 
+- Add `var::List` as a wrapper for `std::list`
 - Add `var::ContainerObject` as the base to container classes
   - Provides more access to algorithms. Allows for easier iteration.
 - Add `api::SystemResource` to encapsulate system resources and minimize the use of the rule of 5.

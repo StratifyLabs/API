@@ -14,6 +14,8 @@ namespace var {
 template <typename T> class Deque : public ContainerObject<Deque<T>, std::deque<T>, T> {
   using Base = ContainerObject<Deque<T>, std::deque<T>, T>;
 public:
+  Deque() : Base(){}
+
   Deque &push_front(const T &value) {
     this->m_container.push_front(value);
     return *this;

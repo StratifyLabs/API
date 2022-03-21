@@ -17,7 +17,7 @@ namespace var {
 template <typename T> class Queue : public ContainerObject<Queue<T>, std::deque<T>, T> {
   using Base = ContainerObject<Queue<T>, std::deque<T>, T>;
 public:
-  Queue() = default;
+  Queue() : Base(){}
 
   Queue &push(const T &value) {
     this->m_container.push_back(value);

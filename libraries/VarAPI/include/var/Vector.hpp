@@ -16,7 +16,7 @@ template <typename T>
 class Vector : public ContainerObject<Vector<T>, std::vector<T>, T> {
   using Base = ContainerObject<Vector<T>, std::vector<T>, T>;
 public:
-  Vector() = default;
+  Vector() : Base(){}
   explicit Vector(size_t count) { this->m_container.resize(count); }
   Vector(std::initializer_list<T> il) : Base(il) {}
 
