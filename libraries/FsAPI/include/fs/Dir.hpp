@@ -40,9 +40,6 @@ public:
   DirObject() = default;
   virtual ~DirObject() = default;
 
-  DirObject(const DirObject &dir) = delete;
-  DirObject &operator=(const DirObject &dir) = delete;
-
   static var::PathString filter_hidden(const var::PathString &entry) {
     if (!entry.is_empty() && entry.string_view().front() == '.') {
       return {};
@@ -67,12 +64,12 @@ protected:
   void set_path(const var::StringView path) { m_path = path; }
   virtual int interface_readdir_r(dirent *result, dirent **resultp) const = 0;
 
-  virtual int interface_telldir() const = 0;
+  virtual long interface_telldir() const = 0;
   virtual void interface_seekdir(size_t location) const = 0;
   virtual void interface_rewinddir() const = 0;
 
 private:
-  mutable struct dirent m_entry = {0};
+  mutable struct dirent m_entry = {};
   var::PathString m_path;
 };
 
@@ -85,7 +82,9 @@ public:
   }
 
   Derived &rewind() {
-    return API_CONST_CAST_SELF(Derived, rewind);
+    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
+    interface_rewinddir();
+    return static_cast<Derived &>(*this);
   }
 
   const Derived &seek(size_t location) const {
@@ -95,39 +94,37 @@ public:
   }
 
   Derived &seek(size_t location) {
-    return API_CONST_CAST_SELF(Derived, seek, location);
+    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
+    interface_seekdir(location);
+    return static_cast<Derived &>(*this);
   }
 };
 
+
+/*! \details
+ *
+ * This class is a wrapper for POSIX directory
+ * access functions opendir(), readdir(), closedir().
+ *
+ */
 class Dir : public DirAccess<Dir> {
 public:
   explicit Dir(var::StringView path);
-  Dir(const Dir &dir) = delete;
-  Dir &operator=(const Dir &dir) = delete;
-
-  Dir(Dir &&dir) noexcept { std::swap(m_dirp, dir.m_dirp); }
-  Dir &operator=(Dir &&dir) noexcept {
-    std::swap(m_dirp, dir.m_dirp);
-    return *this;
-  }
-
-  ~Dir() override;
 
   bool is_open() const { return m_dirp != nullptr; }
   int count() const;
 
 protected:
-  Dir &open(var::StringView path);
-  Dir &close();
-
   int interface_readdir_r(dirent *result, dirent **resultp) const override;
-  int interface_telldir() const override;
+  long interface_telldir() const override;
   void interface_seekdir(size_t location) const override;
   void interface_rewinddir() const override;
 
 private:
-  DIR *m_dirp = nullptr;
-  static DIR *internal_opendir(const char *path);
+  static void dir_deleter(DIR *dirp);
+  std::unique_ptr<DIR, decltype(&dir_deleter)> m_dirp;
+
+  DIR *open(var::StringView path);
 };
 
 } // namespace fs

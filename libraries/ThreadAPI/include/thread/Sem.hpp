@@ -16,9 +16,6 @@ namespace thread {
 class SemaphoreObject : public api::ExecutionContext {
 public:
 
-  SemaphoreObject(const SemaphoreObject & a) = delete;
-  SemaphoreObject& operator=(const SemaphoreObject & a) = delete;
-
   API_NO_DISCARD int get_value() const;
 
   SemaphoreObject &post();
@@ -31,20 +28,14 @@ public:
   SemaphoreObject &wait();
 
 protected:
+  using sem_pointer = sem_t *;
   SemaphoreObject() = default;
-
-  SemaphoreObject(SemaphoreObject && a) noexcept {
-    std::swap(m_handle, a.m_handle);
-  }
-  SemaphoreObject& operator=(SemaphoreObject && a) noexcept {
-    std::swap(m_handle, a.m_handle);
-    return *this;
-  }
 
 private:
   friend class UnnamedSemaphore;
   friend class Semaphore;
-  sem_t *m_handle = reinterpret_cast<sem_t *>(SEM_FAILED);
+
+  sem_pointer m_handle = sem_pointer(SEM_FAILED);
 };
 
 template <class Derived> class SemAccess : public SemaphoreObject {
@@ -71,34 +62,19 @@ public:
   enum class ProcessShared { no, yes };
 
   UnnamedSemaphore(ProcessShared process_shared, unsigned int value);
-  UnnamedSemaphore(const UnnamedSemaphore & a) = delete;
-  UnnamedSemaphore& operator=(const UnnamedSemaphore & a) = delete;
-  UnnamedSemaphore(UnnamedSemaphore && a) noexcept {
-    std::swap(m_sem, a.m_sem);
-  }
-  UnnamedSemaphore& operator=(UnnamedSemaphore && a) noexcept {
-    std::swap(m_sem, a.m_sem);
-    return *this;
-  }
-  ~UnnamedSemaphore();
 
 private:
-  sem_t m_sem{};
+  static void sem_deleter(sem_t * sem);
+  using UnnamedSemaphoreSystemResource = api::SystemResource<sem_t, decltype(&sem_deleter)>;
+  UnnamedSemaphoreSystemResource m_sem = UnnamedSemaphoreSystemResource(null_sem);
+
+  static sem_t initialize_semaphore(ProcessShared process_shared, unsigned int value);
+  static constexpr sem_t null_sem = {};
 };
 
 class Semaphore : public SemAccess<Semaphore> {
 public:
   enum class IsExclusive { no, yes };
-
-  Semaphore(const Semaphore &value) = delete;
-  Semaphore &operator=(const Semaphore &value) = delete;
-  Semaphore(Semaphore &&value) noexcept {
-    m_name = value.m_name;
-  }
-  Semaphore &operator=(Semaphore &&value) noexcept {
-    m_name = value.m_name;
-    return *this;
-  }
 
   //get access to an existing named semaphore
   explicit Semaphore(var::StringView name);
@@ -110,7 +86,6 @@ public:
     var::StringView name,
     fs::Permissions perms = fs::Permissions(0666));
 
-  ~Semaphore();
 
   const Semaphore &unlink() const;
   Semaphore &unlink() { return API_CONST_CAST_SELF(Semaphore, unlink); }
@@ -119,7 +94,12 @@ public:
 private:
   var::KeyString m_name;
 
-  void
+  static void sem_deleter(sem_t * sem);
+
+  using SemUniquePointer = std::unique_ptr<sem_t, decltype(&sem_deleter)>;
+  SemUniquePointer m_unique_pointer = SemUniquePointer(sem_pointer(SEM_FAILED), &sem_deleter);
+
+  sem_t *
   open(int value, var::StringView name, int o_flags, fs::Permissions perms);
 };
 

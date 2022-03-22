@@ -3,6 +3,11 @@
 
 ## New Features
 
+- Add `var::List` as a wrapper for `std::list`
+- Add `var::ContainerObject` as the base to container classes
+  - Provides more access to algorithms. Allows for easier iteration.
+- Add `api::SystemResource` to encapsulate system resources and minimize the use of the rule of 5.
+- Documentation updates for `API`
 - Use a `printer::Printer*` to print help when using `sys::Cli::show_help()`
 - Add `sys::System::get_executable_suffix()` for desktop builds
 - Add `fs::AssetFileSystem` for use on desktop builds to manage bundled assets
@@ -22,6 +27,7 @@
 
 ## Bug Fixes
 
+- Many minor bug fixes based on `SonarLint` suggestions
 - The function `sys::Cli::show_version` was not implemented (it is now)
 - Remove relative links in `README.md`
 - Minor (SonarLint) fixes in `printer::MarkdownPrinter`

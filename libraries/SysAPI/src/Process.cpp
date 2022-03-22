@@ -23,7 +23,7 @@
 #include "fs/FileSystem.hpp"
 #include "sys/Process.hpp"
 
-extern "C" char **environ;
+extern "C" char ** environ;
 
 namespace printer {
 Printer &
@@ -55,7 +55,7 @@ Printer &operator<<(Printer &printer, const sys::Process::Environment &env) {
 using namespace sys;
 
 Process::Environment::Environment(char **env) : Process::Arguments("") {
-  char **effective_env = (env == nullptr) ? environ : env;
+  char ** effective_env = (env == nullptr) ? environ : env;
   size_t i = 0;
   do {
     if (effective_env[i] != nullptr) {

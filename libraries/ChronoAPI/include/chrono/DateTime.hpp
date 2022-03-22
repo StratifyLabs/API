@@ -10,6 +10,13 @@
 
 namespace chrono {
 
+
+/*! \details
+ *
+ * This class is a wrapper for `time_t` and
+ * its associated C/POSIX functions.
+ *
+ */
 class DateTime {
 public:
   DateTime() = default;
@@ -17,10 +24,7 @@ public:
 
   class Construct {
     API_AC(Construct, var::StringView, time);
-    API_AC(Construct, var::StringView, format);
-
-  public:
-    Construct() : m_format("%Y-%m-%d %H:%M:%S") {}
+    API_AF(Construct, var::StringView, format, "%Y-%m-%d %H:%M:%S");
   };
 
   explicit DateTime(const Construct &options);
@@ -71,6 +75,13 @@ private:
   time_t m_ctime = 0;
 };
 
+
+/*! \details
+ *
+ * This class is a wrapper for `struct tm` and
+ * its associated C/POSIX functions.
+ *
+ */
 class Date {
 public:
   class Construct {
@@ -78,7 +89,7 @@ public:
     API_AF(Construct, int, time_zone, 0);
 
   public:
-    Construct() : m_is_daylight_savings(false), m_time_zone(0) {}
+    Construct() : m_is_daylight_savings(false) {}
   };
 
   explicit Date(

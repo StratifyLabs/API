@@ -37,8 +37,15 @@ class UnitTest : public test::Test {
   M m_thread_mutex;
   Sem *m_sem_pointer;
 
+#if defined __link
+  static constexpr size_t minimum_stack_size = 65536;
+#else
+  static constexpr size_t minimum_stack_size = 8192;
+#endif
+
 public:
   UnitTest(var::StringView name) : test::Test(name) {}
+
 
   bool execute_class_api_case() {
     TEST_ASSERT_RESULT(thread_api_case());
@@ -418,7 +425,7 @@ public:
     {
       m_did_execute = false;
       T t(
-        T::Attributes().set_detach_state(T::DetachState::joinable),
+        T::Attributes().set_joinable(),
         T::Construct().set_argument(this).set_function(
           [](void *args) -> void * {
             UnitTest *self = reinterpret_cast<UnitTest *>(args);
@@ -440,8 +447,8 @@ public:
         "policy",
         NumberString(static_cast<int>(t.get_sched_policy())));
       TEST_ASSERT(t.get_sched_policy() == Sched::Policy::fifo);
-
 #endif
+
       TEST_ASSERT(t.join().is_success());
       TEST_ASSERT(m_did_execute);
     }
@@ -479,7 +486,7 @@ public:
 
       m_did_execute = true;
       T t = T(
-        T::Attributes().set_detach_state(T::DetachState::joinable),
+        T::Attributes().set_joinable(),
         T::Construct().set_argument(this).set_function(
           [](void *args) -> void * {
             UnitTest *self = reinterpret_cast<UnitTest *>(args);
@@ -501,8 +508,8 @@ public:
     {
       m_did_execute = false;
       T(T::Attributes()
-          .set_detach_state(T::DetachState::joinable)
-          .set_stack_size(8192),
+          .set_joinable()
+          .set_stack_size(minimum_stack_size),
         T::Construct().set_argument(this).set_function(
           [](void *args) -> void * {
             reinterpret_cast<UnitTest *>(args)->m_did_execute = true;

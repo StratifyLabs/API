@@ -33,7 +33,7 @@ var::StringView Path::parent_directory(const StringView path, size_t depth) {
     return {};
   }
 
-  const StringView result = StringView(path.data(), pos);
+  const auto result = StringView(path.data(), pos);
 
   if (depth > 1) {
     return parent_directory(result, depth - 1);
@@ -56,12 +56,14 @@ var::StringView Path::no_suffix(const StringView path) {
 }
 
 bool Path::is_hidden(const StringView path) {
-  if (name(path).find(".") == 0) {
+  if (const auto path_name = name(path); path_name.length() > 1
+                                         && path_name.find(".") == 0
+                                         && path_name.find("..") != 0) {
     return true;
   }
 
-  var::StringView parent_directory_path = parent_directory(path);
-  if (parent_directory_path != path) {
+  if (const auto parent_directory_path = parent_directory(path);
+      parent_directory_path != path) {
     return is_hidden(parent_directory(parent_directory_path));
   }
 

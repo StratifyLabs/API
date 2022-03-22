@@ -12,6 +12,43 @@ class Printer;
 
 namespace sys {
 
+
+/*! \details
+ *
+ * This class is used to manage arguments
+ * passed to your program using a command line interface.
+ *
+ * For example:
+ *
+ * ```
+ * program --go --path=hello.txt --start=false
+ * ```
+ *
+ * ```cpp
+ * #include <sys.hpp>
+ * int main(int argc, char * argv[]){
+ *   Cli cli(argc, argv);
+ *
+ *   //--go OR --go=true with both work here
+ *   if( cli.get_option("go") == "true" ){
+ *     printf("Go is true\n");
+ *   }
+ *
+ *   if( cli.get_option("path").is_empty() ){
+ *     printf("You forgot to specify the path\n");
+ *   }
+ *
+ *   //Use --start or --start=true for this to be true
+ *   //Not specified start, or using --start=false
+ *   //will avoid this option
+ *   if( cli.get_option("start") == "true" ){
+ *     printf("starting now\n");
+ *   }
+ * }
+ * ```
+ *
+ *
+ */
 class Cli : public api::ExecutionContext {
 public:
   Cli(int argc, char *argv[]);
@@ -70,7 +107,6 @@ private:
 } /* namespace sys */
 
 namespace printer {
-class Printer;
 Printer &operator<<(Printer &printer, const sys::Cli &a);
 } // namespace printer
 

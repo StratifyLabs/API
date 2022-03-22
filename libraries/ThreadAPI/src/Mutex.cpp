@@ -83,28 +83,19 @@ Mutex::ProcessShared Mutex::Attributes::get_process_shared() const {
   return static_cast<ProcessShared>(ret);
 }
 
-Mutex::Mutex() {
-  Mutex::Attributes attr;
-  API_RETURN_IF_ERROR();
-  API_SYSTEM_CALL("", pthread_mutex_init(&m_mutex, &(attr.m_item)));
-}
+Mutex::Mutex() : m_mutex(initialize_mutex(nullptr), &mutex_deleter){}
 
-Mutex::Mutex(const Mutex::Attributes &attr) { set_attributes(attr); }
-
-Mutex::~Mutex() {
-  API_RETURN_IF_ERROR();
-  API_SYSTEM_CALL("", pthread_mutex_destroy(&m_mutex));
-}
+Mutex::Mutex(const Mutex::Attributes &attr) : m_mutex(initialize_mutex(&attr.m_item), &mutex_deleter){}
 
 Mutex &Mutex::set_attributes(const Attributes &attr) {
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL("", pthread_mutex_init(&m_mutex, &(attr.m_item)));
+  API_SYSTEM_CALL("", pthread_mutex_init(m_mutex.pointer_to_value(), &(attr.m_item)));
   return *this;
 }
 
 Mutex &Mutex::lock() {
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL("", pthread_mutex_lock(&m_mutex));
+  API_SYSTEM_CALL("", pthread_mutex_lock(m_mutex.pointer_to_value()));
   return *this;
 }
 
@@ -112,14 +103,14 @@ Mutex &Mutex::lock() {
 Mutex &Mutex::lock_timed(const chrono::ClockTime &clock_time) {
   API_RETURN_VALUE_IF_ERROR(*this);
   const auto calc_time = ClockTime::get_system_time() + clock_time;
-  API_SYSTEM_CALL("", pthread_mutex_timedlock(&m_mutex, calc_time));
+  API_SYSTEM_CALL("", pthread_mutex_timedlock(m_mutex.pointer_to_value(), calc_time));
   return *this;
 }
 #endif
 
 bool Mutex::try_lock() {
   API_RETURN_VALUE_IF_ERROR(false);
-  if (pthread_mutex_trylock(&m_mutex) == 0) {
+  if (pthread_mutex_trylock(m_mutex.pointer_to_value()) == 0) {
     return true;
   }
   API_RESET_ERROR();
@@ -129,12 +120,23 @@ bool Mutex::try_lock() {
 Mutex &Mutex::unlock() {
   // unlock even if there is an error in the context
   api::ErrorScope error_scope;
-  pthread_mutex_unlock(&m_mutex);
+  pthread_mutex_unlock(m_mutex.pointer_to_value());
   return *this;
 }
 
-Mutex &Mutex::unlock_with_error_check(){
-  API_SYSTEM_CALL("", pthread_mutex_unlock(&m_mutex));
+Mutex &Mutex::unlock_with_error_check() {
+  API_SYSTEM_CALL("", pthread_mutex_unlock(m_mutex.pointer_to_value()));
   return *this;
 }
 
+void Mutex::mutex_deleter(pthread_mutex_t *mutex) {
+  API_RETURN_IF_ERROR();
+  pthread_mutex_destroy(mutex);
+}
+
+pthread_mutex_t Mutex::initialize_mutex(const pthread_mutexattr_t *attr) {
+  API_RETURN_VALUE_IF_ERROR({});
+  pthread_mutex_t result;
+  API_SYSTEM_CALL("mutex init", pthread_mutex_init(&result, attr));
+  return result;
+}

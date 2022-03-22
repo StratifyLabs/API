@@ -8,6 +8,23 @@
 
 namespace fs {
 
+/*! \details
+ *
+ * This class allows you to create
+ * a file out of dynamically allocated memory.
+ *
+ * This is great when you need to load a file to RAM.
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ *
+ * DataFile data_file(File("load_to_ram.txt"));
+ * ```
+ *
+ * It uses var::Data as an underlying storage
+ * mechanism.
+ *
+ */
 class DataFile : public FileAccess<DataFile> {
 public:
   /*! \details Constructs a data file. */
@@ -16,9 +33,7 @@ public:
   DataFile &operator=(DataFile &&file) = default;
 
   explicit DataFile(const OpenMode &flags = OpenMode::append_read_write())
-    : m_open_flags(flags) {
-    m_location = 0;
-  }
+    : m_open_flags(flags) {}
 
   explicit DataFile(const FileObject &file_to_load);
 

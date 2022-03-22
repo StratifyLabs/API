@@ -23,6 +23,89 @@ namespace var {
 
 class Data;
 
+/*! \details
+ *
+ * This class creates a reference (or view) of another
+ * part of memory.
+ *
+ * A `View` can be constructed from any data structure
+ * whose size is known at compile time. For example:
+ *
+ * ```cpp
+ * int value;
+ * var::View value_view(value);
+ * if( &value == value_view.data() ){
+ *   printf("Yes\n");
+ * }
+ *
+ * if( sizeof(value) == value_view.size() ){
+ *   printf("Yes Again\n");
+ * }
+ * ```
+ *
+ * Several API data types are implicitly converted to `View`:
+ *
+ * - var::Data
+ * - var::Vector
+ * - var::Array
+ * - var::String
+ * - var::StringView
+ * - `const char *` (c-style null-terminated string)
+ *
+ * When converting to `View`, the `View` will have a pointer to the source
+ * data and the size of the data in bytes.
+ *
+ *
+ * A `View` is handy for looking at data in different ways. For example,
+ * here we calculate a checksum:
+ *
+ * ```cpp
+ * #include <var.hpp>
+ *
+ * struct SomeData {
+ *   u32 start;
+ *   u32 header;
+ *   u32 value;
+ *   u32 checksum;
+ * };
+ *
+ * SomeData some_data;
+ * View some_data_view(some_data);
+ *
+ * u32 sum = 0;
+ * for(auto i: api::Index(some_data_view.count<u32>() - 1){
+ *  sum += some_data_view.at<u32>(i);
+ * }
+ * some_data.checksum = 0 - sum;
+ * ```
+ *
+ * It also create a safe alternative to `memset()` and `memcpy()`.
+ *
+ * ```cpp
+ * char buffer[16];
+ *
+ * //This will fill buffer with zero and guarantee buffer is null terminated
+ * View(buffer).fill(0).pop_back().copy("Hello World");
+ * ```
+ *
+ * You can read/write structures from files using a `View`.
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ * #include <var.hpp>
+ *
+ * SomeData some_data;
+ * File("myfile.data").read(View(some_data));
+ *
+ * //This is easier and less error prone than:
+ * File("myfile.data").read(&some_data, sizeof(some_data));
+ * ```
+ *
+ *
+ *
+ *
+ *
+ */
 class View : public api::ExecutionContext {
 public:
   View() = default;
@@ -62,6 +145,25 @@ public:
     set_view(array.data(), size_value * sizeof(T));
   }
 
+  /*! \details
+   *
+   * Constructs a `View` from an artibrary type.
+   *
+   * @tparam T The type of the viewed item
+   * @param item The item to view
+   *
+   * The item must be `trivial` and have a standard layout.
+   *
+   * ```cpp
+   * u32 value;
+   * View value_view(value); //points to value with sizeof(value) for size
+   *
+   * File f;
+   * View file_view(f); //compiler error - File is not trivial
+   *
+   * ```
+   *
+   */
   template <typename T> explicit View(T &item) {
     // catch all
     static_assert(
@@ -100,6 +202,20 @@ public:
   constexpr static size_t npos = static_cast<size_t>(-1);
   size_t find(const View &view, size_t alignment = 1) const;
 
+  /*! \details
+   *
+   * Returns the number of items in the `View` assuming
+   * the underlying type is `Type`
+   *
+   * @tparam Type The assumed underlying type
+   * @return The number of items that are guaranteed to fit in the View
+   *
+   * ```cpp
+   * u8 buffer[32];
+   * printf("u32's in 32 bytes is %d\n", View(buffer).count<u32>());
+   * ```
+   *
+   */
   template <typename Type> size_t count() const {
     return size() / sizeof(Type);
   }
@@ -116,14 +232,38 @@ public:
   enum class SwapBy { half_word, word };
   View &swap_byte_order(SwapBy order);
 
-  bool operator==(const View &a) const {
-    return a.size() == size() && memcmp(data(), a.data(), size()) == 0;
-  }
+  /*! \details
+   *
+   * Compares the contents of two views.
+   *
+   * @param a The view to compare to
+   * @return true if the contents are the same.
+   *
+   * If the sizes don't match, `false` is returned.
+   *
+   */
+  bool operator==(const View &a) const;
 
+  /*! \details
+   *
+   * Return true if the sizes don't match or if any bytes
+   * between this and `a` are not identical.
+   */
   bool operator!=(const View &a) const { return !(*this == a); }
 
   API_NO_DISCARD size_t size() const { return m_size; }
 
+  /*! \details
+   *
+   * Reduces the size of the `View` by ignoring bytes
+   * at the end.
+   *
+   * @param new_size The new size of the view
+   * @return self
+   *
+   *
+   *
+   */
   View &truncate(size_t new_size) {
     if (size() > new_size) {
       m_size = new_size;
@@ -131,6 +271,16 @@ public:
     return *this;
   }
 
+  /*! \details
+   *
+   * Reduces the size of the view by ignoring bytes
+   * at the end.
+   *
+   * @param pop_size The number of bytes to ignore
+   * @return self
+   *
+   *
+   */
   View &pop_back(size_t pop_size = 1) {
     if (size() >= pop_size) {
       m_size = size() - pop_size;
@@ -138,6 +288,18 @@ public:
     return *this;
   }
 
+  /*! \details
+   *
+   * Reduces the size of the view by ignoring the bytes
+   * at the beginning.
+   *
+   * @param pop_size The number of bytes to ignore
+   * @return self
+   *
+   * This will reduce the size and move the data pointer
+   * forward by `pop_size`.
+   *
+   */
   View &pop_front(size_t pop_size = 1) {
     if (size() >= pop_size) {
       m_size = (size() - pop_size);
@@ -150,6 +312,17 @@ public:
     return static_cast<ssize_t>(size());
   }
 
+  /*! \details
+   *
+   * Copies the contents of `source` to this view.
+   *
+   * @param source The source data for the copy
+   * @return self
+   *
+   * The number of bytes copied is limited to the size
+   * of the smallest between this and `source`.
+   *
+   */
   View &copy(const View &source);
 
   template <typename T> const T *to() const {

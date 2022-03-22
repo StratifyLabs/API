@@ -12,6 +12,20 @@
 
 namespace chrono {
 
+
+/*! \details
+ *
+ * This class stores a 64-bit value
+ * representing the number of clock ticks
+ * since the last reset.
+ *
+ * It is a wrapper for the POSIX `clock_gettime()` function
+ * and adds arithmetic operators for easily dealing clock
+ * time values.
+ *
+ *
+ *
+ */
 class ClockTime {
 public:
   enum class ClockId { realtime = CLOCK_REALTIME };
@@ -24,10 +38,26 @@ public:
   explicit ClockTime(const MicroTime &micro_time);
 
 
+  /*! \details
+   *
+   * This is a factory fuction to create `ClockTime` from
+   * seconds. The `nanoseconds` part is set to zero.
+   */
   static ClockTime from_seconds(u32 seconds) {
     return ClockTime().set_seconds(seconds);
   }
 
+  /*! \details
+   *
+   * This is a factory function to create a clock
+   * time value from a string.
+   *
+   * @param value String of format `XXXX.YYYYYYYYY`.
+   * @return A ClockTime value representing the string
+   *
+   * A valid input is, for example `1.1001001000`.
+   *
+   */
   static ClockTime from_string(var::StringView value);
 
   ClockTime &reset() {
@@ -36,11 +66,21 @@ public:
     return *this;
   }
 
+  /*! \details
+   *
+   * Assigns a value to the `seconds` part.
+   * The `nanoseconds` part is left unchanged.
+   */
   ClockTime &set_seconds(u32 seconds) {
     m_value.tv_sec = time_t(seconds);
     return *this;
   }
 
+  /*! \details
+   *
+   * Assigns a value to the `nanoseconds` part.
+   * The `seconds` part is left unchanged.
+   */
   ClockTime &set_nanoseconds(u32 value) {
     m_value.tv_nsec = value;
     return *this;
@@ -50,6 +90,7 @@ public:
   operator struct timespec *() { return &m_value; }
 
   API_NO_DISCARD bool is_valid() const { return *this != invalid(); }
+
 
   static ClockTime invalid() {
     return ClockTime().set_seconds(-1).set_nanoseconds(-1);
@@ -80,11 +121,36 @@ public:
   API_NO_DISCARD s32 seconds() const { return m_value.tv_sec; }
   API_NO_DISCARD s32 nanoseconds() const { return m_value.tv_nsec; }
 
+  /*! \details
+   *
+   * Converting `ClockTime` to a string is a nice
+   * way of creating unique file names for temporary files.
+   *
+   * This type equates a unique string to one that will fit
+   * the stringified version of the `ClockTime`.
+   *
+   */
   using UniqueString = var::KeyString;
+
+  /*! \details
+   *
+   * Converts the `ClockTime` to a unique string.
+   */
   API_NO_DISCARD UniqueString to_unique_string() const {
     return UniqueString().format("%ld.%09ld", seconds(), nanoseconds());
   }
 
+  /*! \details
+   *
+   * Converts the `ClockTime` to an arbitrary string type.
+   *
+   * @tparam StringClass The type of string to return
+   * @return A string that represents the `ClockTime`
+   *
+   * `StringClass` could be var::String, var::NumberString,
+   * or another type of var::StackString.
+   *
+   */
   template<class StringClass> StringClass to_string() const {
     return StringClass().format("%ld.%09ld", seconds(), nanoseconds());
   }

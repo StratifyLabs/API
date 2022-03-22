@@ -50,7 +50,7 @@ class Data : public api::ExecutionContext {
 public:
   Data() = default;
 
-  Data(std::initializer_list<u8> il) : m_data(il) {}
+  explicit Data(std::initializer_list<u8> il) : m_data(il) {}
   explicit Data(size_t size);
 
   API_NO_DISCARD static Data from_string(var::StringView value);
@@ -67,11 +67,12 @@ public:
   }
 
   class Copy {
-    API_AF(Copy, size_t, destination_position, 0);
-    API_AF(Copy, size_t, size, -1);
-
   public:
     Copy() : m_destination_position(0), m_size(static_cast<size_t>(-1)) {}
+
+  private:
+    API_AF(Copy, size_t, destination_position, 0);
+    API_AF(Copy, size_t, size, -1);
   };
 
   Data &copy(View a, const Copy &options = Copy());
@@ -93,7 +94,9 @@ public:
 #if !defined __link
   static void reclaim_heap_space() { ::free((void *)1); }
 #else
-  static void reclaim_heap_space() {}
+  static void reclaim_heap_space() {
+    //this is only implemented on StratifyOS
+  }
 #endif
 
   Data &reserve(size_t size) {

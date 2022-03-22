@@ -12,7 +12,7 @@ int ViewFile::interface_read(void *buf, int nbyte) const {
     return -1;
   }
 
-  int size_ready = item().size() - m_location;
+  auto size_ready = item().size() - m_location;
   if (size_ready > nbyte) {
     size_ready = nbyte;
   }
@@ -25,7 +25,7 @@ int ViewFile::interface_read(void *buf, int nbyte) const {
   memcpy(buf, item().to_const_u8() + m_location, size_ready);
 
   m_location += size_ready;
-  return size_ready;
+  return int(size_ready);
 }
 
 int ViewFile::interface_write(const void *buf, int nbyte) const {
@@ -35,7 +35,7 @@ int ViewFile::interface_write(const void *buf, int nbyte) const {
     return -1;
   }
 
-  int size_ready = 0;
+  long size_ready = 0;
   if (flags().is_append()) {
     errno = EINVAL;
     return -1;
@@ -56,7 +56,7 @@ int ViewFile::interface_write(const void *buf, int nbyte) const {
   memcpy(var::View(item()).to_u8() + m_location, buf, size_ready);
 
   m_location += size_ready;
-  return size_ready;
+  return int(size_ready);
 }
 
 int ViewFile::interface_lseek(int offset, int whence) const {

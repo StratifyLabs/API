@@ -101,7 +101,7 @@ private:
 class Printer : public api::ExecutionContext, public PrinterFlags {
 public:
   Printer();
-  virtual ~Printer();
+  virtual ~Printer() = default;
 
   static ColorCode color_code(var::StringView color);
 
@@ -344,17 +344,17 @@ private:
 #endif
 
   api::ProgressCallback m_progress_callback;
-  u16 m_progress_width = 0;
+  u16 m_progress_width = 50;
   u16 m_progress_state = 0;
   u16 m_progress_key_state = 0;
-  u16 m_indent;
+  u16 m_indent = 0;
   u16 m_indent_size = 2;
-  Flags m_print_flags = Flags::null;
-  var::StringView m_progress_key;
-  Level m_verbose_level;
+  Flags m_print_flags = Flags::width_8 | Flags::hex;
+  var::StringView m_progress_key = "progress";
+  Level m_verbose_level = Level::info;
 
 #if defined __link
-  bool m_is_bash;
+  bool m_is_bash = false;
 #endif
 };
 

@@ -25,7 +25,8 @@ Cli::Cli(int argc, char *argv[]) {
   m_argv = argv;
 }
 
-const Cli &Cli::handle_version(const HandleVersion &options) const {
+const Cli &
+Cli::handle_version(API_MAYBE_UNUSED const HandleVersion &options) const {
 #if !defined __link
   if (!get_option("--version").is_empty()) {
     var::GeneralString output = var::GeneralString()
@@ -44,7 +45,7 @@ const Cli &Cli::handle_version(const HandleVersion &options) const {
 
 var::GeneralString Cli::to_general_string() const {
   GeneralString result;
-  for (u32 i = 1; i < count(); i++) {
+  for (u16 i = 1; i < count(); i++) {
     result |= at(i);
     if (i < count() - 1) {
       result |= " ";
@@ -58,13 +59,12 @@ StringView Cli::at(u16 value) const {
 }
 
 var::StringView Cli::get_option(StringView name, StringView help) const {
-  u32 args;
 
   if (!help.is_empty()) {
     m_help_list.push_back(name & ":" & help);
   }
 
-  for (args = 1; args < count(); args++) {
+  for (u32 args = 1; args < count(); args++) {
     StringView arg = m_argv[args];
 
     if (arg.find("--") == 0 && arg.length() >= 3) {
@@ -75,13 +75,11 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
           .set_ignore_between("")
           .set_maximum_delimeter_count(1));
 
-      if (tokens.count() > 0) {
-        if (tokens.at(0) == name) {
-          if (tokens.count() > 1) {
-            return tokens.at(1);
-          } else {
-            return {"true"};
-          }
+      if (tokens.count() > 0 && (tokens.at(0) == name)) {
+        if (tokens.count() > 1) {
+          return tokens.at(1);
+        } else {
+          return {"true"};
         }
       }
     }
@@ -92,8 +90,8 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
 var::StringView Cli::get_name() const {
   if (m_argc > 0) {
     StringView result = m_argv[0];
-    size_t slash_position = result.reverse_find('/');
-    if (slash_position != StringView::npos) {
+    if (const auto slash_position = result.reverse_find('/');
+        slash_position != StringView::npos) {
       result.pop_front(slash_position + 1);
     }
 
@@ -126,8 +124,9 @@ const Cli &Cli::show_help(const ShowHelp &options) const {
   for (const auto &help_item : m_help_list) {
     const auto part_container = var::Tokenizer(
       help_item,
-      var::Tokenizer::Construct().set_maximum_delimeter_count(1).set_delimeters(":"));
-    if( part_container.count() > 1 ){
+      var::Tokenizer::Construct().set_maximum_delimeter_count(1).set_delimeters(
+        ":"));
+    if (part_container.count() > 1) {
       printer->key(part_container.at(0), part_container.at(1));
     }
   }
