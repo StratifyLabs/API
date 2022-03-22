@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <iterator>
 #include <numeric>
+#include <algorithm>
 
 #include "api/api.hpp"
 
