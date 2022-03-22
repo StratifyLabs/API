@@ -1,5 +1,11 @@
-# Version 1.3.0
+# Version 1.3.1
 
+
+## Bug Fixes
+
+- Fix build problem with undefined reference to `atof` on Stratify OS
+
+# Version 1.3.0
 
 ## New Features
 
