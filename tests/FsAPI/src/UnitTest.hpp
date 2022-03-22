@@ -190,7 +190,9 @@ public:
 #if defined __link
       // add two for . and ..
       TEST_ASSERT(count == 5);
+#if !defined __win32
       TEST_EXPECT(d.tell() == (count - 1));
+#endif
 #else
       TEST_ASSERT(count == 3);
 #endif
