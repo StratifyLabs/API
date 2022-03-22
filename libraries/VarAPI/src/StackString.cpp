@@ -4,7 +4,14 @@
 namespace var {
 
 int NumberString::to_integer() const { return ::atoi(cstring()); }
-float NumberString::to_float() const { return ::atof(cstring()); }
+float NumberString::to_float() const {
+#if defined __link
+  return ::atof(cstring());
+#else
+  return ::atoff(cstring());
+#endif
+}
+
 
 long NumberString::to_long(Base base) const {
   return ::strtol(cstring(), nullptr, static_cast<int>(base));
