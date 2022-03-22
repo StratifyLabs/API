@@ -133,7 +133,7 @@ sem_t * Semaphore::open(
   int o_flags,
   fs::Permissions perms) {
   API_RETURN_VALUE_IF_ERROR(nullptr);
-  sem_t * result = SEM_FAILED;
+  sem_t * result = sem_pointer(SEM_FAILED);
   const var::KeyString name_string(name);
   if (value > 0) {
     result

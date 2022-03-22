@@ -28,13 +28,14 @@ public:
   SemaphoreObject &wait();
 
 protected:
+  using sem_pointer = sem_t *;
   SemaphoreObject() = default;
 
 private:
   friend class UnnamedSemaphore;
   friend class Semaphore;
 
-  sem_t * m_handle = SEM_FAILED;
+  sem_pointer m_handle = sem_pointer(SEM_FAILED);
 };
 
 template <class Derived> class SemAccess : public SemaphoreObject {
@@ -96,7 +97,7 @@ private:
   static void sem_deleter(sem_t * sem);
 
   using SemUniquePointer = std::unique_ptr<sem_t, decltype(&sem_deleter)>;
-  SemUniquePointer m_unique_pointer = SemUniquePointer(SEM_FAILED, &sem_deleter);
+  SemUniquePointer m_unique_pointer = SemUniquePointer(sem_pointer(SEM_FAILED), &sem_deleter);
 
   sem_t *
   open(int value, var::StringView name, int o_flags, fs::Permissions perms);
