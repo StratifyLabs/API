@@ -3,8 +3,7 @@
 #ifndef SAPI_SYS_CLI_HPP_
 #define SAPI_SYS_CLI_HPP_
 
-#include "var/String.hpp"
-#include "var/StringView.hpp"
+#include "var/StackString.hpp"
 
 namespace printer {
 class Printer;
