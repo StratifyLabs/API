@@ -580,10 +580,10 @@ private:
  * ```
  *
  * Using range based loops is less error prone than tradition `for` loops
- * and the compiler can deduct the type. For example:
+ * and the compiler can deduce the type. For example:
  *
  * ```cpp
- * const u16 first = 200;
+ * const u16 first = 100;
  * const u16 last = 200;
  *
  * for(auto i: api::Range(first,last)){}
@@ -679,7 +679,7 @@ private:
  * ```
  *
  * Using range based loops is less error prone than tradition `for` loops
- * and the compiler can deduct the type. For example:
+ * and the compiler can deduce the type. For example:
  *
  * ```cpp
  * u16 last = 200;
