@@ -31,6 +31,17 @@ API_MAYBE_UNUSED static int clock_gettime(int clk_id, struct timespec *t) {
 }
 #endif
 
+API_MAYBE_UNUSED static int clock_gettime2(int clk_id, struct timespec *t) {
+  MCU_UNUSED_ARGUMENT(clk_id);
+  struct timeval now;
+  if (int rv = gettimeofday(&now, nullptr); rv) {
+    return rv;
+  }
+  t->tv_sec = now.tv_sec;
+  t->tv_nsec = now.tv_usec * 1000;
+  return 0;
+}
+
 using namespace chrono;
 
 ClockTime ClockTime::get_system_time(ClockId clock_id) {
@@ -38,7 +49,7 @@ ClockTime ClockTime::get_system_time(ClockId clock_id) {
   ClockTime clock_time;
   API_SYSTEM_CALL(
     "",
-    clock_gettime(static_cast<clockid_t>(clock_id), clock_time));
+    clock_gettime2(static_cast<clockid_t>(clock_id), clock_time));
   return clock_time;
 }
 
