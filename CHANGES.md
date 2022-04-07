@@ -6,6 +6,7 @@
 
 ## Bug Fixes
 
+- Use `gettimeofday` for `ClockTime` on Linux
 - Fix build problem with undefined reference to `atof` on Stratify OS
 - add `var/StackString.hpp` include to `sys/Cli.hpp` to prevent some build errors
 

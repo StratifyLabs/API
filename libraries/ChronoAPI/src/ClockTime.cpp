@@ -31,6 +31,7 @@ API_MAYBE_UNUSED static int clock_gettime(int clk_id, struct timespec *t) {
 }
 #endif
 
+#if defined __linux
 API_MAYBE_UNUSED static int clock_gettime2(int clk_id, struct timespec *t) {
   MCU_UNUSED_ARGUMENT(clk_id);
   struct timeval now;
@@ -41,15 +42,22 @@ API_MAYBE_UNUSED static int clock_gettime2(int clk_id, struct timespec *t) {
   t->tv_nsec = now.tv_usec * 1000;
   return 0;
 }
+#endif
 
 using namespace chrono;
 
 ClockTime ClockTime::get_system_time(ClockId clock_id) {
   API_RETURN_VALUE_IF_ERROR(ClockTime());
   ClockTime clock_time;
+#if defined __linux
   API_SYSTEM_CALL(
     "",
     clock_gettime2(static_cast<clockid_t>(clock_id), clock_time));
+#else
+  API_SYSTEM_CALL(
+    "",
+    clock_gettime(static_cast<clockid_t>(clock_id), clock_time));
+#endif
   return clock_time;
 }
 
