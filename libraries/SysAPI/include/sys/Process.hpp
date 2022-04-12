@@ -117,7 +117,7 @@ public:
       m_path = arguments.path();
       m_arguments.push_back(nullptr);
       for (const auto *value : arguments.m_arguments) {
-        value && push(value).is_success();
+        value &&push(value).is_success();
       }
     }
 
@@ -188,9 +188,14 @@ public:
   }
 
 private:
-
-
   struct Redirect {
+    static constexpr auto stop_sequence
+      = ";askdryqwepibafgo;aisu;drapoasdf1023498yafgbcnvn,zxn.lk;d[pfsda]][asd["
+        "p]{}}{AKPGJFojd;skfjgns[]{}asdkf77983124ba;"
+        "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
+        "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
+        "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
+        "dfupuiy2ipu3y4aslkdjnflajg";
     thread::Thread thread;
     thread::Mutex mutex;
     Pipe pipe;
@@ -207,7 +212,7 @@ private:
 #endif
   };
 
-  static void pid_deleter(pid_t * pid);
+  static void pid_deleter(pid_t *pid);
 
   using PidResource = api::SystemResource<pid_t, decltype(&pid_deleter)>;
   using RedirectPointer = std::unique_ptr<Redirect>;
@@ -217,7 +222,8 @@ private:
 #if defined __win32
   PROCESS_INFORMATION *m_process_information;
   HANDLE m_process = INVALID_HANDLE_VALUE;
-  using HandleResource = api::SystemResource<HANDLE, decltype(&wait_pid)>;
+  HANDLE m_thread = INVALID_HANDLE_VALUE;
+  // using HandleResource = api::SystemResource<HANDLE, decltype(&wait_pid)>;
 #endif
 
   PidResource m_pid;

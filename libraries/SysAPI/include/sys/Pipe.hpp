@@ -10,10 +10,6 @@ namespace sys {
 class Pipe : public api::ExecutionContext {
 public:
   Pipe();
-  Pipe(const Pipe &) = delete;
-  Pipe &operator=(const Pipe &) = delete;
-  Pipe(Pipe &&) = default;
-  Pipe &operator=(Pipe &&) = default;
 
   fs::File &read_file() { return m_read_file; }
   const fs::File &read_file() const { return m_read_file; }
