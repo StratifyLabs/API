@@ -154,18 +154,10 @@ public:
 
   Process() = default;
   Process(const Arguments &arguments, const Environment &environment);
-  Process(const Process &) = delete;
-  Process &operator=(const Process &) = delete;
-  Process(Process &&a) noexcept { swap(a); }
-  Process &operator=(Process &&a) noexcept {
-    swap(a);
-    return *this;
-  }
-  ~Process();
 
   Process &wait();
   bool is_running();
-  pid_t pid() const { return m_pid; }
+  pid_t pid() const { return m_pid.value(); }
 
   Status status() { return Status(m_status); }
 
@@ -196,6 +188,8 @@ public:
   }
 
 private:
+
+
   struct Redirect {
     static constexpr auto stop_sequence
       = ";askdryqwepibafgo;aisu;drapoasdf1023498yafgbcnvn,zxn.lk;d[pfsda]][asd["
@@ -220,7 +214,7 @@ private:
 #endif
   };
 
-  static void pid_deleter(pid_t *pid);
+  static void pid_deleter(pid_t * pid);
 
   using PidResource = api::SystemResource<pid_t, decltype(&pid_deleter)>;
   using RedirectPointer = std::unique_ptr<Redirect>;
