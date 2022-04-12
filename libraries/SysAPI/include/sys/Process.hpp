@@ -117,7 +117,7 @@ public:
       m_path = arguments.path();
       m_arguments.push_back(nullptr);
       for (const auto *value : arguments.m_arguments) {
-        value && push(value).is_success();
+        value &&push(value).is_success();
       }
     }
 
@@ -196,15 +196,14 @@ public:
   }
 
 private:
-  pid_t m_pid = -1;
-  int m_status = 0;
-
-#if defined __win32
-  PROCESS_INFORMATION *m_process_information;
-  HANDLE m_process = INVALID_HANDLE_VALUE;
-#endif
-
   struct Redirect {
+    static constexpr auto stop_sequence
+      = ";askdryqwepibafgo;aisu;drapoasdf1023498yafgbcnvn,zxn.lk;d[pfsda]][asd["
+        "p]{}}{AKPGJFojd;skfjgns[]{}asdkf77983124ba;"
+        "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
+        "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
+        "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
+        "dfupuiy2ipu3y4aslkdjnflajg";
     thread::Thread thread;
     thread::Mutex mutex;
     Pipe pipe;
@@ -221,15 +220,23 @@ private:
 #endif
   };
 
-  Redirect *m_standard_output = nullptr;
-  Redirect *m_standard_error = nullptr;
+  static void pid_deleter(pid_t *pid);
 
-  void swap(Process &a) noexcept {
-    std::swap(m_pid, a.m_pid);
-    std::swap(m_status, a.m_status);
-    std::swap(m_standard_output, a.m_standard_output);
-    std::swap(m_standard_error, a.m_standard_error);
-  }
+  using PidResource = api::SystemResource<pid_t, decltype(&pid_deleter)>;
+  using RedirectPointer = std::unique_ptr<Redirect>;
+
+  int m_status = 0;
+
+#if defined __win32
+  PROCESS_INFORMATION *m_process_information;
+  HANDLE m_process = INVALID_HANDLE_VALUE;
+  HANDLE m_thread = INVALID_HANDLE_VALUE;
+  // using HandleResource = api::SystemResource<HANDLE, decltype(&wait_pid)>;
+#endif
+
+  PidResource m_pid;
+  RedirectPointer m_standard_output;
+  RedirectPointer m_standard_error;
 
   static void *update_redirect_thread_function(void *args);
   void update_redirect(Redirect *options);
