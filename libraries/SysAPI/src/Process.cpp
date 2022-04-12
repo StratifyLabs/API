@@ -173,7 +173,6 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};
-  STARTUPINFOA startup_info{};
 
   var::PathString cwd;
   _getcwd(cwd.data(), cwd.capacity());
@@ -213,6 +212,8 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 
   if (m_process == nullptr || m_process == INVALID_HANDLE_VALUE) {
     printf("Last error %d\n", GetLastError());
+    API_PRINTF_TRACE_LINE();
+    fflush(stdout);
     m_process = INVALID_HANDLE_VALUE;
     API_RETURN_ASSIGN_ERROR("failed to spawn", errno);
   }

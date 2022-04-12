@@ -229,6 +229,9 @@ private:
     std::swap(m_status, a.m_status);
     std::swap(m_standard_output, a.m_standard_output);
     std::swap(m_standard_error, a.m_standard_error);
+#if defined __win32
+    std::swap(m_process, a.m_process);
+#endif
   }
 
   static void *update_redirect_thread_function(void *args);
