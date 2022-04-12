@@ -23,7 +23,7 @@
 #include "fs/FileSystem.hpp"
 #include "sys/Process.hpp"
 
-extern "C" char ** environ;
+extern "C" char **environ;
 
 namespace printer {
 Printer &
@@ -55,7 +55,7 @@ Printer &operator<<(Printer &printer, const sys::Process::Environment &env) {
 using namespace sys;
 
 Process::Environment::Environment(char **env) : Process::Arguments("") {
-  char ** effective_env = (env == nullptr) ? environ : env;
+  char **effective_env = (env == nullptr) ? environ : env;
   size_t i = 0;
   do {
     if (effective_env[i] != nullptr) {
@@ -154,7 +154,8 @@ bool Process::Status::is_continued() const {
   return WIFCONTINUED(m_status_value) != 0;
 }
 
-Process::Process(const Arguments &arguments, const Environment &environment) {
+Process::Process(const Arguments &arguments, const Environment &environment)
+  : m_pid(-1, &pid_deleter), m_standard_output(new Redirect()), m_standard_error(new Redirect()) {
   API_RETURN_IF_ERROR();
 
   if (arguments.m_arguments.count() == 0) {
@@ -166,9 +167,6 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   }
 
   bool is_process_launched = false;
-
-  m_standard_output = new Redirect();
-  m_standard_error = new Redirect();
 
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
@@ -229,8 +227,8 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
       errno);
   }
 
-  m_pid = API_SYSTEM_CALL("fork()", fork());
-  if (m_pid == 0) {
+  const auto fork_result = API_SYSTEM_CALL("fork()", fork());
+  if (fork_result == 0) {
 
     // this will run in the child process
     Arguments args(arguments);
@@ -256,36 +254,35 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     ::execve(args.path(), args.m_arguments.data(), environ);
     perror("failed to launch\n");
     exit(1);
+  } else {
+    m_pid = PidResource(fork_result, &pid_deleter);
   }
 
-  is_process_launched = m_pid > 0;
+  is_process_launched = (m_pid.value() > 0);
 #endif
 
   if (is_process_launched) {
     m_standard_output->self = this;
     m_standard_error->self = this;
-
     m_standard_output->start_thread();
     m_standard_error->start_thread();
   } else {
-    delete m_standard_output;
-    m_standard_output = nullptr;
-    delete m_standard_error;
-    m_standard_error = nullptr;
+    m_standard_output = {};
+    m_standard_error = {};
   }
 }
 
+void Process::pid_deleter(pid_t *pid) {
+  //caller MUST wait for pid -- can't let it be destroyed when not equal to -1
+  API_ASSERT((*pid == -1));
+}
+
+#if 0
 Process::~Process() {
   // if process is NOT detached -- wait for it to complete
   wait();
-
-  if (m_standard_output != nullptr) {
-    delete m_standard_output;
-  }
-  if (m_standard_error != nullptr) {
-    delete m_standard_error;
-  }
 }
+#endif
 
 Process &Process::wait() {
   API_RETURN_VALUE_IF_ERROR(*this);
@@ -306,15 +303,15 @@ Process &Process::wait() {
   return *this;
 
 #else
-  if (m_pid < 0) {
+  if (m_pid.value() < 0) {
     return *this;
   }
 
   int status = 0;
 
-  auto result = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid, &status, 0));
-  if (result == m_pid) {
-    m_pid = -1;
+  auto result = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid.value(), &status, 0));
+  if (result == m_pid.value()) {
+    m_pid.set_value(-1);
     m_status = status;
     m_standard_error->wait_stop();
     m_standard_output->wait_stop();
@@ -346,18 +343,17 @@ bool Process::is_running() {
   m_standard_output->wait_stop();
   return false;
 #else
-  if (m_pid < 0) {
+  if (m_pid.value() < 0) {
     return false;
   }
 
   api::ErrorScope error_scope;
   int status = 0;
   auto result
-    = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid, &status, WNOHANG));
-  if (result == m_pid) {
+    = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid.value(), &status, WNOHANG));
+  if (result == m_pid.value()) {
     m_status = status;
-    m_pid = -1;
-
+    m_pid.set_value(-1);
     m_standard_error->wait_stop();
     m_standard_output->wait_stop();
     return false;

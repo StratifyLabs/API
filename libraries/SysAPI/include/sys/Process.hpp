@@ -154,18 +154,10 @@ public:
 
   Process() = default;
   Process(const Arguments &arguments, const Environment &environment);
-  Process(const Process &) = delete;
-  Process &operator=(const Process &) = delete;
-  Process(Process &&a) noexcept { swap(a); }
-  Process &operator=(Process &&a) noexcept {
-    swap(a);
-    return *this;
-  }
-  ~Process();
 
   Process &wait();
   bool is_running();
-  pid_t pid() const { return m_pid; }
+  pid_t pid() const { return m_pid.value(); }
 
   Status status() { return Status(m_status); }
 
@@ -196,13 +188,7 @@ public:
   }
 
 private:
-  pid_t m_pid = -1;
-  int m_status = 0;
 
-#if defined __win32
-  PROCESS_INFORMATION *m_process_information;
-  HANDLE m_process = INVALID_HANDLE_VALUE;
-#endif
 
   struct Redirect {
     thread::Thread thread;
@@ -221,18 +207,22 @@ private:
 #endif
   };
 
-  Redirect *m_standard_output = nullptr;
-  Redirect *m_standard_error = nullptr;
+  static void pid_deleter(pid_t * pid);
 
-  void swap(Process &a) noexcept {
-    std::swap(m_pid, a.m_pid);
-    std::swap(m_status, a.m_status);
-    std::swap(m_standard_output, a.m_standard_output);
-    std::swap(m_standard_error, a.m_standard_error);
+  using PidResource = api::SystemResource<pid_t, decltype(&pid_deleter)>;
+  using RedirectPointer = std::unique_ptr<Redirect>;
+
+  int m_status = 0;
+
 #if defined __win32
-    std::swap(m_process, a.m_process);
+  PROCESS_INFORMATION *m_process_information;
+  HANDLE m_process = INVALID_HANDLE_VALUE;
+  using HandleResource = api::SystemResource<HANDLE, decltype(&wait_pid)>;
 #endif
-  }
+
+  PidResource m_pid;
+  RedirectPointer m_standard_output;
+  RedirectPointer m_standard_error;
 
   static void *update_redirect_thread_function(void *args);
   void update_redirect(Redirect *options);
