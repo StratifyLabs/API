@@ -166,6 +166,12 @@ public:
     TEST_ASSERT(D(HOME_FOLDER "/tmp").is_success());
 
     {
+      //check that the compiler can move Dir
+      const auto d = [] { return D(HOME_FOLDER "/tmp"); }();
+      d.read();
+    }
+
+    {
       Vector<var::PathString> dir_list
         = FS().read_directory(HOME_FOLDER "/tmp");
       printer().object("list", dir_list);
@@ -184,7 +190,9 @@ public:
 #if defined __link
       // add two for . and ..
       TEST_ASSERT(count == 5);
+#if !defined __win32
       TEST_EXPECT(d.tell() == (count - 1));
+#endif
 #else
       TEST_ASSERT(count == 3);
 #endif
@@ -447,8 +455,8 @@ public:
 
       TEST_ASSERT(F(file1_name).verify(data1_file.seek(0)));
       TEST_ASSERT(F(file2_name).verify(data2_file.seek(0)));
-      TEST_ASSERT(F(file1_name).verify(File(file1_name)));
-      TEST_ASSERT(F(file1_name).verify(File(file2_name)) == false);
+      TEST_ASSERT(F(file1_name).verify(F(file1_name)));
+      TEST_ASSERT(F(file1_name).verify(F(file2_name)) == false);
       TEST_ASSERT(F(file1_name).verify(data2_file.seek(0)) == false);
       TEST_ASSERT(F(file2_name).verify(data1_file.seek(0)) == false);
       TEST_ASSERT(data1_file.seek(0).verify(data2_file.seek(0)) == false);

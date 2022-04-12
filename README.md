@@ -11,13 +11,13 @@ API is a collection of cross-platform C++ libraries for
 
 including
 
-- [API](libraries/API): error handling and execution context
-- [ChronoAPI](libraries/ChronoAPI): time and timing
-- [FsAPI](libraries/FsAPI): File systems
-- [PrinterAPI](libraries/PrinterAPI): printing variables
-- [SysAPI](libraries/SysAPI): command line interface, system name, semantic versions
-- [ThreadAPI](libraries/ThreadAPI): thread management
-- [VarAPI](libraries/VarAPI): data and strings
+- API: error handling and execution context
+- ChronoAPI: time and timing
+- FsAPI: File systems
+- PrinterAPI: printing variables
+- SysAPI: command line interface, system name, semantic versions
+- ThreadAPI: thread management
+- VarAPI: data and strings
 
 ## How to Build
 
@@ -49,7 +49,7 @@ The API framework is a hard to mis-use, non-onerous C++ API achieved using the f
 
 This means anything that can affect the error context (including changing the value of `errno`) must abort if the thread already has an error.
 
-```c++
+```cpp
 const FileObject &FileObject::read(void *buf, int nbyte) const {
   API_RETURN_VALUE_IF_ERROR(*this); //don't modify erroneous context
   API_SYSTEM_CALL("", interface_read(buf, nbyte)); //update error context if needed
@@ -61,7 +61,7 @@ const FileObject &FileObject::read(void *buf, int nbyte) const {
 
 The process (primary thread) error context is created statically at compile time. The value of `&errno` provides an error context signature for each thread. An error context is dynamically allocated if a new thread has an error.
 
-```c++
+```cpp
 Error &PrivateExecutionContext::get_error() {
   if (&(errno) == m_error.m_signature) {
     return m_error;
@@ -88,7 +88,7 @@ Error &PrivateExecutionContext::get_error() {
 
 Having a per-thread error context allows for very powerful (and concise) code using method chaining. This approach also helps to create strong arguments that are hard for application developers to use incorrectly.
 
-```c++
+```cpp
 class Point {
 public:
   int x() const { return m_x; }
@@ -116,7 +116,7 @@ Point p = Point().set_x(50).set_y(100);
 
 Almost any data in the `API` framework can be treated as a `FileObject`. This provides a unified way to move data around between memory, the filesystem, the internet, and devices.
 
-```c++
+```cpp
 //defines interface for using file like objects
 class FileObject {
   //write source to this file
@@ -144,7 +144,7 @@ class SecureSocket : public FileObject;
 
 `API` classes are designed so that the functionality is obvious without looking at the declaration. The code below illustrates one example.
 
-```c++
+```cpp
 //weak -- don't do this
 FileSystem& rename(const StringView old_path, const StringView new_path);
 
@@ -187,7 +187,7 @@ The constructor/deconstructor paradigm built into the C++ language is an excelle
 
 Here are a few examples:
 
-```c++
+```cpp
 //open/close
 DataFile my_file;
 {
@@ -213,7 +213,7 @@ One limitation to this approach comes when, for example, you want to construct a
 
 Keep in mind, you can `move` a `File` but you cannot copy the object. This will be true throughout the `API` for any class that is associated with a system resource.
 
-```c++
+```cpp
 //this will just be an unopened file for now
 File f;
 
@@ -237,7 +237,7 @@ File f_copy = f;
 
 Using traditional C/POSIX style programming to copy a file looks something like this:
 
-```c++
+```cpp
 int file_fd = open("file.txt", O_READONLY);
 if( f < 0 ){ /*cascade the error up the chain*/ }
 
@@ -259,7 +259,7 @@ if( close(new_file_fd) < 0){ /*cascade the error up the chain*/ }
 
 The `API` way is much more concise.
 
-```c++
+```cpp
 //copy file.txt -> new_file.txt
 File(File::IsOverwrite::yes, "new_file.txt").write(File("file.txt"));
 if( api::ExecutionContext::is_error() ){
@@ -277,7 +277,7 @@ The `API` framework uses `set_value()` for setting and `value()` for access to a
 
 The `chrono::ClockTime` has some good examples:
 
-```c++
+```cpp
 //access seconds -- nothing to calculate or fetch
 s32 seconds() const { return m_value.tv_sec; }
 
@@ -297,7 +297,7 @@ If a class can have a valid/invalid state, the method `is_valid()` is used to ch
 
 Examples:
 
-```c++
+```cpp
 #include <thread.hpp>
 #include <fs.hpp>
 
@@ -312,7 +312,7 @@ if( t.is_valid() ){}
 
 The code and a few guides (README.md docs in the repo) are all the available documentation. For many years, I believed in Doxygen style comments, but most of the documentation just ended up being redundant. This snippet was taken directly from the code before the comments were removed.
 
-```c++
+```cpp
 /*! \details Compares <= to another MicroTime object. */
 bool operator<=(const MicroTime &a) const {
   return microseconds() <= a.microseconds();

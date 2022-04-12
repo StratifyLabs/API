@@ -80,18 +80,17 @@ String &String::erase(StringView string_to_erase, size_t position) {
 }
 
 String &String::replace(const Replace &options) {
-  size_t pos = options.position();
-  const size_t old_length = options.old_string().length();
-  const size_t new_length = options.new_string().length();
+  size_t pos = options.position;
+  const size_t old_length = options.old_string.length();
+  const size_t new_length = options.new_string.length();
   size_t replaced_count = 0;
   while (
-    ((pos = StringView(*this).find(options.old_string(), pos)) != String::npos)
-    && (options.count() ? replaced_count < options.count() : 1)) {
+    ((pos = StringView(*this).find(options.old_string, pos)) != String::npos)
+    && (options.count ? replaced_count < options.count : 1)) {
 
     erase(Erase().set_position(pos).set_length(old_length));
 
-    m_string.insert(pos, options.new_string().m_string_view);
-    // insert(pos, options.new_string());
+    m_string.insert(pos, options.new_string.m_string_view);
     pos += new_length;
     replaced_count++;
   }

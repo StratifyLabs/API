@@ -12,7 +12,7 @@ public:
   explicit Version(const var::StringView value) : m_version(value) {}
 
   API_NO_DISCARD u32 to_bcd() const;
-  API_NO_DISCARD u16 to_bcd16() const { return to_bcd() >> 8; }
+  API_NO_DISCARD u16 to_bcd16() const { return u16(to_bcd() >> 8); }
 
   API_NO_DISCARD static Version from_triple(u16 major, u8 minor, u8 patch);
   API_NO_DISCARD static Version from_u16(u16 major_minor);

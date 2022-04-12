@@ -7,6 +7,17 @@
 
 namespace fs {
 
+
+/*! \details
+ *
+ * This class is used to execute a function whenever
+ * a file is read or written.  It is great if you want to
+ * perform an operation on data read from a file (or an inet::Socket).
+ *
+ *
+ *
+ *
+ */
 class LambdaFile : public FileAccess<LambdaFile> {
 public:
   using read_callback_t = int (*)(void *context, int location, var::View view);

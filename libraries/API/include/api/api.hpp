@@ -7,6 +7,7 @@
 #include <climits>
 #include <cstring>
 
+#include <memory>
 #include <vector>
 
 #include "macros.hpp"
@@ -15,47 +16,94 @@
 #if !defined __win32
 #include <execinfo.h>
 #endif
-#define API_BACKTRACE_SIZE 512
 #else
 extern "C" int sos_trace_stack(u32 count);
-#define API_BACKTRACE_SIZE 32
 #endif
 
 namespace api {
 
+/*! \details
+ *
+ * This class contains basic functions to access information
+ * about the Api build.
+ *
+ */
 class ApiInfo {
 public:
+  /*! \details Gets the version as a c-style string. The version
+   * uses semantic version format.
+   *
+   * @return `<major>.<minor>.<patch>`
+   */
   static const char *version();
+
+  /*! \details Gets the git hash as a c-style string.
+   *
+   * This can be useful when debugging development builds
+   *
+   */
   static const char *git_hash();
 
+  /*! \details Gets the initial size of a malloc chunck.
+   *
+   * This function is really only useful when using Stratify OS.
+   * It lets you optimize some buffers to malloc boundaries.
+   *
+   */
   static constexpr u32 malloc_start_chunk_size() {
     return API_MINIMUM_CHUNK_SIZE;
   }
 
+  /*! \details Gets the standard size of a malloc chunk.
+   *
+   * This function is really only useful when using Stratify OS.
+   * It lets you optimize some buffers to malloc boundaries.
+   *
+   */
   static constexpr u32 malloc_chunk_size() { return API_MALLOC_CHUNK_SIZE; }
 };
 
 #if defined __link
-template <typename A, const A *initial_value> class Api {
+/*! \details
+ *
+ * This class is used for creating abstractions to C libraries.
+ *
+ * It is primarily useful when creating shared libraries on
+ * Stratify OS. For desktop builds, it just uses a function
+ * table for 3rd party libraries. This repo doesn't use
+ * any 3rd party libraries. Check out
+ * [JsonAPI](https://github.com/StratifyLabs/JsonAPI) or
+ * [InetAPI](https://github.com/StratifyLabs/InetAPI).
+ * for more examples
+ *
+ * @tparam FunctionTable The c-style function table
+ * @tparam initial_value The initial value to assign to the table. In
+ * StratifyOS, you use a kernel request to get the pointer to the function
+ * table.
+ *
+ */
+template <typename FunctionTable, const FunctionTable *initial_value>
+class Api {
 #else
 extern "C" const void *kernel_request_api(u32 request);
-template <typename A, u32 request> class Api {
+template <typename FunctionTable, u32 request> class Api {
 #endif
 public:
   Api() { initialize(); }
 
-  bool is_valid() {
-    initialize();
-    return m_api != nullptr;
-  }
+  /*! \details Checks to see if the API is valid and available.
+   *
+   * @return `true` if the API is available.
+   */
+  bool is_valid() { return m_api != nullptr; }
 
-  Api &operator=(const A *value) {
+  Api &operator=(const FunctionTable *value) {
     m_api = value;
     return *this;
   }
 
-  const A *operator->() const { return m_api; }
-  const A *api() const { return m_api; }
+  const FunctionTable *operator->() const { return m_api; }
+  const FunctionTable *api() const { return m_api; }
 
 private:
   void initialize() {
@@ -63,45 +111,84 @@ private:
 #if defined __link
       m_api = initial_value;
 #else
-      m_api = (const A *)kernel_request_api(request);
+      m_api = (const FunctionTable *)kernel_request_api(request);
 #endif
     }
   }
-  const A *m_api = nullptr;
+  const FunctionTable *m_api = nullptr;
 };
 
+/*! \details
+ * This class contains the thread-local error object.
+ *
+ * The API framework is designed to keep track of errors
+ * on a thread-by-thread basis. If the thread has an error,
+ * the API framework will not call any code that affects
+ * the error context.
+ *
+ * For example:
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ *
+ * File file("does_not_exist.txt");
+ * file.write("Hello");
+ * ```
+ *
+ * In the snippet above, the code will try to open `does_not_exist.txt`. It will
+ * fail and set the threads error context. `file.write()` will not attempt
+ * to write to the file because the thread has an error. The first error
+ * encountered is preserved until it is cleared.
+ *
+ * This approach allows you to chain together complex operations and then
+ * precisely debug the error. This code copies a file:
+ *
+ * ```cpp
+ * #include <fs.hpp>
+ * File(File::IsOverwrite::yes,
+ * "new_file.txt").write(File("probably_exists.txt")); if(
+ * api::ExecutionContext::is_error() ){
+ *   //at this point, the first error is preserved and shown
+ *   printf("Error: %s\n", error().message());
+ * }
+ * ```
+ *
+ *
+ */
 class Error {
 public:
+  /*! \details
+   *
+   * This class stores a symbol backtrace whenever an error happens.
+   *
+   * The backtrace is only available on systems that support the
+   * `backtrace_symbols()` function.
+   *
+   */
   class Backtrace {
   public:
-    explicit Backtrace(const Error &context) {
-#if defined __link
-#if !defined __win32
-      m_entry_count = context.m_backtrace_count;
-      m_symbol_pointer
-        = backtrace_symbols(context.m_backtrace_buffer, m_entry_count);
-#endif
+    explicit Backtrace(const Error &context)
+#if defined __link && !defined __win32
+      : m_entry_count(context.m_backtrace_count),
+        m_symbol_pointer(
+          backtrace_symbols(context.m_backtrace_buffer, m_entry_count),
+          &symbol_deleter)
 #else
-
+    : m_symbol_pointer(nullptr, &symbol_deleter)
 #endif
-    }
+    {}
 
-    const char *at(size_t offset) {
+    const char *at(size_t offset) const {
       if (offset < m_entry_count) {
-        return m_symbol_pointer[offset];
+        return m_symbol_pointer.get()[offset];
       }
       return nullptr;
     }
 
-    ~Backtrace() {
-      if (m_symbol_pointer != nullptr) {
-        ::free(m_symbol_pointer);
-      }
-    }
-
   private:
-    char **m_symbol_pointer{};
+    static void symbol_deleter(char **x) { ::free(x); };
     API_RAF(Backtrace, size_t, entry_count, 0);
+    std::unique_ptr<char *, decltype(&symbol_deleter)> m_symbol_pointer;
   };
 
   API_NO_DISCARD const char *message() const { return m_message; }
@@ -120,11 +207,17 @@ public:
   void set_guarded(bool value = true) { m_is_guarded = value; }
 
 private:
+#if defined __link
+  static constexpr size_t api_backtrace_size = 512;
+#else
+  static constexpr size_t api_backtrace_size = 32;
+#endif
+
   explicit Error(void *signature) : m_signature(signature) {}
   friend class PrivateExecutionContext;
   friend class BacktraceSymbols;
   static constexpr size_t m_message_size = PATH_MAX;
-  static constexpr size_t m_backtrace_buffer_size = API_BACKTRACE_SIZE;
+  static constexpr size_t m_backtrace_buffer_size = api_backtrace_size;
 
   void *m_signature{};
   int m_error_number = 0;
@@ -168,12 +261,15 @@ protected:
   void update_error_context(int result, int line, const char *message);
 
 private:
-  friend class ErrorGuard;
-  PrivateExecutionContext() : m_error(&(errno)) {}
-  Error m_error;
+  friend class ErrorScope;
+  PrivateExecutionContext() = default;
+  Error m_error = Error(&errno);
   std::vector<Error> *m_error_list = nullptr;
 };
 
+/*! \details This class is the base class for almost all classes
+ * in all API frameworks.
+ */
 class ExecutionContext {
 public:
   static int
@@ -211,35 +307,68 @@ public:
   static inline int return_value() { return m_private_context.value(); }
 
 private:
-  friend class ErrorGuard;
+  friend class ErrorScope;
   static PrivateExecutionContext m_private_context;
 };
 
-class ErrorGuard {
+/*! \details
+ *
+ * This class saves a copy of the error context on the stack and sets the
+ * current `Error` to a fresh value (no error). Upon
+ * destruction, the original error scope is restored.
+ *
+ * This is helpful in two situations,
+ *
+ * 1. You know an error might happen
+ * 2. An error may have happened, but you want to execute code in an error-free
+ * context.
+ *
+ * For example:
+ *
+ * ```cpp
+ *
+ *   File new_file(File::IsOverwrite::yes, "new_file.txt");
+ *  {
+ *    api::ErrorScope error_scope;
+ *    File maybe_file("maybe_exists.txt");
+ *    if( file.is_success() ){
+ *      new_file.write(file);
+ *    }
+ *  }
+ *  //if maybe_exists.txt was opened, it's contents were copied to new_file
+ *  //either way, the context is error free
+ *  new_file.write("Hello World\n");
+ * ```
+ *
+ */
+class ErrorScope {
 public:
-  ErrorGuard()
-    : m_error(ExecutionContext::m_private_context.m_error),
-      m_error_number(errno) {
-    m_is_guarded = ExecutionContext::m_private_context.m_error.is_guarded();
-    ExecutionContext::reset_error();
-  }
-  ~ErrorGuard() {
+  ErrorScope() { ExecutionContext::reset_error(); }
+  ErrorScope(const ErrorScope &) = delete;
+  ErrorScope &operator=(const ErrorScope &) = delete;
+  ~ErrorScope() {
     ExecutionContext::m_private_context.m_error = m_error;
     ExecutionContext::m_private_context.m_error.set_guarded(m_is_guarded);
     errno = m_error_number;
   }
 
 private:
-  Error m_error;
-  int m_error_number;
-  bool m_is_guarded;
+  Error m_error = Error(ExecutionContext::m_private_context.m_error);
+  int m_error_number = errno;
+  bool m_is_guarded = ExecutionContext::m_private_context.m_error.is_guarded();
 };
 
-using ErrorContext = ErrorGuard;
-using ErrorScope = ErrorGuard;
+/*! \cond */
+using ErrorContext = ErrorScope;
+using ErrorGuard = ErrorScope;
+/*! \endcond */
 
 class ThreadExecutionContext {
 public:
+  ThreadExecutionContext(const ThreadExecutionContext &) = delete;
+  ThreadExecutionContext &operator=(const ThreadExecutionContext &) = delete;
+  ThreadExecutionContext(ThreadExecutionContext &&) = delete;
+  ThreadExecutionContext &operator=(ThreadExecutionContext &&) = delete;
   ~ThreadExecutionContext() { ExecutionContext::free_context(); }
 };
 
@@ -378,7 +507,7 @@ public:
    * shown as indeterminate.
    *
    */
-  typedef bool (*callback_t)(void *, int, int);
+  using callback_t = bool (*)(void *, int, int);
 
   /*! \details Constructs an empty object. */
   ProgressCallback();
@@ -404,6 +533,7 @@ private:
   API_AF(ProgressCallback, void *, context, nullptr);
 };
 
+/*! \sa Range */
 template <typename Type> class RangeIterator {
 public:
   using TransformCallback = Type (*)(const Type &, const Type &);
@@ -433,7 +563,35 @@ private:
   TransformCallback m_transform;
 };
 
-template <typename Type = int> class Range {
+/*! \details
+ *
+ * This class is used to create range based loops from integer types.
+ *
+ * @tparam Type The integer type to use.
+ *
+ * For example:
+ *
+ * ```cpp
+ *
+ * for(int i=5; i < 10; ++i){}
+ *
+ * //becomes
+ * for(auto i: api::Range(5,10)){}
+ * ```
+ *
+ * Using range based loops is less error prone than tradition `for` loops
+ * and the compiler can deduce the type. For example:
+ *
+ * ```cpp
+ * const u16 first = 100;
+ * const u16 last = 200;
+ *
+ * for(auto i: api::Range(first,last)){}
+ *
+ * ```
+ *
+ */
+template <typename Type> class Range {
 public:
   static Type forward(const Type &a, const Type &) { return a; }
   static Type reverse(const Type &a, const Type &b) { return b - a - 1; }
@@ -475,6 +633,7 @@ private:
   typename RangeIterator<Type>::TransformCallback m_transform;
 };
 
+/*! \sa Index */
 template <typename Type> class IndexIterator {
 public:
   explicit IndexIterator(Type value) : m_value(value) {}
@@ -499,7 +658,40 @@ private:
   Type m_value;
 };
 
-template <typename Type = int> class Index {
+/*! \details
+ *
+ *
+ * This class is used to create range based loops from zero to some value.
+ *
+ * @tparam Type The integer type to use. This is usually deduced automatically
+ * by the compiler and does not need to be specified.
+ *
+ * For example:
+ *
+ * ```cpp
+ *
+ * for(int i=0; i < 10; ++i){}
+ * //becomes:
+ * for(auto i: api::Index(10)){}
+ *
+ * //tell the compiler what number type to user
+ * for(auto i: api::Index<size_t>(10)){}
+ * ```
+ *
+ * Using range based loops is less error prone than tradition `for` loops
+ * and the compiler can deduce the type. For example:
+ *
+ * ```cpp
+ * u16 last = 200;
+ *
+ * for(auto i: api::Index(last)){}
+ *
+ * const auto size = File("file.txt").size();
+ * for(auto i: api::Index(size)){}
+ * ```
+ *
+ */
+template <typename Type> class Index {
 public:
   constexpr Index(const Type &start, const Type &finish)
     : m_start(start), m_finish(finish) {}
@@ -518,6 +710,76 @@ private:
   const Type m_start = 0;
   const Type m_finish = 0;
 };
+
+
+/*! \details
+ *
+ * This class is used to manage system resources. It implements the rule of 5
+ * and holds an arbitrary data member that is custom-deleted upon destruction.
+ *
+ * For example, a file descriptor (`int`) can be wrapped in a SystemResource.
+ * The SystemResource will close the file when the destructor is called.
+ *
+ * @tparam Type Type of the member (e.g., pthread_mutex_t, sem_t, int)
+ * @tparam Deleter The function to call when the destructor is called.
+ *
+ * \sa File
+ */
+template <typename Type, typename Deleter> class SystemResource {
+public:
+  SystemResource(const Type &invalid_value = {}) : m_value(invalid_value) {}
+  SystemResource(const Type &initial_value, const Deleter &deleter)
+    : m_value(initial_value), m_deleter(deleter) {}
+
+  SystemResource(const SystemResource &) = delete;
+  SystemResource &operator=(const SystemResource &) = delete;
+
+  SystemResource(SystemResource &&a) noexcept { swap(a); }
+  SystemResource &operator=(SystemResource &&a) noexcept {
+    swap(a);
+    return *this;
+  }
+
+  ~SystemResource() {
+    if (m_deleter != nullptr) {
+      m_deleter(&m_value);
+    }
+  };
+
+  SystemResource &set_value(const Type &value) {
+    m_value = value;
+    return *this;
+  }
+  const Type &value() const { return m_value; }
+
+  Type * pointer_to_value(){
+    return &m_value;
+  }
+
+  const Type * pointer_to_value() const{
+    return &m_value;
+  }
+
+private:
+  Type m_value = {};
+  Deleter m_deleter = nullptr;
+
+  void swap(SystemResource &a) {
+    std::swap(m_value, a.m_value);
+    std::swap(m_deleter, a.m_deleter);
+  }
+};
+
+/*! \details
+ *
+ * This function will setup the system to trace an error
+ * associated with a segmentation fault.
+ *
+ * You can call it at the beginning of main to debug segmentation
+ * faults.
+ *
+ */
+void catch_segmentation_fault();
 
 } // namespace api
 

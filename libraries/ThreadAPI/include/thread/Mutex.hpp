@@ -85,18 +85,6 @@ public:
 
   Mutex();
   explicit Mutex(const Attributes &attr);
-  Mutex(const Mutex & mutex) = delete;
-  Mutex& operator=(const Mutex&mutex) = delete;
-  Mutex(Mutex && a) noexcept {
-    std::swap(m_mutex, a.m_mutex);
-  }
-  Mutex& operator=(Mutex&&a) noexcept {
-    std::swap(m_mutex, a.m_mutex);
-    return *this;
-  }
-
-  ~Mutex();
-
   Mutex &lock();
 
 #if !defined __link
@@ -108,22 +96,22 @@ public:
 
   Mutex &unlock_with_error_check();
 
-  class Guard {
+  class Scope {
   public:
-    explicit Guard(Mutex *mutex) : m_mutex(mutex) {
+    explicit Scope(Mutex *mutex) : m_mutex(mutex) {
       if (mutex) {
         mutex->lock();
       }
     }
-    explicit Guard(Mutex &mutex) : m_mutex(&mutex) { mutex.lock(); }
+    explicit Scope(Mutex &mutex) : m_mutex(&mutex) { mutex.lock(); }
 
-    Guard(Mutex &mutex, void *context, void (*execute)(void *))
+    Scope(Mutex &mutex, void *context, void (*execute)(void *))
         : m_mutex(&mutex) {
       mutex.lock();
       execute(context);
     }
 
-    ~Guard() {
+    ~Scope() {
       if (m_mutex) {
         m_mutex->unlock();
       }
@@ -133,11 +121,17 @@ public:
     Mutex *m_mutex;
   };
 
-  using Scope = Guard;
+  using Guard = Scope;
 
 private:
   friend class Cond;
-  pthread_mutex_t m_mutex{};
+  static void mutex_deleter(pthread_mutex_t * mutex);
+  using MutexSystemResource = api::SystemResource<pthread_mutex_t, decltype(&mutex_deleter)>;
+  MutexSystemResource m_mutex = MutexSystemResource(null_mutex);
+
+
+  static pthread_mutex_t initialize_mutex(const pthread_mutexattr_t * attr);
+  static constexpr pthread_mutex_t null_mutex = {};
 
   Mutex &set_attributes(const Attributes &attr);
 };

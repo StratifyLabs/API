@@ -1,9 +1,13 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
+#if defined __macosx || __linux
+#include <sys/time.h>
+#endif
+
 #include "printer/Printer.hpp"
 
-#include "chrono/MicroTime.hpp"
 #include "chrono/ClockTime.hpp"
+#include "chrono/MicroTime.hpp"
 
 printer::Printer &
 printer::operator<<(printer::Printer &printer, const chrono::ClockTime &a) {
@@ -15,13 +19,25 @@ printer::operator<<(printer::Printer &printer, const chrono::ClockTime &a) {
 using namespace chrono;
 
 #if defined __macosx
-#include <sys/time.h>
-static int clock_gettime(int clk_id, struct timespec *t) {
+API_MAYBE_UNUSED static int clock_gettime(int clk_id, struct timespec *t) {
   MCU_UNUSED_ARGUMENT(clk_id);
   struct timeval now;
-  int rv = gettimeofday(&now, NULL);
-  if (rv)
+  if (int rv = gettimeofday(&now, nullptr); rv) {
     return rv;
+  }
+  t->tv_sec = now.tv_sec;
+  t->tv_nsec = now.tv_usec * 1000;
+  return 0;
+}
+#endif
+
+#if defined __linux
+API_MAYBE_UNUSED static int clock_gettime2(int clk_id, struct timespec *t) {
+  MCU_UNUSED_ARGUMENT(clk_id);
+  struct timeval now;
+  if (int rv = gettimeofday(&now, nullptr); rv) {
+    return rv;
+  }
   t->tv_sec = now.tv_sec;
   t->tv_nsec = now.tv_usec * 1000;
   return 0;
@@ -33,24 +49,41 @@ using namespace chrono;
 ClockTime ClockTime::get_system_time(ClockId clock_id) {
   API_RETURN_VALUE_IF_ERROR(ClockTime());
   ClockTime clock_time;
-  API_SYSTEM_CALL("",
-                  clock_gettime(static_cast<clockid_t>(clock_id), clock_time));
+#if defined __linux
+  API_SYSTEM_CALL(
+    "",
+    clock_gettime2(static_cast<clockid_t>(clock_id), clock_time));
+#else
+  API_SYSTEM_CALL(
+    "",
+    clock_gettime(static_cast<clockid_t>(clock_id), clock_time));
+#endif
   return clock_time;
 }
 
-ClockTime ClockTime::get_system_resolution(ClockId clock_id) {
+ClockTime ClockTime::get_system_resolution(API_MAYBE_UNUSED ClockId clock_id) {
   API_RETURN_VALUE_IF_ERROR(ClockTime());
 #if defined __macosx
   ClockTime resolution = ClockTime().set_nanoseconds(1000);
 #else
   ClockTime resolution;
-  API_SYSTEM_CALL("",
-                  clock_getres(static_cast<clockid_t>(clock_id), resolution));
+  API_SYSTEM_CALL(
+    "",
+    clock_getres(static_cast<clockid_t>(clock_id), resolution));
 #endif
   return resolution;
 }
 
 ClockTime ClockTime::get_age() const { return get_system_time() - *this; }
+
+ClockTime ClockTime::from_string(var::StringView value) {
+  if (const auto elements = value.split("."); elements.count() == 2) {
+    return ClockTime()
+      .set_seconds(elements.at(0).to_unsigned_long())
+      .set_nanoseconds(elements.at(1).to_unsigned_long());
+  }
+  return {};
+}
 
 ClockTime::ClockTime(const MicroTime &micro_time) {
   m_value.tv_sec = micro_time.seconds();

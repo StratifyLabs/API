@@ -1,10 +1,13 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
+#include <array>
+
 #include "api/api.hpp"
 
 #if defined __link
 #include <cxxabi.h>
 #include <pthread.h>
+#include <signal.h>
 #endif
 
 #include <cstdio>
@@ -27,10 +30,10 @@ void api::api_assert(bool value, const char *function, int line) {
   if (!value) {
     printf("assertion %s():%d\n", function, line);
 #if defined __link && !defined __win32
-    void *array[200];
+    std::array<void*,200> array = {};
     size_t size;
-    size = backtrace(array, 200);
-    backtrace_symbols_fd(array, size, fileno(stderr));
+    size = backtrace(array.data(), array.size());
+    backtrace_symbols_fd(array.data(), size, fileno(stderr));
 #endif
     ::abort();
   }
@@ -116,7 +119,7 @@ int ProgressCallback::update_function(
   if (context == nullptr) {
     return 0;
   }
-  return ((ProgressCallback *)context)->update(value, total);
+  return reinterpret_cast<const ProgressCallback*>(context)->update(value, total);
 }
 
 Demangler::Demangler() { m_buffer = static_cast<char *>(malloc(m_length)); }
@@ -138,4 +141,21 @@ const char *Demangler::demangle(const char *input) {
   m_last = abi::__cxa_demangle(input, m_buffer, &m_length, &m_status);
 #endif
   return m_last;
+}
+
+#if defined __link
+void signal_segmentation_fault(int) {
+  static int count = 0;
+  if (count == 0) {
+    API_ASSERT(false);
+    count++;
+  }
+}
+
+#endif
+
+void api::catch_segmentation_fault() {
+#if defined __link
+  signal(11, signal_segmentation_fault);
+#endif
 }

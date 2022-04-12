@@ -140,28 +140,17 @@ public:
   Thread &join(void **value = nullptr);
 
   API_NO_DISCARD bool is_joinable() const { return m_state == State::joinable; }
-  //API_NO_DISCARD const api::Error *execution_context_error() const {
-  //  return m_execution_context_error;
-  //}
 
 private:
   enum class State { null = 0, completed, error, joinable, detached };
 
-  const api::Error *m_execution_context_error = nullptr;
   volatile State m_state = State::null;
 
-  pthread_t m_id =
-#if defined __link
-      {};
-#else
-      0;
-#endif
-
+  pthread_t m_id = {};
 
   void swap(Thread &&a) {
     std::swap(m_id, a.m_id);
     std::swap(m_state, a.m_state);
-    std::swap(m_execution_context_error, a.m_execution_context_error);
   }
 
   void construct(const Attributes & attributes, const Construct & options);

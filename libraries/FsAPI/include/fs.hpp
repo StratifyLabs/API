@@ -7,6 +7,8 @@ namespace fs {}
 
 #if !defined __link
 #include "fs/Aio.hpp"
+#else
+#include "fs/AssetFileSystem.hpp"
 #endif
 
 #include "fs/DataFile.hpp"
