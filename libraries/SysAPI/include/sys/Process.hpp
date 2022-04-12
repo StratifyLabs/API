@@ -201,7 +201,7 @@ private:
 
 #if defined __win32
   PROCESS_INFORMATION *m_process_information;
-  HANDLE m_process;
+  HANDLE m_process = INVALID_HANDLE_VALUE;
 #endif
 
   struct Redirect {
