@@ -505,4 +505,3 @@ void Process::Redirect::wait_stop() {
   }
 }
 
-#endif
