@@ -23,7 +23,7 @@
 #include "fs/FileSystem.hpp"
 #include "sys/Process.hpp"
 
-extern "C" char ** environ;
+extern "C" char **environ;
 
 namespace printer {
 Printer &
@@ -55,7 +55,7 @@ Printer &operator<<(Printer &printer, const sys::Process::Environment &env) {
 using namespace sys;
 
 Process::Environment::Environment(char **env) : Process::Arguments("") {
-  char ** effective_env = (env == nullptr) ? environ : env;
+  char **effective_env = (env == nullptr) ? environ : env;
   size_t i = 0;
   do {
     if (effective_env[i] != nullptr) {
@@ -154,7 +154,9 @@ bool Process::Status::is_continued() const {
   return WIFCONTINUED(m_status_value) != 0;
 }
 
-Process::Process(const Arguments &arguments, const Environment &environment) {
+Process::Process(const Arguments &arguments, const Environment &environment)
+  : m_pid(-1, &pid_deleter), m_standard_output(new Redirect()),
+    m_standard_error(new Redirect()) {
   API_RETURN_IF_ERROR();
 
   if (arguments.m_arguments.count() == 0) {
@@ -167,9 +169,6 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
 
   bool is_process_launched = false;
 
-  m_standard_output = new Redirect();
-  m_standard_error = new Redirect();
-
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};
@@ -179,46 +178,77 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
   _getcwd(cwd.data(), cwd.capacity());
   const var::PathString pwd = environment.find("PWD");
 
-  int stdout_fd = dup(_fileno(stdout));
-  int stderr_fd = dup(_fileno(stderr));
-
-  // change stdout and stderr to specify spawned process stdout, stderr
-  _dup2(m_standard_output->pipe.write_file().fileno(), _fileno(stdout));
-  _dup2(m_standard_error->pipe.write_file().fileno(), _fileno(stderr));
-
-  m_standard_output->pipe.write_file() = fs::File();
-  m_standard_error->pipe.write_file() = fs::File();
 
   if (pwd.is_empty() == false) {
     _chdir(pwd.cstring());
   }
 
-  m_process = HANDLE(_spawnvpe(
-    P_NOWAIT,
-    arguments.path().cstring(),
-    arguments.m_arguments.data(),
-    environment.m_arguments.data()));
+  struct PipeHandles {
+    HANDLE read;
+    HANDLE write;
+  };
 
-  // restore stdout
-  _dup2(stdout_fd, _fileno(stdout));
-  _close(stdout_fd);
+  auto update_pipe = [](Pipe &pipe) {
+    PipeHandles handles;
 
-  // restore stderr
-  _dup2(stderr_fd, _fileno(stderr));
-  _close(stderr_fd);
+    SECURITY_ATTRIBUTES sa_attributes{
+      .nLength = sizeof(SECURITY_ATTRIBUTES),
+      .bInheritHandle = true};
+
+    const auto create_result = CreatePipe(&handles.read, &handles.write, &sa_attributes, 0);
+    API_ASSERT(create_result);
+
+    const auto set_result = SetHandleInformation(handles.read, HANDLE_FLAG_INHERIT, 0);
+    API_ASSERT(set_result);
+
+    pipe.write_file() = fs::File();
+    pipe.read_file() = fs::File();
+
+    pipe.write_file().set_fileno(_open_osfhandle(intptr_t(handles.write), 0));
+    pipe.read_file().set_fileno(_open_osfhandle(intptr_t(handles.read), 0));
+    return handles;
+  };
+
+  const auto output_pipe = update_pipe(m_standard_output->pipe);
+  const auto error_pipe = update_pipe(m_standard_error->pipe);
+
+  STARTUPINFO startup_info{
+    .cb = sizeof(STARTUPINFO),
+    .dwFlags = STARTF_USESTDHANDLES,
+    .hStdOutput = output_pipe.write,
+    .hStdError = error_pipe.write
+  };
+
+  PROCESS_INFORMATION process_info{};
+  var::PathString path;
+  for (const auto &arg : arguments.arguments()) {
+    path.append(arg).append(" ");
+  }
+  path.pop_back();
+
+  fflush(stdout);
+  const auto create_result = CreateProcessA(
+    NULL,             // No module name (use command line)
+    path.data(),      // Command line
+    NULL,             // Process handle not inheritable
+    NULL,             // Thread handle not inheritable
+    TRUE,            // Set handle inheritance to FALSE
+    CREATE_NO_WINDOW, // creation flags
+    NULL,             // Use parent's environment block
+    NULL,             // Use parent's starting directory
+    &startup_info,              // Pointer to STARTUPINFO structure
+    &process_info);             // Pointer to PROCESS_INFORMATION structure
+
+  if (create_result) {
+    m_process = process_info.hProcess;
+    m_thread = process_info.hThread;
+  }
 
   if (pwd.is_empty() == false) {
     _chdir(cwd.cstring());
   }
 
-  if (m_process == nullptr || m_process == INVALID_HANDLE_VALUE) {
-    printf("Last error %d\n", GetLastError());
-    m_process = INVALID_HANDLE_VALUE;
-    API_RETURN_ASSIGN_ERROR("failed to spawn", errno);
-  }
-
   is_process_launched = true;
-
 #else
 
   const auto pwd = environment.find("PWD");
@@ -228,8 +258,8 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
       errno);
   }
 
-  m_pid = API_SYSTEM_CALL("fork()", fork());
-  if (m_pid == 0) {
+  const auto fork_result = API_SYSTEM_CALL("fork()", fork());
+  if (fork_result == 0) {
 
     // this will run in the child process
     Arguments args(arguments);
@@ -255,36 +285,30 @@ Process::Process(const Arguments &arguments, const Environment &environment) {
     ::execve(args.path(), args.m_arguments.data(), environ);
     perror("failed to launch\n");
     exit(1);
+  } else {
+    m_pid = PidResource(fork_result, &pid_deleter);
   }
 
-  is_process_launched = m_pid > 0;
+  is_process_launched = (m_pid.value() > 0);
 #endif
 
   if (is_process_launched) {
     m_standard_output->self = this;
     m_standard_error->self = this;
-
     m_standard_output->start_thread();
     m_standard_error->start_thread();
   } else {
-    delete m_standard_output;
-    m_standard_output = nullptr;
-    delete m_standard_error;
-    m_standard_error = nullptr;
+    m_standard_output = {};
+    m_standard_error = {};
   }
+
 }
 
-Process::~Process() {
-  // if process is NOT detached -- wait for it to complete
-  wait();
-
-  if (m_standard_output != nullptr) {
-    delete m_standard_output;
-  }
-  if (m_standard_error != nullptr) {
-    delete m_standard_error;
-  }
+void Process::pid_deleter(pid_t *pid) {
+  // caller MUST wait for pid -- can't let it be destroyed when not equal to -1
+  API_ASSERT((*pid == -1));
 }
+#endif
 
 Process &Process::wait() {
   API_RETURN_VALUE_IF_ERROR(*this);
@@ -294,26 +318,29 @@ Process &Process::wait() {
     return *this;
   }
 
+
   DWORD code = 0;
   WaitForSingleObject(m_process, INFINITE);
   CloseHandle(m_process);
+  CloseHandle(m_thread);
 
   m_process = INVALID_HANDLE_VALUE;
   m_status = int(code);
   m_standard_error->wait_stop();
   m_standard_output->wait_stop();
-  return *this;
 
+  return *this;
 #else
-  if (m_pid < 0) {
+  if (m_pid.value() < 0) {
     return *this;
   }
 
   int status = 0;
 
-  auto result = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid, &status, 0));
-  if (result == m_pid) {
-    m_pid = -1;
+  auto result
+    = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid.value(), &status, 0));
+  if (result == m_pid.value()) {
+    m_pid.set_value(-1);
     m_status = status;
     m_standard_error->wait_stop();
     m_standard_output->wait_stop();
@@ -340,23 +367,25 @@ bool Process::is_running() {
     return true;
   }
 
+  CloseHandle(m_process);
+  CloseHandle(m_thread);
+  m_pid.set_value(-1);
   m_status = int(code);
   m_standard_error->wait_stop();
   m_standard_output->wait_stop();
   return false;
 #else
-  if (m_pid < 0) {
+  if (m_pid.value() < 0) {
     return false;
   }
 
   api::ErrorScope error_scope;
   int status = 0;
   auto result
-    = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid, &status, WNOHANG));
-  if (result == m_pid) {
+    = API_SYSTEM_CALL("waitpid()", ::waitpid(m_pid.value(), &status, WNOHANG));
+  if (result == m_pid.value()) {
     m_status = status;
-    m_pid = -1;
-
+    m_pid.set_value(-1);
     m_standard_error->wait_stop();
     m_standard_output->wait_stop();
     return false;
@@ -413,11 +442,16 @@ void Process::update_redirect(Redirect *redirect) {
       api::ErrorScope error_scope;
       const auto bytes_read = pipe.read_file().read(buffer).return_value();
       if (bytes_read > 0) {
-        thread::Mutex::Scope mutex_scope(mutex);
-        // data file is write append, we want to preserve
-        // the file location for reading the data file
-        fs::File::LocationScope location_scope(data_file);
-        data_file.write(var::View(buffer.data(), bytes_read));
+        const auto stop_string = var::StringView(Redirect::stop_sequence);
+        if (buffer.data() == stop_string) {
+          is_stop_requested = true;
+        } else {
+          thread::Mutex::Scope mutex_scope(mutex);
+          // data file is write append, we want to preserve
+          // the file location for reading the data file
+          fs::File::LocationScope location_scope(data_file);
+          data_file.write(var::View(buffer.data(), bytes_read));
+        }
       }
     }
 
@@ -458,12 +492,6 @@ var::String Process::Redirect::read() {
   return result;
 }
 
-#if defined __win32
-#undef _WIN32_WINNT
-#define _WIN32_WINNT 0x0600
-#include <ioapiset.h>
-#endif
-
 void Process::Redirect::wait_stop() {
   {
     thread::Mutex::Scope ms(mutex);
@@ -471,6 +499,7 @@ void Process::Redirect::wait_stop() {
   }
 
   thread.cancel();
+  pipe.write_file().write(stop_sequence);
   if (thread.is_joinable()) {
     thread.join();
   }
