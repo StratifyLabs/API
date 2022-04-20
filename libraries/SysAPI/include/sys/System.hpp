@@ -29,10 +29,8 @@ public:
   API_NO_DISCARD static bool is_stratify_os();
   API_NO_DISCARD static var::StringView user_data_path();
 
-#if defined __link
   static void launch_browser(var::StringView url);
-  static const char * get_executable_suffix();
-#endif
+  API_NO_DISCARD static const char * get_executable_suffix();
 };
 
 } // namespace sys
