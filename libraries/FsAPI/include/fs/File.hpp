@@ -32,7 +32,7 @@ namespace fs {
  */
 class File : public FileAccess<File> {
 public:
-  File() : m_fd(-1){}
+  File() : m_fd(-1, &file_descriptor_deleter){}
   explicit File(var::StringView name, OpenMode flags = OpenMode::read_only());
 
   File(
