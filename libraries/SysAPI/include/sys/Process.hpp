@@ -188,6 +188,7 @@ public:
   }
 
 private:
+
   struct Redirect {
     static constexpr auto stop_sequence
       = ";askdryqwepibafgo;aisu;drapoasdf1023498yafgbcnvn,zxn.lk;d[pfsda]][asd["
@@ -212,7 +213,8 @@ private:
 #endif
   };
 
-  static void pid_deleter(pid_t *pid);
+
+  static void pid_deleter(pid_t * pid);
 
   using PidResource = api::SystemResource<pid_t, decltype(&pid_deleter)>;
   using RedirectPointer = std::unique_ptr<Redirect>;
