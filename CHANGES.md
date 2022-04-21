@@ -2,7 +2,7 @@
 
 ## New Features
 
-- None yet
+- Make dummy `sys::launch_browser()` available in Stratify OS
 
 ## Bug Fixes
 

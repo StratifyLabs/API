@@ -308,7 +308,6 @@ void Process::pid_deleter(pid_t *pid) {
   // caller MUST wait for pid -- can't let it be destroyed when not equal to -1
   API_ASSERT((*pid == -1));
 }
-#endif
 
 Process &Process::wait() {
   API_RETURN_VALUE_IF_ERROR(*this);
@@ -504,4 +503,6 @@ void Process::Redirect::wait_stop() {
     thread.join();
   }
 }
+
+#endif
 
