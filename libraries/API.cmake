@@ -1,8 +1,4 @@
-if(SOS_IS_LINK)
-	set(API_CONFIG_LIST release debug coverage)
-else()
-	set(API_CONFIG_LIST release debug)
-endif()
+set(API_CONFIG_LIST release debug)
 
 if(NOT DEFINED API_IS_SDK)
 	if(SOS_IS_ARM)
@@ -79,13 +75,6 @@ function(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 
 	sos_sdk_library_add_arch_targets("${DEBUG_OPTIONS}" ${SOS_ARCH} "${DEPENDENCIES}")
 
-	if(SOS_IS_LINK)
-		sos_sdk_library_target(COVERAGE ${LOCAL_NAME} "${LIB_OPTION}" coverage ${SOS_ARCH})
-		add_library(${COVERAGE_TARGET} STATIC)
-		sos_sdk_copy_target(${RELEASE_TARGET} ${COVERAGE_TARGET})
-		sos_sdk_library_add_arch_targets("${COVERAGE_OPTIONS}" ${SOS_ARCH} "${DEPENDENCIES}")
-	endif()
-
 	target_compile_options(${RELEASE_TARGET}
 		PRIVATE
 		-Os
@@ -127,20 +116,8 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 	set_property(TARGET ${RELEASE_TARGET} PROPERTY CXX_STANDARD 17)
 
 	set(CTEST_OUTPUT_ON_FAILURE ON)
-	if(SOS_IS_LINK)
-		sos_sdk_app_target(COVERAGE ${LOCAL_NAME} "${LIB_OPTION}unittest" coverage ${SOS_ARCH})
-		add_executable(${COVERAGE_TARGET})
-		sos_sdk_copy_target(${RELEASE_TARGET} ${COVERAGE_TARGET})
-
-		set_target_properties(${COVERAGE_TARGET}
-			PROPERTIES
-			LINK_FLAGS --coverage)
-	endif()
 
 	sos_sdk_app_add_arch_targets("${RELEASE_OPTIONS}" "${DEPENDENCIES}" ${RAM_SIZE})
-	if(SOS_IS_LINK)
-		sos_sdk_app_add_arch_targets("${COVERAGE_OPTIONS}" "${DEPENDENCIES}" ${RAM_SIZE})
-	endif()
 
 	target_compile_options(${RELEASE_TARGET}
 		PRIVATE
@@ -149,7 +126,6 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 
 	if(SOS_IS_LINK)
 		sos_sdk_add_test(${LOCAL_NAME} ${LIB_OPTION}unittest release)
-		#sos_sdk_add_test(${LOCAL_NAME} ${LIB_OPTION}unittest coverage)
 	endif()
 
 endfunction()
