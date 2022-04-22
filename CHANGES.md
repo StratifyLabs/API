@@ -2,6 +2,7 @@
 
 ## New Features
 
+- Build `mq_*` on linux and link to `rt` library
 - Make dummy `sys::launch_browser()` available in Stratify OS
 
 ## Bug Fixes
