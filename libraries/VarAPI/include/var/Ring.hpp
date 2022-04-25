@@ -2,8 +2,8 @@
              // LICENSE.md for rights.
 
 
-#ifndef VAR_API_RING_HPP_
-#define VAR_API_RING_HPP_
+#ifndef VAR_API_VAR_RING_HPP_
+#define VAR_API_VAR_RING_HPP_
 
 #include <new>
 
@@ -181,4 +181,4 @@ Printer &operator<<(Printer &printer, const var::Ring<s8> &a);
 } // namespace sys
 #endif
 
-#endif /* VAR_API_RING_HPP_ */
+#endif /* VAR_API_VAR_RING_HPP_ */

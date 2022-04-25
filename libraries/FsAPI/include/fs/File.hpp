@@ -51,20 +51,18 @@ public:
   }
 
   class DescriptorScope {
+    static void deleter(File * file){
+      if( file ) {
+        file->set_fileno(-1);
+      }
+    }
+    using UniquePointer = std::unique_ptr<File, decltype(&deleter)>;
+    UniquePointer m_pointer = UniquePointer(nullptr, &deleter);
+
   public:
-    DescriptorScope(File &file, int file_descriptor) : m_file(&file) {
+    DescriptorScope(File &file, int file_descriptor) : m_pointer(&file, &deleter) {
       file.set_fileno(file_descriptor);
     }
-
-    DescriptorScope(const DescriptorScope &) = delete;
-    DescriptorScope &operator=(const DescriptorScope &) = delete;
-    DescriptorScope(DescriptorScope &&) = delete;
-    DescriptorScope &operator=(DescriptorScope &&) = delete;
-
-    ~DescriptorScope() { m_file->set_fileno(-1); }
-
-  private:
-    File *m_file = nullptr;
   };
 
 protected:

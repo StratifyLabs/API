@@ -171,17 +171,21 @@ inline bool operator>=(const MicroTime &lhs, const ClockTimer &rhs) {
  *
  */
 class PerformanceScope {
+  struct Context {
+    const ClockTimer * timer;
+    printer::Printer * printer;
+    u32 start;
+  };
+
+  static void deleter(Context * context);
+  using SystemResource = api::SystemResource<Context, decltype(&deleter)>;
+  SystemResource m_system_resource;
+
 public:
   PerformanceScope(
     var::StringView name,
     const ClockTimer &timer,
     printer::Printer &printer);
-  ~PerformanceScope();
-
-private:
-  const ClockTimer *m_timer = nullptr;
-  printer::Printer *m_printer = nullptr;
-  u32 m_start = 0;
 };
 
 using PerformanceContext = PerformanceScope;

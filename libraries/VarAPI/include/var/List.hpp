@@ -33,6 +33,16 @@ public:
     return *this;
   }
 
+  template <class... Args> List<T> &emplace_back(Args&&... args) {
+    this->m_container.emplace_back(args...);
+    return *this;
+  }
+
+  template <class... Args> List<T> &emplace_front(Args&&... args) {
+    this->m_container.emplace_front(args...);
+    return *this;
+  }
+
   List &pop_front() {
     this->m_container.pop_front();
     return *this;

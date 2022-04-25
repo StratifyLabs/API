@@ -3,9 +3,6 @@
 #ifndef VAR_API_VECTOR_HPP_
 #define VAR_API_VECTOR_HPP_
 
-#include <algorithm>
-#include <functional>
-#include <numeric>
 #include <vector>
 
 #include "ContainerObject.hpp"
@@ -65,6 +62,11 @@ public:
 
   Vector<T> &push_back(const T &a) {
     this->m_container.push_back(a);
+    return *this;
+  }
+
+  template <class... Args> Vector<T> &emplace_back(Args&&... args) {
+    this->m_container.emplace_back(args...);
     return *this;
   }
 

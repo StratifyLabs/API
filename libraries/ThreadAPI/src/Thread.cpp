@@ -174,13 +174,6 @@ void *Thread::handle_thread(void *args) {
   StartUp startup(*startup_pointer);
   delete startup_pointer;
 
-  {
-    //the first access to the error context needs to
-    //be mutually exclusive
-    Mutex::Scope ms(error_creation_mutex);
-    api::ExecutionContext::error();
-  }
-
   void *result = startup.function(startup.argument);
   free_context();
   return result;
@@ -280,4 +273,24 @@ Thread &Thread::join(void **value) {
     m_state = State::completed;
   }
   return *this;
+}
+
+const char *Thread::to_cstring(Thread::CancelState value) {
+  switch (value) {
+  case CancelState::disable:
+    return "disable";
+  case CancelState::enable:
+    return "disable";
+  }
+  return "unknown";
+}
+
+const char *Thread::to_cstring(Thread::CancelType value) {
+  switch (value) {
+  case CancelType::deferred:
+    return "deferred";
+  case CancelType::asynchronous:
+    return "asynchronous";
+  }
+  return "unknown";
 }

@@ -111,120 +111,84 @@ public:
   MarkdownPrinter &image(var::StringView text, var::StringView link);
 
   class Header {
+    static void deleter(MarkdownPrinter * printer){
+      printer->close_header();
+    }
+    std::unique_ptr<MarkdownPrinter, decltype(&deleter)> m_pointer;
   public:
     Header(
       MarkdownPrinter &printer,
       var::StringView header,
       Level level = Level::info)
-      : m_printer(printer) {
+      : m_pointer(&printer, deleter) {
       printer.open_header(header, level);
     }
-
-    Header(const Header &) = delete;
-    Header &operator=(const Header &) = delete;
-    Header(Header &&) = delete;
-    Header &operator=(Header &&) = delete;
-
-    ~Header() { m_printer.close_header(); }
-
-  private:
-    MarkdownPrinter &m_printer;
   };
 
   class Code {
+    static void deleter(MarkdownPrinter * printer){
+      printer->close_code();
+    }
+    std::unique_ptr<MarkdownPrinter, decltype(&deleter)> m_pointer;
   public:
     Code(
       MarkdownPrinter &printer,
       var::StringView language,
       Level level = Level::info)
-      : m_printer(printer) {
+      : m_pointer(&printer, deleter) {
       printer.open_code(language, level);
     }
-
-    Code(const Code &) = delete;
-    Code &operator=(const Code &) = delete;
-    Code(Code &&) = delete;
-    Code &operator=(Code &&) = delete;
-
-    ~Code() { m_printer.close_code(); }
-
-  private:
-    MarkdownPrinter &m_printer;
   };
 
   class BlockQuote {
+    static void deleter(MarkdownPrinter * printer){
+      printer->close_blockquote();
+    }
+    std::unique_ptr<MarkdownPrinter, decltype(&deleter)> m_pointer;
   public:
     explicit BlockQuote(MarkdownPrinter &printer, Level level = Level::info)
-      : m_printer(printer) {
-      m_printer.open_blockquote(level);
+      : m_pointer(&printer, deleter) {
+      printer.open_blockquote(level);
     }
-
-    BlockQuote(const BlockQuote &) = delete;
-    BlockQuote &operator=(const BlockQuote &) = delete;
-    BlockQuote(BlockQuote &&) = delete;
-    BlockQuote &operator=(BlockQuote &&) = delete;
-
-    ~BlockQuote() { m_printer.close_blockquote(); }
-
-  private:
-    MarkdownPrinter &m_printer;
   };
 
   class Paragraph {
+    static void deleter(MarkdownPrinter * printer){
+      printer->close_paragraph();
+    }
+    std::unique_ptr<MarkdownPrinter, decltype(&deleter)> m_pointer;
   public:
     explicit Paragraph(MarkdownPrinter &printer, Level level = Level::info)
-      : m_printer(printer) {
-      m_printer.open_paragraph(level);
+      : m_pointer(&printer, deleter) {
+      printer.open_paragraph(level);
     }
-
-    Paragraph(const Paragraph &) = delete;
-    Paragraph &operator=(const Paragraph &) = delete;
-    Paragraph(Paragraph &&) = delete;
-    Paragraph &operator=(Paragraph &&) = delete;
-
-    ~Paragraph() { m_printer.close_paragraph(); }
-
-  private:
-    MarkdownPrinter &m_printer;
   };
 
   class List {
+    static void deleter(MarkdownPrinter * printer){
+      printer->close_list();
+    }
+    std::unique_ptr<MarkdownPrinter, decltype(&deleter)> m_pointer;
   public:
     List(MarkdownPrinter &printer, ListType type, Level level = Level::info)
-      : m_printer(printer) {
+      : m_pointer(&printer, deleter) {
       printer.open_list(type, level);
     }
-
-    List(const List &) = delete;
-    List &operator=(const List &) = delete;
-    List(List &&) = delete;
-    List &operator=(List &&) = delete;
-
-    ~List() { m_printer.close_list(); }
-
-  private:
-    MarkdownPrinter &m_printer;
   };
 
   class PrettyTable {
+    static void deleter(MarkdownPrinter * printer){
+      printer->close_pretty_table();
+    }
+    std::unique_ptr<MarkdownPrinter, decltype(&deleter)> m_pointer;
   public:
     PrettyTable(
       MarkdownPrinter &printer,
       const var::StringList &header,
       Level level = Level::info)
-      : m_printer(&printer) {
+      : m_pointer(&printer, deleter) {
       printer.open_pretty_table(header);
     }
-
-    PrettyTable(const PrettyTable &) = delete;
-    PrettyTable &operator=(const PrettyTable &) = delete;
-    PrettyTable(PrettyTable &&) = delete;
-    PrettyTable &operator=(PrettyTable &&) = delete;
-
-    ~PrettyTable() { m_printer->close_pretty_table(); }
-
-  private:
-    MarkdownPrinter *m_printer;
   };
 
 #if 0

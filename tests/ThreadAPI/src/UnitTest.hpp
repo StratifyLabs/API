@@ -35,6 +35,7 @@ class UnitTest : public test::Test {
   M *m_mutex_pointer;
   M m_mutex;
   M m_thread_mutex;
+  Cond m_cond = Cond(m_thread_mutex);
   Sem *m_sem_pointer;
 
 #if defined __link
@@ -265,12 +266,13 @@ public:
             self->m_mutex_pointer->lock().lock();
             self->m_did_execute = true;
             self->m_mutex_pointer->unlock().unlock();
+            self->m_cond.set_asserted(true);
             return nullptr;
           }));
 
       TEST_ASSERT(m.unlock().unlock().unlock().is_success());
       // TEST_ASSERT(t.wait().is_success());
-      wait(100_milliseconds);
+      m_cond.wait_until_asserted().set_asserted(false);
 
       m.unlock();
       reset_error();
@@ -423,6 +425,7 @@ public:
 #endif
 
     {
+      printer().key("didExecuteLocation", NumberString(&m_did_execute, "%p"));
       m_did_execute = false;
       T t(
         T::Attributes().set_joinable(),
@@ -455,42 +458,53 @@ public:
 
     {
       m_did_execute = false;
+      printer().key("wait", "joinable");
+      printer().key_bool("asserted", m_cond.is_asserted());
       T(T::Attributes().set_detach_state(T::DetachState::joinable),
         T::Construct().set_argument(this).set_function(
           [](void *args) -> void * {
             UnitTest *self = reinterpret_cast<UnitTest *>(args);
             self->m_did_execute = true;
+            self->printer().key("condition", "assert");
+            self->m_cond.set_asserted();
             return nullptr;
           }))
         .join();
 
-      wait(2_seconds);
+      m_cond.wait_until_asserted().set_asserted(false);
       TEST_ASSERT(is_success());
       TEST_ASSERT(m_did_execute);
 
+      printer().key("wait", "detached");
+      printer().key_bool("asserted", m_cond.is_asserted());
       m_did_execute = false;
       T(T::Attributes().set_detach_state(T::DetachState::detached),
         T::Construct().set_argument(this).set_function(
           [](void *args) -> void * {
             UnitTest *self = reinterpret_cast<UnitTest *>(args);
             self->m_did_execute = true;
+            self->m_cond.set_asserted();
             return nullptr;
           }));
 
-      wait(50_milliseconds);
+      m_cond.wait_until_asserted().set_asserted(false);
       TEST_ASSERT(is_success());
       TEST_ASSERT(m_did_execute);
+      TEST_ASSERT(!m_cond.is_asserted());
+
     }
 
+#if !__SANITIZE_THREAD__
     {
 
+      //this section does not work if -fsanitize=thread is enabled
       m_did_execute = true;
-      T t = T(
+      printer().key("wait", "joinable - cancel");
+      auto t = T(
         T::Attributes().set_joinable(),
         T::Construct().set_argument(this).set_function(
           [](void *args) -> void * {
             UnitTest *self = reinterpret_cast<UnitTest *>(args);
-
             while (IS_CANCEL_OK) {
               wait(10_milliseconds);
             }
@@ -498,25 +512,41 @@ public:
             return nullptr;
           }));
 
-      const auto old_state = t.set_cancel_state(T::CancelState::enable);
-      const auto old_type = t.set_cancel_type(T::CancelType::deferred);
+      TEST_ASSERT(is_success());
 
-      TEST_ASSERT(t.cancel().join().is_success());
+      const auto old_state = t.set_cancel_state(T::CancelState::enable);
+      printer().key("oldState", Thread::to_cstring(old_state));
+      printer().key("newState", Thread::to_cstring(t.set_cancel_state(T::CancelState::enable)));
+      const auto old_type = t.set_cancel_type(T::CancelType::deferred);
+      printer().key("oldType", Thread::to_cstring(old_type));
+
+      printer().key("thread", "cancel");
+      t.cancel();
+      TEST_ASSERT(is_success());
+      printer().key("thread", "join");
+      TEST_ASSERT(t.join().is_success());
+      TEST_ASSERT(is_success());
       TEST_ASSERT(m_did_execute == IS_CANCEL_OK);
+      printer().key_bool("didExecute", m_did_execute);
     }
+#endif
 
     {
       m_did_execute = false;
+      printer().key("wait", "minstacksize");
       T(T::Attributes()
           .set_joinable()
           .set_stack_size(minimum_stack_size),
         T::Construct().set_argument(this).set_function(
           [](void *args) -> void * {
-            reinterpret_cast<UnitTest *>(args)->m_did_execute = true;
+            auto * self = reinterpret_cast<UnitTest *>(args);
+            self->m_did_execute = true;
+            self->m_cond.set_asserted();
             return nullptr;
           }))
         .join();
 
+      m_cond.wait_until_asserted().set_asserted(false);
       TEST_ASSERT(m_did_execute);
     }
 

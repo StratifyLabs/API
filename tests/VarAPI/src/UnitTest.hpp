@@ -116,11 +116,6 @@ public:
     TEST_ASSERT_RESULT(tokenizer_api_case());
     TEST_ASSERT_RESULT(view_api_case());
     TEST_ASSERT_RESULT(data_api_case());
-
-    const StringView sv0 = "this is ok";
-    const StringView sv1 = PathString("this is not ok");
-    printer().key("sv0", sv0).key("sv1", sv1);
-
     return true;
   }
 
@@ -139,7 +134,7 @@ public:
 
     {
       const auto list
-        = Vector<StringView>().push_back("hello").push_back("world");
+        = Vector<StringView>().push_back("hello").emplace_back("world");
 
       TEST_ASSERT(list.find("hello", StringView()) == "hello");
       TEST_ASSERT(list.find("world", "") == "world");
@@ -533,8 +528,9 @@ public:
     // TEST_EXPECT(encode_test(test_input, test_output));
     TEST_EXPECT(decode_test(test_input, test_output));
 
-    {
 
+    {
+      printer().key("transform", "decoder0");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -545,6 +541,7 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "decoder1");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -555,6 +552,7 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "decoder2");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -565,6 +563,7 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "decoder3");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -575,6 +574,7 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "decoder4");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -585,12 +585,14 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "encoder0");
       DataFile df;
       df.write(
         ViewFile(V(test_input)),
         Base64Encoder(),
         DataFile::Write().set_page_size(12));
 
+      printer().key("transform", "encoder1");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -601,6 +603,7 @@ public:
           .add_null_terminator()
         == test_output);
 
+      printer().key("transform", "encoder2");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -611,6 +614,7 @@ public:
           .add_null_terminator()
         == test_output);
 
+      printer().key("transform", "encoder3");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -621,6 +625,7 @@ public:
           .add_null_terminator()
         == test_output);
 
+      printer().key("transform", "encoder4");
       TEST_ASSERT(
         DataFile()
           .write(

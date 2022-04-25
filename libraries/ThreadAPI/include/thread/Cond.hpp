@@ -50,6 +50,10 @@ public:
   Cond &
   wait_until_asserted(const chrono::ClockTime &timeout = chrono::ClockTime());
 
+
+  bool is_asserted();
+  Cond & set_asserted(bool value = true);
+
   Mutex &mutex() { return *m_mutex; }
 
   API_NO_DISCARD const Mutex &mutex() const { return *m_mutex; }
@@ -61,7 +65,7 @@ private:
 
   Mutex *m_mutex = nullptr;
   CondSystemResource m_cond = CondSystemResource(null_condition);
-  API_AB(Cond, asserted, false);
+  bool m_is_asserted = false;
 
   static pthread_cond_t initialize_cond(const pthread_condattr_t * attr);
 };

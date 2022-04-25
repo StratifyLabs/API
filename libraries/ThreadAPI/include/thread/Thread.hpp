@@ -113,11 +113,16 @@ public:
     asynchronous = PTHREAD_CANCEL_ASYNCHRONOUS
   };
 
+  static const char * to_cstring(CancelType value);
+
+
   static CancelType set_cancel_type(CancelType cancel_type);
   enum class CancelState {
     enable = PTHREAD_CANCEL_ENABLE,
     disable = PTHREAD_CANCEL_DISABLE
   };
+
+  static const char * to_cstring(CancelState value);
 
   Thread &set_sched_parameters(Sched::Policy policy, int priority);
   API_NO_DISCARD Sched::Policy get_sched_policy() const;

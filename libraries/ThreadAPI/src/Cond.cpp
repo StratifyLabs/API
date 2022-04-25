@@ -58,7 +58,7 @@ Cond &Cond::wait_until_asserted(const chrono::ClockTime &timeout) {
   bool is_ready;
   do {
     Mutex::Scope ms(mutex());
-    is_ready = is_asserted();
+    is_ready = m_is_asserted;
     if (!is_ready) {
       if (timeout != chrono::ClockTime()) {
         wait_timed(timeout);
@@ -70,11 +70,24 @@ Cond &Cond::wait_until_asserted(const chrono::ClockTime &timeout) {
   return *this;
 }
 
+bool Cond::is_asserted() {
+  Mutex::Scope ms(mutex());
+  return m_is_asserted;
+}
+
+Cond &Cond::set_asserted(bool value) {
+  Mutex::Scope ms(mutex());
+  m_is_asserted = value;
+  return signal();
+}
+
 Cond &Cond::wait() {
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL(
     "",
-    pthread_cond_wait(m_cond.pointer_to_value(), m_mutex->m_mutex.pointer_to_value()));
+    pthread_cond_wait(
+      m_cond.pointer_to_value(),
+      m_mutex->m_mutex.pointer_to_value()));
   return *this;
 }
 

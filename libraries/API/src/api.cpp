@@ -41,11 +41,24 @@ void api::api_assert(bool value, const char *function, int line) {
 
 PrivateExecutionContext ExecutionContext::m_private_context;
 
+static void error_mutex_handler(int do_lock){
+  static pthread_mutex_t mutex = {};
+  static bool is_initialized = false;
+  if( !is_initialized ){
+    pthread_mutex_init(&mutex, nullptr);
+  }
+  if( do_lock > 0 ){
+    pthread_mutex_lock(&mutex);
+  } else if ( do_lock < 0 ){
+    pthread_mutex_unlock(&mutex);
+  }
+}
+
 Error &PrivateExecutionContext::get_error() {
   if (&(errno) == m_error.m_signature) {
     return m_error;
   }
-
+  error_mutex_handler(1);
   if (m_error_list == nullptr) {
     m_error_list = new std::vector<Error>();
     API_ASSERT(m_error_list != nullptr);
@@ -53,17 +66,21 @@ Error &PrivateExecutionContext::get_error() {
 
   for (Error &error : *m_error_list) {
     if (error.m_signature == &(errno)) {
+      error_mutex_handler(-1);
       return error;
     }
 
     if (error.m_signature == nullptr) {
       error.m_signature = &(errno);
+      error_mutex_handler(-1);
       return error;
     }
   }
 
-  m_error_list->push_back(Error(&(errno)));
-  return m_error_list->back();
+  m_error_list->emplace_back(Error(&(errno)));
+  auto & result =  m_error_list->back();
+  error_mutex_handler(-1);
+  return result;
 }
 
 void PrivateExecutionContext::free_context() {
@@ -73,12 +90,15 @@ void PrivateExecutionContext::free_context() {
     return;
   }
 
+  error_mutex_handler(1);
   for (Error &error : *m_error_list) {
     if (error.m_signature == &(errno)) {
       error.m_signature = nullptr;
+      error_mutex_handler(-1);
       return;
     }
   }
+  error_mutex_handler(-1);
 }
 
 void PrivateExecutionContext::update_error_context(

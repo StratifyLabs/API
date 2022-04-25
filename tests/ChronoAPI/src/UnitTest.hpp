@@ -86,6 +86,19 @@ public:
     wait(10_milliseconds);
     TEST_EXPECT(start.stop().micro_time().milliseconds() >= 10);
 
+    start.restart();
+    {
+      chrono::PerformanceScope ps("performanceScope", start, printer());
+      wait(100_milliseconds);
+    }
+
+    {
+      auto ps
+        = chrono::PerformanceScope("performanceScopeMove", start, printer());
+      wait(200_milliseconds);
+      auto ps2 = std::move(ps);
+    }
+
     return true;
   }
 

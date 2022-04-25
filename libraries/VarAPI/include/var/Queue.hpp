@@ -1,14 +1,9 @@
 /*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see
              // LICENSE.md for rights.
-#ifndef VAR_API_QUEUE_HPP_
-#define VAR_API_QUEUE_HPP_
+#ifndef VAR_API_VAR_QUEUE_HPP_
+#define VAR_API_VAR_QUEUE_HPP_
 
-#include <cstdio>
-
-#include <algorithm>
 #include <deque>
-#include <new>
-#include <numeric>
 
 #include "ContainerObject.hpp"
 
@@ -21,6 +16,11 @@ public:
 
   Queue &push(const T &value) {
     this->m_container.push_back(value);
+    return *this;
+  }
+
+  template <class... Args> Queue<T> &emplace(Args&&... args) {
+    this->m_container.emplace_back(args...);
     return *this;
   }
 
@@ -53,4 +53,4 @@ public:
 private:
 };
 } // namespace var
-#endif // VAR_API_QUEUE_HPP_
+#endif // VAR_API_VAR_QUEUE_HPP_

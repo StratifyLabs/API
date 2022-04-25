@@ -311,58 +311,6 @@ private:
   static PrivateExecutionContext m_private_context;
 };
 
-/*! \details
- *
- * This class saves a copy of the error context on the stack and sets the
- * current `Error` to a fresh value (no error). Upon
- * destruction, the original error scope is restored.
- *
- * This is helpful in two situations,
- *
- * 1. You know an error might happen
- * 2. An error may have happened, but you want to execute code in an error-free
- * context.
- *
- * For example:
- *
- * ```cpp
- *
- *   File new_file(File::IsOverwrite::yes, "new_file.txt");
- *  {
- *    api::ErrorScope error_scope;
- *    File maybe_file("maybe_exists.txt");
- *    if( file.is_success() ){
- *      new_file.write(file);
- *    }
- *  }
- *  //if maybe_exists.txt was opened, it's contents were copied to new_file
- *  //either way, the context is error free
- *  new_file.write("Hello World\n");
- * ```
- *
- */
-class ErrorScope {
-public:
-  ErrorScope() { ExecutionContext::reset_error(); }
-  ErrorScope(const ErrorScope &) = delete;
-  ErrorScope &operator=(const ErrorScope &) = delete;
-  ~ErrorScope() {
-    ExecutionContext::m_private_context.m_error = m_error;
-    ExecutionContext::m_private_context.m_error.set_guarded(m_is_guarded);
-    errno = m_error_number;
-  }
-
-private:
-  Error m_error = Error(ExecutionContext::m_private_context.m_error);
-  int m_error_number = errno;
-  bool m_is_guarded = ExecutionContext::m_private_context.m_error.is_guarded();
-};
-
-/*! \cond */
-using ErrorContext = ErrorScope;
-using ErrorGuard = ErrorScope;
-/*! \endcond */
-
 class ThreadExecutionContext {
 public:
   ThreadExecutionContext(const ThreadExecutionContext &) = delete;
@@ -741,7 +689,7 @@ public:
   }
 
   ~SystemResource() {
-    if (m_deleter != nullptr) {
+    if (m_deleter) {
       m_deleter(&m_value);
     }
   };
@@ -769,6 +717,58 @@ private:
     std::swap(m_deleter, a.m_deleter);
   }
 };
+
+/*! \details
+ *
+ * This class saves a copy of the error context on the stack and sets the
+ * current `Error` to a fresh value (no error). Upon
+ * destruction, the original error scope is restored.
+ *
+ * This is helpful in two situations,
+ *
+ * 1. You know an error might happen
+ * 2. An error may have happened, but you want to execute code in an error-free
+ * context.
+ *
+ * For example:
+ *
+ * ```cpp
+ *
+ *   File new_file(File::IsOverwrite::yes, "new_file.txt");
+ *  {
+ *    api::ErrorScope error_scope;
+ *    File maybe_file("maybe_exists.txt");
+ *    if( file.is_success() ){
+ *      new_file.write(file);
+ *    }
+ *  }
+ *  //if maybe_exists.txt was opened, it's contents were copied to new_file
+ *  //either way, the context is error free
+ *  new_file.write("Hello World\n");
+ * ```
+ *
+ */
+class ErrorScope {
+  struct Context {
+    Error error = ExecutionContext::m_private_context.get_error();
+    int error_number = errno;
+  };
+
+  static void deleter(Context * context){
+    ExecutionContext::m_private_context.get_error() = context->error;
+    errno = context->error_number;
+  }
+  using ErrorResource = SystemResource<Context, decltype(&deleter)>;
+  ErrorResource m_error_resource;
+
+public:
+  ErrorScope() : m_error_resource({}, &deleter) { ExecutionContext::reset_error(); }
+};
+
+/*! \cond */
+using ErrorContext = ErrorScope;
+using ErrorGuard = ErrorScope;
+/*! \endcond */
 
 /*! \details
  *

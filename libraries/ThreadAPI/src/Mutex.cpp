@@ -140,3 +140,4 @@ pthread_mutex_t Mutex::initialize_mutex(const pthread_mutexattr_t *attr) {
   API_SYSTEM_CALL("mutex init", pthread_mutex_init(&result, attr));
   return result;
 }
+

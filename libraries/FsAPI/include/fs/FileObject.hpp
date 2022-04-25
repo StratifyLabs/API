@@ -11,7 +11,6 @@
 
 #include "var/String.hpp"
 
-
 namespace fs {
 
 /*! \details
@@ -134,20 +133,23 @@ public:
   bool
   verify(const FileObject &source_file, const Verify &options = Verify()) const;
 
-  class LocationGuard {
-  public:
-    explicit LocationGuard(const FileObject &object) : m_object(object) {
-      m_location = object.location();
+  class LocationScope {
+    struct Context {
+      const FileObject *file_object;
+      int location;
+    };
+    static void deleter(Context *context) {
+      context->file_object->seek(context->location);
     }
+    using Resource = api::SystemResource<Context, decltype(&deleter)>;
+    Resource m_resource;
 
-    ~LocationGuard() { m_object.seek(m_location); }
-
-  private:
-    const FileObject &m_object;
-    int m_location;
+  public:
+    explicit LocationScope(const FileObject &object)
+      : m_resource({&object, object.location()}) {}
   };
 
-  using LocationScope = LocationGuard;
+  using LocationGuard = LocationScope;
 
   FileObject &
   write(const FileObject &source_file, const Write &options = Write()) {
@@ -185,9 +187,9 @@ public:
     const auto file_location = location();
     read(var::View(result.data(), result.capacity()));
     size_t offset = 0;
-    for(auto c: var::StringView(result)){
-      if( c == term ){
-        const auto new_length = offset+1;
+    for (auto c : var::StringView(result)) {
+      if (c == term) {
+        const auto new_length = offset + 1;
         seek(file_location + new_length);
         result.truncate(new_length);
         return result;

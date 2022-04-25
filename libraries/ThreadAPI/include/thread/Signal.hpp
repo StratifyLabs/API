@@ -245,15 +245,16 @@ public:
   API_NO_DISCARD void *sigptr() const { return m_sigvalue.sival_ptr; }
 
   class HandlerScope {
+    static void deleter(Number * signo){
+      Signal(*signo).set_handler(SignalHandler::default_());
+    }
+    using Resource = api::SystemResource<Number, decltype(&deleter)>;
+    Resource m_resource;
   public:
     HandlerScope(Signal &signal, const SignalHandler &handler)
-        : m_signo(signal.number()) {
+        : m_resource(signal.number(), &deleter) {
       signal.set_handler(handler);
     }
-    ~HandlerScope() { Signal(m_signo).set_handler(SignalHandler::default_()); }
-
-  private:
-    Number m_signo;
   };
 
 private:

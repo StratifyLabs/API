@@ -40,7 +40,7 @@ public:
   public:
     Attributes();
     explicit Attributes(const pthread_mutexattr_t &mutexattr)
-        : m_item(mutexattr) {}
+      : m_item(mutexattr) {}
 
     ~Attributes();
 
@@ -97,45 +97,41 @@ public:
   Mutex &unlock_with_error_check();
 
   class Scope {
-  public:
-    explicit Scope(Mutex *mutex) : m_mutex(mutex) {
-      if (mutex) {
-        mutex->lock();
-      }
+    static void deleter(Mutex *mutex) {
+      mutex->unlock();
     }
-    explicit Scope(Mutex &mutex) : m_mutex(&mutex) { mutex.lock(); }
+    std::unique_ptr<Mutex, decltype(&deleter)> m_mutex;
+
+  public:
+    explicit Scope(Mutex *mutex) : m_mutex(mutex, &deleter) {
+      API_ASSERT(mutex);
+      mutex->lock();
+    }
+    explicit Scope(Mutex &mutex) : m_mutex(&mutex, &deleter) {
+      mutex.lock();
+    }
 
     Scope(Mutex &mutex, void *context, void (*execute)(void *))
-        : m_mutex(&mutex) {
+      : m_mutex(&mutex, &deleter) {
       mutex.lock();
       execute(context);
     }
-
-    ~Scope() {
-      if (m_mutex) {
-        m_mutex->unlock();
-      }
-    }
-
-  private:
-    Mutex *m_mutex;
   };
 
   using Guard = Scope;
 
 private:
   friend class Cond;
-  static void mutex_deleter(pthread_mutex_t * mutex);
-  using MutexSystemResource = api::SystemResource<pthread_mutex_t, decltype(&mutex_deleter)>;
+  static void mutex_deleter(pthread_mutex_t *mutex);
+  using MutexSystemResource
+    = api::SystemResource<pthread_mutex_t, decltype(&mutex_deleter)>;
   MutexSystemResource m_mutex = MutexSystemResource(null_mutex);
 
-
-  static pthread_mutex_t initialize_mutex(const pthread_mutexattr_t * attr);
+  static pthread_mutex_t initialize_mutex(const pthread_mutexattr_t *attr);
   static constexpr pthread_mutex_t null_mutex = {};
 
   Mutex &set_attributes(const Attributes &attr);
 };
-
 
 } // namespace thread
 

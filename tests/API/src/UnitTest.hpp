@@ -43,6 +43,7 @@ public:
   bool api_case() {
 
     TEST_ASSERT(error().signature() == static_cast<const void *>(&(errno)));
+    TEST_ASSERT(is_success());
 
     {
       api::ErrorScope error_scope;
@@ -55,8 +56,10 @@ public:
       TEST_ASSERT(error().line_number() == line_error);
       TEST_ASSERT(StringView(error().message()) == "message");
       TEST_ASSERT(return_value() < 0);
-      API_RESET_ERROR();
+      TEST_ASSERT(is_error());
     }
+
+    TEST_ASSERT(is_success());
 
     TEST_ASSERT(return_value() == 0);
     TEST_ASSERT(context_count() == 1);
