@@ -91,44 +91,6 @@ macro(api_target NAME DIRECTORIES)
   add_library(${DEBUG_TARGET} STATIC)
   sos_sdk_copy_target(${RELEASE_TARGET} ${DEBUG_TARGET})
 
-  if(SOS_IS_LINK)
-    sos_sdk_library_target(COVERAGE ${NAME} "" coverage ${SOS_ARCH})
-    add_library(${COVERAGE_TARGET} STATIC)
-    sos_sdk_copy_target(${RELEASE_TARGET} ${COVERAGE_TARGET})
-
-    target_compile_options(${COVERAGE_TARGET}
-      PUBLIC
-      --coverage
-      )
-
-    sos_sdk_library_add_arch_targets("${COVERAGE_OPTIONS}" ${SOS_ARCH} "${LOCAL_DIRECTORIES}")
-
-    get_target_property(MY_DIR ${COVERAGE_TARGET} BINARY_DIR)
-
-    get_target_property(SOURCES ${COVERAGE_TARGET} SOURCES)
-
-    foreach(SOURCE ${SOURCES})
-      get_filename_component(FILE_NAME ${SOURCE} NAME)
-      list(APPEND GCOV_SOURCES ${MY_DIR}/CMakeFiles/${COVERAGE_TARGET}.dir/src/${FILE_NAME}.gcda)
-    endforeach()
-
-    add_custom_target(coverage_mkdir_${COVERAGE_TARGET}
-      COMMAND mkdir -p ${CMAKE_CURRENT_SOURCE_DIR}/coverage/${COVERAGE_TARGET}
-      )
-
-    add_custom_target(coverage_${COVERAGE_TARGET}
-      COMMAND gcov ${GCOV_SOURCES}
-      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/coverage/${COVERAGE_TARGET}
-      DEPENDS coverage_mkdir_${COVERAGE_TARGET}
-      )
-
-    add_custom_target(clean_coverage_${COVERAGE_TARGET}
-      COMMAND rm -f ${GCOV_SOURCES}
-      DEPENDS coverage_mkdir_${COVERAGE_TARGET}
-      )
-
-  endif()
-
   sos_sdk_library_add_arch_targets("${RELEASE_OPTIONS}" ${SOS_ARCH} "${LOCAL_DIRECTORIES}")
   sos_sdk_library_add_arch_targets("${DEBUG_OPTIONS}" ${SOS_ARCH} "${LOCAL_DIRECTORIES}")
 

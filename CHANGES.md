@@ -2,22 +2,11 @@
 
 ## New Features
 
-- Add `var::Stack::emplace_back()` (emplaces top)
-- Add `var::Queue::emplace()` (emplaces back)
-- Add `var::Vector::emplace_back()`
+- Build `mq_*` on linux and link to `rt` library
 - Make dummy `sys::launch_browser()` available in Stratify OS
 
 ## Bug Fixes
 
-- Fixed bugs with error handling in threads - error context didn't have mutex but needed one
-- Fixed bug with `api::ErrorScope` grabbing the wrong context
-- Use `api::SystemResource` for `thread::Signal::HandlerScope`
-- Use `api::SystemResource` for `fs::FileObject::LocationScope`
-- Use `api::SystemResource` for `chrono::ClockTimer::PerformanceScope`
-- Use `api::SystemResource` for `api::ErrorScope`
-  - This prevents the object from being copied and ensures it is moved correctly
-- Use `std::unique_ptr` in `Mutex::Scope`
-  - This prevents the object from being copied and ensures it is moved correctly
 - `sys::Sys::Process` needs to initialize `m_process` on windows
 - Use `gettimeofday` for `ClockTime` on Linux
 - Fix build problem with undefined reference to `atof` on Stratify OS
