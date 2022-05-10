@@ -172,7 +172,6 @@ Process::Process(const Arguments &arguments, const Environment &environment)
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};
-  STARTUPINFOA startup_info{};
 
   var::PathString cwd;
   _getcwd(cwd.data(), cwd.capacity());
