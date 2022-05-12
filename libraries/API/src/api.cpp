@@ -35,6 +35,9 @@ void api::api_assert(bool value, const char *function, int line) {
     size = backtrace(array.data(), array.size());
     backtrace_symbols_fd(array.data(), size, fileno(stderr));
 #endif
+#if defined __link
+    fflush(stdout);
+#endif
     ::abort();
   }
 }
