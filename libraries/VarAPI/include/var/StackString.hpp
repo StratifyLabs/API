@@ -137,7 +137,7 @@ public:
   Derived &truncate(size_t new_length) {
     const auto current_length = length();
     const auto end = current_length > new_length ? new_length : current_length;
-    m_buffer[new_length] = 0;
+    m_buffer[end] = 0;
     return static_cast<Derived &>(*this);
   }
 
@@ -320,7 +320,7 @@ public:
     ::snprintf(m_buffer, capacity(), format, value);
   }
 
-  NumberString() {}
+  NumberString() = default;
   NumberString(const StringView a) : StackString(a) {}
   NumberString(const char *a) : StackString(a) {}
 

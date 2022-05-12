@@ -122,25 +122,13 @@ int ProgressCallback::update_function(
   return reinterpret_cast<const ProgressCallback*>(context)->update(value, total);
 }
 
-Demangler::Demangler() { m_buffer = static_cast<char *>(malloc(m_length)); }
-Demangler::~Demangler() {
-  if (m_buffer && length() == 2048) {
-    free(m_buffer);
-  }
-  if (m_last) {
-    free(m_last);
-  }
-}
 
 const char *Demangler::demangle(const char *input) {
-  if (m_last != nullptr) {
-    free(m_last);
-  }
-
 #if defined __link
-  m_last = abi::__cxa_demangle(input, m_buffer, &m_length, &m_status);
+  m_buffer.reset(static_cast<char*>(malloc(m_length)));
+  m_last.reset(abi::__cxa_demangle(input, m_buffer.get(), &m_length, &m_status));
 #endif
-  return m_last;
+  return m_last.get();
 }
 
 #if defined __link

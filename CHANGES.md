@@ -2,18 +2,22 @@
 
 ## New Features
 
+- Add `ActionFlags` for signals on linux
+- Add `operator bool()` to `var::StringView` to check for non-empty strings
 - Build `mq_*` on linux and link to `rt` library
 - Make dummy `sys::launch_browser()` available in Stratify OS
 
 ## Bug Fixes
 
+- Use smart pointers in implementation of `api::Demanlger`
+- Fix a bug that allows `fs::FileMemberAccess` to be moved properly
+- Fixed a bug when truncating `var::StackString` objects
 - `sys::Sys::Process` needs to initialize `m_process` on windows
 - Use `gettimeofday` for `ClockTime` on Linux
 - Fix build problem with undefined reference to `atof` on Stratify OS
 - add `var/StackString.hpp` include to `sys/Cli.hpp` to prevent some build errors
 
 # Version 1.3.0
-
 
 ## New Features
 

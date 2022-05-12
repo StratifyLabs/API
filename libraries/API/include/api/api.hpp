@@ -174,7 +174,7 @@ public:
           backtrace_symbols(context.m_backtrace_buffer, m_entry_count),
           &symbol_deleter)
 #else
-    : m_symbol_pointer(nullptr, &symbol_deleter)
+      : m_symbol_pointer(nullptr, &symbol_deleter)
 #endif
     {}
 
@@ -374,22 +374,15 @@ public:
 
 class Demangler {
 public:
-  Demangler();
-  ~Demangler();
-
-  Demangler(const Demangler &) = delete;
-  Demangler &operator=(const Demangler &) = delete;
-
-  Demangler(Demangler &&) = default;
-  Demangler &operator=(Demangler &&) = default;
 
   const char *demangle(const char *input);
 
 private:
+  static constexpr size_t buffer_size = 2048;
   API_RAF(Demangler, int, status, 0);
-  API_RAF(Demangler, size_t, length, 2048);
-  char *m_buffer = nullptr;
-  char *m_last = nullptr;
+  size_t m_length = buffer_size;
+  std::unique_ptr<char> m_last;
+  std::unique_ptr<char> m_buffer;
 };
 
 #define API_THREAD_EXECUTION_CONTEXT()                                         \
@@ -711,7 +704,6 @@ private:
   const Type m_finish = 0;
 };
 
-
 /*! \details
  *
  * This class is used to manage system resources. It implements the rule of 5
@@ -752,13 +744,9 @@ public:
   }
   const Type &value() const { return m_value; }
 
-  Type * pointer_to_value(){
-    return &m_value;
-  }
+  Type *pointer_to_value() { return &m_value; }
 
-  const Type * pointer_to_value() const{
-    return &m_value;
-  }
+  const Type *pointer_to_value() const { return &m_value; }
 
 private:
   Type m_value = {};
