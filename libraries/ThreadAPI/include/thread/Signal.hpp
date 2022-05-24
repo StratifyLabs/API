@@ -283,7 +283,9 @@ private:
   union sigval m_sigvalue{};
 };
 
+#if defined __linux
 API_OR_NAMED_FLAGS_OPERATOR(SignalFlags, ActionFlags)
+#endif
 
 } // namespace thread
 
