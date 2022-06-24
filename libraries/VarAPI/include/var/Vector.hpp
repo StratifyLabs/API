@@ -3,10 +3,9 @@
 #ifndef VAR_API_VECTOR_HPP_
 #define VAR_API_VECTOR_HPP_
 
-#include <algorithm>
 #include <functional>
-#include <numeric>
 #include <vector>
+#include <utility>
 
 #include "ContainerObject.hpp"
 
@@ -68,7 +67,7 @@ public:
   }
 
   Vector<T> &push_back(T &&a) {
-    this->m_container.push_back(a);
+    this->m_container.push_back(std::forward<T>(a));
     return *this;
   }
 
