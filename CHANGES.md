@@ -6,6 +6,7 @@
 - Add `operator bool()` to `var::StringView` to check for non-empty strings
 - Build `mq_*` on linux and link to `rt` library
 - Make dummy `sys::launch_browser()` available in Stratify OS
+- Support move with `var::Vector::push_back()`
 
 ## Bug Fixes
 

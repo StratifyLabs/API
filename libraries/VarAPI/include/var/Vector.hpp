@@ -15,8 +15,9 @@ namespace var {
 template <typename T>
 class Vector : public ContainerObject<Vector<T>, std::vector<T>, T> {
   using Base = ContainerObject<Vector<T>, std::vector<T>, T>;
+
 public:
-  Vector() : Base(){}
+  Vector() : Base() {}
   explicit Vector(size_t count) { this->m_container.resize(count); }
   Vector(std::initializer_list<T> il) : Base(il) {}
 
@@ -27,8 +28,6 @@ public:
   using reverse_iterator = typename std::vector<T>::reverse_iterator;
   using const_reverse_iterator =
     typename std::vector<T>::const_reverse_iterator;
-
-
 
   iterator insert(const_iterator position, const T &value) {
     return this->m_container.insert(position, value);
@@ -68,6 +67,11 @@ public:
     return *this;
   }
 
+  Vector<T> &push_back(T &&a) {
+    this->m_container.push_back(a);
+    return *this;
+  }
+
   Vector<T> &pop_back() {
     this->m_container.pop_back();
     return *this;
@@ -97,11 +101,17 @@ public:
   API_NO_DISCARD const T &operator[](size_t offset) const {
     return this->m_container[offset];
   }
-  API_NO_DISCARD T &operator[](size_t offset) { return this->m_container[offset]; }
+  API_NO_DISCARD T &operator[](size_t offset) {
+    return this->m_container[offset];
+  }
 
   API_NO_DISCARD T *search(const T &a) {
-    return reinterpret_cast<T *>(
-      bsearch(&a, std::vector<T>::data(), this->count(), sizeof(T), Base::ascending));
+    return reinterpret_cast<T *>(bsearch(
+      &a,
+      std::vector<T>::data(),
+      this->count(),
+      sizeof(T),
+      Base::ascending));
   }
 
   API_NO_DISCARD T *
@@ -184,7 +194,9 @@ public:
   API_NO_DISCARD bool is_empty() const { return this->m_container.empty(); }
 
   API_NO_DISCARD std::vector<T> &vector() { return this->m_container; }
-  API_NO_DISCARD const std::vector<T> &vector() const { return this->m_container; }
+  API_NO_DISCARD const std::vector<T> &vector() const {
+    return this->m_container;
+  }
 
   API_NO_DISCARD const T *data() const { return this->m_container.data(); }
   API_NO_DISCARD T *data() { return this->m_container.data(); }
@@ -230,7 +242,6 @@ private:
     }
     return true;
   }
-
 };
 
 } // namespace var
