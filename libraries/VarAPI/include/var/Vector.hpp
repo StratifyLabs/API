@@ -76,6 +76,10 @@ public:
     return *this;
   }
 
+  template<class ...Args> T& emplace_back(Args&&... args){
+    return this->m_container.emplace_back(args...);
+  }
+
   Vector &shrink_to_fit() {
     this->m_container.shrink_to_fit();
     return *this;
@@ -184,6 +188,8 @@ public:
     }
     return result;
   }
+
+
 
   Vector<T> &clear() {
     this->m_container.clear();
