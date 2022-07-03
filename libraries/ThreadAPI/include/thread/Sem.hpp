@@ -96,7 +96,7 @@ private:
 
   static void sem_deleter(sem_t * sem);
 
-  using SemUniquePointer = std::unique_ptr<sem_t, decltype(&sem_deleter)>;
+  using SemUniquePointer = api::UniquePointer<sem_t, decltype(&sem_deleter)>;
   SemUniquePointer m_unique_pointer = SemUniquePointer(sem_pointer(SEM_FAILED), &sem_deleter);
 
   sem_t *

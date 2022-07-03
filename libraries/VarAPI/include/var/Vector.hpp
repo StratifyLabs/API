@@ -3,7 +3,9 @@
 #ifndef VAR_API_VECTOR_HPP_
 #define VAR_API_VECTOR_HPP_
 
+#include <functional>
 #include <vector>
+#include <utility>
 
 #include "ContainerObject.hpp"
 
@@ -12,8 +14,9 @@ namespace var {
 template <typename T>
 class Vector : public ContainerObject<Vector<T>, std::vector<T>, T> {
   using Base = ContainerObject<Vector<T>, std::vector<T>, T>;
+
 public:
-  Vector() : Base(){}
+  Vector() : Base() {}
   explicit Vector(size_t count) { this->m_container.resize(count); }
   Vector(std::initializer_list<T> il) : Base(il) {}
 
@@ -65,14 +68,18 @@ public:
     return *this;
   }
 
-  template <class... Args> Vector<T> &emplace_back(Args&&... args) {
-    this->m_container.emplace_back(args...);
+  Vector<T> &push_back(T &&a) {
+    this->m_container.push_back(std::forward<T>(a));
     return *this;
   }
 
   Vector<T> &pop_back() {
     this->m_container.pop_back();
     return *this;
+  }
+
+  template<class ...Args> T& emplace_back(Args&&... args){
+    return this->m_container.emplace_back(args...);
   }
 
   Vector &shrink_to_fit() {
@@ -99,11 +106,17 @@ public:
   API_NO_DISCARD const T &operator[](size_t offset) const {
     return this->m_container[offset];
   }
-  API_NO_DISCARD T &operator[](size_t offset) { return this->m_container[offset]; }
+  API_NO_DISCARD T &operator[](size_t offset) {
+    return this->m_container[offset];
+  }
 
   API_NO_DISCARD T *search(const T &a) {
-    return reinterpret_cast<T *>(
-      bsearch(&a, std::vector<T>::data(), this->count(), sizeof(T), Base::ascending));
+    return reinterpret_cast<T *>(bsearch(
+      &a,
+      std::vector<T>::data(),
+      this->count(),
+      sizeof(T),
+      Base::ascending));
   }
 
   API_NO_DISCARD T *
@@ -186,7 +199,9 @@ public:
   API_NO_DISCARD bool is_empty() const { return this->m_container.empty(); }
 
   API_NO_DISCARD std::vector<T> &vector() { return this->m_container; }
-  API_NO_DISCARD const std::vector<T> &vector() const { return this->m_container; }
+  API_NO_DISCARD const std::vector<T> &vector() const {
+    return this->m_container;
+  }
 
   API_NO_DISCARD const T *data() const { return this->m_container.data(); }
   API_NO_DISCARD T *data() { return this->m_container.data(); }
@@ -232,7 +247,6 @@ private:
     }
     return true;
   }
-
 };
 
 } // namespace var

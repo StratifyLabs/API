@@ -217,7 +217,7 @@ private:
   static void pid_deleter(pid_t * pid);
 
   using PidResource = api::SystemResource<pid_t, decltype(&pid_deleter)>;
-  using RedirectPointer = std::unique_ptr<Redirect>;
+  using RedirectPointer = api::UniquePointer<Redirect>;
 
   int m_status = 0;
 

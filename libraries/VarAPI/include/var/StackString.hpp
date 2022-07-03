@@ -23,6 +23,9 @@ public:
   }
 
   API_NO_DISCARD bool is_empty() const { return m_buffer[0] == 0; }
+  API_NO_DISCARD explicit operator bool() const {
+    return m_buffer[0] != 0;
+  }
 
   Derived &append(const char a) {
     const size_t len = strnlen(m_buffer, Size - 1);
@@ -137,7 +140,7 @@ public:
   Derived &truncate(size_t new_length) {
     const auto current_length = length();
     const auto end = current_length > new_length ? new_length : current_length;
-    m_buffer[new_length] = 0;
+    m_buffer[end] = 0;
     return static_cast<Derived &>(*this);
   }
 
@@ -232,7 +235,6 @@ public:
   operator const char *() const { return m_buffer; }
 };
 
-
 #if defined __win32
 // on windows PATH_MAX is too small (261 chars)
 #define PATH_STRING_LENGTH 4096
@@ -320,7 +322,7 @@ public:
     ::snprintf(m_buffer, capacity(), format, value);
   }
 
-  NumberString() {}
+  NumberString() = default;
   NumberString(const StringView a) : StackString(a) {}
   NumberString(const char *a) : StackString(a) {}
 

@@ -93,9 +93,10 @@ public:
 
   static bool ascending(const T &a, const T &b) { return a < b; }
   static bool descending(const T &a, const T &b) { return b < a; }
-  typedef bool (*sort_compartor_t)(const T &a, const T &b);
+  using SortComparator = bool (*)(const T &a, const T &b);
+  using sort_compartor_t = SortComparator;
 
-  Derived &sort(sort_compartor_t compare_function) {
+  Derived &sort(SortComparator compare_function) {
     std::sort(begin(), end(), compare_function);
     return self();
   }
@@ -120,6 +121,11 @@ public:
     return self();
   }
 
+  Derived & rotate_left(size_t count){
+    std::rotate(begin(), std::advance(begin(), count), end());
+    return self();
+  }
+
   bool is_sorted(sort_compartor_t compare_function) const {
     return std::is_sorted(begin(), end(), compare_function);
   }
@@ -134,16 +140,6 @@ public:
 
   bool operator==(const Derived &a) const {
     return m_container == a.m_container;
-
-    if (count() != a.count()) {
-      return false;
-    }
-    for (auto i : api::Index(count())) {
-      if (at(i) != a.at(i)) {
-        return false;
-      }
-    }
-    return true;
   }
 
   bool operator!=(const Derived &a) const { return !(*this == a); }

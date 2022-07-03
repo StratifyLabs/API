@@ -18,9 +18,6 @@ namespace fs {
 class ViewFile : public FileAccess<ViewFile> {
 public:
 
-  ViewFile(ViewFile &&view_file) = default;
-  ViewFile &operator=(ViewFile &&view_file) = default;
-
   explicit ViewFile(var::View view) {
     m_view = view;
   }

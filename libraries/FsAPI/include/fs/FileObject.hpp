@@ -350,95 +350,107 @@ public:
   using Ioctl = fs::FileObject::Ioctl;
 
   FileMemberAccess(const fs::FileObject &file)
-    : m_file_member_reference_access(file) {}
+    : m_file_member_reference_access{&file} {
+  }
 
-  // FileMemberAccess(const FileMemberAccess & a) = default;
-  // FileMemberAccess& operator =(const FileMemberAccess & a) = default;
+  //a move should not copy or swap anything
+  //The member pointer should always point to the
+  //derived owner's internal m_file
+  FileMemberAccess(FileMemberAccess&&){}
+  FileMemberAccess & operator=(FileMemberAccess&&){
+    return *this;
+  }
+
+  FileMemberAccess(const FileMemberAccess&) = delete;
+  FileMemberAccess& operator=(const FileMemberAccess&) = delete;
 
   const Derived &read(void *buf, size_t size) const {
-    m_file_member_reference_access.read(buf, int(size));
+    m_file_member_reference_access->read(buf, int(size));
     return static_cast<const Derived &>(*this);
   }
   Derived &read(void *buf, size_t size) {
-    m_file_member_reference_access.read(buf, int(size));
+    m_file_member_reference_access->read(buf, int(size));
     return static_cast<Derived &>(*this);
   }
   const Derived &read(var::View view) const {
-    m_file_member_reference_access.read(view);
+    m_file_member_reference_access->read(view);
     return static_cast<const Derived &>(*this);
   }
   Derived &read(var::View view) {
-    m_file_member_reference_access.read(view);
+    m_file_member_reference_access->read(view);
     return static_cast<Derived &>(*this);
   }
   const Derived &write(const void *buf, size_t size) const {
-    m_file_member_reference_access.write(buf, size);
+    m_file_member_reference_access->write(buf, size);
     return static_cast<const Derived &>(*this);
   }
   Derived &write(const void *buf, size_t size) {
-    m_file_member_reference_access.write(buf, size);
+    m_file_member_reference_access->write(buf, size);
     return static_cast<Derived &>(*this);
   }
   const Derived &write(var::View view) const {
-    m_file_member_reference_access.write(view);
+    m_file_member_reference_access->write(view);
     return static_cast<const Derived &>(*this);
   }
   Derived &write(var::View view) {
-    m_file_member_reference_access.write(view);
+    m_file_member_reference_access->write(view);
     return static_cast<Derived &>(*this);
   }
   const Derived &write(
     const fs::FileObject &source_file,
     const Write &options = Write()) const {
-    m_file_member_reference_access.write(source_file, options);
+    m_file_member_reference_access->write(source_file, options);
     return static_cast<const Derived &>(*this);
   }
   Derived &
   write(const fs::FileObject &source_file, const Write &options = Write()) {
-    m_file_member_reference_access.write(source_file, options);
+    m_file_member_reference_access->write(source_file, options);
     return static_cast<Derived &>(*this);
   }
   const Derived &write(
     const fs::FileObject &source_file,
     const var::Transformer &transformer,
     const Write &options = Write()) const {
-    m_file_member_reference_access.write(source_file, transformer, options);
+    m_file_member_reference_access->write(source_file, transformer, options);
     return static_cast<const Derived &>(*this);
   }
   Derived &write(
     const fs::FileObject &source_file,
     const var::Transformer &transformer,
     const Write &options = Write()) {
-    m_file_member_reference_access.write(source_file, transformer, options);
+    m_file_member_reference_access->write(source_file, transformer, options);
     return static_cast<Derived &>(*this);
   }
   const Derived &seek(int location, Whence whence = Whence::set) const {
-    m_file_member_reference_access.seek(location, whence);
+    m_file_member_reference_access->seek(location, whence);
     return static_cast<const Derived &>(*this);
   }
   Derived &seek(int location, Whence whence = Whence::set) {
-    m_file_member_reference_access.seek(location, whence);
+    m_file_member_reference_access->seek(location, whence);
     return static_cast<Derived &>(*this);
   }
   const Derived &ioctl(int request, void *arg) const {
-    m_file_member_reference_access.ioctl(request, arg);
+    m_file_member_reference_access->ioctl(request, arg);
     return static_cast<const Derived &>(*this);
   }
   Derived &ioctl(int request, void *arg) {
-    m_file_member_reference_access.ioctl(request, arg);
+    m_file_member_reference_access->ioctl(request, arg);
     return static_cast<Derived &>(*this);
   }
   const Derived &ioctl(const Ioctl &options) const {
-    m_file_member_reference_access.ioctl(options);
+    m_file_member_reference_access->ioctl(options);
     return static_cast<const Derived &>(*this);
   }
   Derived &ioctl(const Ioctl &options) {
-    m_file_member_reference_access.ioctl(options);
+    m_file_member_reference_access->ioctl(options);
     return static_cast<Derived &>(*this);
   }
 
 private:
-  const fs::FileObject &m_file_member_reference_access;
+  //This should not be moved during move operations
+  //the file it points to will move the fd from the temporary
+  //to the new location and this will point to the new location
+  const fs::FileObject * m_file_member_reference_access = nullptr;
 };
 
 } // namespace fs

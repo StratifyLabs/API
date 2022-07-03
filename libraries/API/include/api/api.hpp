@@ -22,6 +22,9 @@ extern "C" int sos_trace_stack(u32 count);
 
 namespace api {
 
+template <class Type, class Deleter = std::default_delete<Type>>
+using UniquePointer = std::unique_ptr<Type, Deleter>;
+
 /*! \details
  *
  * This class contains basic functions to access information
@@ -174,9 +177,10 @@ public:
           backtrace_symbols(context.m_backtrace_buffer, m_entry_count),
           &symbol_deleter)
 #else
-    : m_symbol_pointer(nullptr, &symbol_deleter)
+      : m_symbol_pointer(nullptr, &symbol_deleter)
 #endif
-    {}
+    {
+    }
 
     const char *at(size_t offset) const {
       if (offset < m_entry_count) {
@@ -188,7 +192,7 @@ public:
   private:
     static void symbol_deleter(char **x) { ::free(x); };
     API_RAF(Backtrace, size_t, entry_count, 0);
-    std::unique_ptr<char *, decltype(&symbol_deleter)> m_symbol_pointer;
+    UniquePointer<char *, decltype(&symbol_deleter)> m_symbol_pointer;
   };
 
   API_NO_DISCARD const char *message() const { return m_message; }
@@ -322,22 +326,14 @@ public:
 
 class Demangler {
 public:
-  Demangler();
-  ~Demangler();
-
-  Demangler(const Demangler &) = delete;
-  Demangler &operator=(const Demangler &) = delete;
-
-  Demangler(Demangler &&) = default;
-  Demangler &operator=(Demangler &&) = default;
-
   const char *demangle(const char *input);
 
 private:
+  static constexpr size_t buffer_size = 2048;
   API_RAF(Demangler, int, status, 0);
-  API_RAF(Demangler, size_t, length, 2048);
-  char *m_buffer = nullptr;
-  char *m_last = nullptr;
+  size_t m_length = buffer_size;
+  UniquePointer<char> m_last;
+  UniquePointer<char> m_buffer;
 };
 
 #define API_THREAD_EXECUTION_CONTEXT()                                         \
@@ -659,7 +655,6 @@ private:
   const Type m_finish = 0;
 };
 
-
 /*! \details
  *
  * This class is used to manage system resources. It implements the rule of 5
@@ -700,13 +695,9 @@ public:
   }
   const Type &value() const { return m_value; }
 
-  Type * pointer_to_value(){
-    return &m_value;
-  }
+  Type *pointer_to_value() { return &m_value; }
 
-  const Type * pointer_to_value() const{
-    return &m_value;
-  }
+  const Type *pointer_to_value() const { return &m_value; }
 
 private:
   Type m_value = {};
