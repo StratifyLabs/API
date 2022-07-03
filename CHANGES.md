@@ -4,9 +4,11 @@
 
 - Add `ActionFlags` for signals on linux
 - Add `operator bool()` to `var::StringView` to check for non-empty strings
+- Add `operator bool()` to `var::StackString` to check for non-empty strings
 - Build `mq_*` on linux and link to `rt` library
 - Make dummy `sys::launch_browser()` available in Stratify OS
 - Support move with `var::Vector::push_back()`
+- Add `api::UniquePointer` as alias of `std::unique_ptr`
 
 ## Bug Fixes
 

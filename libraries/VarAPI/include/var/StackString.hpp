@@ -23,6 +23,9 @@ public:
   }
 
   API_NO_DISCARD bool is_empty() const { return m_buffer[0] == 0; }
+  API_NO_DISCARD explicit operator bool() const {
+    return m_buffer[0] != 0;
+  }
 
   Derived &append(const char a) {
     const size_t len = strnlen(m_buffer, Size - 1);
@@ -231,7 +234,6 @@ public:
   // implicit conversion
   operator const char *() const { return m_buffer; }
 };
-
 
 #if defined __win32
 // on windows PATH_MAX is too small (261 chars)

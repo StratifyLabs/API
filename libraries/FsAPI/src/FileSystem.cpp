@@ -66,7 +66,7 @@ bool FileSystem::is_create_file_ok(
   IsOverwrite is_overwrite) const {
 
   const auto parent = Path::parent_directory(path);
-  if (!parent.is_empty()) {
+  if (parent) {
     if (exists(parent)) {
       if (!get_info(parent).is_directory()) {
         API_RETURN_VALUE_ASSIGN_ERROR(
@@ -99,8 +99,7 @@ bool FileSystem::is_create_file_ok(
   return true;
 }
 
-bool FileSystem::is_create_directory_ok(
-  var::StringView path) const {
+bool FileSystem::is_create_directory_ok(var::StringView path) const {
 
   const auto parent = Path::parent_directory(path);
   if (!parent.is_empty()) {

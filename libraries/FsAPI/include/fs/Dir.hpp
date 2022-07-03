@@ -122,7 +122,7 @@ protected:
 
 private:
   static void dir_deleter(DIR *dirp);
-  std::unique_ptr<DIR, decltype(&dir_deleter)> m_dirp;
+  api::UniquePointer<DIR, decltype(&dir_deleter)> m_dirp;
 
   DIR *open(var::StringView path);
 };

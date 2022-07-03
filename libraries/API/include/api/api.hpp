@@ -22,6 +22,9 @@ extern "C" int sos_trace_stack(u32 count);
 
 namespace api {
 
+template <class Type, class Deleter = std::default_delete<Type>>
+using UniquePointer = std::unique_ptr<Type, Deleter>;
+
 /*! \details
  *
  * This class contains basic functions to access information
@@ -176,7 +179,8 @@ public:
 #else
       : m_symbol_pointer(nullptr, &symbol_deleter)
 #endif
-    {}
+    {
+    }
 
     const char *at(size_t offset) const {
       if (offset < m_entry_count) {
@@ -188,7 +192,7 @@ public:
   private:
     static void symbol_deleter(char **x) { ::free(x); };
     API_RAF(Backtrace, size_t, entry_count, 0);
-    std::unique_ptr<char *, decltype(&symbol_deleter)> m_symbol_pointer;
+    UniquePointer<char *, decltype(&symbol_deleter)> m_symbol_pointer;
   };
 
   API_NO_DISCARD const char *message() const { return m_message; }
@@ -374,15 +378,14 @@ public:
 
 class Demangler {
 public:
-
   const char *demangle(const char *input);
 
 private:
   static constexpr size_t buffer_size = 2048;
   API_RAF(Demangler, int, status, 0);
   size_t m_length = buffer_size;
-  std::unique_ptr<char> m_last;
-  std::unique_ptr<char> m_buffer;
+  UniquePointer<char> m_last;
+  UniquePointer<char> m_buffer;
 };
 
 #define API_THREAD_EXECUTION_CONTEXT()                                         \
