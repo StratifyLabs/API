@@ -18,6 +18,7 @@
 
 #include "api/api.hpp"
 #include "var/StackString.hpp"
+#include "fs/Path.hpp"
 
 #include "Pipe.hpp"
 
@@ -53,10 +54,14 @@ public:
     Arguments(Arguments &&) = default;
     Arguments &operator=(Arguments &&) = default;
 
-    explicit Arguments(const var::StringView path) {
+    explicit Arguments(const var::StringView path) : m_path(path) {
       m_arguments.push_back(nullptr);
       if (path != "") {
+#if defined __win32
+        push(fs::Path::name(path));
+#else
         push(path);
+#endif
       }
     }
 
@@ -104,7 +109,9 @@ public:
     }
 
   private:
+    API_RAC(Arguments,var::PathString,path);
     void copy(const Arguments &arguments) {
+      m_path = arguments.path();
       m_arguments.push_back(nullptr);
       for (auto *value : arguments.m_arguments) {
         value &&push(value).is_success();
