@@ -38,11 +38,7 @@ public:
   enum class IsRecursive { no, yes };
 
   DirObject() = default;
-
-  DirObject(const DirObject &dir) = delete;
-  DirObject &operator=(const DirObject &dir) = delete;
-  DirObject(DirObject &&dir) = default;
-  DirObject &operator=(DirObject &&dir) = default;
+  virtual ~DirObject() = default;
 
   static var::PathString filter_hidden(const var::PathString &entry) {
     if (!entry.is_empty() && entry.string_view().front() == '.') {
@@ -54,26 +50,8 @@ public:
   const char *read() const;
   API_NO_DISCARD var::PathString get_entry() const;
   API_NO_DISCARD const char *entry_name() const { return m_entry.d_name; }
-  API_NO_DISCARD int ino() const { return m_entry.d_ino; }
+  API_NO_DISCARD ssize_t ino() const { return m_entry.d_ino; }
   API_NO_DISCARD int count() const;
-
-  const DirObject &rewind() const {
-    API_RETURN_VALUE_IF_ERROR(*this);
-    interface_rewinddir();
-    return *this;
-  }
-
-  DirObject &rewind() { return API_CONST_CAST_SELF(DirObject, rewind); }
-
-  const DirObject &seek(size_t location) const {
-    API_RETURN_VALUE_IF_ERROR(*this);
-    interface_seekdir(location);
-    return *this;
-  }
-
-  DirObject &seek(size_t location) {
-    return API_CONST_CAST_SELF(DirObject, seek, location);
-  }
 
   inline long tell() const {
     API_RETURN_VALUE_IF_ERROR(-1);
@@ -86,58 +64,67 @@ protected:
   void set_path(const var::StringView path) { m_path = path; }
   virtual int interface_readdir_r(dirent *result, dirent **resultp) const = 0;
 
-  virtual int interface_telldir() const = 0;
+  virtual long interface_telldir() const = 0;
   virtual void interface_seekdir(size_t location) const = 0;
   virtual void interface_rewinddir() const = 0;
 
 private:
-  mutable struct dirent m_entry = {0};
+  mutable struct dirent m_entry = {};
   var::PathString m_path;
 };
 
 template <class Derived> class DirAccess : public DirObject {
 public:
   const Derived &rewind() const {
-    return static_cast<const Derived &>(DirObject::rewind());
+    API_RETURN_VALUE_IF_ERROR(static_cast<const Derived &>(*this));
+    interface_rewinddir();
+    return static_cast<const Derived &>(*this);
   }
 
-  Derived &rewind() { return static_cast<Derived &>(DirObject::rewind()); }
+  Derived &rewind() {
+    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
+    interface_rewinddir();
+    return static_cast<Derived &>(*this);
+  }
 
   const Derived &seek(size_t location) const {
-    return static_cast<const Derived &>(DirObject::seek(location));
+    API_RETURN_VALUE_IF_ERROR(static_cast<const Derived &>(*this));
+    interface_seekdir(location);
+    return static_cast<const Derived &>(*this);
   }
 
   Derived &seek(size_t location) {
-    return static_cast<Derived &>(DirObject::seek(location));
+    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
+    interface_seekdir(location);
+    return static_cast<Derived &>(*this);
   }
 };
 
+
+/*! \details
+ *
+ * This class is a wrapper for POSIX directory
+ * access functions opendir(), readdir(), closedir().
+ *
+ */
 class Dir : public DirAccess<Dir> {
 public:
   explicit Dir(var::StringView path);
-  Dir(const Dir &dir) = delete;
-  Dir &operator=(const Dir &dir) = delete;
-  Dir(Dir &&dir) noexcept { std::swap(m_dirp, dir.m_dirp); }
-  Dir &operator=(Dir &&dir) {
-    std::swap(m_dirp, dir.m_dirp);
-    return *this;
-  }
-  ~Dir();
+
   bool is_open() const { return m_dirp != nullptr; }
   int count() const;
 
 protected:
-  Dir &open(var::StringView path);
-  Dir &close();
-
   int interface_readdir_r(dirent *result, dirent **resultp) const override;
-  int interface_telldir() const override;
+  long interface_telldir() const override;
   void interface_seekdir(size_t location) const override;
   void interface_rewinddir() const override;
 
 private:
-  DIR *m_dirp = nullptr;
-  static DIR *internal_opendir(const char *path);
+  static void dir_deleter(DIR *dirp);
+  api::UniquePointer<DIR, decltype(&dir_deleter)> m_dirp;
+
+  DIR *open(var::StringView path);
 };
 
 } // namespace fs

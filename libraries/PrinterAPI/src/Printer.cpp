@@ -21,22 +21,12 @@ using namespace printer;
 Printer::Printer() {
   m_progress_callback.set_callback(Printer::update_progress_callback)
     .set_context(this);
-  m_print_flags = Flags::width_8 | Flags::hex;
-  m_indent = 0;
-  m_progress_width = 50;
-  m_progress_state = 0;
-  m_verbose_level = Level::info;
-  m_progress_key = var::StringView("progress");
 #if defined __win32
   if (m_default_color == static_cast<unsigned int>(-1)) {
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
     m_default_color = info.wAttributes;
   }
-#endif
-
-#if defined __link
-  m_is_bash = false;
 #endif
 }
 
@@ -322,8 +312,6 @@ Printer::ColorCode Printer::color_code(const var::StringView color) {
   return ColorCode::normal;
 }
 
-Printer::~Printer() {}
-
 #if 0
 void Printer::vprint(const char * fmt, va_list list){
 	vprintf(fmt, list);
@@ -487,11 +475,7 @@ bool Printer::update_progress(int progress, int total) {
             ? var::NumberString(m_progress_key)
             : var::NumberString(m_progress_key)
                 .append(var::NumberString(m_progress_key_state, "-%d"));
-      print(
-        Level::info,
-        key,
-        var::StringView().set_null(),
-        IsNewline::no);
+      print(Level::info, key, var::StringView().set_null(), IsNewline::no);
 
       m_progress_key_state++;
 
@@ -665,7 +649,7 @@ Printer &Printer::operator<<(const var::View a) {
   const u32 *ptru32 = a.to_const_u32();
   const float *ptrfloat = a.to_const_float();
 
-  const int count = [](size_t size, Flags o_flags) -> int {
+  const auto count = [](size_t size, Flags o_flags) {
     if (o_flags & Flags::width_32) {
       return size / 4;
     } else if (o_flags & Flags::width_16) {
@@ -676,10 +660,9 @@ Printer &Printer::operator<<(const var::View a) {
     return size;
   }(a.size(), o_flags);
 
-  int i;
   u32 bytes_printed = 0;
 
-  for (i = 0; i < count; i++) {
+  for (int i = 0; i < count; i++) {
     var::GeneralString data_string;
     if (o_flags & Flags::hex) {
       if (o_flags & Flags::width_32) {
@@ -760,7 +743,11 @@ Printer &Printer::operator<<(const var::View a) {
       }
     }
 
-    print(verbose_level(), var::NumberString(i, "[%04d]"), data_string, IsNewline::yes);
+    print(
+      verbose_level(),
+      var::NumberString(i, "[%04d]"),
+      data_string,
+      IsNewline::yes);
   }
 
   return *this;

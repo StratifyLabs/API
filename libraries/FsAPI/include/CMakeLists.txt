@@ -1,6 +1,7 @@
 
 set(SOURCES
   fs/Aio.hpp
+  fs/AssetFileSystem.hpp
   fs/Dir.hpp
   fs/File.hpp
   fs/DataFile.hpp

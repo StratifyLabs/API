@@ -1,3 +1,73 @@
+> Please see [Semantic Versioning on Github](https://blog.stratifylabs.dev/device/2021-07-12-Semantic-Versioning-and-Github/) for more details on managing the `CHANGES.md` file.
+
+# Version 1.4.0
+
+## New Features
+
+- Add `ActionFlags` for signals on linux
+- Add `operator bool()` to `var::StringView` to check for non-empty strings
+- Add `operator bool()` to `var::StackString` to check for non-empty strings
+- Build `mq_*` on linux and link to `rt` library
+- Make dummy `sys::launch_browser()` available in Stratify OS
+- Support move with `var::Vector::push_back()`
+- Add `api::UniquePointer` as alias of `std::unique_ptr`
+
+## Bug Fixes
+
+- Use smart pointers in implementation of `api::Demanlger`
+- Fix a bug that allows `fs::FileMemberAccess` to be moved properly
+- Fixed a bug when truncating `var::StackString` objects
+- `sys::Sys::Process` needs to initialize `m_process` on windows
+- Use `gettimeofday` for `ClockTime` on Linux
+- Fix build problem with undefined reference to `atof` on Stratify OS
+- add `var/StackString.hpp` include to `sys/Cli.hpp` to prevent some build errors
+
+# Version 1.3.0
+
+## New Features
+
+- Add `var::List` as a wrapper for `std::list`
+- Add `var::ContainerObject` as the base to container classes
+  - Provides more access to algorithms. Allows for easier iteration.
+- Add `api::SystemResource` to encapsulate system resources and minimize the use of the rule of 5.
+- Documentation updates for `API`
+- Use a `printer::Printer*` to print help when using `sys::Cli::show_help()`
+- Add `sys::System::get_executable_suffix()` for desktop builds
+- Add `fs::AssetFileSystem` for use on desktop builds to manage bundled assets
+- Add `var::ReplaceCharacter` and `var::ReplaceString` structs
+  - `var::String::Replace` is now an alias of `var::ReplaceString`
+  - `var::StackString::Replace` is now an alias of `var::ReplaceCharacter`
+- Add function to access `Process::pid()`
+- Add `to_string()` and `from_string()` to `chrono::ClockTime`
+- Add operator for printing `Date` as an object
+- Add aliases to `StackString` types with the max length of the string (e.g. `StackString24`)
+- Add `double` detection for `var::NumberString` for `__link` builds
+- Add static function for `sys::Pipe::make_fifo()` for linux and macOS
+- `sys::Process` no longer provides a pipe. It gives an `fs::DataFile` for standard output and error.
+- Add `sys::System::launch_browser()` to open a link in the system browser
+- Add `api::catch_segmentation_fault()` to call `API_ASSERT()` when a segmentation fault happens (desktop)
+- Use `fs::PathContainer` instead of `fs::PathList`. `fs::PathList` will be deprecated. `Container` is a more accurate description.
+
+## Bug Fixes
+
+- Many minor bug fixes based on `SonarLint` suggestions
+- The function `sys::Cli::show_version` was not implemented (it is now)
+- Remove relative links in `README.md`
+- Minor (SonarLint) fixes in `printer::MarkdownPrinter`
+- Make `printer::Printer::~Printer` virtual
+- Assign `Dir::m_dirp` to `nullptr` after the object is closed
+- Fix various minor issues with `fs::FileInfo`
+- Remove redundant base functions from `fs::DirObject`
+- Make `fs::DirObject::~DirObject` virtual and default
+- Remove `#include "chrono/MicroTime.hpp"` from `chrono::MicroTime.hpp`
+- When creating a thread, the error context needs to be generated for the first time with a mutex
+- Ensure `PWD` exists for new process before starting the process
+- House keeping on `Process` for linux and mac
+- Fix `Process` spawn on Windows when the path has a space. `argv[0]` is given just the executable name
+- Add correct move semantics to StackString
+- Fix `Process` threads that monitor stdout and stderr
+- Don't set system time in `Date().set_system_time()` if there is an error
+
 # Version 1.2.0
 
 ## New Features

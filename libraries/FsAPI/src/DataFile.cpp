@@ -8,7 +8,6 @@
 using namespace fs;
 
 DataFile::DataFile(const FileObject &file_to_load) {
-  m_location = 0;
   m_open_flags = OpenMode::append_read_write();
   API_RETURN_IF_ERROR();
   write(file_to_load, Write());
@@ -23,7 +22,7 @@ int DataFile::interface_read(void *buf, int nbyte) const {
     return -1;
   }
 
-  int size_ready = m_data.size_signed() - m_location;
+  auto size_ready = m_data.size_signed() - m_location;
   if (size_ready > nbyte) {
     size_ready = nbyte;
   }
@@ -36,7 +35,7 @@ int DataFile::interface_read(void *buf, int nbyte) const {
   memcpy(buf, m_data.data_u8() + m_location, size_ready);
 
   m_location += size_ready;
-  return size_ready;
+  return int(size_ready);
 }
 
 int DataFile::interface_write(const void *buf, int nbyte) const {
@@ -46,7 +45,7 @@ int DataFile::interface_write(const void *buf, int nbyte) const {
     return -1;
   }
 
-  int size_ready = 0;
+  long size_ready = 0;
   if (flags().is_append()) {
     // make room in the m_data object for more bytes
     m_location = static_cast<int>(m_data.size());
@@ -69,7 +68,7 @@ int DataFile::interface_write(const void *buf, int nbyte) const {
   memcpy(m_data.data_u8() + m_location, buf, size_ready);
 
   m_location += size_ready;
-  return size_ready;
+  return int(size_ready);
 }
 
 int DataFile::interface_lseek(int offset, int whence) const {

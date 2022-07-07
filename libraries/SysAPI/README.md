@@ -16,7 +16,7 @@ The `System` class has only `static` methods used for:
 
 The `Cli` class is used for parsing command-line arguments.
 
-```c++
+```cpp
 #include <sys.hpp>
 
 int main(int argc, char * argv[]){
@@ -40,7 +40,7 @@ argument, `action == "program"` is true.
 The `Version` class manages semantic version values. It converts between BCD versions and string versions as well as
 compares versions.
 
-```c++
+```cpp
 #include <sys.hpp>
 
 Version str_version("1.0");

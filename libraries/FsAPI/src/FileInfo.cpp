@@ -44,8 +44,6 @@ printer::operator<<(printer::Printer &printer, const fs::FileInfo &a) {
 
 using namespace fs;
 
-FileInfo::FileInfo() : m_stat{} {}
-
 bool FileInfo::is_directory() const {
   auto masked = static_cast<TypeFlags>(m_stat.st_mode);
   masked &= TypeFlags::mask;
@@ -84,4 +82,4 @@ bool FileInfo::is_socket() const {
 #endif
 }
 
-u32 FileInfo::size() const { return m_stat.st_size; }
+size_t FileInfo::size() const { return m_stat.st_size; }

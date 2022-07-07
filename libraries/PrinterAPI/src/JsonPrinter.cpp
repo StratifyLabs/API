@@ -7,7 +7,7 @@
 using namespace printer;
 
 JsonPrinter::JsonPrinter() {
-  container_list().push_back(Container(Level::fatal, ContainerType::array));
+  container_list().emplace_back(Container(Level::fatal, ContainerType::array));
   enable_flags(
     Flags::no_progress_newline | Flags::key_quotes | Flags::value_quotes);
 }

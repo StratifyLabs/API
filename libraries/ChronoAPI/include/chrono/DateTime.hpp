@@ -10,18 +10,21 @@
 
 namespace chrono {
 
+
+/*! \details
+ *
+ * This class is a wrapper for `time_t` and
+ * its associated C/POSIX functions.
+ *
+ */
 class DateTime {
 public:
-  DateTime();
-
+  DateTime() = default;
   explicit DateTime(time_t t) : m_ctime(t) {}
 
   class Construct {
     API_AC(Construct, var::StringView, time);
-    API_AC(Construct, var::StringView, format);
-
-  public:
-    Construct() : m_format("%Y-%m-%d %H:%M:%S") {}
+    API_AF(Construct, var::StringView, format, "%Y-%m-%d %H:%M:%S");
   };
 
   explicit DateTime(const Construct &options);
@@ -48,6 +51,7 @@ public:
   bool operator>=(const DateTime &a) const { return m_ctime >= a.m_ctime; }
   bool operator<=(const DateTime &a) const { return m_ctime <= a.m_ctime; }
 
+  API_NO_DISCARD var::NumberString to_string() const;
   API_NO_DISCARD DateTime age() const { return DateTime::get_system_time() - *this; }
 
   DateTime &operator+=(const DateTime &a);
@@ -68,9 +72,16 @@ public:
   API_NO_DISCARD u32 hour() const;
 
 private:
-  time_t m_ctime;
+  time_t m_ctime = 0;
 };
 
+
+/*! \details
+ *
+ * This class is a wrapper for `struct tm` and
+ * its associated C/POSIX functions.
+ *
+ */
 class Date {
 public:
   class Construct {
@@ -78,7 +89,7 @@ public:
     API_AF(Construct, int, time_zone, 0);
 
   public:
-    Construct() : m_is_daylight_savings(false), m_time_zone(0) {}
+    Construct() : m_is_daylight_savings(false) {}
   };
 
   explicit Date(
@@ -106,6 +117,8 @@ public:
     november API_MAYBE_UNUSED,
     december API_MAYBE_UNUSED
   };
+
+  static const char * to_cstring(Month value);
 
   API_NO_DISCARD int day() const { return m_tm.tm_mday; }
   API_NO_DISCARD int weekday() const { return m_tm.tm_wday; }
@@ -140,6 +153,7 @@ inline chrono::DateTime operator"" _minutes(unsigned long long int value) {
 namespace printer {
 class Printer;
 Printer &operator<<(Printer &printer, const chrono::DateTime &a);
+Printer &operator<<(Printer &printer, const chrono::Date &a);
 } // namespace printer
 
 #endif /* CHRONO_API_CHRONO_TIME_HPP_ */

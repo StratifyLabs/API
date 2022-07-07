@@ -17,8 +17,7 @@ printer::operator<<(printer::Printer &printer, const chrono::MicroTime &a) {
 void chrono::wait(const chrono::MicroTime &duration) {
   API_RETURN_IF_ERROR();
   chrono::MicroTime period = duration;
-  u32 seconds = period.seconds();
-  if (seconds > 0) {
+  if (const auto seconds = period.seconds(); seconds > 0) {
     ::sleep(seconds);
     period = period - MicroTime(period.seconds() * 1000000UL);
   }

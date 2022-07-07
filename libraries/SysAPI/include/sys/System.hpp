@@ -8,6 +8,13 @@
 
 namespace sys {
 
+/*! \details
+ *
+ * This class provides a group of functions that tell
+ * you about the system you are running on.
+ *
+ *
+ */
 class System {
 public:
   API_NO_DISCARD static var::StringView operating_system_name();
@@ -21,6 +28,9 @@ public:
   API_NO_DISCARD static bool is_linux();
   API_NO_DISCARD static bool is_stratify_os();
   API_NO_DISCARD static var::StringView user_data_path();
+
+  static void launch_browser(var::StringView url);
+  API_NO_DISCARD static const char * get_executable_suffix();
 };
 
 } // namespace sys

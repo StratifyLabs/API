@@ -11,7 +11,7 @@
 #include "fs/Path.hpp"
 
 printer::Printer &
-printer::operator<<(printer::Printer &printer, const fs::PathList &a) {
+printer::operator<<(printer::Printer &printer, const fs::PathContainer &a) {
   size_t i = 0;
   for (const auto &item : a) {
     printer.key(var::NumberString(i++), item.string_view());
@@ -20,8 +20,6 @@ printer::operator<<(printer::Printer &printer, const fs::PathList &a) {
 }
 
 using namespace fs;
-
-FileSystem::FileSystem() = default;
 
 const FileSystem &FileSystem::remove(var::StringView path) const {
   API_RETURN_VALUE_IF_ERROR(*this);
@@ -63,6 +61,73 @@ bool FileSystem::exists(var::StringView path) const {
   return result;
 }
 
+bool FileSystem::is_create_file_ok(
+  var::StringView path,
+  IsOverwrite is_overwrite) const {
+
+  const auto parent = Path::parent_directory(path);
+  if (parent) {
+    if (exists(parent)) {
+      if (!get_info(parent).is_directory()) {
+        API_RETURN_VALUE_ASSIGN_ERROR(
+          false,
+          "Parent exists but is not a directory",
+          EEXIST);
+      }
+    } else {
+      API_RETURN_VALUE_ASSIGN_ERROR(
+        false,
+        "Parent directory does not exist",
+        EINVAL);
+    }
+  }
+
+  if (exists(path)) {
+    if (is_overwrite == IsOverwrite::no) {
+      API_RETURN_VALUE_ASSIGN_ERROR(
+        false,
+        "Cannot overwrite existing file",
+        EEXIST);
+    } else if (!get_info(path).is_file()) {
+      API_RETURN_VALUE_ASSIGN_ERROR(
+        false,
+        "Cannot overwrite destination (not a file)",
+        EEXIST);
+    }
+  }
+
+  return true;
+}
+
+bool FileSystem::is_create_directory_ok(var::StringView path) const {
+
+  const auto parent = Path::parent_directory(path);
+  if (!parent.is_empty()) {
+    if (exists(parent)) {
+      if (!get_info(parent).is_directory()) {
+        API_RETURN_VALUE_ASSIGN_ERROR(
+          false,
+          "Parent exists but is not a directory",
+          EEXIST);
+      }
+    } else {
+      API_RETURN_VALUE_ASSIGN_ERROR(
+        false,
+        "Parent directory does not exist",
+        EINVAL);
+    }
+  }
+
+  if (exists(path) && !get_info(path).is_directory()) {
+    API_RETURN_VALUE_ASSIGN_ERROR(
+      false,
+      "Cannot create directory (conflict with existing file)",
+      EINVAL);
+  }
+
+  return true;
+}
+
 FileInfo FileSystem::get_info(var::StringView path) const {
   API_RETURN_VALUE_IF_ERROR(FileInfo());
   const var::PathString path_string(path);
@@ -92,17 +157,14 @@ const FileSystem &FileSystem::remove_directory(
       var::PathString entry_path = path / entry;
       FileInfo info = get_info(entry_path);
       if (info.is_directory()) {
-        const var::StringView entry_view(entry);
-        if (entry_view != "." && entry_view != "..") {
-          if (remove_directory(entry_path, recursive).is_error()) {
-            return *this;
-          }
-        }
-
-      } else {
-        if (remove(entry_path).is_error()) {
+        if (const var::StringView entry_view(entry);
+            entry_view != "." && entry_view != ".."
+            && remove_directory(entry_path, recursive).is_error()) {
           return *this;
         }
+
+      } else if (remove(entry_path).is_error()) {
+        return *this;
       }
     }
   }
@@ -172,12 +234,10 @@ PathList FileSystem::read_directory(
 
       if (is_recursive == IsRecursive::yes) {
 
-        const var::PathString entry_path
-          = var::PathString(directory.path()) / entry.string_view();
-        FileInfo info = get_info(entry_path.cstring());
-
-        if (info.is_directory()) {
-          const PathList intermediate_result
+        if (const var::PathString entry_path
+            = var::PathString(directory.path()) / entry.string_view();
+            get_info(entry_path).is_directory()) {
+          const auto intermediate_result
             = read_directory(entry_path, is_recursive, exclude, context);
 
           for (const auto &intermediate_entry : intermediate_result) {
@@ -190,6 +250,7 @@ PathList FileSystem::read_directory(
         result.push_back(entry);
       }
     }
+
   } while (!is_the_end);
 
   return result;

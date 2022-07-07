@@ -1,7 +1,9 @@
 
 set(SOURCES
+  AssetFileSystem.cpp
   Dir.cpp
   File.cpp
+  FileObject.cpp
   DataFile.cpp
   ViewFile.cpp
   LambdaFile.cpp

@@ -4,7 +4,7 @@
 #ifndef SAPI_SYS_MQ_HPP_
 #define SAPI_SYS_MQ_HPP_
 
-#ifndef __link
+#if defined __StratifyOS__ || defined __linux
 
 #include <cstring>
 #include <fcntl.h>

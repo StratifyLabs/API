@@ -8,6 +8,11 @@
 
 namespace var {
 
+struct ReplaceCharacter {
+  API_PMAZ(new_character, ReplaceCharacter, char, 0);
+  API_PMAZ(old_character, ReplaceCharacter, char, 0);
+};
+
 template <class Derived, int Size> class StackString {
 public:
   using Base = StringView::Base;
@@ -18,6 +23,9 @@ public:
   }
 
   API_NO_DISCARD bool is_empty() const { return m_buffer[0] == 0; }
+  API_NO_DISCARD explicit operator bool() const {
+    return m_buffer[0] != 0;
+  }
 
   Derived &append(const char a) {
     const size_t len = strnlen(m_buffer, Size - 1);
@@ -44,6 +52,11 @@ public:
     }
     return 0;
   }
+
+  API_NO_DISCARD constexpr size_t capacity() const { return Size - 1; }
+  API_NO_DISCARD char *data() { return m_buffer; }
+  API_NO_DISCARD const char *cstring() const { return m_buffer; }
+  API_NO_DISCARD StringView string_view() const { return StringView(m_buffer); }
 
   Derived operator*(u32 a) const {
     Derived result;
@@ -79,11 +92,6 @@ public:
   bool operator>(const StackString &a) const {
     return string_view() > a.string_view();
   }
-
-  API_NO_DISCARD constexpr size_t capacity() const { return Size - 1; }
-  API_NO_DISCARD char *data() { return m_buffer; }
-  API_NO_DISCARD const char *cstring() const { return m_buffer; }
-  API_NO_DISCARD StringView string_view() const { return StringView(m_buffer); }
 
   API_NO_DISCARD char at(size_t offset) const {
     if (offset < Size) {
@@ -129,22 +137,26 @@ public:
     return static_cast<Derived &>(*this);
   }
 
-  Derived &truncate(size_t new_length){
+  Derived &truncate(size_t new_length) {
     const auto current_length = length();
     const auto end = current_length > new_length ? new_length : current_length;
-    m_buffer[new_length] = 0;
+    m_buffer[end] = 0;
     return static_cast<Derived &>(*this);
   }
 
+#if 0
   class Replace {
     API_AF(Replace, char, old_character, 0);
     API_AF(Replace, char, new_character, 0);
   };
+#endif
+
+  using Replace = ReplaceCharacter;
 
   Derived &replace(const Replace &options) {
     for (size_t i = 0; i < capacity(); i++) {
-      if (m_buffer[i] == options.old_character()) {
-        m_buffer[i] = options.new_character();
+      if (m_buffer[i] == options.old_character) {
+        m_buffer[i] = options.new_character;
       }
     }
     return static_cast<Derived &>(*this);
@@ -152,6 +164,16 @@ public:
 
   inline Derived &operator()(const Replace &options) {
     return replace(options);
+  }
+
+  StackString<Derived, Size>(const StackString &) = default;
+  StackString<Derived, Size> &operator=(const StackString &) = default;
+
+  StackString<Derived, Size>(StackString &&a) { move(a); }
+
+  StackString<Derived, Size> &operator=(StackString &&a) {
+    move(a);
+    return *this;
   }
 
 protected:
@@ -173,6 +195,14 @@ protected:
   }
 
   char m_buffer[Size];
+
+private:
+  void move(StackString &a) {
+    char tmp[Size];
+    strncpy(tmp, a.m_buffer, capacity());
+    strncpy(a.m_buffer, m_buffer, capacity());
+    strncpy(m_buffer, tmp, capacity());
+  }
 };
 
 class IdString : public StackString<IdString, 24> {
@@ -183,6 +213,17 @@ public:
   // implicit conversion
   operator const char *() const { return m_buffer; }
 };
+using StackString24 = IdString;
+
+class KeyString : public StackString<KeyString, 48> {
+public:
+  KeyString() = default;
+  KeyString(const StringView a) : StackString(a) {}
+  KeyString(const char *a) : StackString(a) {}
+  // implicit conversion
+  operator const char *() const { return m_buffer; }
+};
+using StackString48 = IdString;
 
 class NameString : public StackString<NameString, NAME_MAX + 1> {
 public:
@@ -190,15 +231,6 @@ public:
   NameString(const StringView a) : StackString(a) {}
   NameString(const char *a) : StackString(a) {}
 
-  // implicit conversion
-  operator const char *() const { return m_buffer; }
-};
-
-class KeyString : public StackString<KeyString, 48> {
-public:
-  KeyString() = default;
-  KeyString(const StringView a) : StackString(a) {}
-  KeyString(const char *a) : StackString(a) {}
   // implicit conversion
   operator const char *() const { return m_buffer; }
 };
@@ -275,8 +307,11 @@ public:
           ? "%u"
         : std::is_same<T, unsigned long>::value      ? "%lu"
         : std::is_same<T, unsigned long long>::value ? "%lld"
-        : std::is_same<T, float>::value              ? "%f"
-                                                     : nullptr;
+#if defined __link
+        : std::is_same<T, double>::value ? "%f"
+#endif
+        : std::is_same<T, float>::value ? "%f"
+                                        : nullptr;
     static_assert(fmt != nullptr, "NumberString can't handle type");
 
     snprintf(m_buffer, capacity(), fmt, value);
@@ -287,7 +322,7 @@ public:
     ::snprintf(m_buffer, capacity(), format, value);
   }
 
-  NumberString() {}
+  NumberString() = default;
   NumberString(const StringView a) : StackString(a) {}
   NumberString(const char *a) : StackString(a) {}
 

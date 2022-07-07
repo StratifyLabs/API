@@ -9,13 +9,12 @@ using namespace chrono;
 
 ClockTimer::ClockTimer() { reset(); }
 
-ClockTimer::ClockTimer(IsRunning is_running){
+ClockTimer::ClockTimer(IsRunning is_running) {
   reset();
-  if( is_running == IsRunning::yes ){
+  if (is_running == IsRunning::yes) {
     start();
   }
 }
-
 
 ClockTimer &ClockTimer::reset() {
   m_start.reset();
@@ -82,15 +81,17 @@ ClockTimer &ClockTimer::stop() {
   return *this;
 }
 
-PerformanceScope::PerformanceScope(const var::StringView name,
-                                       const ClockTimer &timer,
-                                       printer::Printer &printer)
-    : m_timer(&timer), m_printer(&printer) {
+PerformanceScope::PerformanceScope(
+  const var::StringView name,
+  const ClockTimer &timer,
+  printer::Printer &printer)
+  : m_system_resource({&timer, &printer}, &deleter) {
   printer.open_object("start ->" | name);
-  m_start = m_timer->microseconds();
+  m_system_resource.pointer_to_value()->start = timer.microseconds();
 }
 
-PerformanceScope::~PerformanceScope() {
-  const auto stop = m_timer->microseconds();
-  m_printer->key("stop", var::NumberString(stop - m_start)).close_object();
+void PerformanceScope::deleter(PerformanceScope::Context *context) {
+  const auto stop = context->timer->microseconds();
+  context->printer->key("stop", var::NumberString(stop - context->start))
+    .close_object();
 }

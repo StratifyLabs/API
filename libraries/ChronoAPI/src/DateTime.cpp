@@ -1,4 +1,5 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
+#include <array>
 
 #if defined __StratifyOS__
 #include <sos/dev/rtc.h>
@@ -35,22 +36,66 @@ static char *strptime(const char *s, const char *f, struct tm *tm) {
 
 #endif
 
-printer::Printer &printer::operator<<(printer::Printer &printer,
-                                      const chrono::DateTime &a) {
-  printer.key("ctime", var::NumberString(a.ctime()).string_view());
-  return printer;
+printer::Printer &
+printer::operator<<(printer::Printer &printer, const chrono::DateTime &a) {
+  return printer.key("ctime", var::NumberString(a.ctime()));
+}
+
+printer::Printer &
+printer::operator<<(printer::Printer &printer, const chrono::Date &a) {
+  return printer.key("year", var::NumberString(a.year()))
+    .key("month", chrono::Date::to_cstring(a.month()))
+    .key("day", var::NumberString(a.day()))
+    .key("weekday", var::NumberString(a.weekday()))
+    .key("hour", var::NumberString(a.hour()))
+    .key("minute", var::NumberString(a.minute()))
+    .key("second", var::NumberString(a.second()));
 }
 
 using namespace chrono;
 
+const char *Date::to_cstring(Month value) {
+  switch (value) {
+  case Month::null:
+    return "null";
+  case Month::january:
+    return "january";
+  case Month::february:
+    return "february";
+  case Month::march:
+    return "march";
+  case Month::april:
+    return "april";
+  case Month::may:
+    return "may";
+  case Month::june:
+    return "june";
+  case Month::july:
+    return "july";
+  case Month::august:
+    return "august";
+  case Month::september:
+    return "september";
+  case Month::october:
+    return "october";
+  case Month::november:
+    return "november";
+  case Month::december:
+    return "december";
+  }
+  return "unknown";
+}
+
 /*! \brief Construct using current time */
-DateTime::DateTime() { m_ctime = 0; }
 
 DateTime::DateTime(const Construct &options) {
-  struct tm tm{};
-  if (strptime(var::StackString64(options.time()).cstring(),
-               var::StackString64(options.format()).cstring(),
-               &tm) != nullptr) {
+  struct tm tm {};
+  if (
+    strptime(
+      var::StackString64(options.time()).cstring(),
+      var::StackString64(options.format()).cstring(),
+      &tm)
+    != nullptr) {
     m_ctime = mktime(&tm);
   } else {
     m_ctime = 0;
@@ -76,9 +121,10 @@ DateTime DateTime::get_system_time() {
 }
 
 DateTime &DateTime::set_system_time() {
+  API_RETURN_VALUE_IF_ERROR(*this);
 #if !defined __link
-  struct timeval tp{};
-  struct timezone tz{};
+  struct timeval tp {};
+  struct timezone tz {};
   tp.tv_sec = m_ctime;
   settimeofday(&tp, &tz);
 #endif
@@ -90,10 +136,22 @@ u32 DateTime::second() const { return m_ctime % 60; }
 u32 DateTime::minute() const { return (m_ctime % 3600) / 60; }
 
 u32 DateTime::hour() const { return m_ctime / 3600 % 24; }
+var::NumberString DateTime::to_string() const {
+  const auto date = Date(*this);
+  return var::NumberString().format(
+    "%04u-%02u-%02u %02d:%02d:%02d",
+    date.year(),
+    date.month(),
+    date.day(),
+    date.hour(),
+    date.minute(),
+    date.second());
+}
 
 Date::Date(const DateTime &date_time, const Construct &options) {
-  time_t ctime = date_time.ctime() + options.is_daylight_savings() * 3600 +
-                 options.time_zone() * 3600;
+  const time_t ctime = date_time.ctime()
+                       + int(options.is_daylight_savings()) * 3600
+                       + options.time_zone() * 3600;
 #if defined __win32
   struct tm *ptr;
   ptr = gmtime(&ctime);
@@ -107,12 +165,16 @@ Date::Date(const DateTime &date_time, const Construct &options) {
 
 var::GeneralString Date::to_string(var::StringView format) const {
   API_RETURN_VALUE_IF_ERROR(var::GeneralString());
-  char buffer[64] = {};
-  size_t result =
-      strftime(buffer, 63, var::StackString64(format).cstring(), &m_tm);
-  if (result == 0) {
+  std::array<char, 64> buffer;
+
+  if (size_t result = strftime(
+        buffer.data(),
+        buffer.size() - 1,
+        var::StackString64(format).cstring(),
+        &m_tm);
+      result == 0) {
     API_SYSTEM_CALL("format time", -1);
     return {};
   }
-  return {buffer};
+  return {buffer.data()};
 }

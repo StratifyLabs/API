@@ -87,7 +87,8 @@ struct PrinterFlags {
 
 API_OR_NAMED_FLAGS_OPERATOR(PrinterFlags, Flags)
 
-#define PRINTER_TRACE(printer, msg) ((printer).trace(__FUNCTION__, __LINE__, (msg)))
+#define PRINTER_TRACE(printer, msg)                                            \
+  ((printer).trace(__FUNCTION__, __LINE__, (msg)))
 #define PRINTER_TRACE_ERROR(printer, x)                                        \
   int printer_result = x;                                                      \
   if (printer_result < 0)                                                      \
@@ -101,7 +102,7 @@ private:
 class Printer : public api::ExecutionContext, public PrinterFlags {
 public:
   Printer();
-  ~Printer();
+  virtual ~Printer() = default;
 
   static ColorCode color_code(var::StringView color);
 
@@ -178,7 +179,7 @@ public:
   class FlagScope {
   public:
     explicit FlagScope(Printer &printer)
-        : m_printer(printer), m_flags(printer.flags()) {}
+      : m_printer(printer), m_flags(printer.flags()) {}
 
     ~FlagScope() { m_printer.set_flags(m_flags); }
 
@@ -190,15 +191,19 @@ public:
   using FlagGuard = FlagScope;
 
   class LevelScope {
+    struct Context {
+      Printer *printer;
+      Level level;
+    };
+    static void deleter(Context *context) {
+      context->printer->set_verbose_level(context->level);
+    }
+    using Resource = api::SystemResource<Context, decltype(&deleter)>;
+    Resource m_resource;
+
   public:
     explicit LevelScope(Printer &printer)
-        : m_printer(printer), m_level(printer.verbose_level()) {}
-
-    ~LevelScope() { m_printer.set_verbose_level(m_level); }
-
-  private:
-    Level m_level;
-    Printer &m_printer;
+      : m_resource({&printer, printer.verbose_level()}, &deleter) {}
   };
 
   using LevelGuard = LevelScope;
@@ -226,9 +231,7 @@ public:
     return *this;
   }
 
-  u16 indent_size() const {
-    return m_indent_size;
-  }
+  u16 indent_size() const { return m_indent_size; }
 
   Printer &set_progress_width(u16 value) {
     m_progress_width = value;
@@ -236,8 +239,8 @@ public:
   }
 
   API_NO_DISCARD var::StringView progress_key() const { return m_progress_key; }
-  API_NO_DISCARD static char get_bitmap_pixel_character(u32 color,
-                                                        u8 bits_per_pixel);
+  API_NO_DISCARD static char
+  get_bitmap_pixel_character(u32 color, u8 bits_per_pixel);
   API_NO_DISCARD static u32 get_bitmap_pixel_color(char c, u8 bits_per_pixel);
 
 #if defined __link
@@ -252,8 +255,8 @@ public:
   Printer &key(var::StringView key, const var::String &a);
 
   template <class T>
-  Printer &object(var::StringView key, const T &value,
-                  Level level = Level::fatal) {
+  Printer &
+  object(var::StringView key, const T &value, Level level = Level::fatal) {
     print_open_object(level, key);
     *this << value;
     print_close_object();
@@ -261,8 +264,8 @@ public:
   }
 
   template <class T>
-  Printer &array(const var::StringView key, const T &value,
-                 Level level = Level::fatal) {
+  Printer &
+  array(const var::StringView key, const T &value, Level level = Level::fatal) {
     print_open_array(level, key);
     *this << value;
     print_close_array();
@@ -284,41 +287,41 @@ public:
   virtual void print_open_array(Level verbose_level, var::StringView key);
   virtual void print_close_array();
 
-  virtual void print(Level level, var::StringView key,
-                     var::StringView value,
-                     IsNewline is_newline);
+  virtual void print(
+    Level level,
+    var::StringView key,
+    var::StringView value,
+    IsNewline is_newline);
 
   class Object {
+    static void deleter(Printer * printer){
+      printer->close_object();
+    }
+    std::unique_ptr<Printer, decltype(&deleter)> m_pointer;
   public:
     Object(Printer &printer, var::StringView name, Level level = Level::info)
-        : m_printer(printer) {
+      : m_pointer(&printer, deleter) {
       printer.open_object(name, level);
     }
-
-    ~Object() { m_printer.close_object(); }
-
-  private:
-    Printer &m_printer;
   };
 
   class Array {
+    static void deleter(Printer * printer){
+      printer->close_array();
+    }
+    std::unique_ptr<Printer, decltype(&deleter)> m_pointer;
   public:
     Array(Printer &printer, var::StringView name, Level level = Level::info)
-        : m_printer(printer) {
+      : m_pointer(&printer, deleter) {
       printer.open_array(name, level);
     }
-
-    ~Array() { m_printer.close_array(); }
-
-  private:
-    Printer &m_printer;
   };
 
 protected:
   template <typename T> class ContainerAccess {
   public:
     ContainerAccess(Level verbose_level, T type)
-        : m_type(type), m_count(1), m_verbose_level(verbose_level) {}
+      : m_type(type), m_count(1), m_verbose_level(verbose_level) {}
 
     API_NO_DISCARD Level verbose_level() const { return m_verbose_level; }
     void set_verbose_level(Level level) { m_verbose_level = level; }
@@ -344,17 +347,17 @@ private:
 #endif
 
   api::ProgressCallback m_progress_callback;
-  u16 m_progress_width = 0;
+  u16 m_progress_width = 50;
   u16 m_progress_state = 0;
   u16 m_progress_key_state = 0;
-  u16 m_indent;
+  u16 m_indent = 0;
   u16 m_indent_size = 2;
-  Flags m_print_flags = Flags::null;
-  var::StringView m_progress_key;
-  Level m_verbose_level;
+  Flags m_print_flags = Flags::width_8 | Flags::hex;
+  var::StringView m_progress_key = "progress";
+  Level m_verbose_level = Level::info;
 
 #if defined __link
-  bool m_is_bash;
+  bool m_is_bash = false;
 #endif
 };
 

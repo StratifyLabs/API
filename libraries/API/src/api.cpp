@@ -1,10 +1,13 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
+#include <array>
+
 #include "api/api.hpp"
 
 #if defined __link
 #include <cxxabi.h>
 #include <pthread.h>
+#include <signal.h>
 #endif
 
 #include <cstdio>
@@ -27,10 +30,13 @@ void api::api_assert(bool value, const char *function, int line) {
   if (!value) {
     printf("assertion %s():%d\n", function, line);
 #if defined __link && !defined __win32
-    void *array[200];
+    std::array<void*,200> array = {};
     size_t size;
-    size = backtrace(array, 200);
-    backtrace_symbols_fd(array, size, fileno(stderr));
+    size = backtrace(array.data(), array.size());
+    backtrace_symbols_fd(array.data(), size, fileno(stderr));
+#endif
+#if defined __link
+    fflush(stdout);
 #endif
     ::abort();
   }
@@ -38,11 +44,24 @@ void api::api_assert(bool value, const char *function, int line) {
 
 PrivateExecutionContext ExecutionContext::m_private_context;
 
+static void error_mutex_handler(int do_lock){
+  static pthread_mutex_t mutex = {};
+  static bool is_initialized = false;
+  if( !is_initialized ){
+    pthread_mutex_init(&mutex, nullptr);
+  }
+  if( do_lock > 0 ){
+    pthread_mutex_lock(&mutex);
+  } else if ( do_lock < 0 ){
+    pthread_mutex_unlock(&mutex);
+  }
+}
+
 Error &PrivateExecutionContext::get_error() {
   if (&(errno) == m_error.m_signature) {
     return m_error;
   }
-
+  error_mutex_handler(1);
   if (m_error_list == nullptr) {
     m_error_list = new std::vector<Error>();
     API_ASSERT(m_error_list != nullptr);
@@ -50,17 +69,21 @@ Error &PrivateExecutionContext::get_error() {
 
   for (Error &error : *m_error_list) {
     if (error.m_signature == &(errno)) {
+      error_mutex_handler(-1);
       return error;
     }
 
     if (error.m_signature == nullptr) {
       error.m_signature = &(errno);
+      error_mutex_handler(-1);
       return error;
     }
   }
 
-  m_error_list->push_back(Error(&(errno)));
-  return m_error_list->back();
+  m_error_list->emplace_back(Error(&(errno)));
+  auto & result =  m_error_list->back();
+  error_mutex_handler(-1);
+  return result;
 }
 
 void PrivateExecutionContext::free_context() {
@@ -70,12 +93,15 @@ void PrivateExecutionContext::free_context() {
     return;
   }
 
+  error_mutex_handler(1);
   for (Error &error : *m_error_list) {
     if (error.m_signature == &(errno)) {
       error.m_signature = nullptr;
+      error_mutex_handler(-1);
       return;
     }
   }
+  error_mutex_handler(-1);
 }
 
 void PrivateExecutionContext::update_error_context(
@@ -116,26 +142,31 @@ int ProgressCallback::update_function(
   if (context == nullptr) {
     return 0;
   }
-  return ((ProgressCallback *)context)->update(value, total);
+  return reinterpret_cast<const ProgressCallback*>(context)->update(value, total);
 }
 
-Demangler::Demangler() { m_buffer = static_cast<char *>(malloc(m_length)); }
-Demangler::~Demangler() {
-  if (m_buffer && length() == 2048) {
-    free(m_buffer);
-  }
-  if (m_last) {
-    free(m_last);
-  }
-}
 
 const char *Demangler::demangle(const char *input) {
-  if (m_last != nullptr) {
-    free(m_last);
-  }
+#if defined __link
+  m_buffer.reset(static_cast<char*>(malloc(m_length)));
+  m_last.reset(abi::__cxa_demangle(input, m_buffer.get(), &m_length, &m_status));
+#endif
+  return m_last.get();
+}
 
 #if defined __link
-  m_last = abi::__cxa_demangle(input, m_buffer, &m_length, &m_status);
+void signal_segmentation_fault(int) {
+  static int count = 0;
+  if (count == 0) {
+    API_ASSERT(false);
+    count++;
+  }
+}
+
 #endif
-  return m_last;
+
+void api::catch_segmentation_fault() {
+#if defined __link
+  signal(11, signal_segmentation_fault);
+#endif
 }

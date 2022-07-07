@@ -106,3 +106,19 @@ var::StringView System::user_data_path() {
   return "/home";
 #endif
 }
+
+void System::launch_browser(var::StringView url){
+#if defined __link
+  var::String command = var::String(is_macosx() ? "open" : "start") + " " + url;
+  system(command.cstring());
+#endif
+}
+
+const char * System::get_executable_suffix(){
+#if defined __link
+  return is_windows() ? ".exe" : "";
+#else
+  return "";
+#endif
+}
+

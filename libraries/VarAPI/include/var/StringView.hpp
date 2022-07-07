@@ -47,6 +47,10 @@ public:
     m_string_view = std::string_view(value, length);
   }
 
+  API_NO_DISCARD explicit operator bool() const {
+    return !is_empty();
+  }
+
   API_NO_DISCARD bool is_null() const {
     return m_string_view.data() == nullptr;
   }

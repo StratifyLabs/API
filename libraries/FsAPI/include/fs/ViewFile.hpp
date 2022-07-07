@@ -9,14 +9,16 @@
 
 namespace fs {
 
+/*! \details
+ *
+ * This class lets you convert any var::View object
+ * into a file-like object.
+ *
+ */
 class ViewFile : public FileAccess<ViewFile> {
 public:
-  /*! \details Constructs a data file. */
 
-  ViewFile(ViewFile &&view_file) = default;
-  ViewFile &operator=(ViewFile &&view_file) = default;
-
-  explicit ViewFile(var::View view) : m_open_flags(OpenMode::read_write()) {
+  explicit ViewFile(var::View view) {
     m_view = view;
   }
 
@@ -34,7 +36,7 @@ public:
 
 private:
   mutable int m_location = 0; // offset location for seeking/reading/writing
-  mutable OpenMode m_open_flags;
+  mutable OpenMode m_open_flags = OpenMode::read_write();
   var::View m_view;
 
   int interface_ioctl(int request, void *argument) const override {

@@ -86,6 +86,17 @@ public:
     realtime_max = SIGRTMAX
 #endif
   };
+
+#if defined __linux
+  enum class ActionFlags : u32{
+    no_child_stop = SA_NOCLDSTOP,
+    on_stack = SA_ONSTACK,
+    reset_handler = SA_RESETHAND,
+    restart = SA_RESTART,
+    signal_info = SA_SIGINFO,
+    no_child_wait = SA_NOCLDWAIT,
+    no_defer = SA_NODEFER};
+#endif
 };
 
 class SignalHandler : public SignalFlags {
@@ -126,18 +137,25 @@ public:
     m_sig_action.sa_flags = SIGNAL_SIGINFO_FLAG;
   }
 
+#if defined __linux
+  SignalHandler& add_action_flags(ActionFlags action_flags ){
+    m_sig_action.sa_flags |= int(action_flags);
+    return *this;
+  }
+#endif
+
   API_NO_DISCARD const struct sigaction *sigaction() const {
     return &m_sig_action;
   }
 
   static SignalHandler default_() {
     return SignalHandler(SignalHandler::Construct().set_signal_function(
-        (signal_function_callback_t)SIG_DFL));
+      (signal_function_callback_t)SIG_DFL));
   }
 
   static SignalHandler ignore() {
     return SignalHandler(SignalHandler::Construct().set_signal_function(
-        (signal_function_callback_t)SIG_IGN));
+      (signal_function_callback_t)SIG_IGN));
   }
 
 private:
@@ -146,11 +164,13 @@ private:
 
 class Signal : public SignalFlags {
 public:
-#if !defined __link
+#if !defined __link || defined __linux
   class Event {
   public:
-    enum class Notify{none = SIGEV_NONE, signal = SIGEV_SIGNAL,
-                      thread = SIGEV_THREAD};
+    enum class Notify{
+      none = SIGEV_NONE,
+      signal = SIGEV_SIGNAL,
+      thread = SIGEV_THREAD};
 
     Event &set_notify(Notify value) {
       m_event.sigev_notify = int(value);
@@ -184,7 +204,7 @@ public:
 
   private:
     friend class Timer;
-    struct sigevent m_event = {};
+    struct sigevent m_event{};
   };
 
   class Set {
@@ -215,13 +235,15 @@ public:
 
   private:
     friend class Signal;
-    sigset_t m_sigset = {0};
+    sigset_t m_sigset{};
   };
 #endif
 
-  explicit Signal(Number signo, int signal_value = 0) : m_signo{int(signo)}, m_sigvalue{signal_value}{}
+  explicit Signal(Number signo, int signal_value = 0)
+    : m_signo{int(signo)}, m_sigvalue{signal_value} {}
 
-  Signal(Number signo, void *signal_pointer) : m_signo{int(signo)}, m_sigvalue{ .sival_ptr = signal_pointer} {}
+  Signal(Number signo, void *signal_pointer)
+    : m_signo{int(signo)}, m_sigvalue{.sival_ptr = signal_pointer} {}
 
   const Signal &send(pid_t pid) const;
   Signal &send(pid_t pid) { return API_CONST_CAST_SELF(Signal, send, pid); }
@@ -247,19 +269,23 @@ public:
   class HandlerScope {
   public:
     HandlerScope(Signal &signal, const SignalHandler &handler)
-        : m_signo(signal.number()) {
+      : m_signo(signal.number()) {
       signal.set_handler(handler);
     }
     ~HandlerScope() { Signal(m_signo).set_handler(SignalHandler::default_()); }
 
   private:
-    Number m_signo;
+    Number m_signo{};
   };
 
 private:
-  int m_signo;
-  union sigval m_sigvalue;
+  int m_signo{};
+  union sigval m_sigvalue{};
 };
+
+#if defined __linux
+API_OR_NAMED_FLAGS_OPERATOR(SignalFlags, ActionFlags)
+#endif
 
 } // namespace thread
 

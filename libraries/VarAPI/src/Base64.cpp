@@ -36,6 +36,7 @@ String Base64::encode(View input) const {
   String result;
   result.resize(get_encoded_size(input.size()));
   API_RETURN_VALUE_IF_ERROR(String());
+  auto result_size = ((((input.size() * 4 + 2) / 3) + 3) / 4) * 4;
   encode(result.to_char(), input.to_const_void(), input.size());
   return result;
 }
@@ -113,10 +114,7 @@ int Base64::encode(char *dest, const void *src, int nbyte) {
     dest[k - 1] = '=';
   }
 
-  // finally, zero terminate the output string
-  dest[k] = 0;
-
-  return strlen(dest);
+  return k;
 }
 
 int Base64::decode(void *dest, const char *src, int nbyte) {

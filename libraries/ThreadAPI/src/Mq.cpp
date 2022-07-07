@@ -1,6 +1,6 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#if !defined __link
+#if defined __StratifyOS__ || defined __linux
 
 #include <mqueue.h>
 

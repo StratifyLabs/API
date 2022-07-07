@@ -24,11 +24,91 @@ using T = var::Tokenizer;
 using B64 = var::Base64;
 
 class UnitTest : public test::Test {
+
+  template <typename Container>
+  bool container_test(void (*initialize)(Container &container) = nullptr) {
+    {
+      Container data;
+      if( initialize ){
+        initialize(data);
+      }
+      data.populate_by_incrementing(1);
+      const auto sum = data.accumulate(0);
+      printer().key("sum", NumberString(sum));
+      u32 sum2 = 0;
+      for (const auto value : data) {
+        sum2 += value;
+      }
+      printer().key("sum2", NumberString(sum2));
+      TEST_ASSERT(sum == sum2);
+      for (auto i : api::Index(data.count())) {
+        TEST_ASSERT(data.at(i) == i + 1);
+      }
+      printer().key("minimum", NumberString(data.get_minimum()));
+      printer().key("maximum", NumberString(data.get_maximum()));
+      TEST_EXPECT(data.get_minimum() == 1);
+      TEST_EXPECT(data.get_maximum() == data.count());
+    }
+
+    {
+      Container data;
+      if( initialize ){
+        initialize(data);
+      }
+      data.fill(4);
+      for (const auto &value : data) {
+        TEST_ASSERT(value == 4);
+      }
+      for (auto i : api::Index(data.count())) {
+        TEST_ASSERT(data.at(i) == 4);
+      }
+    }
+
+    {
+      Container data0;
+      if( initialize ){
+        initialize(data0);
+      }
+      Container data1;
+      if( initialize ){
+        initialize(data1);
+      }
+      data0.populate_by_incrementing(0);
+      data1.populate_by_incrementing(0);
+      for(const auto & value: data0){
+        printer().key("data0", NumberString(value));
+      }
+      for(const auto & value: data0){
+        printer().key("data1", NumberString(value));
+      }
+      const auto is_equal_true = data0 == data1;
+      const auto is_not_equal_false = data0 != data1;
+      printer().key_bool("== (true?)", is_equal_true);
+      printer().key_bool("!= (false?)", is_not_equal_false);
+      TEST_ASSERT(is_equal_true);
+      TEST_ASSERT(!(is_not_equal_false));
+      data0.populate_by_incrementing(5);
+      for(const auto & value: data0){
+        printer().key("data0", NumberString(value));
+      }
+      const auto is_equal_false = data0 == data1;
+      const auto is_not_equal_true = data0 != data1;
+      printer().key_bool("== (false?)", is_equal_false);
+      printer().key_bool("!= (true?)", is_not_equal_true);
+      TEST_ASSERT(!(is_equal_false));
+      TEST_ASSERT(is_not_equal_true);
+    }
+
+    return true;
+  }
+
 public:
   UnitTest(var::StringView name) : test::Test(name) {}
 
   bool execute_class_api_case() {
 
+    TEST_ASSERT_RESULT(array_api_case());
+    TEST_ASSERT_RESULT(vector_api_case());
     TEST_ASSERT_RESULT(string_api_case());
     TEST_ASSERT_RESULT(string_view_api_case());
     TEST_ASSERT_RESULT(stack_string_api_case());
@@ -36,24 +116,37 @@ public:
     TEST_ASSERT_RESULT(tokenizer_api_case());
     TEST_ASSERT_RESULT(view_api_case());
     TEST_ASSERT_RESULT(data_api_case());
-    TEST_ASSERT_RESULT(vector_api_case());
+    return true;
+  }
 
-    const StringView sv0 = "this is ok";
-    const StringView sv1 = PathString("this is not ok");
-    printer().key("sv0", sv0).key("sv1", sv1);
+  bool array_api_case() {
+    Printer::Object array_object(printer(), "arrayApiCase");
+    {
+      using Container = Array<int, 4>;
+      TEST_ASSERT(container_test<Container>());
+    }
 
     return true;
   }
 
   bool vector_api_case() {
+    Printer::Object array_object(printer(), "vectorApiCase");
+
     {
-      Vector<StringView> list
-        = Vector<StringView>().push_back("hello").push_back("world");
+      const auto list
+        = Vector<StringView>().push_back("hello").emplace_back("world");
 
       TEST_ASSERT(list.find("hello", StringView()) == "hello");
       TEST_ASSERT(list.find("world", "") == "world");
       TEST_ASSERT(list.find("test", "") == "");
       TEST_ASSERT(list.find("go", "notempty") == "notempty");
+    }
+
+    {
+      using Container = Vector<int>;
+      TEST_ASSERT(container_test<Container>([](Container&a){
+        a.resize(4);
+      }));
     }
 
     return true;
@@ -170,16 +263,16 @@ public:
       View(third).copy(View(first));
       TEST_ASSERT(third == 0x3344);
 
-      char source[BIG_BUFFER_SIZE];
-      char dest[BIG_BUFFER_SIZE];
-      TEST_ASSERT(View(source).size() == sizeof(source));
-      TEST_ASSERT(View(source).size() == sizeof(source));
+      Data source(BIG_BUFFER_SIZE);
+      Data dest(BIG_BUFFER_SIZE);
+      TEST_ASSERT(View(source).size() == BIG_BUFFER_SIZE);
+      TEST_ASSERT(View(source).size() == BIG_BUFFER_SIZE);
       View(source).fill(0);
       View(dest).fill<u32>(0xaaaa5555);
       {
         ClockTimer ct(ClockTimer::IsRunning::yes);
         PerformanceScope ps("memcpyCharBuffer", ct, printer());
-        memcpy(dest, source, sizeof(source));
+        memcpy(dest.data(), source.data(), BIG_BUFFER_SIZE);
       }
       TEST_ASSERT(View(source) == View(dest));
       View(dest).fill<u32>(0xaaaa5555);
@@ -435,8 +528,9 @@ public:
     // TEST_EXPECT(encode_test(test_input, test_output));
     TEST_EXPECT(decode_test(test_input, test_output));
 
-    {
 
+    {
+      printer().key("transform", "decoder0");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -447,6 +541,7 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "decoder1");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -457,6 +552,7 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "decoder2");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -467,6 +563,7 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "decoder3");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -477,6 +574,7 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "decoder4");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -487,12 +585,14 @@ public:
           .add_null_terminator()
         == test_input);
 
+      printer().key("transform", "encoder0");
       DataFile df;
       df.write(
         ViewFile(V(test_input)),
         Base64Encoder(),
         DataFile::Write().set_page_size(12));
 
+      printer().key("transform", "encoder1");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -503,6 +603,7 @@ public:
           .add_null_terminator()
         == test_output);
 
+      printer().key("transform", "encoder2");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -513,6 +614,7 @@ public:
           .add_null_terminator()
         == test_output);
 
+      printer().key("transform", "encoder3");
       TEST_ASSERT(
         DataFile()
           .write(
@@ -523,6 +625,7 @@ public:
           .add_null_terminator()
         == test_output);
 
+      printer().key("transform", "encoder4");
       TEST_ASSERT(
         DataFile()
           .write(

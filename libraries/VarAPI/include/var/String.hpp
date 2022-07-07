@@ -16,6 +16,13 @@ namespace var {
 class View;
 class Data;
 
+struct ReplaceString {
+  API_PMAZ(count, ReplaceString, size_t, 0);
+  API_PMAZ(new_string, ReplaceString, StringView, {});
+  API_PMAZ(old_string, ReplaceString, StringView, {});
+  API_PMAZ(position, ReplaceString, size_t, 0);
+};
+
 class String : public api::ExecutionContext {
 public:
   constexpr static size_t npos = std::string::npos;
@@ -195,12 +202,7 @@ public:
   String &erase(StringView string_to_erase, size_t position = 0);
   String &operator()(const Erase &options) { return erase(options); }
 
-  class Replace {
-    API_AC(Replace, StringView, old_string);
-    API_AC(Replace, StringView, new_string);
-    API_AF(Replace, size_t, position, 0);
-    API_AF(Replace, size_t, count, 0);
-  };
+  using Replace = ReplaceString;
   String &replace(const Replace &options);
   String &operator()(const Replace &options) { return replace(options); }
 
