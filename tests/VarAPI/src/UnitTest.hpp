@@ -29,7 +29,7 @@ class UnitTest : public test::Test {
   bool container_test(void (*initialize)(Container &container) = nullptr) {
     {
       Container data;
-      if( initialize ){
+      if (initialize) {
         initialize(data);
       }
       data.populate_by_incrementing(1);
@@ -52,7 +52,7 @@ class UnitTest : public test::Test {
 
     {
       Container data;
-      if( initialize ){
+      if (initialize) {
         initialize(data);
       }
       data.fill(4);
@@ -66,19 +66,19 @@ class UnitTest : public test::Test {
 
     {
       Container data0;
-      if( initialize ){
+      if (initialize) {
         initialize(data0);
       }
       Container data1;
-      if( initialize ){
+      if (initialize) {
         initialize(data1);
       }
       data0.populate_by_incrementing(0);
       data1.populate_by_incrementing(0);
-      for(const auto & value: data0){
+      for (const auto &value : data0) {
         printer().key("data0", NumberString(value));
       }
-      for(const auto & value: data0){
+      for (const auto &value : data0) {
         printer().key("data1", NumberString(value));
       }
       const auto is_equal_true = data0 == data1;
@@ -88,7 +88,7 @@ class UnitTest : public test::Test {
       TEST_ASSERT(is_equal_true);
       TEST_ASSERT(!(is_not_equal_false));
       data0.populate_by_incrementing(5);
-      for(const auto & value: data0){
+      for (const auto &value : data0) {
         printer().key("data0", NumberString(value));
       }
       const auto is_equal_false = data0 == data1;
@@ -133,20 +133,20 @@ public:
     Printer::Object array_object(printer(), "vectorApiCase");
 
     {
-      const auto list
-        = Vector<StringView>().push_back("hello").emplace_back("world");
+      auto list
+        = Vector<StringView>().reserve(2).push_back("hello").push_back("world");
 
-      TEST_ASSERT(list.find("hello", StringView()) == "hello");
-      TEST_ASSERT(list.find("world", "") == "world");
-      TEST_ASSERT(list.find("test", "") == "");
-      TEST_ASSERT(list.find("go", "notempty") == "notempty");
+      TEST_ASSERT(list.find("hello") == "hello");
+      TEST_ASSERT(list.find("world") == "world");
+      TEST_ASSERT(list.find("test") == "");
+      TEST_ASSERT(list.find("go") != "go");
+      TEST_ASSERT(list.find("go") != "notempty");
+      TEST_ASSERT(list.emplace_back("go") == "go");
     }
 
     {
       using Container = Vector<int>;
-      TEST_ASSERT(container_test<Container>([](Container&a){
-        a.resize(4);
-      }));
+      TEST_ASSERT(container_test<Container>([](Container &a) { a.resize(4); }));
     }
 
     return true;
@@ -527,7 +527,6 @@ public:
 
     // TEST_EXPECT(encode_test(test_input, test_output));
     TEST_EXPECT(decode_test(test_input, test_output));
-
 
     {
       printer().key("transform", "decoder0");

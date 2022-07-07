@@ -8,6 +8,7 @@
 #include <iterator>
 #include <numeric>
 #include <algorithm>
+#include <optional>
 
 #include "api/api.hpp"
 
@@ -83,7 +84,7 @@ public:
     return std::find(begin(), end(), a) - begin();
   }
 
-  API_NO_DISCARD const T &find(const T &a, const T &not_found = T()) const {
+  API_NO_DISCARD T find(const T &a, const T & not_found = {}) const {
     const size_t offset = find_offset(a);
     if (offset == count()) {
       return not_found;
