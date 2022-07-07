@@ -1,5 +1,4 @@
 #Copy this file to the application project folder as CMakeLists.txt
-cmake_minimum_required(VERSION 3.12)
 
 get_filename_component(SOS_NAME ${CMAKE_CURRENT_LIST_DIR} NAME)
 project(${SOS_NAME} CXX C)
