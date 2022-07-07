@@ -14,6 +14,7 @@
 
 ## Bug Fixes
 
+- Removed superfluous cmake code from tests 
 - Use smart pointers in implementation of `api::Demanlger`
 - Fix a bug that allows `fs::FileMemberAccess` to be moved properly
 - Fixed a bug when truncating `var::StackString` objects
