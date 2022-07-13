@@ -11,4 +11,4 @@ target_sources(${RELEASE_TARGET}
 
 install(FILES
   ../API.cmake
-  DESTINATION ${SOS_SDK_PATH}/cmake/targets)
+  DESTINATION ${CMSDK_PATH}/cmake/targets)

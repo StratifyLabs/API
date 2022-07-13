@@ -9,11 +9,11 @@ macro(api_target NAME DIRECTORIES)
 
   install(DIRECTORY include/ DESTINATION include/${NAME})
 
-  sos_sdk_add_subdirectory(PRIVATE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src)
-  sos_sdk_add_subdirectory(PUBLIC_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/include)
+  cmsdk_add_subdirectory(PRIVATE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  cmsdk_add_subdirectory(PUBLIC_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/include)
   set(FORMAT_LIST ${PRIVATE_SOURCES} ${PUBLIC_SOURCES})
 
-  sos_sdk_library_target(RELEASE ${NAME} "" release ${SOS_ARCH})
+  cmsdk_library_target(RELEASE ${NAME} "" release ${CMSDK_ARCH})
   add_library(${RELEASE_TARGET} STATIC)
 
   set_property(TARGET ${RELEASE_TARGET}
@@ -49,7 +49,7 @@ macro(api_target NAME DIRECTORIES)
     -Os
     )
 
-  if(SOS_IS_ARM)
+  if(CMSDK_IS_ARM)
     target_compile_options(${RELEASE_TARGET}
       PUBLIC
       -fno-threadsafe-statics
@@ -73,7 +73,7 @@ macro(api_target NAME DIRECTORIES)
 
   string(COMPARE EQUAL ${NAME} API IS_API)
   set(LOCAL_DIRECTORIES ${DIRECTORIES})
-  if(IS_API AND SOS_IS_ARM)
+  if(IS_API AND CMSDK_IS_ARM)
     #list(APPEND LOCAL_DIRECTORIES StratifyOS_crt)
     target_compile_options(${RELEASE_TARGET}
       INTERFACE
@@ -87,22 +87,22 @@ macro(api_target NAME DIRECTORIES)
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     )
 
-  sos_sdk_library_target(DEBUG ${NAME} "" debug ${SOS_ARCH})
+  cmsdk_library_target(DEBUG ${NAME} "" debug ${CMSDK_ARCH})
   add_library(${DEBUG_TARGET} STATIC)
-  sos_sdk_copy_target(${RELEASE_TARGET} ${DEBUG_TARGET})
+  cmsdk_copy_target(${RELEASE_TARGET} ${DEBUG_TARGET})
 
-  sos_sdk_library_add_arch_targets("${RELEASE_OPTIONS}" ${SOS_ARCH} "${LOCAL_DIRECTORIES}")
-  sos_sdk_library_add_arch_targets("${DEBUG_OPTIONS}" ${SOS_ARCH} "${LOCAL_DIRECTORIES}")
+  cmsdk_library_add_arch_targets("${RELEASE_OPTIONS}" ${CMSDK_ARCH} "${LOCAL_DIRECTORIES}")
+  cmsdk_library_add_arch_targets("${DEBUG_OPTIONS}" ${CMSDK_ARCH} "${LOCAL_DIRECTORIES}")
 
   if(IS_API)
     get_target_property(RELEASE_LINK_LIBS ${RELEASE_TARGET} INTERFACE_LINK_LIBRARIES)
     get_target_property(DEBUG_LINK_LIBS ${DEBUG_TARGET} INTERFACE_LINK_LIBRARIES)
-    if(SOS_IS_ARM)
-      target_link_libraries(API_release_${SOS_ARCH} PUBLIC StratifyOS_crt_release_${SOS_ARCH} stdc++ supc++)
-      target_link_libraries(API_debug_${SOS_ARCH} PUBLIC StratifyOS_crt_debug_${SOS_ARCH} stdc++ supc++)
-      message(STATUS "API_release_${SOS_ARCH} -> crt stdc++ supc++")
-      message(STATUS "API_debug_${SOS_ARCH} -> crt stdc++ supc++")
-      foreach(ARCH ${SOS_ARCH_LIST})
+    if(CMSDK_IS_ARM)
+      target_link_libraries(API_release_${CMSDK_ARCH} PUBLIC StratifyOS_crt_release_${CMSDK_ARCH} stdc++ supc++)
+      target_link_libraries(API_debug_${CMSDK_ARCH} PUBLIC StratifyOS_crt_debug_${CMSDK_ARCH} stdc++ supc++)
+      message(STATUS "API_release_${CMSDK_ARCH} -> crt stdc++ supc++")
+      message(STATUS "API_debug_${CMSDK_ARCH} -> crt stdc++ supc++")
+      foreach(ARCH ${CMSDK_ARCH_LIST})
         target_link_libraries(API_release_${ARCH} PUBLIC StratifyOS_crt_release_${ARCH} stdc++ supc++)
         target_link_libraries(API_debug_${ARCH} PUBLIC StratifyOS_crt_debug_${ARCH} stdc++ supc++)
         message(STATUS "API_release_${ARCH} -> crt stdc++ supc++")

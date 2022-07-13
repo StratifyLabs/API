@@ -1,6 +1,6 @@
 
 macro(api_test_executable NAME DIRECTORIES)
-  sos_sdk_app_target(RELEASE ${NAME} "unittest" release ${SOS_ARCH})
+  cmsdk_app_target(RELEASE ${NAME} "unittest" release ${CMSDK_ARCH})
   add_executable(${RELEASE_TARGET})
   add_dependencies(API_test ${RELEASE_TARGET})
 
@@ -31,15 +31,15 @@ macro(api_test_executable NAME DIRECTORIES)
     )
 
   get_target_property(MY_DIR ${RELEASE_TARGET} BINARY_DIR)
-  sos_sdk_app_add_arch_targets("${RELEASE_OPTIONS}" "${DIRECTORIES}" ${RAM_SIZE})
+  cmsdk_app_add_arch_targets("${RELEASE_OPTIONS}" "${DIRECTORIES}" ${RAM_SIZE})
 
   target_compile_options(${RELEASE_TARGET}
     PRIVATE
     -Os
     )
 
-  if (SOS_IS_LINK)
-    sos_sdk_add_test(${NAME} "unittest" release)
+  if (CMSDK_IS_LINK)
+    cmsdk_add_test(${NAME} "unittest" release)
     set_tests_properties(${NAME}_release PROPERTIES DEPENDS API_Test)
   endif ()
 
