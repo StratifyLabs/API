@@ -24,7 +24,7 @@ const char *ApiInfo::version() {
     __PROJECT_VERSION_MINOR) "." MCU_STRINGIFY(__PROJECT_VERSION_PATCH);
 }
 
-const char *ApiInfo::git_hash() { return SOS_GIT_HASH; }
+const char *ApiInfo::git_hash() { return CMSDK_GIT_HASH; }
 
 void api::api_assert(bool value, const char *function, int line) {
   if (!value) {

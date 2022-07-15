@@ -8,6 +8,7 @@ set(SOURCES
   var/Flags.hpp
   var/View.hpp
   var/List.hpp
+  var/MagicEnum.hpp
   var/Deque.hpp
   var/Stack.hpp
   var/Queue.hpp

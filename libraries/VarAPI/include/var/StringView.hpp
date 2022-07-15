@@ -42,14 +42,14 @@ public:
   StringView(const PathString &value);
   StringView(const NameString &value);
   StringView(const GeneralString &value);
+  explicit StringView(const std::string_view string_view)
+    : m_string_view(string_view) {}
 
   StringView(const char *value, size_t length) {
     m_string_view = std::string_view(value, length);
   }
 
-  API_NO_DISCARD explicit operator bool() const {
-    return !is_empty();
-  }
+  API_NO_DISCARD explicit operator bool() const { return !is_empty(); }
 
   API_NO_DISCARD bool is_null() const {
     return m_string_view.data() == nullptr;
@@ -215,12 +215,13 @@ public:
 
   API_NO_DISCARD String to_string() const;
   API_NO_DISCARD static String to_string(const StringView &a);
+  API_NO_DISCARD std::string_view to_std_string_view() const {
+    return m_string_view;
+  }
 
 private:
   friend class String;
   std::string_view m_string_view;
-
-  StringView(const std::string_view string_view) : m_string_view(string_view) {}
 
   API_NO_DISCARD Base get_base(Base input) const;
 };

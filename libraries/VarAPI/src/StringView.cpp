@@ -23,21 +23,22 @@ StringView::StringView(const GeneralString &value)
 
 StringView StringView::get_substring(const GetSubstring &options) const {
   if (options.length() != StringView::npos) {
-    return {m_string_view.substr(options.position(), options.length())};
+    return StringView{
+      m_string_view.substr(options.position(), options.length())};
   }
-  return {m_string_view.substr(options.position())};
+  return StringView{m_string_view.substr(options.position())};
 }
 
 StringView StringView::get_substring_at_position(size_t position) const {
   if (position < length()) {
-    return {m_string_view.substr(position)};
+    return StringView{m_string_view.substr(position)};
   }
 
   return {};
 }
 
 StringView StringView::get_substring_with_length(size_t length) const {
-  return {m_string_view.substr(0, length)};
+  return StringView{m_string_view.substr(0, length)};
 }
 
 StringViewList StringView::split(StringView delimeters) const {
