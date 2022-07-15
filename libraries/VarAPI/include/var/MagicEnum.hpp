@@ -12,9 +12,9 @@
 namespace var {
 
 template <class Type> class MagicEnum {
-public:
   MagicEnum() = default;
 
+public:
   static StringView to_string_view(Type value) {
     return StringView{magic_enum::enum_name(value)};
   }
@@ -24,17 +24,12 @@ public:
   }
 
   static auto from_string_view(var::StringView name) {
-    return magic_enum::enum_cast<Type>(std::string{name.to_std_string_view()});
+    return magic_enum::enum_cast<Type>(name.to_std_string_view());
   }
 
-  static size_t count(){
-    return magic_enum::enum_count<Type>();
-  }
+  static size_t count() { return magic_enum::enum_count<Type>(); }
 
-  static constexpr auto list(){
-    return magic_enum::enum_values<Type>();
-  }
-
+  static constexpr auto list() { return magic_enum::enum_values<Type>(); }
 
 private:
 };

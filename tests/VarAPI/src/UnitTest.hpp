@@ -142,8 +142,16 @@ public:
     TEST_ASSERT(MagicX::from_cstring("x5").value() == X::x5);
     TEST_ASSERT(!MagicX::from_cstring("x6").has_value());
 
+    TEST_ASSERT(MagicX::from_string_view("x0").value() == X::x0);
+    TEST_ASSERT(MagicX::from_string_view("x1").value() == X::x1);
+    TEST_ASSERT(MagicX::from_string_view("x2").value() == X::x2);
+    TEST_ASSERT(MagicX::from_string_view("x3").value() == X::x3);
+    TEST_ASSERT(MagicX::from_string_view("x4").value() == X::x4);
+    TEST_ASSERT(MagicX::from_string_view("x5").value() == X::x5);
+    TEST_ASSERT(!MagicX::from_string_view("x6").has_value());
+
     int count = 0;
-    for (const auto &value : MagicX::list()) {
+    for (const auto value : MagicX::list()) {
       const auto sv = MagicX::to_string_view(value);
       printer().key(NumberString(count), sv);
       ++count;
