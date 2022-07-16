@@ -146,7 +146,7 @@ public:
 
   public:
     explicit LocationScope(const FileObject &object)
-      : m_resource({&object, object.location()}) {}
+      : m_resource({&object, object.location()}, &deleter) {}
   };
 
   using LocationGuard = LocationScope;

@@ -11,6 +11,7 @@
 
 - Remove unused member from `fs::Path`
 - Make `fs::Path` a `static` only class (cannot be constructed)
+- Fixed a regression error with `fs::LocationScope`
 
 # Version 1.4.0
 
