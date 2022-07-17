@@ -110,14 +110,5 @@ macro(api_target NAME DIRECTORIES)
       endforeach()
     endif()
   endif()
-
-  add_custom_target(
-    ${NAME}_format
-    COMMAND /usr/local/bin/clang-format
-    -i
-    --verbose
-    ${FORMAT_LIST}
-  )
-
 endmacro()
 

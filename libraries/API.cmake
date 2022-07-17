@@ -87,7 +87,7 @@ function(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 		PATTERN CMakelists.txt EXCLUDE)
 
 	install(FILES ${LOCAL_NAME}.cmake
-		DESTINATION ${CMSDK_PATH}/cmake/targets)
+		DESTINATION ${CMSDK_LOCAL_PATH}/cmake/targets)
 
 
 
