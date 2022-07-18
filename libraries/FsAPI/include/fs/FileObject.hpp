@@ -186,8 +186,8 @@ public:
     StringType result;
     const auto file_location = location();
     read(var::View(result.data(), result.capacity()));
-    size_t offset = 0;
-    for (auto c : var::StringView(result)) {
+    size_t offset{};
+    for (auto c : result.string_view()) {
       if (c == term) {
         const auto new_length = offset + 1;
         seek(file_location + new_length);

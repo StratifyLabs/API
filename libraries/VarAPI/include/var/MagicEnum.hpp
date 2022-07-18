@@ -23,8 +23,13 @@ public:
     return magic_enum::enum_cast<Type>(name);
   }
 
-  static auto from_string_view(var::StringView name) {
+  static auto from_string(var::StringView name) {
     return magic_enum::enum_cast<Type>(name.to_std_string_view());
+  }
+
+  static Type from_string_with_invalid(var::StringView name, Type invalid) {
+    const auto result = from_string(name);
+    return result.has_value() ? result.value() : invalid;
   }
 
   static size_t count() { return magic_enum::enum_count<Type>(); }
