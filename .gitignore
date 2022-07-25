@@ -6,6 +6,7 @@ cmake*_link/
 build_*/
 tests/sl_report.txt
 doc/xml
+libraries/VarAPI/magic_enum/
 libraries/API/doc/
 libraries/ChronoAPI/doc/
 libraries/FsAPI/doc/

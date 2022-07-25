@@ -11,7 +11,7 @@ set(DIRECTORIES
 api_target(ThreadAPI "${DIRECTORIES}")
 
 message(STATUS "Check to see if running linux and need to link to pthread and rt")
-if(SOS_IS_LINUX)
+if(CMSDK_IS_LINUX)
   message(STATUS "Running on Linux -- need to add pthread and rt dependencies")
   set(CONFIG_LIST release debug)
   foreach(CONFIG ${CONFIG_LIST})

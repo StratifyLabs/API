@@ -6,7 +6,6 @@ project(API
 	VERSION ${API_PROJECT_VERSION}
 	)
 
-
 add_subdirectory(libraries/API API)
 add_subdirectory(libraries/VarAPI VarAPI)
 add_subdirectory(libraries/PrinterAPI PrinterAPI)

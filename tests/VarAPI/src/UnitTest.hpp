@@ -9,6 +9,8 @@
 #include "test/Test.hpp"
 #include "var.hpp"
 
+#include "var/MagicEnum.hpp"
+
 #if defined __link
 #define BIG_BUFFER_SIZE 10 * 1024 * 1024
 #else
@@ -107,6 +109,7 @@ public:
 
   bool execute_class_api_case() {
 
+    TEST_ASSERT_RESULT(magic_enum_api_case());
     TEST_ASSERT_RESULT(array_api_case());
     TEST_ASSERT_RESULT(vector_api_case());
     TEST_ASSERT_RESULT(string_api_case());
@@ -116,6 +119,44 @@ public:
     TEST_ASSERT_RESULT(tokenizer_api_case());
     TEST_ASSERT_RESULT(view_api_case());
     TEST_ASSERT_RESULT(data_api_case());
+    return true;
+  }
+
+  bool magic_enum_api_case() {
+    enum class X { x0, x1, x2, x3, x4, x5 };
+    using MagicX = MagicEnum<X>;
+    Printer::Object object(printer(), "magicEnumApiCase");
+
+    TEST_ASSERT(MagicX::to_string_view(X::x0) == "x0");
+    TEST_ASSERT(MagicX::to_string_view(X::x1) == "x1");
+    TEST_ASSERT(MagicX::to_string_view(X::x2) == "x2");
+    TEST_ASSERT(MagicX::to_string_view(X::x3) == "x3");
+    TEST_ASSERT(MagicX::to_string_view(X::x4) == "x4");
+    TEST_ASSERT(MagicX::to_string_view(X::x5) == "x5");
+
+    TEST_ASSERT(MagicX::from_cstring("x0").value() == X::x0);
+    TEST_ASSERT(MagicX::from_cstring("x1").value() == X::x1);
+    TEST_ASSERT(MagicX::from_cstring("x2").value() == X::x2);
+    TEST_ASSERT(MagicX::from_cstring("x3").value() == X::x3);
+    TEST_ASSERT(MagicX::from_cstring("x4").value() == X::x4);
+    TEST_ASSERT(MagicX::from_cstring("x5").value() == X::x5);
+    TEST_ASSERT(!MagicX::from_cstring("x6").has_value());
+
+    TEST_ASSERT(MagicX::from_string_view("x0").value() == X::x0);
+    TEST_ASSERT(MagicX::from_string_view("x1").value() == X::x1);
+    TEST_ASSERT(MagicX::from_string_view("x2").value() == X::x2);
+    TEST_ASSERT(MagicX::from_string_view("x3").value() == X::x3);
+    TEST_ASSERT(MagicX::from_string_view("x4").value() == X::x4);
+    TEST_ASSERT(MagicX::from_string_view("x5").value() == X::x5);
+    TEST_ASSERT(!MagicX::from_string_view("x6").has_value());
+
+    int count = 0;
+    for (const auto value : MagicX::list()) {
+      const auto sv = MagicX::to_string_view(value);
+      printer().key(NumberString(count), sv);
+      ++count;
+    }
+
     return true;
   }
 

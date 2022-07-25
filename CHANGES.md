@@ -5,7 +5,13 @@
 ## New Features
 
 - Updated CMake files to use CMakeSDK v2.0 or greater
+- Add `magic_enum` to `VarAPI` to convert `enum class` to/from string and to iterate all values
 
+## Bug Fixes
+
+- Remove unused member from `fs::Path`
+- Make `fs::Path` a `static` only class (cannot be constructed)
+- Fixed a regression error with `fs::LocationScope`
 
 # Version 1.4.0
 

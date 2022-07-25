@@ -31,6 +31,7 @@ namespace fs {
  */
 
 class Path {
+  Path() = default;
 public:
   API_NO_DISCARD static var::StringView suffix(var::StringView path);
   API_NO_DISCARD static var::StringView name(var::StringView path);
@@ -49,9 +50,6 @@ public:
    *
    */
   API_NO_DISCARD static bool is_hidden(var::StringView path);
-
-private:
-  var::StringView m_path;
 };
 } // namespace fs
 
