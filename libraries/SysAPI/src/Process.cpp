@@ -496,7 +496,6 @@ void Process::Redirect::wait_stop() {
     is_stop_requested = true;
   }
 
-  thread.cancel();
   pipe.write_file().write(stop_sequence);
   if (thread.is_joinable()) {
     thread.join();
