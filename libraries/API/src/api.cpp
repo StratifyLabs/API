@@ -48,6 +48,7 @@ static void error_mutex_handler(int do_lock){
   static pthread_mutex_t mutex = {};
   static bool is_initialized = false;
   if( !is_initialized ){
+    is_initialized = true;
     pthread_mutex_init(&mutex, nullptr);
   }
   if( do_lock > 0 ){
