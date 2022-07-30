@@ -185,9 +185,14 @@ public:
   template <class StringType> StringType get_line(char term = '\n') const {
     StringType result;
     const auto file_location = location();
-    read(var::View(result.data(), result.capacity()));
-    size_t offset = 0;
-    for (auto c : var::StringView(result)) {
+    const auto bytes_read = read(var::View(result.data(), result.capacity())).return_value();
+    if( bytes_read > 0){
+      result.truncate(bytes_read);
+    } else {
+      return result;
+    }
+    size_t offset{};
+    for (auto c : result.string_view()) {
       if (c == term) {
         const auto new_length = offset + 1;
         seek(file_location + new_length);
