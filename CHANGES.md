@@ -4,6 +4,7 @@
 
 ## Bug Fixes
 
+- Fix bug with `fs::FileObject::get_line()`
 - Fixed a build error with the `VarAPI` Unit test
 - Fixed crashing bug with multithreaded apps and error handling
 - Fixed bug with `sys::Process` where `thread.cancel()` was causing a crash
