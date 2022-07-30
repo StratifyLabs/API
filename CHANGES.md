@@ -1,5 +1,18 @@
 > Please see [Semantic Versioning on Github](https://blog.stratifylabs.dev/device/2021-07-12-Semantic-Versioning-and-Github/) for more details on managing the `CHANGES.md` file.
 
+# Version 1.6.0 (not released)
+
+## New Features
+
+- None yet
+
+## Bug Fixes
+
+- Fix bug with `fs::FileObject::get_line()`
+- Fixed a build error with the `VarAPI` Unit test
+- Fixed crashing bug with multithreaded apps and error handling
+- Fixed bug with `sys::Process` where `thread.cancel()` was causing a crash
+
 # Version 1.5.0
 
 ## New Features
