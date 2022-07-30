@@ -1,3 +1,9 @@
+# Version 1.4.1
+
+## Bug Fixes
+
+- Fix bug with `fs::FileObject::get_line()`
+
 # Version 1.4.0
 
 ## New Features
