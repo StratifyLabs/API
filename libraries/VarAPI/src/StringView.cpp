@@ -99,3 +99,12 @@ bool StringView::operator==(const String &a) const {
 bool StringView::operator!=(const String &a) const {
   return m_string_view != a.m_string;
 }
+
+bool StringView::contains_any_of(const StringView a) const {
+  for(const auto c: a){
+    if( find(StringView{&c,1}) != npos ){
+      return true;
+    }
+  }
+  return false;
+}

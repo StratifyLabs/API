@@ -736,6 +736,10 @@ public:
         TEST_ASSERT(s0.get_substring_with_length(0) == "");
         TEST_ASSERT(s0.get_substring_with_length(0) == StringView());
         TEST_ASSERT(s0.get_substring_with_length(100) == "test0");
+        TEST_ASSERT(s0.contains("test"));
+        TEST_ASSERT(s0.contains("tin"));
+        TEST_ASSERT(!s0.contains_any_of("abcdf"));
+        TEST_ASSERT(s0.contains_any_of("abcdef"));
       }
 
       TEST_EXPECT(sv.find('e') == 1);
@@ -753,8 +757,8 @@ public:
       TEST_EXPECT(sv.find_first_not_of("test") == 4);
 
 #if RUN_NOT_PASSING
-      TEST_EXPECT(sv.find_last_of("rst") == 3);
-      TEST_EXPECT(sv.find_last_not_of("in") == 6);
+      TEST_ASSERT(sv.find_last_of("rst") == 3);
+      TEST_ASSERT(sv.find_last_not_of("in") == 6);
 #endif
 
       TEST_EXPECT(
@@ -776,6 +780,11 @@ public:
       TEST_EXPECT(StringView("0777").to_unsigned_long(SV::Base::auto_) == 0777);
 
       TEST_EXPECT(sv.pop_front(4) == "ing");
+
+      const auto value = StringView{"This is a test"};
+      TEST_EXPECT(StringView{value}.pop_front(5).pop_back(5) == "is a");
+      TEST_EXPECT(StringView{value}.pop_front(5).truncate(4) == "is a");
+      TEST_EXPECT(StringView{value}.truncate(4) == "This");
     }
 
     {
@@ -851,7 +860,15 @@ public:
     }
 
     {
-      StringViewList list = StringView("1,2,3,4").split(",");
+      const auto value = StringView{"Hello World"};
+      TEST_ASSERT(value.starts_with("Hello"));
+      TEST_ASSERT(value.ends_with("World"));
+      TEST_ASSERT(!value.starts_with("hello"));
+      TEST_ASSERT(!value.ends_with("hello"));
+    }
+
+    {
+      const auto list = StringView("1,2,3,4").split(",");
       TEST_ASSERT(list.count() == 4);
     }
 

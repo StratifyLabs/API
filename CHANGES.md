@@ -4,7 +4,7 @@
 
 ## New Features
 
-- None yet
+- Add additional functions and documentation to `var::StringView`
 
 ## Bug Fixes
 

@@ -27,13 +27,31 @@ class PathString;
 class NameString;
 class GeneralString;
 
+/*! \brief StringView (wrapper for std::string_view)
+ *
+ *
+ * \details The StringView class is meant to be the cheapest
+ * way to refer to strings. It can be implicitly constructed
+ * from all the other common string types.
+ *
+ * When passing a string as a parameter, use `StringView` passed by
+ * value rather than reference.
+ *
+ */
+
 class StringView {
 public:
   constexpr static size_t npos = std::string_view::npos;
 
   enum class Base { auto_ = 0, octal = 8, decimal = 10, hexadecimal = 16 };
 
-  StringView() : m_string_view("") {}
+  /*! \details This is constructed so that is points
+   * to an empty string rather than a null string.
+   *
+   * The default for `std::string_view` is to create
+   * a null string i.e `data() == nullptr`.
+   */
+  StringView() : m_string_view{""}{}
   StringView(const char *value) : m_string_view(value) {}
   StringView(const String &value);
   StringView(const IdString &value);
@@ -45,10 +63,19 @@ public:
   explicit StringView(const std::string_view string_view)
     : m_string_view(string_view) {}
 
-  StringView(const char *value, size_t length) {
-    m_string_view = std::string_view(value, length);
-  }
+  StringView(const char *value, size_t length) : m_string_view{value, length} {}
 
+  /*! \details This allows you to quickly check for an empty string.
+   *
+   * ```cpp
+   * StringView value;
+   * if( value ){
+   *  //string is not empty
+   * }
+   * ```
+   *
+   * @return `true` is string is not empty.
+   */
   API_NO_DISCARD explicit operator bool() const { return !is_empty(); }
 
   API_NO_DISCARD bool is_null() const {
@@ -60,6 +87,14 @@ public:
     return *this;
   }
 
+  /*! \details `StringView` data is not guaranteed to
+   * be null terminated. With this function, you can check
+   * to see if it is null terminated.
+   *
+   * Try to avoid using this function.
+   *
+   * @return `true` if the string is null terminated
+   */
   API_NO_DISCARD bool is_null_terminated() const {
     return data() && (data()[length()] == 0);
   }
@@ -78,6 +113,13 @@ public:
 
   StringView &pop_back(size_t length = 1) {
     m_string_view.remove_suffix(length);
+    return *this;
+  }
+
+  StringView &truncate(size_t length){
+    if( this->length() > length ){
+      m_string_view.remove_suffix(this->length() - length);
+    }
     return *this;
   }
 
@@ -175,6 +217,29 @@ public:
     return m_string_view.find_last_not_of(a.m_string_view, position);
   }
 
+  API_NO_DISCARD bool starts_with(const StringView a) const {
+    return find(a) == 0;
+  }
+
+  API_NO_DISCARD bool ends_with(const StringView a) const {
+    return find(a) == length() - a.length();
+  }
+
+  API_NO_DISCARD bool contains(const StringView a) const {
+    return find(a) != npos;
+  }
+
+  API_NO_DISCARD bool contains_any_of(const StringView a) const;
+
+  template<class Container> API_NO_DISCARD bool contains_any_of(const Container & a) const {
+    for(const auto & value: a){
+      if( find(value) != npos ){
+        return true;
+      }
+    }
+    return false;
+  }
+
   bool operator==(const StringView a) const {
     return a.m_string_view == m_string_view;
   }
@@ -229,6 +294,11 @@ private:
 inline bool operator==(const char *lhs, StringView rhs) { return rhs == lhs; }
 
 using StringViewList = Vector<StringView>;
+
+inline StringView
+operator"" _string_view(const char * value) {
+  return StringView{value};
+}
 
 } // namespace var
 
