@@ -4,11 +4,17 @@
 
 ## New Features
 
+- Update `var::Tokenizer` to support delimeters as characters or as a single string
 - Add additional functions and documentation to `var::StringView`
+  - Strip trailing whitespace
+  - Strip leading whitespace
+  - Truncate a string view
+  - `contains_any_of` for both finding characters and strings (using a template)
 
 ## Bug Fixes
 
-- Fix bug with `fs::FileObject::get_line()`
+- Fixed a bug with `var::StringView::find_last_not_of` assigning the end position to `0`.
+- Fixed a bug with `fs::FileObject::get_line()`
 - Fixed a build error with the `VarAPI` Unit test
 - Fixed crashing bug with multithreaded apps and error handling
 - Fixed bug with `sys::Process` where `thread.cancel()` was causing a crash

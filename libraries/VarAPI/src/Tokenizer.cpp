@@ -13,32 +13,44 @@ Tokenizer::Tokenizer(var::StringView input, const Construct &options) {
 
 void Tokenizer::parse(var::StringView input, const Construct &options) {
 
-  const u32 max_delimeter_count = options.maximum_delimeter_count();
-  const u32 length = input.length();
+  const auto length = input.length();
+
+  const auto delimeter_length = options.delimeters.length();
 
   m_token_list = StringViewList();
-  u32 cursor = 0;
-  u32 sub_position = 0;
+  size_t cursor = 0;
+  size_t sub_position = 0;
 
   while (cursor < length) {
-    if (options.delimeters().find(input.at(cursor)) != String::npos) {
+    if (
+      options.delimeter_type == DelimeterType::string
+      && StringView{input}.pop_front(cursor).truncate(delimeter_length) == options.delimeters ) {
+      m_token_list.push_back(input(StringView::GetSubstring()
+                                     .set_position(sub_position)
+                                     .set_length(cursor - sub_position)));
+
+      sub_position = cursor + delimeter_length;
+    } else if (
+      options.delimeter_type == DelimeterType::characters
+      && options.delimeters.contains(input.at(cursor))) {
       m_token_list.push_back(input(StringView::GetSubstring()
                                      .set_position(sub_position)
                                      .set_length(cursor - sub_position)));
 
       sub_position = cursor + 1;
-      if (
-        max_delimeter_count && (m_token_list.count() == max_delimeter_count)) {
-        cursor = length - 1;
-      }
-    } else if (
-      options.ignore_between().find(input.at(cursor)) != String::npos) {
+    } else if (options.ignore_between.contains(input.at(cursor))) {
       // skip the space between specific characters
-      char end = input.at(cursor);
+      const auto end = input.at(cursor);
       cursor++;
       while ((cursor < length) && (input.at(cursor) != end)) {
         cursor++;
       }
+    }
+
+    if (
+      options.maximum_delimeter_count
+      && (m_token_list.count() == options.maximum_delimeter_count)) {
+      cursor = length - 1;
     }
 
     cursor++;

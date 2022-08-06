@@ -475,6 +475,39 @@ public:
     }
 
     {
+      T t(
+        "mkdir /home/test && ninja build",
+        T::Construct().set_delimeters("&&").set_delimeter_type(
+          Tokenizer::DelimeterType::string));
+      TEST_ASSERT(t.count() == 2);
+      TEST_ASSERT(t.at(0) == "mkdir /home/test ");
+      TEST_ASSERT(t.at(1) == " ninja build");
+    }
+
+    {
+      T t(
+        "mkdir /home/test' && 'ninja build",
+        T::Construct()
+          .set_delimeters("&&")
+          .set_delimeter_type(Tokenizer::DelimeterType::string)
+          .set_ignore_between("'"));
+      TEST_ASSERT(t.count() == 1);
+      TEST_ASSERT(t.at(0) == "mkdir /home/test' && 'ninja build");
+    }
+
+    {
+      T t(
+        "mkdir '/home/test' && \"ninja build\"",
+        T::Construct()
+          .set_delimeters("&&")
+          .set_delimeter_type(Tokenizer::DelimeterType::string)
+          .set_ignore_between("'"));
+      TEST_ASSERT(t.count() == 2);
+      TEST_ASSERT(t.at(0) == "mkdir '/home/test' ");
+      TEST_ASSERT(t.at(1) == " \"ninja build\"");
+    }
+
+    {
       T token("0,1,4,5,7,2,3", T::Construct().set_delimeters(","));
       TEST_ASSERT(token.count() == 7);
       TEST_ASSERT(token.at(0) == "0");
@@ -526,7 +559,7 @@ public:
     TEST_EXPECT(decode_test("KLMNOPQ", "S0xNTk9QUQ=="));
     TEST_EXPECT(decode_test("rstuvwxy", "cnN0dXZ3eHk="));
 
-    const StringView test_input
+    static constexpr StringView test_input
       = "In computer science, Base64 is a group of binary-to-text encoding "
         "schemes that represent binary data in an ASCII string format by "
         "translating it into a radix-64 representation. The term Base64 "
@@ -544,7 +577,7 @@ public:
         "encoding causes an overhead of 33–36% (33% by the encoding itself, up "
         "to 3% more by the inserted line breaks).";
 
-    const StringView test_output
+    static constexpr StringView test_output
       = "SW4gY29tcHV0ZXIgc2NpZW5jZSwgQmFzZTY0IGlzIGEgZ3JvdXAgb2YgYmluYXJ5LXRvLX"
         "RleHQgZW5jb2Rpbmcgc2NoZW1lcyB0aGF0IHJlcHJlc2VudCBiaW5hcnkgZGF0YSBpbiBh"
         "biBBU0NJSSBzdHJpbmcgZm9ybWF0IGJ5IHRyYW5zbGF0aW5nIGl0IGludG8gYSByYWRpeC"
@@ -737,7 +770,8 @@ public:
         TEST_ASSERT(s0.get_substring_with_length(0) == StringView());
         TEST_ASSERT(s0.get_substring_with_length(100) == "test0");
         TEST_ASSERT(s0.contains("test"));
-        TEST_ASSERT(s0.contains("tin"));
+        TEST_ASSERT(!s0.contains("ti"));
+        TEST_ASSERT(s0.contains("st"));
         TEST_ASSERT(!s0.contains_any_of("abcdf"));
         TEST_ASSERT(s0.contains_any_of("abcdef"));
       }
@@ -756,10 +790,8 @@ public:
       TEST_EXPECT(sv.find_first_not_of("abcde") == 0);
       TEST_EXPECT(sv.find_first_not_of("test") == 4);
 
-#if RUN_NOT_PASSING
       TEST_ASSERT(sv.find_last_of("rst") == 3);
       TEST_ASSERT(sv.find_last_not_of("in") == 6);
-#endif
 
       TEST_EXPECT(
         sv.get_substring(SV::GetSubstring().set_position(2).set_length(3))
@@ -768,6 +800,18 @@ public:
       size_t i = 0;
       for (auto c : sv) {
         TEST_EXPECT(c == sv.at(i++));
+      }
+
+      {
+        static constexpr StringView sv = "\t This is a test";
+        TEST_ASSERT(sv.find_first_not_of(StringView::whitespace()) == 2);
+        TEST_ASSERT(StringView{sv}.strip_leading_whitespace() == "This is a test");
+      }
+
+      {
+        static constexpr StringView sv = "This is a test   \t\t";
+        TEST_ASSERT(sv.find_last_not_of(StringView::whitespace()) == 13);
+        TEST_ASSERT(StringView{sv}.strip_trailing_whitespace() == "This is a test");
       }
 
       TEST_EXPECT(sv.to_long() == 0);

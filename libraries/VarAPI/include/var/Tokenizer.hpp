@@ -4,7 +4,6 @@
 #ifndef VAR_API_TOKENIZER_HPP_
 #define VAR_API_TOKENIZER_HPP_
 
-#include "Data.hpp"
 #include "String.hpp"
 #include "Vector.hpp"
 
@@ -12,10 +11,17 @@ namespace var {
 
 class Tokenizer : public api::ExecutionContext {
 public:
-  class Construct {
-    API_ACCESS_COMPOUND(Construct, StringView, delimeters);
-    API_ACCESS_COMPOUND(Construct, StringView, ignore_between);
-    API_ACCESS_FUNDAMENTAL(Construct, u32, maximum_delimeter_count, 0);
+
+  enum class DelimeterType {
+    characters,
+    string
+  };
+
+  struct Construct {
+    API_PMAZ(delimeters, Construct, StringView, {});
+    API_PMAZ(delimeter_type, Construct, DelimeterType, DelimeterType::characters);
+    API_PMAZ(ignore_between, Construct, StringView, {});
+    API_PMAZ(maximum_delimeter_count, Construct, u32, {});
   };
 
   Tokenizer(StringView input, const Construct &options);

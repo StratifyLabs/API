@@ -108,3 +108,17 @@ bool StringView::contains_any_of(const StringView a) const {
   }
   return false;
 }
+StringView &StringView::strip_leading_containing(StringView value) {
+  const auto position = find_first_not_of(value);
+  if( position != npos ){
+    pop_front(position);
+  }
+  return *this;
+}
+StringView &StringView::strip_trailing_containing(StringView value) {
+  const auto position = find_last_not_of(whitespace());
+  if( position != npos ){
+    truncate(position+1);
+  }
+  return *this;
+}
