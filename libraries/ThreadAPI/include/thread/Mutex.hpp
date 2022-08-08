@@ -40,16 +40,10 @@ public:
   public:
     Attributes();
     explicit Attributes(const pthread_mutexattr_t &mutexattr)
-      : m_item(mutexattr) {}
-
-    ~Attributes();
+      : m_resource({mutexattr}) {}
 
     API_NO_DISCARD bool is_valid() const {
-#if defined __link
-      return m_is_valid;
-#else
-      return m_item.is_initialized != 0;
-#endif
+      return m_resource.value().is_valid();
     }
 
     Attributes &set_priority_ceiling(int ceiling);
@@ -63,24 +57,37 @@ public:
 
   private:
     friend class Mutex;
-    void invalidate() {
-#if defined __link
-      m_is_valid = false;
-#else
-      m_item.is_initialized = 0;
-#endif
-    }
 
-    void validate() {
+    struct Resource {
+      pthread_mutexattr_t mutexattr;
 #if defined __link
-      m_is_valid = true;
+      bool is_link_valid;
+#endif
+
+      void set_valid(bool value = true) {
+#if defined __link
+        is_link_valid = value;
 #else
+        if (!value) {
+          mutexattr.is_initialized = 0;
+        }
 #endif
-    }
-    pthread_mutexattr_t m_item{};
+      }
+      bool is_valid() const {
 #if defined __link
-    bool m_is_valid;
+        return is_link_valid;
+#else
+        return mutexattr.is_initialized != 0;
+
 #endif
+      }
+    };
+
+    static void deleter(Resource *resource);
+    using SystemResource = api::SystemResource<Resource, decltype(&deleter)>;
+    static constexpr Resource null_resource{};
+
+    SystemResource m_resource = SystemResource(null_resource);
   };
 
   Mutex();
@@ -97,9 +104,7 @@ public:
   Mutex &unlock_with_error_check();
 
   class Scope {
-    static void deleter(Mutex *mutex) {
-      mutex->unlock();
-    }
+    static void deleter(Mutex *mutex) { mutex->unlock(); }
     std::unique_ptr<Mutex, decltype(&deleter)> m_mutex;
 
   public:
@@ -107,9 +112,7 @@ public:
       API_ASSERT(mutex);
       mutex->lock();
     }
-    explicit Scope(Mutex &mutex) : m_mutex(&mutex, &deleter) {
-      mutex.lock();
-    }
+    explicit Scope(Mutex &mutex) : m_mutex(&mutex, &deleter) { mutex.lock(); }
 
     Scope(Mutex &mutex, void *context, void (*execute)(void *))
       : m_mutex(&mutex, &deleter) {
@@ -122,9 +125,9 @@ public:
 
 private:
   friend class Cond;
-  static void mutex_deleter(pthread_mutex_t *mutex);
+  static void deleter(pthread_mutex_t *mutex);
   using MutexSystemResource
-    = api::SystemResource<pthread_mutex_t, decltype(&mutex_deleter)>;
+    = api::SystemResource<pthread_mutex_t, decltype(&deleter)>;
   MutexSystemResource m_mutex = MutexSystemResource(null_mutex);
 
   static pthread_mutex_t initialize_mutex(const pthread_mutexattr_t *attr);
