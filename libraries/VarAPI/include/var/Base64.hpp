@@ -8,6 +8,10 @@
 
 namespace var {
 
+/*! \details This class converts binary data to
+ * a Base64 encoded string and turns strings
+ * into binary encoded data.
+ */
 class Base64 : public api::ExecutionContext {
 public:
   API_NO_DISCARD var::String encode(var::View input) const;
@@ -36,6 +40,15 @@ private:
   static char decode_eight(u8 eight_bit_value);
 };
 
+/*! \details This class can be used to directly write binary data to
+ * files using Base64 encoding.
+ *
+ * ```cpp
+ * var::Array<int, 32> data;
+ * data.fill(5);
+ * File(File::IsOverwrite::yes, "myfile.txt").write(data, Base64Encoder());
+ * ```
+ */
 class Base64Encoder : public Transformer {
 public:
   API_NO_DISCARD int transform(const Transform &options) const override;

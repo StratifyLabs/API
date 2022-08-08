@@ -23,6 +23,21 @@ struct ReplaceString {
   API_PMAZ(position, ReplaceString, size_t, 0);
 };
 
+
+/*! \details This class is a wrapper for `std::string`.
+ * It uses dynamic memory allocation with short string optimizations
+ * to create space for the contents. So if the string is short,
+ * no call to `malloc()` is used.
+ *
+ * If the string is of a known max length, the classes in
+ * `var/StackString.hpp` (such as var::NameString or var::PathString)
+ * won't use `malloc()`. Those classes are great for variables that have
+ * a short life.
+ *
+ * Use `var::StringView` to refer to a string or part of its contents.
+ *
+ *
+ */
 class String : public api::ExecutionContext {
 public:
   constexpr static size_t npos = std::string::npos;

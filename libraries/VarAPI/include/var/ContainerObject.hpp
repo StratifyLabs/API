@@ -3,16 +3,43 @@
 #ifndef VAR_API_CONTAINER_OBJECT_HPP_
 #define VAR_API_CONTAINER_OBJECT_HPP_
 
+#include <algorithm>
 #include <array>
 #include <cstdio>
 #include <iterator>
 #include <numeric>
-#include <algorithm>
 #include <optional>
 
 #include "api/api.hpp"
 
 namespace var {
+
+/*! \details This is the parent class of the standard containers
+ * that are wrapped in this library.
+ *
+ * @tparam Derived Name of the Derived class
+ * @tparam Container std::container type
+ * @tparam T Type that is contained
+ *
+ * It declares the iterators that allow for range-based for loops:
+ *
+ * ```cpp
+ * var::Vector<int> container; //inherits ContainerObject
+ * for(auto value: constainer){
+ *  printf("value is %d\n", value);
+ * }
+ * ```
+ *
+ * It also provides member functions for various std::algorithms.
+ *
+ * ```cpp
+ * container.fill(24);
+ * container.sort(Vector<int>::ascending)
+ * container.assign_adjacent_difference();
+ * ```
+ *
+ *
+ */
 
 template <class Derived, typename Container, typename T>
 class ContainerObject : public api::ExecutionContext {
@@ -56,7 +83,7 @@ public:
     return m_container.crend();
   }
 
-  size_t count() const { return m_container.size(); }
+  API_NO_DISCARD size_t count() const { return m_container.size(); }
 
   API_NO_DISCARD bool is_empty() const { return m_container.empty(); }
 
@@ -84,20 +111,33 @@ public:
     return std::find(begin(), end(), a) - begin();
   }
 
-  API_NO_DISCARD T find(const T &a, const T & not_found = {}) const {
+  API_NO_DISCARD const T &find(const T &a) const {
     const size_t offset = find_offset(a);
     if (offset == count()) {
+      static T not_found{};
       return not_found;
     }
     return at(offset);
   }
 
-  static bool ascending(const T &a, const T &b) { return a < b; }
-  static bool descending(const T &a, const T &b) { return b < a; }
+  API_NO_DISCARD T &find(const T &a) {
+    const size_t offset = find_offset(a);
+    if (offset == count()) {
+      static T not_found{};
+      return not_found;
+    }
+    return at(offset);
+  }
+
+  API_NO_DISCARD static bool ascending(const T &a, const T &b) { return a < b; }
+  API_NO_DISCARD static bool descending(const T &a, const T &b) {
+    return b < a;
+  }
+
   using SortComparator = bool (*)(const T &a, const T &b);
   using sort_compartor_t = SortComparator;
 
-  Derived &sort(SortComparator compare_function) {
+  template<typename CompareFunction> Derived &sort(CompareFunction compare_function) {
     std::sort(begin(), end(), compare_function);
     return self();
   }
@@ -107,12 +147,12 @@ public:
     return self();
   }
 
-  const Derived & for_each(void (*function)(const T & a)) const {
+  template<typename Function> const Derived &for_each(Function function) const {
     std::for_each(begin(), end(), function);
     return self();
   };
 
-  Derived & for_each(void (*function)(T & a)){
+  template<typename Function> Derived &for_each(Function function) {
     std::for_each(begin(), end(), function);
     return self();
   };
@@ -122,20 +162,24 @@ public:
     return self();
   }
 
-  Derived & rotate_left(size_t count){
+  Derived &rotate_left(size_t count) {
     std::rotate(begin(), std::advance(begin(), count), end());
     return self();
   }
 
-  bool is_sorted(sort_compartor_t compare_function) const {
+  template<typename CompareFunction> bool is_sorted(CompareFunction compare_function) const {
     return std::is_sorted(begin(), end(), compare_function);
   }
 
-  const T &get_maximum() const { return *std::max_element(cbegin(), cend()); }
+  API_NO_DISCARD const T &get_maximum() const {
+    return *std::max_element(cbegin(), cend());
+  }
 
   T &get_maximum() { return *std::max_element(begin(), end()); }
 
-  const T &get_minimum() const { return *std::min_element(cbegin(), cend()); }
+  API_NO_DISCARD const T &get_minimum() const {
+    return *std::min_element(cbegin(), cend());
+  }
 
   T &get_minimum() { return *std::min_element(begin(), end()); }
 
@@ -145,8 +189,8 @@ public:
 
   bool operator!=(const Derived &a) const { return !(*this == a); }
 
-  const Container &container() const { return m_container; }
-  Container &container() { return m_container; }
+  API_NO_DISCARD const auto &container() const { return m_container; }
+  auto &container() { return m_container; }
 
   API_NO_DISCARD T sum() const { return std::accumulate(begin(), end(), T()); }
   API_NO_DISCARD T mean() const { return sum() / count(); }
@@ -164,64 +208,13 @@ public:
 
 protected:
   ContainerObject() = default;
-  ContainerObject(const Container &value) : m_container(value) {}
-  ContainerObject(Container &&value) : m_container(std::move(value)) {}
-  ContainerObject(std::initializer_list<T> il) : m_container(il) {}
+  explicit ContainerObject(const Container &value) : m_container(value) {}
+  explicit ContainerObject(Container &&value) : m_container(std::move(value)) {}
+  explicit ContainerObject(std::initializer_list<T> il) : m_container(il) {}
   Container m_container;
 
 private:
   Derived &self() { return static_cast<Derived &>(*this); }
-};
-
-template <typename Container>
-class ForwardIteratorObject : public api::ExecutionContext {
-public:
-  typename Container::const_iterator begin() const noexcept {
-    return m_container.begin();
-  }
-
-  typename Container::iterator begin() noexcept { return m_container.begin(); }
-
-  typename Container::const_iterator end() const noexcept {
-    return m_container.end();
-  }
-
-  typename Container::iterator end() noexcept { return m_container.end(); }
-
-  typename Container::const_iterator cbegin() const noexcept {
-    return m_container.cbegin();
-  }
-
-  typename Container::const_iterator cend() const noexcept {
-    return m_container.cend();
-  }
-
-  typename Container::const_reverse_iterator rbegin() const noexcept {
-    return m_container.rbegin();
-  }
-
-  typename Container::reverse_iterator rbegin() noexcept {
-    return m_container.rbegin();
-  }
-
-  typename Container::const_reverse_iterator rend() const noexcept {
-    return m_container.rend();
-  }
-
-  typename Container::reverse_iterator rend() noexcept {
-    return m_container.rend();
-  }
-
-  typename Container::const_reverse_iterator crbegin() const noexcept {
-    return m_container.crbegin();
-  }
-
-  typename Container::const_reverse_iterator crend() const noexcept {
-    return m_container.crend();
-  }
-
-protected:
-  Container m_container;
 };
 
 } // namespace var

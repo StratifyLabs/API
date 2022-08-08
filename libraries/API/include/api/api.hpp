@@ -66,7 +66,6 @@ public:
   static constexpr u32 malloc_chunk_size() { return API_MALLOC_CHUNK_SIZE; }
 };
 
-#if defined __link
 /*! \details
  *
  * This class is used for creating abstractions to C libraries.
@@ -85,6 +84,7 @@ public:
  * table.
  *
  */
+#if defined __link
 template <typename FunctionTable, const FunctionTable *initial_value>
 class Api {
 #else
