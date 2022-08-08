@@ -1,13 +1,15 @@
 ﻿
 #include <cstdio>
 
-#include "api/api.hpp"
-#include "chrono.hpp"
 #include "fs.hpp"
-#include "printer.hpp"
-#include "sys.hpp"
+#include "sys/System.hpp"
+#include "sys/TemporaryDirectory.hpp"
 #include "test/Test.hpp"
-#include "var.hpp"
+#include "var/Base64.hpp"
+
+using namespace printer;
+using namespace var;
+using namespace sys;
 
 #if defined __link
 #define HOME_FOLDER "."
@@ -33,6 +35,40 @@ public:
     TEST_ASSERT_RESULT(fileinfo_api_case());
     TEST_ASSERT_RESULT(view_file_api_case());
     TEST_ASSERT_RESULT(data_file_api_case());
+    TEST_ASSERT_RESULT(transformer_api_case());
+
+    return true;
+  }
+
+  bool transformer_api_case() {
+    Printer::Object po(printer(), __FUNCTION__);
+    static constexpr auto test_string_list = {
+      "The fox ran through the hollow",
+      "This is another string",
+      "1234",
+      "0",
+      "0123456789012345678901234567890123456789012345678901234567890123456789"
+      "0123456789",
+      ""};
+    for (const auto &test_string : test_string_list) {
+      printer().key("testing", test_string);
+      const auto encoded_data = Base64().encode(test_string);
+      TemporaryDirectory temporary_directory;
+
+      const auto base64_path = temporary_directory.path() / "base64.txt";
+      File(File::IsOverwrite::yes, base64_path)
+        .write(ViewFile(test_string), Base64Encoder());
+
+      {
+        const auto contents = DataFile(File(base64_path));
+        TEST_ASSERT(View(contents.data()) == View(encoded_data));
+      }
+      {
+        auto contents = DataFile();
+        contents.write(File(base64_path), Base64Decoder());
+        TEST_ASSERT(View(contents.data()) == View(test_string));
+      }
+    }
 
     return true;
   }
@@ -166,7 +202,7 @@ public:
     TEST_ASSERT(D(HOME_FOLDER "/tmp").is_success());
 
     {
-      //check that the compiler can move Dir
+      // check that the compiler can move Dir
       const auto d = [] { return D(HOME_FOLDER "/tmp"); }();
       d.read();
     }
@@ -224,6 +260,7 @@ public:
     }
 
     {
+      Printer::Object tmp2_object(printer(), "readDirectory");
       TEST_ASSERT(FS().directory_exists(HOME_FOLDER "/tmp2"));
       const auto list = FS().read_directory(
         HOME_FOLDER "/tmp2",
