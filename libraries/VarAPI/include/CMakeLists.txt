@@ -1,21 +1,22 @@
 
 set(SOURCES
   var/ContainerObject.hpp
-  var/Data.hpp
   var/Array.hpp
   var/Base64.hpp
-  var/Vector.hpp
+  var/Data.hpp
+  var/Deque.hpp
   var/Flags.hpp
-  var/View.hpp
   var/List.hpp
   var/MagicEnum.hpp
-  var/Deque.hpp
-  var/Stack.hpp
   var/Queue.hpp
   var/Ring.hpp
-  var/StringView.hpp
+  var/Set.hpp
+  var/Stack.hpp
   var/StackString.hpp
   var/String.hpp
+  var/StringView.hpp
   var/Tokenizer.hpp
+  var/Vector.hpp
+  var/View.hpp
   var.hpp
   PARENT_SCOPE)

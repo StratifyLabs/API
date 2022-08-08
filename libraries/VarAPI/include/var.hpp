@@ -18,6 +18,7 @@ namespace var {}
 #include "var/Flags.hpp"
 #include "var/Queue.hpp"
 #include "var/Ring.hpp"
+#include "var/Set.hpp"
 #include "var/Stack.hpp"
 #include "var/StackString.hpp"
 #include "var/String.hpp"

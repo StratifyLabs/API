@@ -109,6 +109,7 @@ public:
 
   bool execute_class_api_case() {
 
+    TEST_ASSERT_RESULT(set_api_case());
     TEST_ASSERT_RESULT(magic_enum_api_case());
     TEST_ASSERT_RESULT(array_api_case());
     TEST_ASSERT_RESULT(vector_api_case());
@@ -119,6 +120,45 @@ public:
     TEST_ASSERT_RESULT(tokenizer_api_case());
     TEST_ASSERT_RESULT(view_api_case());
     TEST_ASSERT_RESULT(data_api_case());
+    return true;
+  }
+
+  bool set_api_case() {
+
+    {
+      OrderedSet<int> set;
+
+      set.insert(7)
+        .insert(0)
+        .insert(3)
+        .insert(2)
+        .insert(6)
+        .insert(4)
+        .insert(5)
+        .insert(1);
+
+      int check_value{};
+      for (const auto value : set) {
+        TEST_ASSERT(value == check_value);
+        ++check_value;
+      }
+    }
+
+#if NOT_BUILDING
+    {
+      UnorderedSet<int> set;
+      set.insert(7)
+        .insert(0)
+        .insert(3)
+        .insert(2)
+        .insert(6)
+        .insert(4)
+        .insert(5)
+        .insert(1);
+
+    }
+#endif
+
     return true;
   }
 
@@ -805,13 +845,15 @@ public:
       {
         static constexpr StringView sv = "\t This is a test";
         TEST_ASSERT(sv.find_first_not_of(StringView::whitespace()) == 2);
-        TEST_ASSERT(StringView{sv}.strip_leading_whitespace() == "This is a test");
+        TEST_ASSERT(
+          StringView{sv}.strip_leading_whitespace() == "This is a test");
       }
 
       {
         static constexpr StringView sv = "This is a test   \t\t";
         TEST_ASSERT(sv.find_last_not_of(StringView::whitespace()) == 13);
-        TEST_ASSERT(StringView{sv}.strip_trailing_whitespace() == "This is a test");
+        TEST_ASSERT(
+          StringView{sv}.strip_trailing_whitespace() == "This is a test");
       }
 
       TEST_EXPECT(sv.to_long() == 0);
