@@ -14,6 +14,7 @@
 
 namespace var {
 
+
 /*! \details This is the parent class of the standard containers
  * that are wrapped in this library.
  *
@@ -42,7 +43,7 @@ namespace var {
  */
 
 template <class Derived, typename Container, typename T>
-class ContainerObject : public api::ExecutionContext {
+class ContainerObjectForwardOnly : public api::ExecutionContext {
 public:
   typename Container::const_iterator begin() const noexcept {
     return m_container.begin();
@@ -59,28 +60,6 @@ public:
   }
   typename Container::const_iterator cend() const noexcept {
     return m_container.cend();
-  }
-
-  typename Container::const_reverse_iterator rbegin() const noexcept {
-    return m_container.rbegin();
-  }
-  typename Container::reverse_iterator rbegin() noexcept {
-    return m_container.rbegin();
-  }
-
-  typename Container::const_reverse_iterator rend() const noexcept {
-    return m_container.rend();
-  }
-  typename Container::reverse_iterator rend() noexcept {
-    return m_container.rend();
-  }
-
-  typename Container::const_reverse_iterator crbegin() const noexcept {
-    return m_container.crbegin();
-  }
-
-  typename Container::const_reverse_iterator crend() const noexcept {
-    return m_container.crend();
   }
 
   API_NO_DISCARD size_t count() const { return m_container.size(); }
@@ -207,14 +186,50 @@ public:
   }
 
 protected:
-  ContainerObject() = default;
-  explicit ContainerObject(const Container &value) : m_container(value) {}
-  explicit ContainerObject(Container &&value) : m_container(std::move(value)) {}
-  explicit ContainerObject(std::initializer_list<T> il) : m_container(il) {}
+  ContainerObjectForwardOnly() = default;
+  explicit ContainerObjectForwardOnly(const Container &value) : m_container(value) {}
+  explicit ContainerObjectForwardOnly(Container &&value) : m_container(std::move(value)) {}
+  explicit ContainerObjectForwardOnly(std::initializer_list<T> il) : m_container(il) {}
   Container m_container;
 
-private:
   Derived &self() { return static_cast<Derived &>(*this); }
+};
+
+template <class Derived, typename Container, typename T>
+class ContainerObject : public ContainerObjectForwardOnly<Derived, Container, T> {
+  using Base = ContainerObject<Derived, Container, T>;
+public:
+
+  typename Container::const_reverse_iterator rbegin() const noexcept {
+    return this->m_container.rbegin();
+  }
+  typename Container::reverse_iterator rbegin() noexcept {
+    return this->m_container.rbegin();
+  }
+
+  typename Container::const_reverse_iterator rend() const noexcept {
+    return this->m_container.rend();
+  }
+  typename Container::reverse_iterator rend() noexcept {
+    return this->m_container.rend();
+  }
+
+  typename Container::const_reverse_iterator crbegin() const noexcept {
+    return this->m_container.crbegin();
+  }
+
+  typename Container::const_reverse_iterator crend() const noexcept {
+    return this->m_container.crend();
+  }
+
+
+protected:
+  using Parent = ContainerObjectForwardOnly<Derived, Container, T>;
+  ContainerObject() = default;
+  explicit ContainerObject(const Container &value) : Parent(value) {}
+  explicit ContainerObject(Container &&value) : Parent(std::move(value)) {}
+  explicit ContainerObject(std::initializer_list<T> il) : Parent(il) {}
+
 };
 
 } // namespace var

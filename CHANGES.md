@@ -4,7 +4,7 @@
 
 ## New Features
 
-- Add `var::OrderedSet` for ordered sets.
+- Add `var::OrderedSet`, `var::UnorderedSet`, `var::OrderedMultiset` and `var::UnorderedMultiset`
 - Update `var::Tokenizer` to support delimeters as characters or as a single string
 - Add additional functions and documentation to `var::StringView`
   - Strip trailing whitespace

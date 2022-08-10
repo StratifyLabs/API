@@ -127,7 +127,6 @@ public:
 
     {
       OrderedSet<int> set;
-
       set.insert(7)
         .insert(0)
         .insert(3)
@@ -142,9 +141,9 @@ public:
         TEST_ASSERT(value == check_value);
         ++check_value;
       }
+
     }
 
-#if NOT_BUILDING
     {
       UnorderedSet<int> set;
       set.insert(7)
@@ -156,8 +155,28 @@ public:
         .insert(5)
         .insert(1);
 
+      TEST_ASSERT(set.lookup(0) != set.end());
+      TEST_ASSERT(set.lookup(1) != set.end());
+      TEST_ASSERT(set.lookup(2) != set.end());
+      TEST_ASSERT(set.lookup(3) != set.end());
+      TEST_ASSERT(set.lookup(4) != set.end());
+      TEST_ASSERT(set.lookup(5) != set.end());
+      TEST_ASSERT(set.lookup(6) != set.end());
+      TEST_ASSERT(set.lookup(7) != set.end());
+      TEST_ASSERT(set.lookup(8) == set.end());
     }
-#endif
+
+    {
+      UnorderedMultiset<int> set;
+      set.insert(7)
+        .insert(0)
+        .insert(3)
+        .insert(2)
+        .insert(6)
+        .insert(4)
+        .insert(5)
+        .insert(1);
+    }
 
     return true;
   }
