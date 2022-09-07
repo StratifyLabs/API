@@ -6,6 +6,7 @@
 
 - Fixed crashing bug with multithreaded apps and error handling
 - Fixed bug with `sys::Process` where `thread.cancel()` was causing a crash
+- Fixed a build bug with `var::Stack`
 
 # Version 1.4.0
 
