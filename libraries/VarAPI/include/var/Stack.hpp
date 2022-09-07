@@ -22,7 +22,7 @@ public:
     return *this;
   }
 
-  template <class... Args> Queue<T> &emplace(Args &&...args) {
+  template <class... Args> Stack<T> &emplace(Args &&...args) {
     this->m_container.emplace(args...);
     return *this;
   }
