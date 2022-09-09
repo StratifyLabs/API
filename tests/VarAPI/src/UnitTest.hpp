@@ -186,6 +186,13 @@ public:
     using MagicX = MagicEnum<X>;
     Printer::Object object(printer(), "magicEnumApiCase");
 
+    TEST_ASSERT(MagicX::to_string_view(X::x0).is_null_terminated());
+    TEST_ASSERT(MagicX::to_string_view(X::x1).is_null_terminated());
+    TEST_ASSERT(MagicX::to_string_view(X::x2).is_null_terminated());
+    TEST_ASSERT(MagicX::to_string_view(X::x3).is_null_terminated());
+    TEST_ASSERT(MagicX::to_string_view(X::x4).is_null_terminated());
+    TEST_ASSERT(MagicX::to_string_view(X::x5).is_null_terminated());
+
     TEST_ASSERT(MagicX::to_string_view(X::x0) == "x0");
     TEST_ASSERT(MagicX::to_string_view(X::x1) == "x1");
     TEST_ASSERT(MagicX::to_string_view(X::x2) == "x2");
