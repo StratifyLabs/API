@@ -29,8 +29,8 @@ class DataFile : public FileAccess<DataFile> {
 public:
   /*! \details Constructs a data file. */
 
-  DataFile(DataFile &&file) = default;
-  DataFile &operator=(DataFile &&file) = default;
+  //DataFile(DataFile &&file) = default;
+  //DataFile &operator=(DataFile &&file) = default;
 
   explicit DataFile(const OpenMode &flags = OpenMode::append_read_write())
     : m_open_flags(flags) {}

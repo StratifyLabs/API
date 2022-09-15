@@ -5,6 +5,8 @@
 #ifndef VAR_API_MAGIC_ENUM_HPP_
 #define VAR_API_MAGIC_ENUM_HPP_
 
+#if defined __link
+
 #include "magic_enum.hpp"
 
 #include "String.hpp"
@@ -40,4 +42,7 @@ private:
 };
 
 } // namespace var
+
+#endif
+
 #endif // VAR_API_MAGIC_ENUM_HPP_
