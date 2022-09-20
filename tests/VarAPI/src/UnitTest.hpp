@@ -141,7 +141,6 @@ public:
         TEST_ASSERT(value == check_value);
         ++check_value;
       }
-
     }
 
     {
@@ -596,34 +595,51 @@ public:
   bool base64_api_case() {
     Printer::Object po(printer(), "Base64");
 
-    bool (*encode_test)(const char *, const char *)
-      = [](const char *input, const char *output) {
-          return (Base64().encode(SV(input)) == S(output));
-        };
+    auto encode_test = [](const char *input, const char *output) {
+      return (Base64().encode(SV(input)) == S(output));
+    };
 
-    TEST_EXPECT(encode_test("1", "MQ=="));
+    TEST_ASSERT(encode_test("1", "MQ=="));
     TEST_ASSERT(encode_test(".", "Lg=="));
-    TEST_EXPECT(encode_test("ab", "YWI="));
-    TEST_EXPECT(encode_test("234", "MjM0"));
-    TEST_EXPECT(encode_test("5678", "NTY3OA=="));
-    TEST_EXPECT(encode_test("9abcd", "OWFiY2Q="));
-    TEST_EXPECT(encode_test("efghij", "ZWZnaGlq"));
-    TEST_EXPECT(encode_test("KLMNOPQ", "S0xNTk9QUQ=="));
-    TEST_EXPECT(encode_test("rstuvwxy", "cnN0dXZ3eHk="));
+    TEST_ASSERT(encode_test("ab", "YWI="));
+    TEST_ASSERT(encode_test("234", "MjM0"));
+    TEST_ASSERT(encode_test("5678", "NTY3OA=="));
+    TEST_ASSERT(encode_test("9abcd", "OWFiY2Q="));
+    TEST_ASSERT(encode_test("efghij", "ZWZnaGlq"));
+    TEST_ASSERT(encode_test("KLMNOPQ", "S0xNTk9QUQ=="));
+    TEST_ASSERT(encode_test("rstuvwxy", "cnN0dXZ3eHk="));
 
-    bool (*decode_test)(StringView, StringView)
-      = [](StringView output, StringView input) {
-          return (V(Base64().decode(input)) == V(output));
-        };
+    auto decode_test = [](StringView output, StringView input) {
+      return (V(Base64().decode(input)) == V(output));
+    };
 
-    TEST_EXPECT(decode_test("1", "MQ=="));
-    TEST_EXPECT(decode_test("ab", "YWI="));
-    TEST_EXPECT(decode_test("234", "MjM0"));
-    TEST_EXPECT(decode_test("5678", "NTY3OA=="));
-    TEST_EXPECT(decode_test("9abcd", "OWFiY2Q="));
-    TEST_EXPECT(decode_test("efghij", "ZWZnaGlq"));
-    TEST_EXPECT(decode_test("KLMNOPQ", "S0xNTk9QUQ=="));
-    TEST_EXPECT(decode_test("rstuvwxy", "cnN0dXZ3eHk="));
+    TEST_ASSERT(decode_test("1", "MQ=="));
+    TEST_ASSERT(decode_test("ab", "YWI="));
+    TEST_ASSERT(decode_test("234", "MjM0"));
+    TEST_ASSERT(decode_test("5678", "NTY3OA=="));
+    TEST_ASSERT(decode_test("9abcd", "OWFiY2Q="));
+    TEST_ASSERT(decode_test("efghij", "ZWZnaGlq"));
+    TEST_ASSERT(decode_test("KLMNOPQ", "S0xNTk9QUQ=="));
+    TEST_ASSERT(decode_test("rstuvwxy", "cnN0dXZ3eHk="));
+
+    auto valid_test = [](StringView input) { return Base64().is_valid(input); };
+
+    TEST_EXPECT(valid_test("MQ=="));
+    TEST_EXPECT(valid_test("YWI="));
+    TEST_EXPECT(valid_test("MjM0"));
+    TEST_EXPECT(valid_test("NTY3OA=="));
+    TEST_EXPECT(valid_test("OWFiY2Q="));
+    TEST_EXPECT(valid_test("ZWZnaGlq"));
+    TEST_EXPECT(valid_test("S0xNTk9QUQ=="));
+    TEST_EXPECT(valid_test("cnN0dXZ3eHk="));
+    TEST_EXPECT(valid_test("cnN0dXZ3eHk="));
+
+    TEST_EXPECT(!valid_test("(Q=="));
+    TEST_EXPECT(!valid_test("Q=="));
+    TEST_EXPECT(!valid_test("ABQ=="));
+    TEST_EXPECT(!valid_test("YI=)"));
+    TEST_EXPECT(!valid_test("YWI==="));
+    TEST_EXPECT(!valid_test("cnN0dX|Z3H="));
 
     static constexpr StringView test_input
       = "In computer science, Base64 is a group of binary-to-text encoding "
@@ -664,6 +680,8 @@ public:
         "9ydCA3IGJpdCBBU0NJSSBjaGFyYWN0ZXJzIG9ubHkuIFRoaXMgZW5jb2RpbmcgY2F1c2Vz"
         "IGFuIG92ZXJoZWFkIG9mIDMz4oCTMzYlICgzMyUgYnkgdGhlIGVuY29kaW5nIGl0c2VsZi"
         "wgdXAgdG8gMyUgbW9yZSBieSB0aGUgaW5zZXJ0ZWQgbGluZSBicmVha3MpLg==";
+
+    TEST_ASSERT(Base64().is_valid(test_output));
 
     // TEST_EXPECT(encode_test(test_input, test_output));
     TEST_EXPECT(decode_test(test_input, test_output));
