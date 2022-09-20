@@ -79,7 +79,7 @@ int Dir::count() const {
 
 int Dir::interface_readdir_r(struct dirent *result, struct dirent **resultp)
   const {
-#if defined __link
+#if defined __linux || defined __win32
   if (const struct dirent *result_dirent = readdir(m_dirp.get());
       result_dirent) {
     *result = *result_dirent;
