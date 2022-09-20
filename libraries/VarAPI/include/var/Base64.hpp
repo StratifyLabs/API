@@ -17,6 +17,8 @@ public:
   API_NO_DISCARD var::String encode(var::View input) const;
   API_NO_DISCARD var::Data decode(var::StringView input) const;
 
+  API_NO_DISCARD bool is_valid(var::StringView input) const;
+
   const Base64 &encode(var::View input, var::String &output) const;
   const Base64 &decode(var::StringView input, var::Data &output) const;
 

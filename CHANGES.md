@@ -4,6 +4,7 @@
 
 ## New Features
 
+- Add `var::Base64::is_valid()` to check to see if a string view is valid Base64
 - Add `var::OrderedSet`, `var::UnorderedSet`, `var::OrderedMultiset` and `var::UnorderedMultiset`
 - Update `var::Tokenizer` to support delimeters as characters or as a single string
 - Add additional functions and documentation to `var::StringView`

@@ -32,6 +32,16 @@ int Base64Decoder::transform(const Transform &options) const {
            options.input().size());
 }
 
+bool Base64::is_valid(var::StringView input) const {
+  if (input.length() % 4 != 0) {
+    return false;
+  }
+
+  return input.find_first_not_of(
+           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=")
+         == StringView::npos;
+}
+
 String Base64::encode(View input) const {
   String result;
   result.resize(get_encoded_size(input.size()));
