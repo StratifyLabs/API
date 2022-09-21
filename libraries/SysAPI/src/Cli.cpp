@@ -17,13 +17,7 @@ printer::operator<<(printer::Printer &printer, const sys::Cli &a) {
 using namespace var;
 using namespace sys;
 
-Cli::Cli(int argc, char *argv[]) {
-  if (argc < 0) {
-    argc = 0;
-  }
-  m_argc = argc;
-  m_argv = argv;
-}
+Cli::Cli(int argc, char *argv[]) : m_argc{argc < 0 ? 0U : argc}, m_argv{argv} {}
 
 const Cli &
 Cli::handle_version(API_MAYBE_UNUSED const HandleVersion &options) const {
@@ -45,7 +39,7 @@ Cli::handle_version(API_MAYBE_UNUSED const HandleVersion &options) const {
 
 var::GeneralString Cli::to_general_string() const {
   GeneralString result;
-  for (u16 i = 1; i < count(); i++) {
+  for (auto i = 1U; i < count(); ++i) {
     result |= at(i);
     if (i < count() - 1) {
       result |= " ";
@@ -54,18 +48,18 @@ var::GeneralString Cli::to_general_string() const {
   return result;
 }
 
-StringView Cli::at(u16 value) const {
+StringView Cli::at(unsigned value) const {
   return (value < m_argc) ? StringView(m_argv[value]) : var::StringView();
 }
 
 var::StringView Cli::get_option(StringView name, StringView help) const {
 
-  if (!help.is_empty()) {
+  if (help) {
     m_help_list.push_back(name & ":" & help);
   }
 
-  for (u32 args = 1; args < count(); args++) {
-    StringView arg = m_argv[args];
+  for (auto args = 1U; args < count(); ++args) {
+    auto arg = StringView{m_argv[args]};
 
     if (arg.find("--") == 0 && arg.length() >= 3) {
       const Tokenizer tokens(
@@ -79,7 +73,7 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
         if (tokens.count() > 1) {
           return tokens.at(1);
         } else {
-          return {"true"};
+          return "true";
         }
       }
     }
@@ -89,7 +83,7 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
 
 var::StringView Cli::get_name() const {
   if (m_argc > 0) {
-    StringView result = m_argv[0];
+    auto result = StringView{m_argv[0]};
     if (const auto slash_position = result.reverse_find('/');
         slash_position != StringView::npos) {
       result.pop_front(slash_position + 1);
@@ -109,13 +103,12 @@ var::StringView Cli::get_path() const {
 
 const Cli &Cli::show_help(const ShowHelp &options) const {
   printer::Printer simple_printer;
-  auto *printer
-    = options.printer() == nullptr ? &simple_printer : options.printer();
-  if (!options.publisher().is_empty()) {
+  auto *printer = !options.printer() ? &simple_printer : options.printer();
+  if (options.publisher()) {
     printer->key("publisher", options.publisher());
   }
 
-  if (!options.version().is_empty()) {
+  if (options.version()) {
     printer->key("version", options.version());
   }
 
@@ -140,11 +133,11 @@ const Cli &Cli::show_version(const ShowVersion &options) const {
 
   printer->key("name", get_name());
 
-  if (!options.publisher().is_empty()) {
+  if (options.publisher()) {
     printer->key("publisher", options.publisher());
   }
 
-  if (!options.version().is_empty()) {
+  if (options.version()) {
     printer->key("version", options.version());
   }
 

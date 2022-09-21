@@ -47,7 +47,7 @@ API_MAYBE_UNUSED static int clock_gettime2(int clk_id, struct timespec *t) {
 using namespace chrono;
 
 ClockTime ClockTime::get_system_time(ClockId clock_id) {
-  API_RETURN_VALUE_IF_ERROR(ClockTime());
+  API_RETURN_VALUE_IF_ERROR({});
   ClockTime clock_time;
 #if defined __linux
   API_SYSTEM_CALL(
@@ -148,14 +148,14 @@ bool ClockTime::operator!=(const ClockTime &a) const {
 void ClockTime::assign(u32 seconds, u32 nanoseconds) {
   m_value.tv_sec = seconds;
   m_value.tv_nsec = nanoseconds;
-  if (m_value.tv_nsec > 1000000000) {
+  if (m_value.tv_nsec > 1000000000L) {
     m_value.tv_sec++;
-    m_value.tv_nsec -= 1000000000;
+    m_value.tv_nsec -= 1000000000L;
   }
 
   if (m_value.tv_nsec < 0) {
     m_value.tv_sec--;
-    m_value.tv_nsec += 1000000000;
+    m_value.tv_nsec += 1000000000L;
   }
 }
 
@@ -163,8 +163,8 @@ ClockTime ClockTime::add(const ClockTime &a, const ClockTime &b) {
   ClockTime c;
   c.m_value.tv_sec = a.m_value.tv_sec + b.m_value.tv_sec;
   c.m_value.tv_nsec = a.m_value.tv_nsec + b.m_value.tv_nsec;
-  if (c.m_value.tv_nsec > 1000000000) {
-    c.m_value.tv_nsec -= 1000000000;
+  if (c.m_value.tv_nsec > 1000000000L) {
+    c.m_value.tv_nsec -= 1000000000L;
     c.m_value.tv_sec++;
   }
   return c;
@@ -174,8 +174,8 @@ ClockTime ClockTime::subtract(const ClockTime &a, const ClockTime &b) {
   ClockTime c;
   c.m_value.tv_sec = a.m_value.tv_sec - b.m_value.tv_sec;
   c.m_value.tv_nsec = a.m_value.tv_nsec - b.m_value.tv_nsec;
-  if (c.m_value.tv_nsec < 0) {
-    c.m_value.tv_nsec += 1000000000;
+  if (c.m_value.tv_nsec < 0L) {
+    c.m_value.tv_nsec += 1000000000L;
     c.m_value.tv_sec--;
   }
   return c;

@@ -24,6 +24,8 @@ namespace api {
 
 template <class Type, class Deleter = std::default_delete<Type>>
 using UniquePointer = std::unique_ptr<Type, Deleter>;
+template<typename FunctionType >
+using Function = std::function<FunctionType>;
 
 /*! \details
  *

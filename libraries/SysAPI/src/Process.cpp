@@ -28,7 +28,7 @@ extern "C" char **environ;
 namespace printer {
 Printer &
 operator<<(Printer &printer, const sys::Process::Arguments &arguments) {
-  size_t count = 0;
+  auto count = size_t{};
   for (const auto &arg : arguments.arguments()) {
     if (arg != nullptr) {
       printer.key(var::NumberString(count, "[%04d]"), arg);
@@ -53,6 +53,8 @@ Printer &operator<<(Printer &printer, const sys::Process::Environment &env) {
 } // namespace printer
 
 using namespace sys;
+using namespace var;
+using namespace thread;
 
 Process::Environment::Environment(char **env) : Process::Arguments("") {
   char **effective_env = (env == nullptr) ? environ : env;
@@ -69,16 +71,16 @@ Process::Environment &Process::Environment::set(
   const var::StringView name,
   const var::StringView value) {
 
-  auto format = [](const var::StringView name, const var::StringView value) {
+  auto format = [](const StringView name, const StringView value) {
     return name | "=" | value;
   };
 
   // check to see if the entry exists
   const auto starts_with = name | "=";
-  for (size_t i = 0; i < m_arguments.count(); i++) {
-    char *current_value = m_arguments.at(i);
+  for (auto i = size_t{}; i < m_arguments.count(); ++i) {
+    const auto current_value = m_arguments.at(i);
     if (current_value != nullptr) {
-      if (var::StringView(current_value).find(starts_with) == 0) {
+      if (StringView{current_value}.find(starts_with) == 0) {
         replace(i, format(name, value));
         return *this;
       }
@@ -90,24 +92,24 @@ Process::Environment &Process::Environment::set(
 }
 
 Process::Environment &
-Process::Environment::set_working_directory(const var::StringView path) {
+Process::Environment::set_working_directory(const StringView path) {
   return set("PWD", path);
 }
 
-const char *Process::Environment::find(const var::StringView variable) const {
-  const auto check = var::NameString(variable).append("=");
+const char *Process::Environment::find(const StringView variable) const {
+  const auto check = NameString(variable).append("=");
   for (const auto *value : variables()) {
-    if (value && var::StringView(value).find(check) == 0) {
+    if (value && StringView(value).find(check) == 0) {
       return value + check.length();
     }
   }
   return "";
 }
 
-var::PathString Process::which(const var::StringView executable) {
+PathString Process::which(const StringView executable) {
   const char *pwd = getenv("PWD");
   if (pwd) {
-    if (const auto path = var::StringView(pwd) / executable;
+    if (const auto path = StringView(pwd) / executable;
         fs::FileSystem().exists(path)) {
       return path;
     }
@@ -122,7 +124,7 @@ var::PathString Process::which(const var::StringView executable) {
     return {};
   }
 
-  const auto path_list = var::StringView(path).split(";:");
+  const auto path_list = StringView(path).split(";:");
   for (const auto &entry : path_list) {
     const auto entry_path = entry / executable;
     if (fs::FileSystem().exists(entry_path)) {
@@ -163,7 +165,7 @@ Process::Process(const Arguments &arguments, const Environment &environment)
     API_RETURN_ASSIGN_ERROR("arguments are empty", EINVAL);
   }
 
-  if (var::StringView(arguments.get_value(0)).is_empty()) {
+  if (StringView(arguments.get_value(0)).is_empty()) {
     API_RETURN_ASSIGN_ERROR("no executable was found", EINVAL);
   }
 
@@ -173,10 +175,9 @@ Process::Process(const Arguments &arguments, const Environment &environment)
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};
 
-  var::PathString cwd;
+  PathString cwd;
   _getcwd(cwd.data(), cwd.capacity());
-  const var::PathString pwd = environment.find("PWD");
-
+  const PathString pwd = environment.find("PWD");
 
   if (pwd.is_empty() == false) {
     _chdir(pwd.cstring());
@@ -194,10 +195,12 @@ Process::Process(const Arguments &arguments, const Environment &environment)
       .nLength = sizeof(SECURITY_ATTRIBUTES),
       .bInheritHandle = true};
 
-    const auto create_result = CreatePipe(&handles.read, &handles.write, &sa_attributes, 0);
+    const auto create_result
+      = CreatePipe(&handles.read, &handles.write, &sa_attributes, 0);
     API_ASSERT(create_result);
 
-    const auto set_result = SetHandleInformation(handles.read, HANDLE_FLAG_INHERIT, 0);
+    const auto set_result
+      = SetHandleInformation(handles.read, HANDLE_FLAG_INHERIT, 0);
     API_ASSERT(set_result);
 
     pipe.write_file() = fs::File();
@@ -215,11 +218,10 @@ Process::Process(const Arguments &arguments, const Environment &environment)
     .cb = sizeof(STARTUPINFO),
     .dwFlags = STARTF_USESTDHANDLES,
     .hStdOutput = output_pipe.write,
-    .hStdError = error_pipe.write
-  };
+    .hStdError = error_pipe.write};
 
   PROCESS_INFORMATION process_info{};
-  var::PathString path;
+  PathString path;
   for (const auto &arg : arguments.arguments()) {
     path.append(arg).append(" ");
   }
@@ -231,12 +233,12 @@ Process::Process(const Arguments &arguments, const Environment &environment)
     path.data(),      // Command line
     NULL,             // Process handle not inheritable
     NULL,             // Thread handle not inheritable
-    TRUE,            // Set handle inheritance to FALSE
+    TRUE,             // Set handle inheritance to FALSE
     CREATE_NO_WINDOW, // creation flags
     NULL,             // Use parent's environment block
     NULL,             // Use parent's starting directory
-    &startup_info,              // Pointer to STARTUPINFO structure
-    &process_info);             // Pointer to PROCESS_INFORMATION structure
+    &startup_info,    // Pointer to STARTUPINFO structure
+    &process_info);   // Pointer to PROCESS_INFORMATION structure
 
   if (create_result) {
     m_process = process_info.hProcess;
@@ -253,7 +255,7 @@ Process::Process(const Arguments &arguments, const Environment &environment)
   const auto pwd = environment.find("PWD");
   if (fs::FileSystem().directory_exists(pwd) == false) {
     API_RETURN_ASSIGN_ERROR(
-      ("cannot change dir to `" | var::StringView(pwd)) | "`",
+      ("cannot change dir to `" | StringView(pwd)) | "`",
       errno);
   }
 
@@ -300,7 +302,6 @@ Process::Process(const Arguments &arguments, const Environment &environment)
     m_standard_output = {};
     m_standard_error = {};
   }
-
 }
 
 void Process::pid_deleter(pid_t *pid) {
@@ -315,7 +316,6 @@ Process &Process::wait() {
   if (m_process == INVALID_HANDLE_VALUE || m_process == nullptr) {
     return *this;
   }
-
 
   DWORD code = 0;
   WaitForSingleObject(m_process, INFINITE);
@@ -393,28 +393,28 @@ bool Process::is_running() {
   return true;
 }
 
-var::String Process::get_standard_output() {
+String Process::get_standard_output() {
   thread::Mutex::Scope mutex_scope(m_standard_output->mutex);
-  return var::String(var::StringView(
+  return String(StringView(
     reinterpret_cast<const char *>(
       m_standard_output->data_file.data().data_u8()),
     m_standard_output->data_file.data().size()));
 }
 
-var::String Process::get_standard_error() {
+String Process::get_standard_error() {
   thread::Mutex::Scope mutex_scope(m_standard_error->mutex);
-  return var::String(var::StringView(
+  return String(StringView(
     reinterpret_cast<const char *>(
       m_standard_error->data_file.data().data_u8()),
     m_standard_error->data_file.data().size()));
 }
 
-var::String Process::read_standard_output() {
+String Process::read_standard_output() {
   API_ASSERT(m_standard_output != nullptr);
   return m_standard_output->read();
 }
 
-var::String Process::read_standard_error() {
+String Process::read_standard_error() {
   API_ASSERT(m_standard_error != nullptr);
   return m_standard_error->read();
 }
@@ -426,7 +426,7 @@ void Process::update_redirect(Redirect *redirect) {
 #if defined __win32
   redirect->thread_handle = GetCurrentThread();
 #endif
-  var::Array<char, 2048> buffer;
+  Array<char, 2048> buffer;
   auto &data_file = redirect->data_file;
   auto &pipe = redirect->pipe;
   auto &mutex = redirect->mutex;
@@ -440,7 +440,7 @@ void Process::update_redirect(Redirect *redirect) {
       api::ErrorScope error_scope;
       const auto bytes_read = pipe.read_file().read(buffer).return_value();
       if (bytes_read > 0) {
-        const auto stop_string = var::StringView(Redirect::stop_sequence);
+        const auto stop_string = StringView(Redirect::stop_sequence);
         if (buffer.data() == stop_string) {
           is_stop_requested = true;
         } else {
@@ -448,7 +448,7 @@ void Process::update_redirect(Redirect *redirect) {
           // data file is write append, we want to preserve
           // the file location for reading the data file
           fs::File::LocationScope location_scope(data_file);
-          data_file.write(var::View(buffer.data(), bytes_read));
+          data_file.write(View(buffer.data(), bytes_read));
         }
       }
     }
@@ -473,15 +473,15 @@ void Process::Redirect::start_thread() {
     update_redirect_thread_function);
 }
 
-var::String Process::Redirect::read() {
-  thread::Mutex::Scope ms(mutex);
-  var::Array<char, 1024> buffer;
-  var::String result;
-  int bytes_read = 0;
+String Process::Redirect::read() {
+  auto mutex_scope = thread::Mutex::Scope(mutex);
+  Array<char, 1024> buffer;
+  String result;
+  auto bytes_read = 0;
   do {
     api::ErrorScope error_scope;
-    bytes_read = data_file.read(var::View(buffer.data(), buffer.count() - 1))
-                   .return_value();
+    bytes_read
+      = data_file.read(View(buffer.data(), buffer.count() - 1)).return_value();
     if (bytes_read > 0) {
       buffer.at(bytes_read) = 0;
       result += buffer.data();
@@ -491,10 +491,8 @@ var::String Process::Redirect::read() {
 }
 
 void Process::Redirect::wait_stop() {
-  {
-    thread::Mutex::Scope ms(mutex);
-    is_stop_requested = true;
-  }
+
+  Mutex::Scope(mutex, [&]() { is_stop_requested = true; });
 
   pipe.write_file().write(stop_sequence);
   if (thread.is_joinable()) {
@@ -503,4 +501,3 @@ void Process::Redirect::wait_stop() {
 }
 
 #endif
-

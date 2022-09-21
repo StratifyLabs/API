@@ -13,9 +13,6 @@
 #include <cstdio>
 #include <cstring>
 
-#define ERROR_CODE_CASE(c)                                                     \
-  case c:                                                                      \
-    return MCU_STRINGIFY(c)
 
 using namespace api;
 
@@ -31,8 +28,7 @@ void api::api_assert(bool value, const char *function, int line) {
     printf("assertion %s():%d\n", function, line);
 #if defined __link && !defined __win32
     std::array<void*,200> array = {};
-    size_t size;
-    size = backtrace(array.data(), array.size());
+    const auto size= backtrace(array.data(), array.size());
     backtrace_symbols_fd(array.data(), size, fileno(stderr));
 #endif
 #if defined __link
@@ -44,16 +40,18 @@ void api::api_assert(bool value, const char *function, int line) {
 
 PrivateExecutionContext ExecutionContext::m_private_context;
 
-static void error_mutex_handler(int do_lock){
+enum class DoLock { unlock, lock };
+
+static void error_mutex_handler(DoLock do_lock){
   static pthread_mutex_t mutex = {};
   static bool is_initialized = false;
   if( !is_initialized ){
     is_initialized = true;
     pthread_mutex_init(&mutex, nullptr);
   }
-  if( do_lock > 0 ){
+  if( do_lock == DoLock::lock ){
     pthread_mutex_lock(&mutex);
-  } else if ( do_lock < 0 ){
+  } else {
     pthread_mutex_unlock(&mutex);
   }
 }
@@ -62,7 +60,7 @@ Error &PrivateExecutionContext::get_error() {
   if (&(errno) == m_error.m_signature) {
     return m_error;
   }
-  error_mutex_handler(1);
+  error_mutex_handler(DoLock::lock);
   if (m_error_list == nullptr) {
     m_error_list = new std::vector<Error>();
     API_ASSERT(m_error_list != nullptr);
@@ -70,20 +68,20 @@ Error &PrivateExecutionContext::get_error() {
 
   for (Error &error : *m_error_list) {
     if (error.m_signature == &(errno)) {
-      error_mutex_handler(-1);
+      error_mutex_handler(DoLock::unlock);
       return error;
     }
 
     if (error.m_signature == nullptr) {
       error.m_signature = &(errno);
-      error_mutex_handler(-1);
+      error_mutex_handler(DoLock::unlock);
       return error;
     }
   }
 
   m_error_list->emplace_back(Error(&(errno)));
   auto & result =  m_error_list->back();
-  error_mutex_handler(-1);
+  error_mutex_handler(DoLock::unlock);
   return result;
 }
 
@@ -94,15 +92,15 @@ void PrivateExecutionContext::free_context() {
     return;
   }
 
-  error_mutex_handler(1);
+  error_mutex_handler(DoLock::lock);
   for (Error &error : *m_error_list) {
     if (error.m_signature == &(errno)) {
       error.m_signature = nullptr;
-      error_mutex_handler(-1);
+      error_mutex_handler(DoLock::unlock);
       return;
     }
   }
-  error_mutex_handler(-1);
+  error_mutex_handler(DoLock::unlock);
 }
 
 void PrivateExecutionContext::update_error_context(

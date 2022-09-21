@@ -245,8 +245,6 @@ protected:
     return -1;
   }
 
-private:
-  constexpr static size_t m_gets_buffer_size = 128;
 };
 
 template <class Derived> class FileAccess : public FileObject {

@@ -202,8 +202,8 @@ private:
     thread::Mutex mutex;
     Pipe pipe;
     fs::DataFile data_file;
-    volatile bool is_stop_requested = false;
-    Process *self;
+    bool is_stop_requested = false;
+    Process *self{};
 
     void start_thread();
     void wait_stop();

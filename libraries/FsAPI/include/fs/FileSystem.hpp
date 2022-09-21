@@ -29,7 +29,7 @@ public:
   using IsRecursive = Dir::IsRecursive;
   enum class IsExclude { no, yes };
 
-  using ExcludeCallback = IsExclude (*)(const var::StringView name, void *);
+  using ExcludeCallback = IsExclude (*)(var::StringView name, void *);
 
   FileSystem() = default;
 

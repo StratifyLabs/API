@@ -56,7 +56,7 @@ public:
         file->set_fileno(-1);
       }
     }
-    using UniquePointer = std::unique_ptr<File, decltype(&deleter)>;
+    using UniquePointer = api::UniquePointer<File, decltype(&deleter)>;
     UniquePointer m_pointer = UniquePointer(nullptr, &deleter);
 
   public:

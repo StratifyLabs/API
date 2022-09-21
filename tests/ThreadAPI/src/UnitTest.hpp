@@ -252,6 +252,13 @@ public:
   bool mutex_api_case() {
 
     {
+      auto value = false;
+      Mutex mutex;
+      Mutex::Scope(mutex, [&](){ value = true; });
+      TEST_ASSERT(value);
+    }
+
+    {
       m_did_execute = false;
       Mutex m(Mutex::Attributes().set_type(Mutex::Type::recursive));
       m_mutex_pointer = &m;

@@ -105,7 +105,7 @@ public:
 
   class Scope {
     static void deleter(Mutex *mutex) { mutex->unlock(); }
-    std::unique_ptr<Mutex, decltype(&deleter)> m_mutex;
+    api::UniquePointer<Mutex, decltype(&deleter)> m_mutex;
 
   public:
     explicit Scope(Mutex *mutex) : m_mutex(mutex, &deleter) {
@@ -114,10 +114,10 @@ public:
     }
     explicit Scope(Mutex &mutex) : m_mutex(&mutex, &deleter) { mutex.lock(); }
 
-    Scope(Mutex &mutex, void *context, void (*execute)(void *))
+    Scope(Mutex &mutex, api::Function<void()> function)
       : m_mutex(&mutex, &deleter) {
       mutex.lock();
-      execute(context);
+      function();
     }
   };
 

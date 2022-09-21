@@ -73,14 +73,14 @@ public:
   }
 
   API_NO_DISCARD var::GeneralString to_general_string() const;
-  API_NO_DISCARD var::StringView at(u16 value) const;
+  API_NO_DISCARD var::StringView at(unsigned value) const;
 
   API_NO_DISCARD var::StringView get_option(
     var::StringView name,
     var::StringView help = var::StringView()) const;
 
-  API_NO_DISCARD u32 count() const { return m_argc; }
-  API_NO_DISCARD u32 size() const { return m_argc; }
+  API_NO_DISCARD auto count() const { return m_argc; }
+  API_NO_DISCARD auto size() const { return m_argc; }
 
   API_NO_DISCARD var::StringView get_name() const;
   API_NO_DISCARD var::StringView get_path() const;
@@ -96,7 +96,7 @@ public:
   API_MAYBE_UNUSED const Cli &show_version(const ShowVersion &options) const;
 
 private:
-  u16 m_argc = 0;
+  unsigned m_argc{};
   char **m_argv = nullptr;
   bool m_is_case_sensitive = true;
   const char *m_app_git_hash = nullptr;
