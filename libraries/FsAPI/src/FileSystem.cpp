@@ -4,7 +4,6 @@
 
 #include "fs/Dir.hpp"
 #include "printer/Printer.hpp"
-#include "var/StackString.hpp"
 #include "var/Tokenizer.hpp"
 
 #include "fs/FileSystem.hpp"
@@ -154,7 +153,7 @@ const FileSystem &FileSystem::remove_directory(
 
     const char *entry;
     while ((entry = d.read()) != nullptr) {
-      var::PathString entry_path = path / entry;
+      const auto entry_path = path / entry;
       FileInfo info = get_info(entry_path);
       if (info.is_directory()) {
         if (const var::StringView entry_view(entry);
@@ -186,12 +185,12 @@ size_t FileSystem::get_entry_count(
   const var::StringView path,
   IsRecursive is_recursive) const {
   Dir directory(path);
-  size_t result = 0;
+  auto result = size_t{};
   const char *entry;
   while ((entry = directory.read()) != nullptr) {
     const var::StringView entry_view = entry;
     if (entry_view != "." && entry_view != "..") {
-      result++;
+      ++result;
       if (is_recursive == IsRecursive::yes) {
         const auto entry_path = path / entry;
         const auto info = get_info(entry_path);
@@ -212,8 +211,7 @@ PathList FileSystem::read_directory(
   PathList result;
   bool is_the_end = false;
 
-  size_t count = get_entry_count(path, is_recursive);
-  result.reserve(count);
+  result.reserve(get_entry_count(path, is_recursive));
 
   Dir directory(path);
   do {
@@ -301,19 +299,13 @@ const FileSystem &FileSystem::create_directory(
 
   var::Tokenizer path_tokens
     = var::Tokenizer(path, var::Tokenizer::Construct().set_delimeters("/"));
-  var::PathString base_path;
-
   // tokenizer will strip the first / and create an empty token
-  if (path.length() && path.front() == '/') {
-    base_path &= "/";
-  }
-
-  for (u32 i = 0; i < path_tokens.count(); i++) {
-    if (path_tokens.at(i).is_empty() == false) {
-      base_path &= path_tokens.at(i);
-
+  var::PathString base_path = (path && path.front() == '/') ? "/" : "";
+  for (const auto path_component : path_tokens.list()) {
+    if (path_component) {
+      base_path &= path_component;
       if (
-        (directory_exists(base_path) == false)
+        !directory_exists(base_path)
         && create_directory(base_path, permissions).is_error()) {
         return *this;
       }
