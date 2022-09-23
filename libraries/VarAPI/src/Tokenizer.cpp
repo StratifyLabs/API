@@ -24,7 +24,8 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
   while (cursor < length) {
     if (
       options.delimeter_type == DelimeterType::string
-      && StringView{input}.pop_front(cursor).truncate(delimeter_length) == options.delimeters ) {
+      && StringView{input}.pop_front(cursor).truncate(delimeter_length)
+           == options.delimeters) {
       m_token_list.push_back(input(StringView::GetSubstring()
                                      .set_position(sub_position)
                                      .set_length(cursor - sub_position)));
@@ -40,7 +41,20 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
       sub_position = cursor + 1;
     } else if (options.ignore_between.contains(input.at(cursor))) {
       // skip the space between specific characters
-      const auto end = input.at(cursor);
+      const auto start = input.at(cursor);
+      const auto end = [start]() {
+        switch (start) {
+        case '{':
+          return '}';
+        case '[':
+          return ']';
+        case '(':
+          return ')';
+        case '<':
+          return '>';
+        }
+        return start;
+      }();
       cursor++;
       while ((cursor < length) && (input.at(cursor) != end)) {
         cursor++;

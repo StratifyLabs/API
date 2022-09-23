@@ -507,6 +507,56 @@ public:
       TEST_EXPECT(t.at(1) == "'1,2,3'");
       TEST_EXPECT(t.at(2) == "4,5");
     }
+    {
+      T t(
+        "0,{1,2,3},4,5",
+        T::Construct()
+          .set_delimeters(",")
+          .set_maximum_delimeter_count(2)
+          .set_ignore_between("{"));
+      TEST_EXPECT(t.count() == 3);
+      TEST_EXPECT(t.at(0) == "0");
+      TEST_EXPECT(t.at(1) == "{1,2,3}");
+      TEST_EXPECT(t.at(2) == "4,5");
+    }
+    {
+      T t(
+        "0,(1,2,3),4,5",
+        T::Construct()
+          .set_delimeters(",")
+          .set_maximum_delimeter_count(2)
+          .set_ignore_between("("));
+      TEST_EXPECT(t.count() == 3);
+      TEST_EXPECT(t.at(0) == "0");
+      TEST_EXPECT(t.at(1) == "(1,2,3)");
+      TEST_EXPECT(t.at(2) == "4,5");
+    }
+
+    {
+      T t(
+        "0,[1,2,3],4,5",
+        T::Construct()
+          .set_delimeters(",")
+          .set_maximum_delimeter_count(2)
+          .set_ignore_between("["));
+      TEST_EXPECT(t.count() == 3);
+      TEST_EXPECT(t.at(0) == "0");
+      TEST_EXPECT(t.at(1) == "[1,2,3]");
+      TEST_EXPECT(t.at(2) == "4,5");
+    }
+
+    {
+      auto t = T(
+        "0,<1,2,3>,4,5",
+        T::Construct()
+          .set_delimeters(",")
+          .set_maximum_delimeter_count(2)
+          .set_ignore_between("<"));
+      TEST_EXPECT(t.count() == 3);
+      TEST_EXPECT(t.at(0) == "0");
+      TEST_EXPECT(t.at(1) == "<1,2,3>");
+      TEST_EXPECT(t.at(2) == "4,5");
+    }
 
     {
       T t("0,1,,,2", T::Construct().set_delimeters(","));
