@@ -42,15 +42,6 @@ File::File(
 
 }
 
-#if 0
-File::~File() {
-  if (fileno() >= 0) {
-    api::ErrorGuard error_guard;
-    close();
-  }
-}
-#endif
-
 int File::fileno() const { return m_fd.value(); }
 
 int File::flags() const {
@@ -70,15 +61,6 @@ int File::fstat(struct stat *st) const {
   API_RETURN_VALUE_IF_ERROR(-1);
   return API_SYSTEM_CALL("", ::fstat(m_fd.value(), st));
 }
-
-#if 0
-void File::close() {
-  if (m_system_resource.value() >= 0) {
-    internal_close(m_system_resource.value());
-    m_system_resource.value() = -1;
-  }
-}
-#endif
 
 int File::internal_open(const char *path, int flags, int mode) {
   return ::posix_open(path, flags, mode);

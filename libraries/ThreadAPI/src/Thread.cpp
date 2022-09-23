@@ -13,6 +13,27 @@ using namespace thread;
 #define THREAD_ATTRIBUTES_DEFAULT_STACK_SIZE (4096)
 #endif
 
+namespace {
+struct StartUp {
+  void *argument = nullptr;
+  Thread::function_t function = nullptr;
+  Thread::Function thread_function;
+};
+
+void *handle_thread(void *args) {
+  static Mutex error_creation_mutex;
+  auto *startup_pointer = reinterpret_cast<StartUp *>(args);
+  StartUp startup(*startup_pointer);
+  delete startup_pointer;
+
+  void *result = startup.function ? startup.function(startup.argument)
+                                  : startup.thread_function();
+  api::ExecutionContext::free_context();
+  return result;
+}
+
+} // namespace
+
 Thread::Attributes::Attributes() {
   API_RETURN_IF_ERROR();
   API_SYSTEM_CALL("", pthread_attr_init(&m_pthread_attr));
@@ -138,21 +159,29 @@ Thread::Thread(const Construct &options) {
   construct(Attributes(), options);
 }
 
-struct StartUp {
-  volatile Thread::function_t function = nullptr;
-  void *argument = nullptr;
-};
+Thread::Thread(Function &&function) {
+  construct(
+    Attributes(),
+    Construct().set_thread_function(std::forward<Function>(function)));
+}
+
+Thread::Thread(const Attributes &attributes, Function &&function) {
+  construct(
+    attributes,
+    Construct().set_thread_function(std::forward<Function>(function)));
+}
 
 void Thread::construct(const Attributes &attributes, const Construct &options) {
   API_RETURN_IF_ERROR();
-  API_ASSERT(options.function() != nullptr);
+  API_ASSERT(options.function || options.thread_function);
 
   // this can't be a member of Thread because if thread gets
   // moved the address will be wrong
   // this is deleted in the new thread OR below if creation fails
   auto *startup = new StartUp{
-    .function = options.function(),
-    .argument = options.argument()};
+    .argument = options.argument,
+    .function = options.function,
+    .thread_function = options.thread_function};
 
   // First create the thread
   int result = API_SYSTEM_CALL(
@@ -166,17 +195,6 @@ void Thread::construct(const Attributes &attributes, const Construct &options) {
                 ? State::joinable
                 : State::detached;
   }
-}
-
-void *Thread::handle_thread(void *args) {
-  static Mutex error_creation_mutex;
-  auto *startup_pointer = reinterpret_cast<StartUp *>(args);
-  StartUp startup(*startup_pointer);
-  delete startup_pointer;
-
-  void *result = startup.function(startup.argument);
-  free_context();
-  return result;
 }
 
 Thread::~Thread() {

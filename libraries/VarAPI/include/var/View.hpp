@@ -301,10 +301,9 @@ public:
    *
    */
   View &pop_front(size_t pop_size = 1) {
-    if (size() >= pop_size) {
-      m_size = (size() - pop_size);
-      m_data = (static_cast<u8 *>(m_data)) + pop_size;
-    }
+    const auto adjust_pop_size = size() >= pop_size ? pop_size : size();
+    m_size = (size() - adjust_pop_size);
+    m_data = (static_cast<u8 *>(m_data)) + adjust_pop_size;
     return *this;
   }
 

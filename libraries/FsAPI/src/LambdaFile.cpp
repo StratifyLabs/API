@@ -9,7 +9,7 @@ int LambdaFile::interface_read(void *buf, int nbyte) const {
     return -1;
   }
 
-  int result = m_read_callback(m_context, m_location, var::View(buf, nbyte));
+  int result = m_read_callback(m_location, var::View(buf, nbyte));
   if (result > 0) {
     m_location += result;
   }
@@ -22,7 +22,7 @@ int LambdaFile::interface_write(const void *buf, int nbyte) const {
     return -1;
   }
 
-  int result = m_write_callback(m_context, m_location, var::View(buf, nbyte));
+  int result = m_write_callback(m_location, var::View(buf, nbyte));
   if (result > 0) {
     m_location += result;
   }

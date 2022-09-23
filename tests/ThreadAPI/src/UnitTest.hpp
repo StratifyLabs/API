@@ -47,7 +47,6 @@ class UnitTest : public test::Test {
 public:
   UnitTest(var::StringView name) : test::Test(name) {}
 
-
   bool execute_class_api_case() {
     TEST_ASSERT_RESULT(thread_api_case());
     TEST_ASSERT_RESULT(mutex_api_case());
@@ -254,7 +253,7 @@ public:
     {
       auto value = false;
       Mutex mutex;
-      Mutex::Scope(mutex, [&](){ value = true; });
+      Mutex::Scope(mutex, [&]() { value = true; });
       TEST_ASSERT(value);
     }
 
@@ -348,7 +347,7 @@ public:
       TEST_ASSERT(
         T::Attributes().set_stack_size(4096).get_stack_size() >= 4096);
 
-      bool (*test_policy)(UnitTest * self, const Sched::Policy policy)
+      auto test_policy
         = [](UnitTest *self, const Sched::Policy policy) -> bool {
         const int min_priority = Sched::get_priority_min(policy);
         const int max_priority = Sched::get_priority_max(policy);
@@ -482,6 +481,22 @@ public:
       TEST_ASSERT(is_success());
       TEST_ASSERT(m_did_execute);
 
+      m_did_execute = false;
+      printer().key("wait", "joinable api::Function");
+      printer().key_bool("asserted", m_cond.is_asserted());
+      T(T::Attributes().set_detach_state(T::DetachState::joinable),
+        [&]() -> void * {
+          m_did_execute = true;
+          printer().key("condition", "assert");
+          m_cond.set_asserted();
+          return nullptr;
+        })
+        .join();
+
+      m_cond.wait_until_asserted().set_asserted(false);
+      TEST_ASSERT(is_success());
+      TEST_ASSERT(m_did_execute);
+
       printer().key("wait", "detached");
       printer().key_bool("asserted", m_cond.is_asserted());
       m_did_execute = false;
@@ -498,13 +513,12 @@ public:
       TEST_ASSERT(is_success());
       TEST_ASSERT(m_did_execute);
       TEST_ASSERT(!m_cond.is_asserted());
-
     }
 
 #if !__SANITIZE_THREAD__
     {
 
-      //this section does not work if -fsanitize=thread is enabled
+      // this section does not work if -fsanitize=thread is enabled
       m_did_execute = true;
       printer().key("wait", "joinable - cancel");
       auto t = T(
@@ -523,7 +537,9 @@ public:
 
       const auto old_state = t.set_cancel_state(T::CancelState::enable);
       printer().key("oldState", Thread::to_cstring(old_state));
-      printer().key("newState", Thread::to_cstring(t.set_cancel_state(T::CancelState::enable)));
+      printer().key(
+        "newState",
+        Thread::to_cstring(t.set_cancel_state(T::CancelState::enable)));
       const auto old_type = t.set_cancel_type(T::CancelType::deferred);
       printer().key("oldType", Thread::to_cstring(old_type));
 
@@ -541,12 +557,10 @@ public:
     {
       m_did_execute = false;
       printer().key("wait", "minstacksize");
-      T(T::Attributes()
-          .set_joinable()
-          .set_stack_size(minimum_stack_size),
+      T(T::Attributes().set_joinable().set_stack_size(minimum_stack_size),
         T::Construct().set_argument(this).set_function(
           [](void *args) -> void * {
-            auto * self = reinterpret_cast<UnitTest *>(args);
+            auto *self = reinterpret_cast<UnitTest *>(args);
             self->m_did_execute = true;
             self->m_cond.set_asserted();
             return nullptr;

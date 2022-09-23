@@ -66,10 +66,12 @@ public:
     friend class Thread;
     pthread_attr_t m_pthread_attr{};
   };
+  using Function = api::Function<void*()>;
 
-  class Construct {
-    API_ACCESS_FUNDAMENTAL(Construct, function_t, function, nullptr);
-    API_ACCESS_FUNDAMENTAL(Construct, void *, argument, nullptr);
+  struct Construct {
+    API_PMAZ(argument, Construct, void*, nullptr);
+    API_PMAZ(function, Construct, function_t, nullptr);
+    API_PMAZ(thread_function, Construct, Function, {});
   };
 
   Thread() = default;
@@ -86,6 +88,7 @@ public:
   Thread(Thread &&a)  noexcept { swap(std::move(a)); }
   Thread &&move() { return std::move(*this); }
 
+
   explicit Thread(const Construct &options);
   Thread(const Attributes &attributes, const Construct &options);
   Thread(const Attributes &attributes, void * argument, function_t thread_function){
@@ -94,6 +97,8 @@ public:
   Thread(void * argument, function_t thread_function){
     construct(Attributes(), Construct().set_argument(argument).set_function(thread_function));
   }
+  Thread(Function && function);
+  Thread(const Attributes &attributes, Function && function);
   ~Thread();
 
   /*! \details Gets the ID of the thread. */
@@ -159,8 +164,6 @@ private:
   }
 
   void construct(const Attributes & attributes, const Construct & options);
-
-  static void *handle_thread(void *args);
 
   int get_sched_parameters(int &policy, int &priority) const;
 };

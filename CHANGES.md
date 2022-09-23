@@ -4,6 +4,10 @@
 
 ## New Features
 
+- Add option to execute threads with a lambda
+- WARNING Breaking API Change: `fs::LambdaFile` using `api::Function` rather than a c-style function pointer
+  - `context` was passed by now must be captured in the lambda
+  - This won't affect many people. `fs::LambdaFile` is not frequently used
 - Add ignore between `(){}[]<>` to `var::Tokenizer`
 - Add `var::Base64::is_valid()` to check to see if a string view is valid Base64
 - Add `var::OrderedSet`, `var::UnorderedSet`, `var::OrderedMultiset` and `var::UnorderedMultiset`

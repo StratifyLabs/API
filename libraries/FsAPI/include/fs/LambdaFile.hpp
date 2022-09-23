@@ -20,16 +20,10 @@ namespace fs {
  */
 class LambdaFile : public FileAccess<LambdaFile> {
 public:
-  using read_callback_t = int (*)(void *context, int location, var::View view);
-  using write_callback_t
-    = int (*)(void *context, int location, const var::View view);
+  using ReadCallback = api::Function<int(int, var::View)>;
+  using WriteCallback = api::Function<int(int, const var::View)>;
 
   LambdaFile() = default;
-
-  LambdaFile(const LambdaFile &) = delete;
-  LambdaFile &operator=(const LambdaFile &) = delete;
-  LambdaFile(LambdaFile &&) = default;
-  LambdaFile &operator=(LambdaFile &&) = default;
 
   LambdaFile &set_size(size_t size) {
     m_size = size;
@@ -39,9 +33,8 @@ public:
 private:
   mutable int m_location = 0;
   mutable size_t m_size = 0;
-  API_AF(LambdaFile, read_callback_t, read_callback, nullptr);
-  API_AF(LambdaFile, write_callback_t, write_callback, nullptr);
-  API_AF(LambdaFile, void *, context, nullptr);
+  API_AF(LambdaFile, ReadCallback, read_callback, nullptr);
+  API_AF(LambdaFile, WriteCallback, write_callback, nullptr);
 
   int interface_read(void *buf, int nbyte) const override;
   int interface_write(const void *buf, int nbyte) const override;

@@ -615,25 +615,22 @@ public:
       Printer::Object po(printer(), "lambdaFile");
       Data lambda_file_data;
       printer().key("fileData", NumberString(&lambda_file_data, "%p"));
-      LambdaFile lambda_file
+      auto lambda_file
         = LambdaFile()
             .set_read_callback(
-              [](void *context, int location, var::View view) -> int {
-                Data *data = reinterpret_cast<Data *>(context);
-                View data_at_location = View(*data).pop_front(location);
+              [&lambda_file_data](int location, var::View view) -> int {
+                View data_at_location = View(lambda_file_data).pop_front(location);
                 const size_t size = data_at_location.size() > view.size()
                                       ? view.size()
                                       : data_at_location.size();
-                view.copy(View(*data).pop_front(location));
+                view.copy(View(lambda_file_data).pop_front(location));
                 return size;
               })
             .set_write_callback(
-              [](void *context, int location, const var::View view) -> int {
-                Data *data = reinterpret_cast<Data *>(context);
-                data->append(view);
+              [&lambda_file_data](int location, const var::View view) -> int {
+                lambda_file_data.append(view);
                 return view.size();
               })
-            .set_context(&lambda_file_data)
             .move();
 
       const StringView hello = "hello";
