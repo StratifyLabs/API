@@ -1,6 +1,5 @@
 // Copyright 2011-2021 Tyler Gilbert and Stratify Labs, Inc; see LICENSE.md
 
-#include <cstdarg>
 #if defined __win32
 #include <windows.h>
 #endif
@@ -8,7 +7,6 @@
 #include <unistd.h>
 
 #include "var/StackString.hpp"
-#include "var/String.hpp"
 
 #include "printer/Printer.hpp"
 
@@ -200,13 +198,13 @@ void Printer::interface_print_final(const var::StringView view) {
 }
 
 void Printer::write_fileno(int fd, const var::StringView view) const {
-  const char *begin = view.data();
-  const size_t length = view.length();
-  size_t sent = 0;
-  int result;
-  api::ErrorGuard error_guard;
+  const auto *begin = view.data();
+  const auto length = view.length();
+  auto sent = size_t{};
+  auto result = ssize_t{};
+  api::ErrorScope error_scope;
   do {
-    const size_t page_size = view.length() - sent;
+    const auto page_size = view.length() - sent;
     result = ::write(fd, begin + sent, page_size);
     if (result > 0) {
       sent += result;
@@ -618,14 +616,11 @@ Printer &Printer::fatal(const var::StringView a) {
 
 Printer &
 Printer::trace(const char *function, int line, var::StringView message) {
-
   if (verbose_level() == Level::trace) {
-    const auto s = var::GeneralString().format(
-      ">> trace %s:%d %s\n",
-      function,
-      line,
-      var::GeneralString(message).cstring());
-    interface_print_final(s);
+    interface_print_final(">> trace ");
+    interface_print_final(function);
+    interface_print_final(var::NumberString(line, ":%d "));
+    interface_print_final(message);
   }
   return *this;
 }
@@ -640,16 +635,10 @@ Printer &Printer::operator<<(const var::DataInfo &a) {
 #endif
 
 Printer &Printer::operator<<(const var::View a) {
-  const Flags o_flags = flags();
-  const s8 *ptrs8 = a.to_const_s8();
-  const s16 *ptrs16 = a.to_const_s16();
-  const s32 *ptrs32 = a.to_const_s32();
-  const u8 *ptru8 = a.to_const_u8();
-  const u16 *ptru16 = a.to_const_u16();
-  const u32 *ptru32 = a.to_const_u32();
-  const float *ptrfloat = a.to_const_float();
+  const auto o_flags = flags();
 
-  const auto count = [](size_t size, Flags o_flags) {
+  const auto count = [a,o_flags]() {
+    const auto size = a.size();
     if (o_flags & Flags::width_32) {
       return size / 4;
     } else if (o_flags & Flags::width_16) {
@@ -658,9 +647,12 @@ Printer &Printer::operator<<(const var::View a) {
       return (size + 15) / 16;
     }
     return size;
-  }(a.size(), o_flags);
+  }();
 
-  u32 bytes_printed = 0;
+  const auto *ptru8 = a.to_const_u8();
+  const auto *ptru32 = a.to_const_u32();
+  const auto *ptru16 = a.to_const_u16();
+  auto bytes_printed = 0;
 
   for (int i = 0; i < count; i++) {
     var::GeneralString data_string;
@@ -717,13 +709,16 @@ Printer &Printer::operator<<(const var::View a) {
         data_string = var::NumberString().format(" %c", ptru8[i]).string_view();
       }
     } else if (o_flags & Flags::type_float) {
+      const auto *ptrfloat = a.to_const_float();
       data_string
         = var::NumberString().format("%0.3f", ptrfloat[i]).string_view();
     } else {
       // default is signed values
       if (o_flags & Flags::width_32) {
+        const auto *ptrs32 = a.to_const_s32();
         data_string = var::NumberString().format(F32D, ptrs32[i]).string_view();
       } else if (o_flags & Flags::width_16) {
+        const auto *ptrs16 = a.to_const_s16();
         data_string = var::NumberString().format("%d", ptrs16[i]).string_view();
       } else if (o_flags & Flags::blob) {
         for (u32 j = 0; j < 16; j++) {
@@ -739,6 +734,7 @@ Printer &Printer::operator<<(const var::View a) {
           }
         }
       } else {
+        const auto *ptrs8 = a.to_const_s8();
         data_string = var::NumberString().format("%d", ptrs8[i]).string_view();
       }
     }

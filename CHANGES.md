@@ -20,6 +20,7 @@
 
 ## Bug Fixes
 
+- Fixed `Printer::trace` to never truncate
 - Fixed a bug with `var::StringView::find_last_not_of` assigning the end position to `0`.
 - Fixed a bug with `fs::FileObject::get_line()`
 - Fixed a build error with the `VarAPI` Unit test
