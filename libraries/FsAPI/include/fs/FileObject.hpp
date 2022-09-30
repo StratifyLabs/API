@@ -86,7 +86,7 @@ public:
 
   private:
     API_ACCESS_FUNDAMENTAL(Write, int, location, -1);
-    API_ACCESS_FUNDAMENTAL(Write, u32, page_size, FSAPI_LINK_DEFAULT_PAGE_SIZE);
+    API_ACCESS_FUNDAMENTAL(Write, size_t, page_size, FSAPI_LINK_DEFAULT_PAGE_SIZE);
     API_ACCESS_FUNDAMENTAL(Write, size_t, size, static_cast<size_t>(-1));
     API_ACCESS_FUNDAMENTAL(Write, char, terminator, 0);
     API_ACCESS_FUNDAMENTAL(Write, chrono::MicroTime, timeout, 0_microseconds);
