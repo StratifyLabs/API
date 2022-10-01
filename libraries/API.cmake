@@ -1,131 +1,205 @@
 set(API_CONFIG_LIST release debug)
 
 if(NOT DEFINED API_IS_SDK)
-	if(CMSDK_IS_ARM)
-		#cmsdk_include_target(StratifyOS_iface "${API_CONFIG_LIST}")
-		cmsdk_include_target(StratifyOS_crt "${API_CONFIG_LIST}")
-	endif()
-	cmsdk_include_target(API "${API_CONFIG_LIST}")
-	cmsdk_include_target(VarAPI "${API_CONFIG_LIST}")
-	cmsdk_include_target(PrinterAPI "${API_CONFIG_LIST}")
-	cmsdk_include_target(SysAPI "${API_CONFIG_LIST}")
-	cmsdk_include_target(ChronoAPI "${API_CONFIG_LIST}")
-	cmsdk_include_target(FsAPI "${API_CONFIG_LIST}")
-	cmsdk_include_target(ThreadAPI "${API_CONFIG_LIST}")
-	cmsdk_include_target(TestAPI "${API_CONFIG_LIST}")
+  if(CMSDK_IS_ARM)
+    #cmsdk_include_target(StratifyOS_iface "${API_CONFIG_LIST}")
+    cmsdk_include_target(StratifyOS_crt "${API_CONFIG_LIST}")
+  endif()
+  cmsdk_include_target(API "${API_CONFIG_LIST}")
+  cmsdk_include_target(VarAPI "${API_CONFIG_LIST}")
+  cmsdk_include_target(PrinterAPI "${API_CONFIG_LIST}")
+  cmsdk_include_target(SysAPI "${API_CONFIG_LIST}")
+  cmsdk_include_target(ChronoAPI "${API_CONFIG_LIST}")
+  cmsdk_include_target(FsAPI "${API_CONFIG_LIST}")
+  cmsdk_include_target(ThreadAPI "${API_CONFIG_LIST}")
+  cmsdk_include_target(TestAPI "${API_CONFIG_LIST}")
 endif()
 
 function(api_add_api_library NAME DEPENDENCIES)
-	api_add_api_library_option(${NAME} "${DEPENDENCIES}" "")
+  api_add_api_library_option(${NAME} "${DEPENDENCIES}" "")
 endfunction()
 
-function(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
+macro(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 
-	set(LOCAL_NAME ${NAME})
+  cmsdk2_add_library(
+    NAME ${NAME}
+    TARGET RELEASE_TARGET
+    OPTION ${LIB_OPTION}
+    CONFIG release
+    ARCH ${CMSDK_ARCH}
+  )
 
+  cmsdk2_add_sources(
+    LIST PRIVATE_SOURCES
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
+    BINARY_DIRECTORY ${RELEASE_TARGET}_src
+  )
+  cmsdk2_add_sources(
+    LIST INTERFACE_SOURCES
+    DIRECTORY include
+    BINARY_DIRECTORY ${RELEASE_TARGET}_include)
 
-	cmsdk_library_target(RELEASE ${LOCAL_NAME} "${LIB_OPTION}" release ${CMSDK_ARCH})
+  set_property(TARGET ${RELEASE_TARGET}
+    PROPERTY
+    CXX_STANDARD 17
+    )
+  set_property(TARGET ${RELEASE_TARGET}
+    PROPERTY
+    CXX_STANDARD_REQUIRED ON
+    )
+  set_property(TARGET ${RELEASE_TARGET}
+    PROPERTY
+    CXX_EXTENSIONS ON
+    )
 
-	#cmsdk_add_subdirectory(PRIVATE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src)
-	cmsdk_add_out_of_source_directory(PRIVATE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src ${RELEASE_TARGET}_src)
-	cmsdk_add_out_of_source_directory(INTERFACE_SOURCES include ${RELEASE_TARGET}_include)
-	#cmsdk_add_subdirectory(INTERFACE_SOURCES include)
+  target_sources(${RELEASE_TARGET}
+    PRIVATE
+    ${INTERFACE_SOURCES}
+    ${PRIVATE_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.cmake
+    )
 
+  target_include_directories(${RELEASE_TARGET}
+    PUBLIC
+    $<INSTALL_INTERFACE:include/${NAME}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    PRIVATE
+    )
 
-	add_library(${RELEASE_TARGET} STATIC)
+  cmsdk2_add_library(
+    NAME ${NAME}
+    TARGET DEBUG_TARGET
+    OPTION "${LIB_OPTION}"
+    CONFIG debug
+    ARCH ${CMSDK_ARCH}
+  )
 
-	set_property(TARGET ${RELEASE_TARGET}
-		PROPERTY
-		CXX_STANDARD 17
-		)
+  target_compile_options(${RELEASE_TARGET}
+    PRIVATE
+    -Os
+    )
 
-	set_property(TARGET ${RELEASE_TARGET}
-		PROPERTY
-		CXX_STANDARD_REQUIRED ON
-		)
+  cmsdk2_copy_target(
+    SOURCE ${RELEASE_TARGET}
+    DESTINATION ${DEBUG_TARGET}
+  )
 
-	set_property(TARGET ${RELEASE_TARGET}
-		PROPERTY
-		CXX_EXTENSIONS ON
-		)
+  target_compile_options(${DEBUG_TARGET}
+    PRIVATE
+    -g
+    )
 
-	target_sources(${RELEASE_TARGET}
-		PRIVATE
-		${INTERFACE_SOURCES}
-		${PRIVATE_SOURCES}
-		${CMAKE_CURRENT_SOURCE_DIR}/${LOCAL_NAME}.cmake
-		)
+  string(REPLACE ":" " " DEPENDENCY_LIST "${DEPENDENCIES}")
+  cmsdk2_library_add_targets_for_architectures(
+		TARGET ${DEBUG_TARGET}
+		DEPENDENCIES ${DEPENDENCY_LIST}
+    TARGETS DEBUG_TARGET_LIST
+	)
 
+  cmsdk2_library_add_targets_for_architectures(
+    TARGET ${RELEASE_TARGET}
+    DEPENDENCIES ${DEPENDENCY_LIST}
+    TARGETS RELEASE_TARGET_LIST
+  )
+  set(TARGET_LIST ${RELEASE_TARGET_LIST} ${DEBUG_TARGET_LIST})
 
-	target_include_directories(${RELEASE_TARGET}
-		PUBLIC
-		$<INSTALL_INTERFACE:include/${LOCAL_NAME}>
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-		PRIVATE
-		)
+  install(DIRECTORY include/
+    DESTINATION include/${NAME}
+    PATTERN CMakelists.txt EXCLUDE)
 
-	cmsdk_library_target(DEBUG ${LOCAL_NAME} "${LIB_OPTION}" debug ${CMSDK_ARCH})
-	add_library(${DEBUG_TARGET} STATIC)
-	cmsdk_copy_target(${RELEASE_TARGET} ${DEBUG_TARGET})
+  install(FILES ${NAME}.cmake
+    DESTINATION ${CMSDK_LOCAL_PATH}/cmake/targets)
+endmacro()
 
-	target_compile_options(${DEBUG_TARGET}
-		PRIVATE
-		-Os
-		)
+function(api2_add_library)
+  set(OPTIONS "")
+  set(PREFIX ARGS)
+  set(ONE_VALUE_ARGS NAME OPTION TARGETS)
+  set(MULTI_VALUE_ARGS DEPENDENCIES)
+  cmake_parse_arguments(PARSE_ARGV 0 ${PREFIX} "${OPTIONS}" "${ONE_VALUE_ARGS}" "${MULTI_VALUE_ARGS}")
 
-	cmsdk_library_add_arch_targets("${DEBUG_OPTIONS}" ${CMSDK_ARCH} "${DEPENDENCIES}")
+  set(REQUIRED_ARGS NAME DEPENDENCIES)
+  foreach(VALUE ${REQUIRED_ARGS})
+    if(NOT ARGS_${VALUE})
+      message(FATAL_ERROR "api2_add_api_library_option requires ${VALUE}")
+    endif()
+  endforeach()
 
-	target_compile_options(${RELEASE_TARGET}
-		PRIVATE
-		-Os
-		)
-
-	cmsdk_library_add_arch_targets("${RELEASE_OPTIONS}" ${CMSDK_ARCH} "${DEPENDENCIES}")
-
-	install(DIRECTORY include/
-		DESTINATION include/${LOCAL_NAME}
-		PATTERN CMakelists.txt EXCLUDE)
-
-	install(FILES ${LOCAL_NAME}.cmake
-		DESTINATION ${CMSDK_LOCAL_PATH}/cmake/targets)
-
-
-
+  api_add_api_library_option(${ARGS_NAME} "${ARGS_DEPENDENCIES}" "${ARGS_OPTION}")
+  if(ARGS_TARGETS)
+    set(${ARGS_TARGETS} ${TARGET_LIST} PARENT_SCOPE)
+  endif()
 endfunction()
 
 function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
 
-	set(LOCAL_NAME ${NAME})
+  cmsdk2_app_add_executable(
+    NAME ${NAME}
+    OPTION unittest
+    CONFIG release
+    ARCH ${CMSDK_ARCH}
+    TARGET TEST_TARGET
+  )
 
-	cmsdk_app_target(RELEASE ${LOCAL_NAME} "unittest" release ${CMSDK_ARCH})
-  message(STATUS "API UnitTest Executable ${RELEASE_TARGET}")
-	add_executable(${RELEASE_TARGET})
-	add_dependencies(API_test ${RELEASE_TARGET})
-	target_sources(${RELEASE_TARGET}
-		PRIVATE
-		${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
-		${CMAKE_CURRENT_SOURCE_DIR}/src/sl_config.h
-		${CMAKE_CURRENT_SOURCE_DIR}/src/UnitTest.hpp
-		)
+  set(MAIN_COMMON ${CMAKE_CURRENT_SOURCE_DIR}/../common/main.cpp)
+  if(EXISTS ${MAIN_COMMON})
+    set(MAIN_CPP ${MAIN_COMMON})
+  else()
+    set(MAIN_CPP ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+  endif()
 
-	target_compile_options(${RELEASE_TARGET}
-		PRIVATE
-		-Os
-		)
+  add_dependencies(API_test ${TEST_TARGET})
+  target_sources(${TEST_TARGET}
+    PRIVATE
+    ${MAIN_CPP}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/sl_config.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/UnitTest.hpp
+    )
 
-	set_property(TARGET ${RELEASE_TARGET} PROPERTY CXX_STANDARD 17)
+  target_include_directories(${TEST_TARGET}
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
 
-	set(CTEST_OUTPUT_ON_FAILURE ON)
+  target_compile_options(${TEST_TARGET}
+    PRIVATE
+    -Os
+    )
 
-	cmsdk_app_add_arch_targets("${RELEASE_OPTIONS}" "${DEPENDENCIES}" ${RAM_SIZE})
+  set_property(TARGET ${TEST_TARGET} PROPERTY CXX_STANDARD 17)
 
-	target_compile_options(${RELEASE_TARGET}
-		PRIVATE
-		-Os
-		)
+  set(CTEST_OUTPUT_ON_FAILURE ON)
 
-	if(CMSDK_IS_LINK)
-		cmsdk_add_test(${LOCAL_NAME} ${LIB_OPTION}unittest release)
-	endif()
+  cmsdk2_app_add_targets_for_architectures(
+    TARGET ${TEST_TARGET}
+    RAM_SIZE ${RAM_SIZE}
+    DEPENDENCIES "${DEPENDENCIES}"
+  )
 
+  target_compile_options(${TEST_TARGET}
+    PRIVATE
+    -Os
+    )
+
+  if(${CMSDK_IS_LINK})
+    cmsdk2_add_test(TARGET ${TEST_TARGET})
+  endif()
+
+endfunction()
+
+function(api2_add_test_executable)
+  set(OPTIONS "")
+  set(PREFIX ARGS)
+  set(ONE_VALUE_ARGS NAME RAM_SIZE)
+  set(MULTI_VALUE_ARGS DEPENDENCIES)
+  cmake_parse_arguments(PARSE_ARGV 0 ${PREFIX} "${OPTIONS}" "${ONE_VALUE_ARGS}" "${MULTI_VALUE_ARGS}")
+
+  set(REQUIRED_ARGS NAME DEPENDENCIES)
+  foreach(VALUE ${REQUIRED_ARGS})
+    if(NOT ARGS_${VALUE})
+      message(FATAL_ERROR "api2_add_test_executable requires ${VALUE}")
+    endif()
+  endforeach()
+
+  api_add_test_executable(${ARGS_NAME} ${ARGS_RAM_SIZE} "${ARGS_DEPENDENCIES}")
 endfunction()

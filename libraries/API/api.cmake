@@ -1,7 +1,6 @@
 
 
-macro(api_target NAME DIRECTORIES)
-
+macro(api_target NAME DEPENDENCIES)
   project(
     ${NAME}
     VERSION ${API_PROJECT_VERSION}
@@ -9,12 +8,20 @@ macro(api_target NAME DIRECTORIES)
 
   install(DIRECTORY include/ DESTINATION include/${NAME})
 
-  cmsdk_add_subdirectory(PRIVATE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src)
-  cmsdk_add_subdirectory(PUBLIC_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/include)
-  set(FORMAT_LIST ${PRIVATE_SOURCES} ${PUBLIC_SOURCES})
+  cmsdk2_add_sources(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
+    LIST SOURCES)
 
-  cmsdk_library_target(RELEASE ${NAME} "" release ${CMSDK_ARCH})
-  add_library(${RELEASE_TARGET} STATIC)
+  cmsdk2_add_sources(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include
+    LIST HEADERS)
+
+  cmsdk2_add_library(
+    TARGET RELEASE_TARGET
+    NAME ${NAME}
+    CONFIG release
+    ARCH ${CMSDK_ARCH}
+  )
 
   set_property(TARGET ${RELEASE_TARGET}
     PROPERTY
@@ -33,8 +40,8 @@ macro(api_target NAME DIRECTORIES)
 
   target_sources(${RELEASE_TARGET}
     PRIVATE
-    ${PUBLIC_SOURCES}
-    ${PRIVATE_SOURCES}
+    ${HEADERS}
+    ${SOURCES}
     )
 
   target_compile_definitions(${RELEASE_TARGET}
@@ -57,24 +64,14 @@ macro(api_target NAME DIRECTORIES)
   endif()
 
   target_include_directories(${RELEASE_TARGET}
-    INTERFACE
+    PUBLIC
     $<INSTALL_INTERFACE:include/${NAME}>
+    INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
     )
 
-  foreach(DIRECTORY ${DIRECTORIES})
-    target_include_directories(${RELEASE_TARGET}
-      INTERFACE
-      $<INSTALL_INTERFACE:include/${DIRECTORY}>
-      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../${DIRECTORY}/include>
-      )
-  endforeach(DIRECTORY)
-
   string(COMPARE EQUAL ${NAME} API IS_API)
-  set(LOCAL_DIRECTORIES ${DIRECTORIES})
   if(IS_API AND CMSDK_IS_ARM)
-    #list(APPEND LOCAL_DIRECTORIES StratifyOS_crt)
     target_compile_options(${RELEASE_TARGET}
       INTERFACE
       -mlong-calls)
@@ -87,12 +84,27 @@ macro(api_target NAME DIRECTORIES)
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     )
 
-  cmsdk_library_target(DEBUG ${NAME} "" debug ${CMSDK_ARCH})
-  add_library(${DEBUG_TARGET} STATIC)
-  cmsdk_copy_target(${RELEASE_TARGET} ${DEBUG_TARGET})
+  cmsdk2_add_library(
+    TARGET DEBUG_TARGET
+    NAME ${NAME}
+    CONFIG debug
+    ARCH ${CMSDK_ARCH}
+  )
 
-  cmsdk_library_add_arch_targets("${RELEASE_OPTIONS}" ${CMSDK_ARCH} "${LOCAL_DIRECTORIES}")
-  cmsdk_library_add_arch_targets("${DEBUG_OPTIONS}" ${CMSDK_ARCH} "${LOCAL_DIRECTORIES}")
+  cmsdk2_copy_target(
+    SOURCE ${RELEASE_TARGET}
+    DESTINATION ${DEBUG_TARGET}
+  )
+
+  string(REPLACE ":" " " DEPENDENCY_LIST "${DEPENDENCIES}")
+  cmsdk2_library_add_targets_for_architectures(
+    TARGET ${RELEASE_TARGET}
+    DEPENDENCIES ${DEPENDENCY_LIST}
+  )
+  cmsdk2_library_add_targets_for_architectures(
+    TARGET ${DEBUG_TARGET}
+    DEPENDENCIES ${DEPENDENCY_LIST}
+  )
 
   if(IS_API)
     get_target_property(RELEASE_LINK_LIBS ${RELEASE_TARGET} INTERFACE_LINK_LIBRARIES)
@@ -111,4 +123,25 @@ macro(api_target NAME DIRECTORIES)
     endif()
   endif()
 endmacro()
+
+function(api2_target)
+  set(OPTIONS "")
+  set(PREFIX ARGS)
+  set(ONE_VALUE_ARGS NAME TARGETS)
+  set(MULTI_VALUE_ARGS DEPENDENCIES)
+  cmake_parse_arguments(PARSE_ARGV 0 ${PREFIX} "${OPTIONS}" "${ONE_VALUE_ARGS}" "${MULTI_VALUE_ARGS}")
+
+  set(REQUIRED_ARGS NAME)
+  foreach(VALUE ${REQUIRED_ARGS})
+    if(NOT ARGS_${VALUE})
+      message(FATAL_ERROR "api2_target requires ${VALUE}")
+    endif()
+  endforeach()
+
+  api_target(${ARGS_NAME} "${ARGS_DEPENDENCIES}")
+  if(ARGS_TARGETS)
+    set(${ARGS_TARGETS} ${RELEASE_TARGET} ${DEBUG_TARGET} PARENT_SCOPE)
+  endif()
+
+endfunction()
 

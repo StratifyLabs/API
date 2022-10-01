@@ -17,6 +17,7 @@
   - Strip leading whitespace
   - Truncate a string view
   - `contains_any_of` for both finding characters and strings (using a template)
+- Use `cmsdk2_` functions for build
 
 ## Bug Fixes
 

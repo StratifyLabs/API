@@ -1,10 +1,5 @@
-cmake_minimum_required(VERSION 3.12)
-
 include(${CMAKE_CURRENT_LIST_DIR}/../API/api.cmake)
 
-set(DIRECTORIES
-  ChronoAPI
-  PrinterAPI
-  )
-
-api_target(FsAPI "${DIRECTORIES}")
+api2_target(
+  NAME FsAPI
+  DEPENDENCIES ChronoAPI PrinterAPI)
