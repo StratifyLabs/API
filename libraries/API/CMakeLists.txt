@@ -3,10 +3,15 @@ api2_target(
   NAME API
   TARGETS TARGETS)
 foreach(TARGET ${TARGETS})
+  message(STATUS "API has target ${TARGET}")
   target_sources(${TARGET}
     PRIVATE
     api.cmake
     ../API.cmake)
+  if(API_PUBLIC_COMPILE_OPTIONS)
+    message(STATUS "Apply: ${API_PUBLIC_COMPILE_OPTIONS} to ${TARGET} as PUBLIC")
+    target_compile_options(${TARGET} PUBLIC ${API_PUBLIC_COMPILE_OPTIONS})
+  endif()
   if(${CMSDK_IS_ARM})
     get_target_property(LINK_LIBS ${TARGET} INTERFACE_LINK_LIBRARIES)
     get_target_property(CONFIG ${TARGET} CMSDK_PROPERTY_CONFIG)

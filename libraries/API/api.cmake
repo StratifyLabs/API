@@ -35,9 +35,6 @@ macro(api_target NAME DEPENDENCIES)
     __PROJECT_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
     __PROJECT_VERSION_MINOR=${PROJECT_VERSION_MINOR}
     __PROJECT_VERSION_PATCH=${PROJECT_VERSION_PATCH})
-  target_compile_options(${RELEASE_TARGET}
-    PRIVATE
-    -Os)
   if(CMSDK_IS_ARM)
     target_compile_options(${RELEASE_TARGET}
       PUBLIC
@@ -59,8 +56,8 @@ macro(api_target NAME DEPENDENCIES)
     CONFIG debug
     ARCH ${CMSDK_ARCH})
   string(COMPARE EQUAL ${NAME} API IS_API)
-  if(IS_API)
-    target_compile_options(${DEBUG_TARGET} PUBLIC -g)
+  if(IS_API AND API_PUBLIC_DEBUG_COMPILE_OPTIONS)
+    target_compile_options(${DEBUG_TARGET} PUBLIC ${API_PUBLIC_DEBUG_COMPILE_OPTIONS})
   endif()
   cmsdk2_copy_target(
     SOURCE ${RELEASE_TARGET}

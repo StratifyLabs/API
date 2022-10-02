@@ -1,6 +1,6 @@
 set(API_CONFIG_LIST release debug)
 
-if(NOT DEFINED API_IS_SDK)
+if(API_INCLUDE_TARGETS)
   if(CMSDK_IS_ARM)
     #cmsdk_include_target(StratifyOS_iface "${API_CONFIG_LIST}")
     cmsdk_include_target(StratifyOS_crt "${API_CONFIG_LIST}")
@@ -14,10 +14,6 @@ if(NOT DEFINED API_IS_SDK)
   cmsdk_include_target(ThreadAPI "${API_CONFIG_LIST}")
   cmsdk_include_target(TestAPI "${API_CONFIG_LIST}")
 endif()
-
-function(api_add_api_library NAME DEPENDENCIES)
-  api_add_api_library_option(${NAME} "${DEPENDENCIES}" "")
-endfunction()
 
 macro(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
   cmsdk2_add_library(
@@ -59,9 +55,6 @@ macro(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
     OPTION "${LIB_OPTION}"
     CONFIG debug
     ARCH ${CMSDK_ARCH})
-  target_compile_options(${RELEASE_TARGET}
-    PRIVATE
-    -Os)
   cmsdk2_copy_target(
     SOURCE ${RELEASE_TARGET}
     DESTINATION ${DEBUG_TARGET})
