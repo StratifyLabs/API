@@ -212,12 +212,7 @@ public:
     return &m_progress_callback;
   }
 
-  static bool update_progress_callback(void *context, int progress, int total) {
-    API_ASSERT(context != nullptr);
-    return static_cast<Printer *>(context)->update_progress(progress, total);
-  }
-
-  bool update_progress(int progress, int total);
+  auto update_progress(int progress, int total) -> api::ProgressCallback::IsAbort;
 
   Printer &set_progress_key(var::StringView progress_key) {
     m_progress_state = 0;

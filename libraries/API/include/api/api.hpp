@@ -442,6 +442,10 @@ public:                                                                        \
  */
 class ProgressCallback {
 public:
+  enum class IsAbort {
+    no, yes
+  };
+
   /*! \details Defines the callback function prototype.
    *
    * The function has three arguments.  The first
@@ -454,12 +458,13 @@ public:
    * shown as indeterminate.
    *
    */
-  using callback_t = bool (*)(void *, int, int);
+  using Callback = Function<IsAbort(int,int)>;
+
 
   /*! \details Constructs an empty object. */
-  ProgressCallback();
+  ProgressCallback(Callback callback);
 
-  static int indeterminate_progress_total() { return -1; }
+  static auto indeterminate_progress_total() { return -1; }
 
   /*! \details Executes the callback if it is valid.
    *
@@ -471,13 +476,12 @@ public:
    * @return true to abort the operation or false to continue as normal
    *
    */
-  bool update(int value, int total) const;
-
-  static int update_function(const void *context, int value, int total);
+  auto update(int value, int total) const -> IsAbort;
 
 private:
-  API_AF(ProgressCallback, callback_t, callback, nullptr);
-  API_AF(ProgressCallback, void *, context, nullptr);
+  API_AF(ProgressCallback, Callback, callback, {});
+  //API_AF(ProgressCallback, void *, context, nullptr);
+
 };
 
 /*! \sa Range */

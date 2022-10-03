@@ -16,9 +16,9 @@ unsigned int printer::Printer::m_default_color = static_cast<unsigned int>(-1);
 
 using namespace printer;
 
-Printer::Printer() {
-  m_progress_callback.set_callback(Printer::update_progress_callback)
-    .set_context(this);
+Printer::Printer()
+  : m_progress_callback(
+    [&](int value, int total) { return update_progress(value, total); }) {
 #if defined __win32
   if (m_default_color == static_cast<unsigned int>(-1)) {
     CONSOLE_SCREEN_BUFFER_INFO info;
@@ -460,7 +460,8 @@ u32 Printer::get_bitmap_pixel_color(char c, u8 bits_per_pixel) {
   return 255;
 }
 
-bool Printer::update_progress(int progress, int total) {
+auto Printer::update_progress(int progress, int total)
+  -> api::ProgressCallback::IsAbort {
   const u32 width = m_progress_width;
 
   if (verbose_level() >= Level::info) {
@@ -543,7 +544,7 @@ bool Printer::update_progress(int progress, int total) {
     }
   }
 
-  return false;
+  return api::ProgressCallback::IsAbort::no;
 }
 
 Printer &Printer::key(const var::StringView key, const var::String &a) {
@@ -637,7 +638,7 @@ Printer &Printer::operator<<(const var::DataInfo &a) {
 Printer &Printer::operator<<(const var::View a) {
   const auto o_flags = flags();
 
-  const auto count = [a,o_flags]() {
+  const auto count = [a, o_flags]() {
     const auto size = a.size();
     if (o_flags & Flags::width_32) {
       return size / 4;

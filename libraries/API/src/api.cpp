@@ -13,7 +13,6 @@
 #include <cstdio>
 #include <cstring>
 
-
 using namespace api;
 
 const char *ApiInfo::version() {
@@ -27,8 +26,8 @@ void api::api_assert(bool value, const char *function, int line) {
   if (!value) {
     printf("assertion %s():%d\n", function, line);
 #if defined __link && !defined __win32
-    std::array<void*,200> array = {};
-    const auto size= backtrace(array.data(), array.size());
+    std::array<void *, 200> array = {};
+    const auto size = backtrace(array.data(), array.size());
     backtrace_symbols_fd(array.data(), size, fileno(stderr));
 #endif
 #if defined __link
@@ -42,14 +41,14 @@ PrivateExecutionContext ExecutionContext::m_private_context;
 
 enum class DoLock { unlock, lock };
 
-static void error_mutex_handler(DoLock do_lock){
+static void error_mutex_handler(DoLock do_lock) {
   static pthread_mutex_t mutex = {};
   static bool is_initialized = false;
-  if( !is_initialized ){
+  if (!is_initialized) {
     is_initialized = true;
     pthread_mutex_init(&mutex, nullptr);
   }
-  if( do_lock == DoLock::lock ){
+  if (do_lock == DoLock::lock) {
     pthread_mutex_lock(&mutex);
   } else {
     pthread_mutex_unlock(&mutex);
@@ -80,7 +79,7 @@ Error &PrivateExecutionContext::get_error() {
   }
 
   m_error_list->emplace_back(Error(&(errno)));
-  auto & result =  m_error_list->back();
+  auto &result = m_error_list->back();
   error_mutex_handler(DoLock::unlock);
   return result;
 }
@@ -124,31 +123,22 @@ void ExecutionContext::exit_fatal(const char *message) {
   exit(1);
 }
 
-ProgressCallback::ProgressCallback() = default;
+ProgressCallback::ProgressCallback(Callback callback)
+  : m_callback(std::move(callback)) {}
 
-bool ProgressCallback::update(int value, int total) const {
+auto ProgressCallback::update(int value, int total) const -> IsAbort {
   if (m_callback) {
-    return m_callback(context(), value, total);
+    return m_callback(value, total);
   }
   // do not abort the operation
-  return false;
+  return IsAbort::no;
 }
-
-int ProgressCallback::update_function(
-  const void *context,
-  int value,
-  int total) {
-  if (context == nullptr) {
-    return 0;
-  }
-  return reinterpret_cast<const ProgressCallback*>(context)->update(value, total);
-}
-
 
 const char *Demangler::demangle(const char *input) {
 #if defined __link
-  m_buffer.reset(static_cast<char*>(malloc(m_length)));
-  m_last.reset(abi::__cxa_demangle(input, m_buffer.get(), &m_length, &m_status));
+  m_buffer.reset(static_cast<char *>(malloc(m_length)));
+  m_last.reset(
+    abi::__cxa_demangle(input, m_buffer.get(), &m_length, &m_status));
 #endif
   return m_last.get();
 }

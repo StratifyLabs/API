@@ -172,7 +172,7 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
       options.progress_callback()
       && options.progress_callback()->update(
         int(size_processed),
-        int(file_size))) {
+        int(file_size)) == api::ProgressCallback::IsAbort::yes) {
       options.progress_callback()->update(0, 0);
       API_SYSTEM_CALL("aborted", size_processed);
       return *this;
@@ -248,7 +248,7 @@ bool FileObject::verify(const FileObject &source_file, const Verify &options)
       options.progress_callback()
       && options.progress_callback()->update(
         int(size_processed),
-        int(verify_size))) {
+        int(verify_size)) == api::ProgressCallback::IsAbort::yes) {
       options.progress_callback()->update(0, 0);
       API_SYSTEM_CALL("aborted", size_processed);
       return false;

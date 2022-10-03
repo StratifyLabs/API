@@ -4,6 +4,8 @@
 
 ## New Features
 
+- WARNING BREAKING CHANGE: Use api::Function with api::ProgressCallback instead of `context` and `callback`
+  - This is a much safer alternative (really more of a bug fix)
 - Add option to execute threads with a lambda
 - WARNING Breaking API Change: `fs::LambdaFile` using `api::Function` rather than a c-style function pointer
   - `context` was passed by now must be captured in the lambda
@@ -11,7 +13,7 @@
 - Add ignore between `(){}[]<>` to `var::Tokenizer`
 - Add `var::Base64::is_valid()` to check to see if a string view is valid Base64
 - Add `var::OrderedSet`, `var::UnorderedSet`, `var::OrderedMultiset` and `var::UnorderedMultiset`
-- Update `var::Tokenizer` to support delimeters as characters or as a single string
+- Update `var::Tokenizer` to support delimiters as characters or as a single string
 - Add additional functions and documentation to `var::StringView`
   - Strip trailing whitespace
   - Strip leading whitespace
@@ -26,7 +28,7 @@
 - Fixed a bug with `var::StringView::find_last_not_of` assigning the end position to `0`.
 - Fixed a bug with `fs::FileObject::get_line()`
 - Fixed a build error with the `VarAPI` Unit test
-- Fixed crashing bug with multithreaded apps and error handling
+- Fixed crashing bug with multi-threaded apps and error handling
 - Fixed bug with `sys::Process` where `thread.cancel()` was causing a crash
 - Fixed a build error with `var::Stack`
 
