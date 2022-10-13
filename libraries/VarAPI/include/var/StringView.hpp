@@ -155,7 +155,7 @@ public:
   API_NO_DISCARD StringView get_substring_at_position(size_t position) const;
   API_NO_DISCARD StringView get_substring_with_length(size_t length) const;
 
-  API_NO_DISCARD StringViewList split(StringView delimeters) const;
+  API_NO_DISCARD StringViewList split(StringView delimiters) const;
 
   API_NO_DISCARD StringView get_encapsulated(StringView start) const;
 

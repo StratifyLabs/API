@@ -41,8 +41,8 @@ StringView StringView::get_substring_with_length(size_t length) const {
   return StringView{m_string_view.substr(0, length)};
 }
 
-StringViewList StringView::split(StringView delimeters) const {
-  return Tokenizer(*this, Tokenizer::Construct().set_delimeters(delimeters))
+StringViewList StringView::split(StringView delimiters) const {
+  return Tokenizer(*this, Tokenizer::Construct().set_delimeters(delimiters))
     .list();
 }
 
