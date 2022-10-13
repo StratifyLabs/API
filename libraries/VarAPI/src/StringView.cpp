@@ -47,7 +47,7 @@ StringViewList StringView::split(StringView delimeters) const {
 }
 
 float StringView::to_float() const {
-  return ::atoff(NumberString(*this).cstring());
+  return float(::atoff(NumberString(*this).cstring()));
 }
 
 StringView::Base StringView::get_base(Base input) const {
@@ -101,24 +101,67 @@ bool StringView::operator!=(const String &a) const {
 }
 
 bool StringView::contains_any_of(const StringView a) const {
-  for(const auto c: a){
-    if( find(StringView{&c,1}) != npos ){
+  for (const auto c : a) {
+    if (find(StringView{&c, 1}) != npos) {
       return true;
     }
   }
   return false;
 }
-StringView &StringView::strip_leading_containing(StringView value) {
+StringView &StringView::strip_leading_containing(const StringView value) {
   const auto position = find_first_not_of(value);
-  if( position != npos ){
+  if (position != npos) {
     pop_front(position);
   }
   return *this;
 }
-StringView &StringView::strip_trailing_containing(StringView value) {
-  const auto position = find_last_not_of(whitespace());
-  if( position != npos ){
-    truncate(position+1);
+StringView &StringView::strip_trailing_containing(const StringView value) {
+  const auto position = find_last_not_of(value);
+  if (position != npos) {
+    truncate(position + 1);
   }
   return *this;
+}
+
+StringView StringView::get_encapsulated(const StringView start) const {
+  if (!start) {
+    return {};
+  }
+  const auto start_character = start.back();
+  const auto end = get_closing_character(start_character);
+  const auto start_position = find(start);
+  if (start_position == npos) {
+    return {};
+  }
+  auto cursor = start_position;
+  cursor += start.length();
+  const auto result_position = cursor;
+  auto count = 1;
+  auto result_length = size_t{};
+  while ((cursor < length()) && (count)) {
+    if (at(cursor) == end) {
+      --count;
+    } else if (end != start_character && at(cursor) == start_character) {
+      ++count;
+    }
+    if( count ) {
+      ++cursor;
+      ++result_length;
+    }
+  }
+  return StringView{*this}.pop_front(result_position).truncate(result_length);
+}
+
+char StringView::get_closing_character(char input) {
+  switch (input) {
+  case '{':
+    return '}';
+  case '[':
+    return ']';
+  case '(':
+    return ')';
+  case '<':
+    return '>';
+  }
+  return input;
 }

@@ -4,6 +4,7 @@
 
 ## New Features
 
+- Add `StringView::get_encapsulated` to find encapsulated tokens in a string
 - WARNING BREAKING CHANGE: Use api::Function with api::ProgressCallback instead of `context` and `callback`
   - This is a much safer alternative (really more of a bug fix)
 - Add option to execute threads with a lambda
@@ -11,6 +12,7 @@
   - `context` was passed by now must be captured in the lambda
   - This won't affect many people. `fs::LambdaFile` is not frequently used
 - Add ignore between `(){}[]<>` to `var::Tokenizer`
+  - Also handles recursive symbols `${${test}}`
 - Add `var::Base64::is_valid()` to check to see if a string view is valid Base64
 - Add `var::OrderedSet`, `var::UnorderedSet`, `var::OrderedMultiset` and `var::UnorderedMultiset`
 - Update `var::Tokenizer` to support delimiters as characters or as a single string

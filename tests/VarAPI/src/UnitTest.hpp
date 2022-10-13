@@ -481,18 +481,18 @@ public:
         "0,\"1,2\"",
         T::Construct().set_delimeters(",").set_ignore_between("\""));
       TEST_ASSERT(t.count() == 2);
-      TEST_EXPECT(t.at(0) == "0");
-      TEST_EXPECT(t.at(1) == "\"1,2\"");
+      TEST_ASSERT(t.at(0) == "0");
+      TEST_ASSERT(t.at(1) == "\"1,2\"");
     }
 
     {
       T t(
         "0,1,2,3,4,5",
         T::Construct().set_delimeters(",").set_maximum_delimeter_count(2));
-      TEST_EXPECT(t.count() == 3);
-      TEST_EXPECT(t.at(0) == "0");
-      TEST_EXPECT(t.at(1) == "1");
-      TEST_EXPECT(t.at(2) == "2,3,4,5");
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "0");
+      TEST_ASSERT(t.at(1) == "1");
+      TEST_ASSERT(t.at(2) == "2,3,4,5");
     }
 
     {
@@ -502,10 +502,11 @@ public:
           .set_delimeters(",")
           .set_maximum_delimeter_count(2)
           .set_ignore_between("'"));
-      TEST_EXPECT(t.count() == 3);
-      TEST_EXPECT(t.at(0) == "0");
-      TEST_EXPECT(t.at(1) == "'1,2,3'");
-      TEST_EXPECT(t.at(2) == "4,5");
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "0");
+      printf("value: %s\n", String{t.at(1)}.cstring());
+      TEST_ASSERT(t.at(1) == "'1,2,3'");
+      TEST_ASSERT(t.at(2) == "4,5");
     }
     {
       T t(
@@ -514,10 +515,10 @@ public:
           .set_delimeters(",")
           .set_maximum_delimeter_count(2)
           .set_ignore_between("{"));
-      TEST_EXPECT(t.count() == 3);
-      TEST_EXPECT(t.at(0) == "0");
-      TEST_EXPECT(t.at(1) == "{1,2,3}");
-      TEST_EXPECT(t.at(2) == "4,5");
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "0");
+      TEST_ASSERT(t.at(1) == "{1,2,3}");
+      TEST_ASSERT(t.at(2) == "4,5");
     }
     {
       T t(
@@ -526,10 +527,10 @@ public:
           .set_delimeters(",")
           .set_maximum_delimeter_count(2)
           .set_ignore_between("("));
-      TEST_EXPECT(t.count() == 3);
-      TEST_EXPECT(t.at(0) == "0");
-      TEST_EXPECT(t.at(1) == "(1,2,3)");
-      TEST_EXPECT(t.at(2) == "4,5");
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "0");
+      TEST_ASSERT(t.at(1) == "(1,2,3)");
+      TEST_ASSERT(t.at(2) == "4,5");
     }
 
     {
@@ -539,54 +540,78 @@ public:
           .set_delimeters(",")
           .set_maximum_delimeter_count(2)
           .set_ignore_between("["));
-      TEST_EXPECT(t.count() == 3);
-      TEST_EXPECT(t.at(0) == "0");
-      TEST_EXPECT(t.at(1) == "[1,2,3]");
-      TEST_EXPECT(t.at(2) == "4,5");
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "0");
+      TEST_ASSERT(t.at(1) == "[1,2,3]");
+      TEST_ASSERT(t.at(2) == "4,5");
+    }
+
+    {
+      T t(
+        "0,[1,[2],3],[4,[5]]",
+        T::Construct()
+          .set_delimeters(",")
+          .set_maximum_delimeter_count(2)
+          .set_ignore_between("["));
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "0");
+      TEST_ASSERT(t.at(1) == "[1,[2],3]");
+      TEST_ASSERT(t.at(2) == "[4,[5]]");
+    }
+
+    {
+      T t(
+        "1,{2,5},{{3,10,12}},${test ${this ${that 1,2,3}}",
+        T::Construct().set_delimeters(",").set_ignore_between("{"));
+      TEST_ASSERT(t.count() == 4);
+      TEST_ASSERT(t.at(0) == "1");
+      TEST_ASSERT(t.at(1) == "{2,5}");
+      TEST_ASSERT(t.at(2) == "{{3,10,12}}");
+      TEST_ASSERT(t.at(3) == "${test ${this ${that 1,2,3}}");
     }
 
     {
       auto t = T(
-        "0,<1,2,3>,4,5",
+        "0,<1,(2),3>,4,<<5>>",
         T::Construct()
           .set_delimeters(",")
           .set_maximum_delimeter_count(2)
           .set_ignore_between("<"));
-      TEST_EXPECT(t.count() == 3);
-      TEST_EXPECT(t.at(0) == "0");
-      TEST_EXPECT(t.at(1) == "<1,2,3>");
-      TEST_EXPECT(t.at(2) == "4,5");
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "0");
+      TEST_ASSERT(t.at(1) == "<1,(2),3>");
+      TEST_ASSERT(t.at(2) == "4,<<5>>");
     }
 
     {
       T t("0,1,,,2", T::Construct().set_delimeters(","));
-      TEST_EXPECT(t.count() == 5);
-      TEST_EXPECT(t.at(0) == "0");
-      TEST_EXPECT(t.at(1) == "1");
-      TEST_EXPECT(t.at(2) == "");
-      TEST_EXPECT(t.at(3) == "");
-      TEST_EXPECT(t.at(4) == "2");
+      TEST_ASSERT(t.count() == 5);
+      TEST_ASSERT(t.at(0) == "0");
+      TEST_ASSERT(t.at(1) == "1");
+      TEST_ASSERT(t.at(2) == "");
+      TEST_ASSERT(t.at(3) == "");
+      TEST_ASSERT(t.at(4) == "2");
     }
 
     {
       T t(
         "0,1,Testing'123'Testing,2",
         T::Construct().set_delimeters(",").set_ignore_between("'"));
-      TEST_EXPECT(t.count() == 4);
-      TEST_EXPECT(t.at(0) == "0");
-      TEST_EXPECT(t.at(1) == "1");
-      TEST_EXPECT(t.at(2) == "Testing'123'Testing");
-      TEST_EXPECT(t.at(3) == "2");
+      TEST_ASSERT(t.count() == 4);
+      TEST_ASSERT(t.at(0) == "0");
+      TEST_ASSERT(t.at(1) == "1");
+      TEST_ASSERT(t.at(2) == "Testing'123'Testing");
+      TEST_ASSERT(t.at(3) == "2");
     }
 
     {
       T t(
         "'0,1',Testing'123'Testing,2",
         T::Construct().set_delimeters(",").set_ignore_between("'"));
-      TEST_EXPECT(t.count() == 3);
-      TEST_EXPECT(t.at(0) == "'0,1'");
-      TEST_EXPECT(t.at(1) == "Testing'123'Testing");
-      TEST_EXPECT(t.at(2) == "2");
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "'0,1'");
+      TEST_ASSERT(t.at(1) == "Testing'123'Testing");
+      TEST_ASSERT(t.at(2) == "2");
     }
 
     {
@@ -865,28 +890,42 @@ public:
     }
 
     {
-      SV sv("testing");
-      TEST_EXPECT(!sv.is_empty());
-      TEST_EXPECT(!sv.is_null());
-      TEST_EXPECT(sv.is_null_terminated());
-      TEST_EXPECT(sv.data() != nullptr);
-      TEST_EXPECT(sv.data()[1] == 'e');
-      TEST_EXPECT(sv == "testing");
-      TEST_EXPECT(!(sv != "testing"));
-      TEST_EXPECT(sv.front() == 't');
-      TEST_EXPECT(sv.back() == 'g');
-      TEST_EXPECT(sv.at(0) == 't');
-      TEST_EXPECT(sv.at(1) == 'e');
-      TEST_EXPECT(sv.at(2) == 's');
-      TEST_EXPECT(sv.at(3) == 't');
-      TEST_EXPECT(sv.at(4) == 'i');
-      TEST_EXPECT(sv.at(5) == 'n');
-      TEST_EXPECT(sv.at(6) == 'g');
-      TEST_EXPECT(sv.length() == (sizeof("testing") - 1));
+      SV sv("${test ${wildcard 1,${this}}}");
+      const auto encapsulated = sv.get_encapsulated("${");
+      printer().key("encapsulated", encapsulated);
+      TEST_ASSERT(encapsulated == "test ${wildcard 1,${this}}");
+      const auto encapsulated2 = encapsulated.get_encapsulated("${");
+      printer().key("encapsulated2", encapsulated2);
+      TEST_ASSERT(encapsulated2 == "wildcard 1,${this}");
+      const auto encapsulated3 = encapsulated2.get_encapsulated("${");
+      printer().key("encapsulated3", encapsulated3);
+      TEST_ASSERT(encapsulated3 == "this");
+    }
 
-      TEST_EXPECT(sv.get_substring_at_position(2) == "sting");
-      TEST_EXPECT(sv.get_substring_with_length(4) == "test");
-      TEST_EXPECT(
+    {
+      SV sv("testing");
+      TEST_ASSERT(!sv.is_empty());
+      TEST_ASSERT(bool{sv});
+      TEST_ASSERT(!sv.is_null());
+      TEST_ASSERT(sv.is_null_terminated());
+      TEST_ASSERT(sv.data() != nullptr);
+      TEST_ASSERT(sv.data()[1] == 'e');
+      TEST_ASSERT(sv == "testing");
+      TEST_ASSERT(!(sv != "testing"));
+      TEST_ASSERT(sv.front() == 't');
+      TEST_ASSERT(sv.back() == 'g');
+      TEST_ASSERT(sv.at(0) == 't');
+      TEST_ASSERT(sv.at(1) == 'e');
+      TEST_ASSERT(sv.at(2) == 's');
+      TEST_ASSERT(sv.at(3) == 't');
+      TEST_ASSERT(sv.at(4) == 'i');
+      TEST_ASSERT(sv.at(5) == 'n');
+      TEST_ASSERT(sv.at(6) == 'g');
+      TEST_ASSERT(sv.length() == (sizeof("testing") - 1));
+
+      TEST_ASSERT(sv.get_substring_at_position(2) == "sting");
+      TEST_ASSERT(sv.get_substring_with_length(4) == "test");
+      TEST_ASSERT(
         sv.get_substring_with_length(4).is_null_terminated() == false);
 
       {

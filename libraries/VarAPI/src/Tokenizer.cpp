@@ -22,6 +22,7 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
   size_t sub_position = 0;
 
   while (cursor < length) {
+    const auto cursor_character = input.at(cursor);
     if (
       options.delimeter_type == DelimeterType::string
       && StringView{input}.pop_front(cursor).truncate(delimeter_length)
@@ -33,31 +34,29 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
       sub_position = cursor + delimeter_length;
     } else if (
       options.delimeter_type == DelimeterType::characters
-      && options.delimeters.contains(input.at(cursor))) {
+      && options.delimeters.contains(cursor_character)) {
       m_token_list.push_back(input(StringView::GetSubstring()
                                      .set_position(sub_position)
                                      .set_length(cursor - sub_position)));
 
       sub_position = cursor + 1;
-    } else if (options.ignore_between.contains(input.at(cursor))) {
+    } else if (options.ignore_between.contains(cursor_character)) {
       // skip the space between specific characters
-      const auto start = input.at(cursor);
-      const auto end = [start]() {
-        switch (start) {
-        case '{':
-          return '}';
-        case '[':
-          return ']';
-        case '(':
-          return ')';
-        case '<':
-          return '>';
+      const auto start = cursor_character;
+      const auto end = StringView::get_closing_character(start);
+      const auto cursor_start = cursor;
+      ++cursor;
+      auto count = 1;
+      while ((cursor < length) && count) {
+        const auto current_cursor_character = input.at(cursor);
+        if (current_cursor_character == end) {
+          --count;
+        } else if ((end != start) && (current_cursor_character == start)) {
+          ++count;
         }
-        return start;
-      }();
-      cursor++;
-      while ((cursor < length) && (input.at(cursor) != end)) {
-        cursor++;
+        if(count) {
+          ++cursor;
+        }
       }
     }
 

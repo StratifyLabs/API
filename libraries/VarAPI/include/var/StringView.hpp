@@ -157,6 +157,9 @@ public:
 
   API_NO_DISCARD StringViewList split(StringView delimeters) const;
 
+  API_NO_DISCARD StringView get_encapsulated(StringView start) const;
+
+
   using iterator = typename std::string_view::iterator;
   using const_iterator = typename std::string_view::const_iterator;
   using reverse_iterator = typename std::string_view::reverse_iterator;
@@ -252,7 +255,7 @@ public:
     return find(a) != npos;
   }
 
-  API_NO_DISCARD bool contains_any_of(const StringView a) const;
+  API_NO_DISCARD bool contains_any_of(StringView a) const;
 
   template<class Container> API_NO_DISCARD bool contains_any_of(const Container & a) const {
     for(const auto & value: a){
@@ -306,6 +309,8 @@ public:
   API_NO_DISCARD std::string_view to_std_string_view() const {
     return m_string_view;
   }
+
+  static char get_closing_character(char input);
 
 private:
   friend class String;
