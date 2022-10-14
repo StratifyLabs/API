@@ -298,7 +298,7 @@ const FileSystem &FileSystem::create_directory(
   }
 
   var::Tokenizer path_tokens
-    = var::Tokenizer(path, var::Tokenizer::Construct().set_delimeters("/"));
+    = var::Tokenizer(path, var::Tokenizer::Construct().set_delimiters("/"));
   // tokenizer will strip the first / and create an empty token
   var::PathString base_path = (path && path.front() == '/') ? "/" : "";
   for (const auto path_component : path_tokens.list()) {

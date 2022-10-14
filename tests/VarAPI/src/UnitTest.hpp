@@ -460,7 +460,7 @@ public:
     Printer::Object po(printer(), "Tokenizer");
 
     {
-      T t("0,1,2", T::Construct().set_delimeters(","));
+      T t("0,1,2", T::Construct().set_delimiters(","));
       TEST_EXPECT(t.count() == 3);
       TEST_EXPECT(t.at(0) == "0");
       TEST_EXPECT(t.at(1) == "1");
@@ -470,7 +470,7 @@ public:
     {
       T t(
         "0,'1,2'",
-        T::Construct().set_delimeters(",").set_ignore_between("'"));
+        T::Construct().set_delimiters(",").set_ignore_between("'"));
       TEST_ASSERT(t.count() == 2);
       TEST_EXPECT(t.at(0) == "0");
       TEST_EXPECT(t.at(1) == "'1,2'");
@@ -479,7 +479,7 @@ public:
     {
       T t(
         "0,\"1,2\"",
-        T::Construct().set_delimeters(",").set_ignore_between("\""));
+        T::Construct().set_delimiters(",").set_ignore_between("\""));
       TEST_ASSERT(t.count() == 2);
       TEST_ASSERT(t.at(0) == "0");
       TEST_ASSERT(t.at(1) == "\"1,2\"");
@@ -488,7 +488,7 @@ public:
     {
       T t(
         "0,1,2,3,4,5",
-        T::Construct().set_delimeters(",").set_maximum_delimeter_count(2));
+        T::Construct().set_delimiters(",").set_maximum_delimiter_count(2));
       TEST_ASSERT(t.count() == 3);
       TEST_ASSERT(t.at(0) == "0");
       TEST_ASSERT(t.at(1) == "1");
@@ -499,8 +499,8 @@ public:
       T t(
         "0,'1,2,3',4,5",
         T::Construct()
-          .set_delimeters(",")
-          .set_maximum_delimeter_count(2)
+          .set_delimiters(",")
+          .set_maximum_delimiter_count(2)
           .set_ignore_between("'"));
       TEST_ASSERT(t.count() == 3);
       TEST_ASSERT(t.at(0) == "0");
@@ -512,8 +512,8 @@ public:
       T t(
         "0,{1,2,3},4,5",
         T::Construct()
-          .set_delimeters(",")
-          .set_maximum_delimeter_count(2)
+          .set_delimiters(",")
+          .set_maximum_delimiter_count(2)
           .set_ignore_between("{"));
       TEST_ASSERT(t.count() == 3);
       TEST_ASSERT(t.at(0) == "0");
@@ -524,8 +524,8 @@ public:
       T t(
         "0,(1,2,3),4,5",
         T::Construct()
-          .set_delimeters(",")
-          .set_maximum_delimeter_count(2)
+          .set_delimiters(",")
+          .set_maximum_delimiter_count(2)
           .set_ignore_between("("));
       TEST_ASSERT(t.count() == 3);
       TEST_ASSERT(t.at(0) == "0");
@@ -537,8 +537,8 @@ public:
       T t(
         "0,[1,2,3],4,5",
         T::Construct()
-          .set_delimeters(",")
-          .set_maximum_delimeter_count(2)
+          .set_delimiters(",")
+          .set_maximum_delimiter_count(2)
           .set_ignore_between("["));
       TEST_ASSERT(t.count() == 3);
       TEST_ASSERT(t.at(0) == "0");
@@ -550,8 +550,8 @@ public:
       T t(
         "0,[1,[2],3],[4,[5]]",
         T::Construct()
-          .set_delimeters(",")
-          .set_maximum_delimeter_count(2)
+          .set_delimiters(",")
+          .set_maximum_delimiter_count(2)
           .set_ignore_between("["));
       TEST_ASSERT(t.count() == 3);
       TEST_ASSERT(t.at(0) == "0");
@@ -562,7 +562,7 @@ public:
     {
       T t(
         "1,{2,5},{{3,10,12}},${test ${this ${that 1,2,3}}",
-        T::Construct().set_delimeters(",").set_ignore_between("{"));
+        T::Construct().set_delimiters(",").set_ignore_between("{"));
       TEST_ASSERT(t.count() == 4);
       TEST_ASSERT(t.at(0) == "1");
       TEST_ASSERT(t.at(1) == "{2,5}");
@@ -574,8 +574,8 @@ public:
       auto t = T(
         "0,<1,(2),3>,4,<<5>>",
         T::Construct()
-          .set_delimeters(",")
-          .set_maximum_delimeter_count(2)
+          .set_delimiters(",")
+          .set_maximum_delimiter_count(2)
           .set_ignore_between("<"));
       TEST_ASSERT(t.count() == 3);
       TEST_ASSERT(t.at(0) == "0");
@@ -584,7 +584,7 @@ public:
     }
 
     {
-      T t("0,1,,,2", T::Construct().set_delimeters(","));
+      T t("0,1,,,2", T::Construct().set_delimiters(","));
       TEST_ASSERT(t.count() == 5);
       TEST_ASSERT(t.at(0) == "0");
       TEST_ASSERT(t.at(1) == "1");
@@ -596,7 +596,7 @@ public:
     {
       T t(
         "0,1,Testing'123'Testing,2",
-        T::Construct().set_delimeters(",").set_ignore_between("'"));
+        T::Construct().set_delimiters(",").set_ignore_between("'"));
       TEST_ASSERT(t.count() == 4);
       TEST_ASSERT(t.at(0) == "0");
       TEST_ASSERT(t.at(1) == "1");
@@ -607,7 +607,7 @@ public:
     {
       T t(
         "'0,1',Testing'123'Testing,2",
-        T::Construct().set_delimeters(",").set_ignore_between("'"));
+        T::Construct().set_delimiters(",").set_ignore_between("'"));
       TEST_ASSERT(t.count() == 3);
       TEST_ASSERT(t.at(0) == "'0,1'");
       TEST_ASSERT(t.at(1) == "Testing'123'Testing");
@@ -617,8 +617,8 @@ public:
     {
       T t(
         "mkdir /home/test && ninja build",
-        T::Construct().set_delimeters("&&").set_delimeter_type(
-          Tokenizer::DelimeterType::string));
+        T::Construct().set_delimiters("&&").set_delimiter_type(
+          Tokenizer::DelimiterType::string));
       TEST_ASSERT(t.count() == 2);
       TEST_ASSERT(t.at(0) == "mkdir /home/test ");
       TEST_ASSERT(t.at(1) == " ninja build");
@@ -628,8 +628,8 @@ public:
       T t(
         "mkdir /home/test' && 'ninja build",
         T::Construct()
-          .set_delimeters("&&")
-          .set_delimeter_type(Tokenizer::DelimeterType::string)
+          .set_delimiters("&&")
+          .set_delimiter_type(Tokenizer::DelimiterType::string)
           .set_ignore_between("'"));
       TEST_ASSERT(t.count() == 1);
       TEST_ASSERT(t.at(0) == "mkdir /home/test' && 'ninja build");
@@ -639,8 +639,8 @@ public:
       T t(
         "mkdir '/home/test' && \"ninja build\"",
         T::Construct()
-          .set_delimeters("&&")
-          .set_delimeter_type(Tokenizer::DelimeterType::string)
+          .set_delimiters("&&")
+          .set_delimiter_type(Tokenizer::DelimiterType::string)
           .set_ignore_between("'"));
       TEST_ASSERT(t.count() == 2);
       TEST_ASSERT(t.at(0) == "mkdir '/home/test' ");
@@ -648,7 +648,7 @@ public:
     }
 
     {
-      T token("0,1,4,5,7,2,3", T::Construct().set_delimeters(","));
+      T token("0,1,4,5,7,2,3", T::Construct().set_delimiters(","));
       TEST_ASSERT(token.count() == 7);
       TEST_ASSERT(token.at(0) == "0");
       TEST_ASSERT(token.at(6) == "3");

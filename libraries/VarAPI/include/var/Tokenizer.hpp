@@ -12,16 +12,16 @@ namespace var {
 class Tokenizer : public api::ExecutionContext {
 public:
 
-  enum class DelimeterType {
+  enum class DelimiterType {
     characters,
     string
   };
 
   struct Construct {
-    API_PMAZ(delimeters, Construct, StringView, {});
-    API_PMAZ(delimeter_type, Construct, DelimeterType, DelimeterType::characters);
+    API_PMAZ(delimiters, Construct, StringView, {});
+    API_PMAZ(delimiter_type, Construct, DelimiterType, DelimiterType::characters);
     API_PMAZ(ignore_between, Construct, StringView, {});
-    API_PMAZ(maximum_delimeter_count, Construct, u32, {});
+    API_PMAZ(maximum_delimiter_count, Construct, u32, {});
   };
 
   Tokenizer(StringView input, const Construct &options);

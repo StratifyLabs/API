@@ -4,12 +4,13 @@
 
 ## New Features
 
+- WARNING BREAKING CHANGE: Fix spelling of `delimiter` in `var::Tokenizer` (was `delimeter`)
 - Add `StringView::get_encapsulated` to find encapsulated tokens in a string
 - WARNING BREAKING CHANGE: Use api::Function with api::ProgressCallback instead of `context` and `callback`
   - This is a much safer alternative (really more of a bug fix)
 - Add option to execute threads with a lambda
 - WARNING Breaking API Change: `fs::LambdaFile` using `api::Function` rather than a c-style function pointer
-  - `context` was passed by now must be captured in the lambda
+  - `context` was passed but now must be captured in the lambda
   - This won't affect many people. `fs::LambdaFile` is not frequently used
 - Add ignore between `(){}[]<>` to `var::Tokenizer`
   - Also handles recursive symbols `${${test}}`

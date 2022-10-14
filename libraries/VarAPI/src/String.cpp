@@ -114,7 +114,7 @@ String &String::to_lower() {
 float String::to_float() const { return ::atoff(cstring()); }
 
 StringViewList String::split(StringView delimiter) const {
-  return Tokenizer(cstring(), Tokenizer::Construct().set_delimeters(delimiter))
+  return Tokenizer(cstring(), Tokenizer::Construct().set_delimiters(delimiter))
     .list();
 }
 

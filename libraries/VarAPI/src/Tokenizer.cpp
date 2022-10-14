@@ -15,7 +15,7 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
 
   const auto length = input.length();
 
-  const auto delimeter_length = options.delimeters.length();
+  const auto delimiter_length = options.delimiters.length();
 
   m_token_list = StringViewList();
   size_t cursor = 0;
@@ -24,17 +24,17 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
   while (cursor < length) {
     const auto cursor_character = input.at(cursor);
     if (
-      options.delimeter_type == DelimeterType::string
-      && StringView{input}.pop_front(cursor).truncate(delimeter_length)
-           == options.delimeters) {
+      options.delimiter_type == DelimiterType::string
+      && StringView{input}.pop_front(cursor).truncate(delimiter_length)
+           == options.delimiters) {
       m_token_list.push_back(input(StringView::GetSubstring()
                                      .set_position(sub_position)
                                      .set_length(cursor - sub_position)));
 
-      sub_position = cursor + delimeter_length;
+      sub_position = cursor + delimiter_length;
     } else if (
-      options.delimeter_type == DelimeterType::characters
-      && options.delimeters.contains(cursor_character)) {
+      options.delimiter_type == DelimiterType::characters
+      && options.delimiters.contains(cursor_character)) {
       m_token_list.push_back(input(StringView::GetSubstring()
                                      .set_position(sub_position)
                                      .set_length(cursor - sub_position)));
@@ -44,7 +44,6 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
       // skip the space between specific characters
       const auto start = cursor_character;
       const auto end = StringView::get_closing_character(start);
-      const auto cursor_start = cursor;
       ++cursor;
       auto count = 1;
       while ((cursor < length) && count) {
@@ -61,8 +60,8 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
     }
 
     if (
-      options.maximum_delimeter_count
-      && (m_token_list.count() == options.maximum_delimeter_count)) {
+      options.maximum_delimiter_count
+      && (m_token_list.count() == options.maximum_delimiter_count)) {
       cursor = length - 1;
     }
 
@@ -96,17 +95,12 @@ Tokenizer &Tokenizer::sort(SortBy sort_option) {
   return *this;
 }
 
-var::String Tokenizer::join(StringView delimeter) const {
+var::String Tokenizer::join(StringView delimiter) const {
   var::String result;
-  result.reserve(m_input.length() + list().count() * delimeter.length());
-
+  result.reserve(m_input.length() + list().count() * delimiter.length());
   for (const auto &item : list()) {
-    result += item + delimeter;
+    result += item + delimiter;
   }
-
-  for (size_t i = 0; i < delimeter.length(); i++) {
-    result.pop_back();
-  }
-
+  result.pop_back(delimiter.length());
   return result;
 }

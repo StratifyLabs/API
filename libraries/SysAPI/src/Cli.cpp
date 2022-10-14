@@ -65,9 +65,9 @@ var::StringView Cli::get_option(StringView name, StringView help) const {
       const Tokenizer tokens(
         arg.pop_front(2),
         Tokenizer::Construct()
-          .set_delimeters("=")
+          .set_delimiters("=")
           .set_ignore_between("")
-          .set_maximum_delimeter_count(1));
+          .set_maximum_delimiter_count(1));
 
       if (tokens.count() > 0 && (tokens.at(0) == name)) {
         if (tokens.count() > 1) {
@@ -117,7 +117,7 @@ const Cli &Cli::show_help(const ShowHelp &options) const {
   for (const auto &help_item : m_help_list) {
     const auto part_container = var::Tokenizer(
       help_item,
-      var::Tokenizer::Construct().set_maximum_delimeter_count(1).set_delimeters(
+      var::Tokenizer::Construct().set_maximum_delimiter_count(1).set_delimiters(
         ":"));
     if (part_container.count() > 1) {
       printer->key(part_container.at(0), part_container.at(1));
