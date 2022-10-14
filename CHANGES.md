@@ -4,6 +4,7 @@
 
 ## New Features
 
+- Add `StringView::pop_encapsulated()` which will get a substring after the encapsulation
 - WARNING BREAKING CHANGE: Fix spelling of `delimiter` in `var::Tokenizer` (was `delimeter`)
 - Add `StringView::get_encapsulated` to find encapsulated tokens in a string
 - WARNING BREAKING CHANGE: Use api::Function with api::ProgressCallback instead of `context` and `callback`
@@ -26,6 +27,7 @@
 
 ## Bug Fixes
 
+- Make `var::StringView::pop_front(), pop_back(), and truncate()` safe (checks length)
 - `fs::FileObject` uses `size_t` for size
 - Fixed `Printer::trace` to never truncate
 - Fixed a bug with `var::StringView::find_last_not_of` assigning the end position to `0`.

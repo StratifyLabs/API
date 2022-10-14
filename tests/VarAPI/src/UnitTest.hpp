@@ -890,6 +890,7 @@ public:
     }
 
     {
+      Printer::Object get_encapsulated_object(printer(), "getEncapsulated");
       SV sv("${test ${wildcard 1,${this}}}");
       const auto encapsulated = sv.get_encapsulated("${");
       printer().key("encapsulated", encapsulated);
@@ -900,6 +901,20 @@ public:
       const auto encapsulated3 = encapsulated2.get_encapsulated("${");
       printer().key("encapsulated3", encapsulated3);
       TEST_ASSERT(encapsulated3 == "this");
+    }
+
+    {
+      Printer::Object pop_encapsulated_object(printer(), "popEncapsulated");
+      SV sv("${test1}${test2}${test3}");
+      const auto pop_encapsulated1 = sv.pop_encapsulated("${");
+      printer().key("pop_encapsulated1", pop_encapsulated1);
+      TEST_ASSERT(pop_encapsulated1 == "${test2}${test3}");
+      const auto pop_encapsulated2 = pop_encapsulated1.pop_encapsulated("${");
+      printer().key("pop_encapsulated2", pop_encapsulated2);
+      TEST_ASSERT(pop_encapsulated2 == "${test3}");
+      const auto pop_encapsulated3 = pop_encapsulated2.pop_encapsulated("${");
+      printer().key("pop_encapsulated3", pop_encapsulated3);
+      TEST_ASSERT(!pop_encapsulated3);
     }
 
     {

@@ -144,12 +144,17 @@ StringView StringView::get_encapsulated(const StringView start) const {
     } else if (end != start_character && at(cursor) == start_character) {
       ++count;
     }
-    if( count ) {
+    if (count) {
       ++cursor;
       ++result_length;
     }
   }
   return StringView{*this}.pop_front(result_position).truncate(result_length);
+}
+
+StringView StringView::pop_encapsulated(StringView start) const {
+  const auto encapsulated = get_encapsulated(start);
+  return StringView(*this).pop_front(encapsulated.length() + start.length() + 1);
 }
 
 char StringView::get_closing_character(char input) {
@@ -164,4 +169,27 @@ char StringView::get_closing_character(char input) {
     return '>';
   }
   return input;
+}
+
+StringView &StringView::truncate(size_t length) {
+  if (this->length() > length) {
+    m_string_view.remove_suffix(this->length() - length);
+  } else {
+    m_string_view = "";
+  }
+  return *this;
+}
+
+StringView &StringView::pop_back(size_t length) {
+  const auto remove_length
+    = length < this->length() ? length : this->length();
+  m_string_view.remove_suffix(remove_length);
+  return *this;
+}
+
+StringView &StringView::pop_front(size_t length) {
+  const auto remove_length
+    = length < this->length() ? length : this->length();
+  m_string_view.remove_prefix(remove_length);
+  return *this;
 }

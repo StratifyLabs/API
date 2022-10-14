@@ -30,7 +30,6 @@ class GeneralString;
 class StringView;
 using StringViewList = Vector<StringView>;
 
-
 /*! \brief StringView (wrapper for std::string_view)
  *
  *
@@ -54,7 +53,7 @@ public:
    * The default for `std::string_view` is to create
    * a null string i.e `data() == nullptr`.
    */
-  constexpr StringView() : m_string_view{""}{}
+  constexpr StringView() : m_string_view{""} {}
   constexpr StringView(const char *value) : m_string_view(value) {}
   StringView(const String &value);
   StringView(const IdString &value);
@@ -68,9 +67,7 @@ public:
 
   StringView(const char *value, size_t length) : m_string_view{value, length} {}
 
-  static constexpr StringView whitespace(){
-    return StringView{"\t\n\v\f\r "};
-  }
+  static constexpr StringView whitespace() { return StringView{"\t\n\v\f\r "}; }
 
   /*! \details This allows you to quickly check for an empty string.
    *
@@ -113,34 +110,21 @@ public:
 
   API_NO_DISCARD bool is_empty() const { return m_string_view.empty(); }
 
-  StringView& strip_leading_containing(StringView value);
+  StringView &strip_leading_containing(StringView value);
 
   StringView &strip_trailing_containing(StringView value);
 
-  StringView &strip_leading_whitespace(){
+  StringView &strip_leading_whitespace() {
     return strip_leading_containing(whitespace());
   }
 
-  StringView &strip_trailing_whitespace(){
+  StringView &strip_trailing_whitespace() {
     return strip_trailing_containing(whitespace());
   }
 
-  StringView &pop_front(size_t length = 1) {
-    m_string_view.remove_prefix(length);
-    return *this;
-  }
-
-  StringView &pop_back(size_t length = 1) {
-    m_string_view.remove_suffix(length);
-    return *this;
-  }
-
-  StringView &truncate(size_t length){
-    if( this->length() > length ){
-      m_string_view.remove_suffix(this->length() - length);
-    }
-    return *this;
-  }
+  StringView &pop_front(size_t length = 1);
+  StringView &pop_back(size_t length = 1);
+  StringView &truncate(size_t length);
 
   class GetSubstring {
     API_AF(GetSubstring, size_t, position, 0);
@@ -158,7 +142,7 @@ public:
   API_NO_DISCARD StringViewList split(StringView delimiters) const;
 
   API_NO_DISCARD StringView get_encapsulated(StringView start) const;
-
+  API_NO_DISCARD StringView pop_encapsulated(StringView start) const;
 
   using iterator = typename std::string_view::iterator;
   using const_iterator = typename std::string_view::const_iterator;
@@ -230,7 +214,8 @@ public:
     return m_string_view.rfind(a, position);
   }
 
-  API_NO_DISCARD size_t find_last_of(StringView a, size_t position = npos) const {
+  API_NO_DISCARD size_t
+  find_last_of(StringView a, size_t position = npos) const {
     return m_string_view.find_last_of(a.m_string_view, position);
   }
 
@@ -251,15 +236,14 @@ public:
     return find(a) != npos;
   }
 
-  API_NO_DISCARD bool contains(char a) const {
-    return find(a) != npos;
-  }
+  API_NO_DISCARD bool contains(char a) const { return find(a) != npos; }
 
   API_NO_DISCARD bool contains_any_of(StringView a) const;
 
-  template<class Container> API_NO_DISCARD bool contains_any_of(const Container & a) const {
-    for(const auto & value: a){
-      if( find(value) != npos ){
+  template <class Container>
+  API_NO_DISCARD bool contains_any_of(const Container &a) const {
+    for (const auto &value : a) {
+      if (find(value) != npos) {
         return true;
       }
     }
@@ -321,9 +305,7 @@ private:
 
 inline bool operator==(const char *lhs, StringView rhs) { return rhs == lhs; }
 
-
-inline StringView
-operator"" _string_view(const char * value) {
+inline StringView operator"" _string_view(const char *value) {
   return StringView{value};
 }
 
