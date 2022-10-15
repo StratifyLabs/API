@@ -139,7 +139,7 @@ void Printer::print(
           return StringView{"\\t"};
         }
         if( character == '\\'){
-          return StringView{"\\"};
+          return StringView{"\\\\"};
         }
 
         return StringView{&character, 1};
