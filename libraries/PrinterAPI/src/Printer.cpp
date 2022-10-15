@@ -121,7 +121,7 @@ void Printer::print(
     for(const auto character: value){
       const auto print_value = [&](){
         if( character == '"'){
-          return StringView{"\""};
+          return StringView{"\\\""};
         }
         if( character == '\b'){
           return StringView{"\\b"};
