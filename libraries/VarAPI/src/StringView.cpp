@@ -174,8 +174,6 @@ char StringView::get_closing_character(char input) {
 StringView &StringView::truncate(size_t length) {
   if (this->length() > length) {
     m_string_view.remove_suffix(this->length() - length);
-  } else {
-    m_string_view = "";
   }
   return *this;
 }

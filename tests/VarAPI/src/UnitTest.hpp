@@ -1006,6 +1006,13 @@ public:
           StringView{sv}.strip_trailing_whitespace() == "This is a test");
       }
 
+      {
+        static constexpr StringView sv = "     \t This is a test   \t\t";
+        TEST_ASSERT(
+          StringView{sv}.strip_leading_whitespace().strip_trailing_whitespace()
+          == "This is a test");
+      }
+
       TEST_EXPECT(sv.to_long() == 0);
 
       TEST_EXPECT(
