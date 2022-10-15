@@ -4,6 +4,7 @@
 
 ## New Features
 
+- Escape characters that are printed within quotes with `printer::Printer::print()`
 - Add `is_character_wise` to `var::ReplaceString` which replaces each character in `old_string`
 - Add `StringView::pop_encapsulated()` which will get a substring after the encapsulation
 - WARNING BREAKING CHANGE: Fix spelling of `delimiter` in `var::Tokenizer` (was `delimeter`)
