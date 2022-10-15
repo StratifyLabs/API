@@ -1164,6 +1164,24 @@ public:
     }
 
     {
+      Printer::Object replace_characters(printer(), "replaceCharacters");
+      auto s
+        = S("   testing, 1, 2, \t3, \t\t4")(S::Replace()
+                                              .set_old_string(SV::whitespace())
+                                              .set_new_string("")
+                                              .set_character_wise(true));
+      printer().key("replaced", s);
+      TEST_ASSERT(s == "testing,1,2,3,4");
+    }
+
+    {
+      Printer::Object replace_characters(printer(), "removeWhitespace");
+      auto s = std::move(S("   testing, 1, 2, \t3, \t\t4").remove_whitespace());
+      printer().key("replaced", s);
+      TEST_ASSERT(s == "testing,1,2,3,4");
+    }
+
+    {
       S s("testing,1,2,3,4");
       TEST_ASSERT(
         s.replace(

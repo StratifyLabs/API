@@ -18,11 +18,13 @@ class Data;
 
 struct ReplaceString {
   API_PMAZ(count, ReplaceString, size_t, 0);
+
+  API_PUBLIC_BOOL(ReplaceString, character_wise, false);
+
   API_PMAZ(new_string, ReplaceString, StringView, {});
   API_PMAZ(old_string, ReplaceString, StringView, {});
   API_PMAZ(position, ReplaceString, size_t, 0);
 };
-
 
 /*! \details This class is a wrapper for `std::string`.
  * It uses dynamic memory allocation with short string optimizations
@@ -220,6 +222,14 @@ public:
   using Replace = ReplaceString;
   String &replace(const Replace &options);
   String &operator()(const Replace &options) { return replace(options); }
+  String &remove_whitespace() {
+    return replace(Replace{
+      .count = 0,
+      .is_character_wise = true,
+      .new_string = StringView{},
+      .old_string = StringView::whitespace(),
+      });
+  }
 
   API_NO_DISCARD size_t count(var::StringView to_count) const;
   API_NO_DISCARD size_t length() const { return m_string.length(); }

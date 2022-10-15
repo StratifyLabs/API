@@ -80,6 +80,14 @@ String &String::erase(StringView string_to_erase, size_t position) {
 }
 
 String &String::replace(const Replace &options) {
+  if (options.is_character_wise) {
+    auto new_options = options;
+    new_options.set_character_wise(false);
+    for (const auto character : options.old_string) {
+      replace(new_options.set_old_string(StringView{&character, 1}));
+    }
+    return *this;
+  }
   size_t pos = options.position;
   const size_t old_length = options.old_string.length();
   const size_t new_length = options.new_string.length();
