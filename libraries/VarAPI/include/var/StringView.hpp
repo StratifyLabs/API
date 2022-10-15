@@ -125,6 +125,7 @@ public:
   StringView &pop_front(size_t length = 1);
   StringView &pop_back(size_t length = 1);
   StringView &truncate(size_t length);
+  StringView& pop_encapsulated(StringView start);
 
   class GetSubstring {
     API_AF(GetSubstring, size_t, position, 0);
@@ -142,7 +143,6 @@ public:
   API_NO_DISCARD StringViewList split(StringView delimiters) const;
 
   API_NO_DISCARD StringView get_encapsulated(StringView start) const;
-  API_NO_DISCARD StringView pop_encapsulated(StringView start) const;
 
   using iterator = typename std::string_view::iterator;
   using const_iterator = typename std::string_view::const_iterator;

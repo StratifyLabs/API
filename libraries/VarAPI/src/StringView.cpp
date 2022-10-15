@@ -152,9 +152,9 @@ StringView StringView::get_encapsulated(const StringView start) const {
   return StringView{*this}.pop_front(result_position).truncate(result_length);
 }
 
-StringView StringView::pop_encapsulated(StringView start) const {
+StringView& StringView::pop_encapsulated(StringView start) {
   const auto encapsulated = get_encapsulated(start);
-  return StringView(*this).pop_front(encapsulated.length() + start.length() + 1);
+  return pop_front(encapsulated.length() + start.length() + 1);
 }
 
 char StringView::get_closing_character(char input) {

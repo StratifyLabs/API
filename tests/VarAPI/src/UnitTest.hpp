@@ -909,10 +909,12 @@ public:
       const auto pop_encapsulated1 = sv.pop_encapsulated("${");
       printer().key("pop_encapsulated1", pop_encapsulated1);
       TEST_ASSERT(pop_encapsulated1 == "${test2}${test3}");
-      const auto pop_encapsulated2 = pop_encapsulated1.pop_encapsulated("${");
+      const auto pop_encapsulated2
+        = StringView{pop_encapsulated1}.pop_encapsulated("${");
       printer().key("pop_encapsulated2", pop_encapsulated2);
       TEST_ASSERT(pop_encapsulated2 == "${test3}");
-      const auto pop_encapsulated3 = pop_encapsulated2.pop_encapsulated("${");
+      const auto pop_encapsulated3
+        = StringView{pop_encapsulated2}.pop_encapsulated("${");
       printer().key("pop_encapsulated3", pop_encapsulated3);
       TEST_ASSERT(!pop_encapsulated3);
     }
