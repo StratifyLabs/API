@@ -283,6 +283,20 @@ public:
       TEST_ASSERT(GeneralString("test") == "test");
     }
 
+    {
+      auto path = PathString("test1");
+      auto path2 = PathString(path);
+      printer().key("path", path).key("path2", path2);
+      TEST_ASSERT(path == path2);
+    }
+
+    {
+      const auto path = PathString("./tmp");
+      const auto path2 = PathString(path) / "test1.txt";
+      printer().key("path2", path2);
+      TEST_ASSERT(path2 == "./tmp/test1.txt");
+    }
+
     return true;
   }
 
@@ -388,9 +402,8 @@ public:
           printer().key(
             "ring" | NumberString(index),
             NumberString(ring.at(index).data.value));
-            TEST_ASSERT(
-              ring.at(index).data.value
-              == (size + index - rotate_index) % size);
+          TEST_ASSERT(
+            ring.at(index).data.value == (size + index - rotate_index) % size);
         }
         ring.rotate_forward();
       }

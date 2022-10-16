@@ -216,12 +216,12 @@ public:
 
     {
       D d(HOME_FOLDER "/tmp");
-      int count = 0;
+      auto count = 0;
       var::PathString e;
-      while (!(e = d.get_entry()).is_empty()) {
-        printer().key("tell", NumberString(d.tell()).string_view());
-        printer().key(NumberString(count), StringView(e.cstring()));
-        count++;
+      while ((e = d.get_entry()).string_view() && count < 10) {
+        printer().key("tell", NumberString(d.tell()));
+        printer().key(NumberString(count), e);
+        ++count;
       }
 #if defined __link
       // add two for . and ..
@@ -249,9 +249,12 @@ public:
     }
 
     {
+      TEST_ASSERT(is_success());
       TEST_ASSERT(FS().directory_exists(HOME_FOLDER "/tmp"));
+      PRINTER_TRACE(printer(), "read directory " HOME_FOLDER "/tmp");
       const auto list
         = FS().read_directory(HOME_FOLDER "/tmp", FS::IsRecursive::yes);
+      TEST_ASSERT(is_success());
       printer().object("tmpFiles", list);
 
       TEST_ASSERT(list.find("test0.txt") == "test0.txt");
@@ -265,7 +268,7 @@ public:
       const auto list = FS().read_directory(
         HOME_FOLDER "/tmp2",
         FS::IsRecursive::yes,
-        [](StringView entry, void *context) {
+        [](StringView entry) {
           return FS::IsExclude(entry.find("filesystem") != StringView::npos);
         });
       TEST_ASSERT(list.find("test0.txt") == "test0.txt");

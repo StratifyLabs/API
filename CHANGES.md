@@ -14,6 +14,7 @@
   - `fs::LambdaFile` using `api::Function` rather than a c-style function pointer
     - `context` was passed but now must be captured in the lambda
   - Removed `fs::FileObject::gets()` use `fs::FileObject::get_line()`
+- Separate `var::StackString` logic from the template
 - Added `rvalue` reference functions for some function-chained member functions
 - Escape characters that are printed within quotes with `printer::Printer::print()`
 - Add `is_character_wise` to `var::ReplaceString` which replaces each character in `old_string`

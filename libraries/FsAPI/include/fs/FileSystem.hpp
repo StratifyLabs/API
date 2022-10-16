@@ -29,7 +29,7 @@ public:
   using IsRecursive = Dir::IsRecursive;
   enum class IsExclude { no, yes };
 
-  using ExcludeCallback = IsExclude (*)(var::StringView name, void *);
+  using ExcludeCallback = api::Function<IsExclude(var::StringView name)>;
 
   FileSystem() = default;
 
@@ -120,8 +120,7 @@ public:
   API_NO_DISCARD PathContainer read_directory(
     var::StringView path,
     IsRecursive is_recursive = IsRecursive::no,
-    ExcludeCallback exclude = nullptr,
-    void *context = nullptr) const;
+    ExcludeCallback exclude = {}) const;
 
   class Rename {
     API_AC(Rename, var::StringView, source);

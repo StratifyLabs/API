@@ -77,3 +77,7 @@ const Signal &Signal::queue(pid_t pid) const {
 #endif
   return *this;
 }
+Signal::Signal(SignalFlags::Number signo, int signal_value)
+  : m_signo{int(signo)}, m_sigvalue{signal_value} {}
+Signal::Signal(SignalFlags::Number signo, void *signal_pointer)
+  : m_signo{int(signo)}, m_sigvalue{.sival_ptr = signal_pointer} {}

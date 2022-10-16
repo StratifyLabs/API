@@ -172,3 +172,20 @@ pthread_mutex_t Mutex::initialize_mutex(const pthread_mutexattr_t *attr) {
   API_SYSTEM_CALL("mutex init", pthread_mutex_init(&result, attr));
   return result;
 }
+bool Mutex::Attributes::Resource::is_valid() const {
+#if defined __link
+  return is_link_valid;
+#else
+  return mutexattr.is_initialized != 0;
+
+#endif
+}
+void Mutex::Attributes::Resource::set_valid(bool value) {
+#if defined __link
+  is_link_valid = value;
+#else
+  if (!value) {
+          mutexattr.is_initialized = 0;
+        }
+#endif
+}

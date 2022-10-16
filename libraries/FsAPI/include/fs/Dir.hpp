@@ -37,7 +37,7 @@ class DirObject : public api::ExecutionContext {
 public:
   enum class IsRecursive { no, yes };
 
-  DirObject() = default;
+  DirObject(var::StringView path) : m_path(path){}
   virtual ~DirObject() = default;
 
   static var::PathString filter_hidden(const var::PathString &entry) {
@@ -75,6 +75,7 @@ private:
 
 template <class Derived> class DirAccess : public DirObject {
 public:
+  DirAccess(var::StringView path) : DirObject(path){}
   const Derived &rewind() const & {
     API_RETURN_VALUE_IF_ERROR(static_cast<const Derived &>(*this));
     interface_rewinddir();

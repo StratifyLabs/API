@@ -4,55 +4,58 @@
 
 #include "fs/Dir.hpp"
 #include "printer/Printer.hpp"
+#include "var/Queue.hpp"
 #include "var/Tokenizer.hpp"
 
 #include "fs/FileSystem.hpp"
 #include "fs/Path.hpp"
 
+using namespace var;
+
 printer::Printer &
 printer::operator<<(printer::Printer &printer, const fs::PathContainer &a) {
   size_t i = 0;
   for (const auto &item : a) {
-    printer.key(var::NumberString(i++), item.string_view());
+    printer.key(NumberString(i++), item.string_view());
   }
   return printer;
 }
 
 using namespace fs;
 
-const FileSystem &FileSystem::remove(var::StringView path) const {
+const FileSystem &FileSystem::remove(StringView path) const {
   API_RETURN_VALUE_IF_ERROR(*this);
-  const var::PathString path_string(path);
+  const PathString path_string(path);
   API_SYSTEM_CALL(
     path_string.cstring(),
     interface_unlink(path_string.cstring()));
   return *this;
 }
 
-const FileSystem &FileSystem::touch(var::StringView path) const {
+const FileSystem &FileSystem::touch(StringView path) const {
   API_RETURN_VALUE_IF_ERROR(*this);
   char c;
   API_SYSTEM_CALL(
     "",
     File(path, OpenMode::read_write())
-      .read(var::View(c))
+      .read(View(c))
       .seek(0)
-      .write(var::View(c))
+      .write(View(c))
       .return_value());
   return *this;
 }
 
 const FileSystem &FileSystem::rename(const Rename &options) const {
   API_RETURN_VALUE_IF_ERROR(*this);
-  const var::PathString source_string(options.source());
-  const var::PathString dest_string(options.destination());
+  const PathString source_string(options.source());
+  const PathString dest_string(options.destination());
   API_SYSTEM_CALL(
     source_string.cstring(),
     interface_rename(source_string.cstring(), dest_string.cstring()));
   return *this;
 }
 
-bool FileSystem::exists(var::StringView path) const {
+bool FileSystem::exists(StringView path) const {
   API_RETURN_VALUE_IF_ERROR(false);
   const auto info = get_info(path);
   bool result = info.is_valid() && is_success();
@@ -60,9 +63,8 @@ bool FileSystem::exists(var::StringView path) const {
   return result;
 }
 
-bool FileSystem::is_create_file_ok(
-  var::StringView path,
-  IsOverwrite is_overwrite) const {
+bool FileSystem::is_create_file_ok(StringView path, IsOverwrite is_overwrite)
+  const {
 
   const auto parent = Path::parent_directory(path);
   if (parent) {
@@ -98,7 +100,7 @@ bool FileSystem::is_create_file_ok(
   return true;
 }
 
-bool FileSystem::is_create_directory_ok(var::StringView path) const {
+bool FileSystem::is_create_directory_ok(StringView path) const {
 
   const auto parent = Path::parent_directory(path);
   if (!parent.is_empty()) {
@@ -127,9 +129,9 @@ bool FileSystem::is_create_directory_ok(var::StringView path) const {
   return true;
 }
 
-FileInfo FileSystem::get_info(var::StringView path) const {
+FileInfo FileSystem::get_info(StringView path) const {
   API_RETURN_VALUE_IF_ERROR(FileInfo());
-  const var::PathString path_string(path);
+  const PathString path_string(path);
   struct stat stat {};
   API_SYSTEM_CALL(
     path_string.cstring(),
@@ -144,9 +146,8 @@ FileInfo FileSystem::get_info(const File &file) const {
   return FileInfo(stat);
 }
 
-const FileSystem &FileSystem::remove_directory(
-  var::StringView path,
-  IsRecursive recursive) const {
+const FileSystem &
+FileSystem::remove_directory(StringView path, IsRecursive recursive) const {
 
   if (recursive == IsRecursive::yes) {
     Dir d(path);
@@ -156,7 +157,7 @@ const FileSystem &FileSystem::remove_directory(
       const auto entry_path = path / entry;
       FileInfo info = get_info(entry_path);
       if (info.is_directory()) {
-        if (const var::StringView entry_view(entry);
+        if (const StringView entry_view(entry);
             entry_view != "." && entry_view != ".."
             && remove_directory(entry_path, recursive).is_error()) {
           return *this;
@@ -172,9 +173,9 @@ const FileSystem &FileSystem::remove_directory(
   return *this;
 }
 
-const FileSystem &FileSystem::remove_directory(var::StringView path) const {
+const FileSystem &FileSystem::remove_directory(StringView path) const {
   API_RETURN_VALUE_IF_ERROR(*this);
-  const var::PathString path_string(path);
+  const PathString path_string(path);
   API_SYSTEM_CALL(
     path_string.cstring(),
     interface_rmdir(path_string.cstring()));
@@ -182,13 +183,13 @@ const FileSystem &FileSystem::remove_directory(var::StringView path) const {
 }
 
 size_t FileSystem::get_entry_count(
-  const var::StringView path,
+  const StringView path,
   IsRecursive is_recursive) const {
-  Dir directory(path);
+  auto directory = Dir(path);
   auto result = size_t{};
   const char *entry;
   while ((entry = directory.read()) != nullptr) {
-    const var::StringView entry_view = entry;
+    const StringView entry_view = entry;
     if (entry_view != "." && entry_view != "..") {
       ++result;
       if (is_recursive == IsRecursive::yes) {
@@ -204,65 +205,58 @@ size_t FileSystem::get_entry_count(
 }
 
 PathList FileSystem::read_directory(
-  const var::StringView path,
+  const StringView path,
   IsRecursive is_recursive,
-  ExcludeCallback exclude,
-  void *context) const {
-  PathList result;
-  bool is_the_end = false;
+  ExcludeCallback exclude) const {
+  auto is_the_end = false;
+  const auto queue = [&]() {
+    auto queue_result = Queue<PathString>();
+    auto directory = Dir(path);
+    auto entry = PathString();
+    do {
+      [&]() -> void {
+        entry = PathString{directory.read()};
+        if (
+          entry.is_empty() || (exclude && exclude(entry) == IsExclude::yes)
+          || (entry == "." || entry == "..")) {
+          return;
+        }
+        if (is_recursive == IsRecursive::no) {
+          queue_result.push(entry);
+          return;
+        }
 
-  result.reserve(get_entry_count(path, is_recursive));
-
-  Dir directory(path);
-  do {
-    const char *entry_result = directory.read();
-    const var::PathString entry = (entry_result != nullptr)
-                                    ? var::PathString(entry_result)
-                                    : var::PathString();
-
-    if (entry.is_empty()) {
-      is_the_end = true;
-    }
-
-    if (
-      (exclude == nullptr
-       || (exclude(entry.string_view(), context) == IsExclude::no))
-      && !entry.is_empty() && (entry.string_view() != ".")
-      && (entry.string_view() != "..")) {
-
-      if (is_recursive == IsRecursive::yes) {
-
-        if (const var::PathString entry_path
-            = var::PathString(directory.path()) / entry.string_view();
-            get_info(entry_path).is_directory()) {
+        const auto entry_path = PathString(directory.path()) / entry;
+        const auto info = get_info(entry_path);
+        if (info.is_directory()) {
           const auto intermediate_result
-            = read_directory(entry_path, is_recursive, exclude, context);
-
+            = read_directory(entry_path, is_recursive, exclude);
           for (const auto &intermediate_entry : intermediate_result) {
-            result.push_back(entry / intermediate_entry);
+            queue_result.push(entry / intermediate_entry);
           }
         } else {
-          result.push_back(entry);
+          queue_result.push(entry);
         }
-      } else {
-        result.push_back(entry);
-      }
-    }
+      }();
+    } while (entry.string_view());
+    return queue_result;
+  }();
 
-  } while (!is_the_end);
-
+  auto result = PathList().reserve(queue.count());
+  for (const auto &entry : queue) {
+    result.push_back(entry);
+  }
   return result;
 }
 
-bool FileSystem::directory_exists(var::StringView path) const {
+bool FileSystem::directory_exists(StringView path) const {
   API_RETURN_VALUE_IF_ERROR(false);
-  bool result = Dir(path).is_success();
-  reset_error();
-  return result;
+  api::ErrorScope error_scope;
+  return Dir(path).is_success();
 }
 
-Permissions FileSystem::get_permissions(var::StringView path) const {
-  const var::StringView parent = fs::Path::parent_directory(path);
+Permissions FileSystem::get_permissions(StringView path) const {
+  const StringView parent = fs::Path::parent_directory(path);
   if (parent.is_empty()) {
     return get_info(".").permissions();
   }
@@ -271,7 +265,7 @@ Permissions FileSystem::get_permissions(var::StringView path) const {
 }
 
 const FileSystem &FileSystem::create_directory(
-  var::StringView path,
+  StringView path,
   const Permissions &permissions) const {
 
   if (directory_exists(path)) {
@@ -281,7 +275,7 @@ const FileSystem &FileSystem::create_directory(
   const Permissions use_permissions
     = permissions.permissions() == 0 ? get_permissions(path) : permissions;
 
-  const var::PathString path_string(path);
+  const PathString path_string(path);
   API_SYSTEM_CALL(
     path_string.cstring(),
     interface_mkdir(path_string.cstring(), use_permissions.permissions()));
@@ -289,7 +283,7 @@ const FileSystem &FileSystem::create_directory(
 }
 
 const FileSystem &FileSystem::create_directory(
-  var::StringView path,
+  StringView path,
   IsRecursive is_recursive,
   const Permissions &permissions) const {
 
@@ -297,10 +291,10 @@ const FileSystem &FileSystem::create_directory(
     return create_directory(path, permissions);
   }
 
-  var::Tokenizer path_tokens
-    = var::Tokenizer(path, var::Tokenizer::Construct().set_delimiters("/"));
+  Tokenizer path_tokens
+    = Tokenizer(path, Tokenizer::Construct().set_delimiters("/"));
   // tokenizer will strip the first / and create an empty token
-  var::PathString base_path = (path && path.front() == '/') ? "/" : "";
+  PathString base_path = (path && path.front() == '/') ? "/" : "";
   for (const auto path_component : path_tokens.list()) {
     if (path_component) {
       base_path &= path_component;
@@ -317,9 +311,9 @@ const FileSystem &FileSystem::create_directory(
 }
 
 #if !defined __link
-Access FileSystem::access(var::StringView path) {
+Access FileSystem::access(StringView path) {
   API_RETURN_VALUE_IF_ERROR(Access());
-  const var::PathString path_string(path);
+  const PathString path_string(path);
   Access result;
   API_SYSTEM_CALL(
     path_string.cstring(),

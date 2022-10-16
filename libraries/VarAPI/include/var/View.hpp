@@ -120,9 +120,12 @@ public:
   View(const void *buffer, size_t size) { set_view(buffer, size); }
   View(void *buffer, size_t size) { set_view(buffer, size); }
 
+  API_NO_DISCARD auto size() const { return m_size; }
+  constexpr static auto npos = static_cast<size_t>(-1);
+
   template <class StringType> StringType to_string() const {
     StringType result;
-    for (u32 i = 0; i < size(); i++) {
+    for (auto i = 0; i < size(); i++) {
       result.append(NumberString(to_const_u8()[i], "%02X").string_view());
     }
     return result;
@@ -182,16 +185,16 @@ public:
   API_NO_DISCARD bool is_valid() const { return size() > 0; }
   API_NO_DISCARD bool is_null() const { return m_data == nullptr; }
 
-  template <typename T> View &fill(const T &value) {
-    for (u32 i = 0; i < this->count<T>(); i++) {
+  template <typename T> auto &fill(const T &value) {
+    for (auto i = 0; i < this->count<T>(); i++) {
       to<T>()[i] = value;
     }
     return *this;
   }
 
-  template <typename T> size_t find_offset(const T &value) {
+  template <typename T> auto find_offset(const T &value) {
     const auto count = this->count<T>();
-    for (u32 i = 0; i < count; i++) {
+    for (auto i = 0; i < count; i++) {
       if (to<T>()[i] == value) {
         return i;
       }
@@ -199,7 +202,6 @@ public:
     return count;
   }
 
-  constexpr static size_t npos = static_cast<size_t>(-1);
   size_t find(const View &view, size_t alignment = 1) const;
 
   /*! \details
@@ -216,11 +218,11 @@ public:
    * ```
    *
    */
-  template <typename Type> size_t count() const {
+  template <typename Type> auto count() const {
     return size() / sizeof(Type);
   }
 
-  template <typename Type> bool verify_zero_sum() const {
+  template <typename Type> auto verify_zero_sum() const {
     Type sum = 0;
     const auto count = size() / sizeof(Type);
     for (size_t i = 0; i < count; i++) {
@@ -249,9 +251,8 @@ public:
    * Return true if the sizes don't match or if any bytes
    * between this and `a` are not identical.
    */
-  bool operator!=(const View &a) const { return !(*this == a); }
+  auto operator!=(const View &a) const { return !(*this == a); }
 
-  API_NO_DISCARD size_t size() const { return m_size; }
 
   /*! \details
    *
@@ -264,7 +265,7 @@ public:
    *
    *
    */
-  View &truncate(size_t new_size) {
+  auto &truncate(size_t new_size) {
     if (size() > new_size) {
       m_size = new_size;
     }
@@ -281,7 +282,7 @@ public:
    *
    *
    */
-  View &pop_back(size_t pop_size = 1) {
+  auto &pop_back(size_t pop_size = 1) {
     if (size() >= pop_size) {
       m_size = size() - pop_size;
     }
@@ -300,7 +301,7 @@ public:
    * forward by `pop_size`.
    *
    */
-  View &pop_front(size_t pop_size = 1) {
+  auto &pop_front(size_t pop_size = 1) {
     const auto adjust_pop_size = size() >= pop_size ? pop_size : size();
     m_size = (size() - adjust_pop_size);
     m_data = (static_cast<u8 *>(m_data)) + adjust_pop_size;

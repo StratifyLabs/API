@@ -64,23 +64,8 @@ public:
       bool is_link_valid;
 #endif
 
-      void set_valid(bool value = true) {
-#if defined __link
-        is_link_valid = value;
-#else
-        if (!value) {
-          mutexattr.is_initialized = 0;
-        }
-#endif
-      }
-      bool is_valid() const {
-#if defined __link
-        return is_link_valid;
-#else
-        return mutexattr.is_initialized != 0;
-
-#endif
-      }
+      void set_valid(bool value = true);
+      bool is_valid() const;
     };
 
     static void deleter(Resource *resource);

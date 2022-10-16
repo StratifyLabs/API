@@ -29,32 +29,24 @@ class DataFile : public FileAccess<DataFile> {
 public:
   /*! \details Constructs a data file. */
 
-  //DataFile(DataFile &&file) = default;
-  //DataFile &operator=(DataFile &&file) = default;
+  // DataFile(DataFile &&file) = default;
+  // DataFile &operator=(DataFile &&file) = default;
 
   explicit DataFile(const OpenMode &flags = OpenMode::append_read_write())
     : m_open_flags(flags) {}
 
   explicit DataFile(const FileObject &file_to_load);
 
-  DataFile &reserve(size_t size) {
-    m_data.reserve(size);
-    return *this;
-  }
+  DataFile &reserve(size_t size) &;
+  DataFile &&reserve(size_t size) && { return std::move(reserve(size)); }
+  DataFile &resize(size_t size) &;
+  DataFile &&resize(size_t size) && { return std::move(resize(size)); }
+  DataFile &copy(var::View view) &;
+  DataFile &&copy(var::View view) && { return std::move(copy(view)); }
 
-  DataFile &resize(size_t size) {
-    m_data.resize(size);
-    return *this;
-  }
-
-  DataFile &copy(var::View view) {
-    m_data.copy(view);
-    return *this;
-  }
-
-  DataFile &set_flags(OpenMode open_flags) {
-    m_open_flags = open_flags;
-    return *this;
+  DataFile &set_flags(OpenMode open_flags) &;
+  DataFile &&set_flags(OpenMode open_flags) && {
+    return std::move(set_flags(open_flags));
   }
   const OpenMode &flags() const { return m_open_flags; }
 

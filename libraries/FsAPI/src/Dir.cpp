@@ -19,17 +19,17 @@ const char *DirObject::read() const {
 
 var::PathString DirObject::get_entry() const {
   const char *entry = read();
-
   if (entry == nullptr) {
     return {};
   }
 
   return var::PathString(m_path)
-    .append((!m_path.is_empty()) ? "/" : "")
+    .append(m_path.string_view() ? '/' : '\0')
     .append(entry);
 }
 
-Dir::Dir(var::StringView path) : m_dirp(open(path), &dir_deleter) {}
+Dir::Dir(var::StringView path)
+  : DirAccess<Dir>(path), m_dirp(open(path), &dir_deleter) {}
 
 DIR *Dir::open(var::StringView path) {
   API_RETURN_VALUE_IF_ERROR(nullptr);

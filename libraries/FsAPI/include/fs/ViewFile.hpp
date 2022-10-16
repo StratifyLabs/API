@@ -17,14 +17,11 @@ namespace fs {
  */
 class ViewFile : public FileAccess<ViewFile> {
 public:
+  explicit ViewFile(var::View view) { m_view = view; }
 
-  explicit ViewFile(var::View view) {
-    m_view = view;
-  }
-
-  ViewFile &set_flags(const OpenMode &open_flags) {
-    m_open_flags = open_flags;
-    return *this;
+  ViewFile &set_flags(const OpenMode &open_flags) &;
+  ViewFile &&set_flags(const OpenMode &open_flags) && {
+    return std::move(set_flags(open_flags));
   }
 
   const OpenMode &flags() const { return m_open_flags; }

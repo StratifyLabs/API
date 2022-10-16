@@ -138,7 +138,7 @@ public:
   }
 
 #if defined __linux
-  SignalHandler& add_action_flags(ActionFlags action_flags ){
+  SignalHandler &add_action_flags(ActionFlags action_flags) {
     m_sig_action.sa_flags |= int(action_flags);
     return *this;
   }
@@ -204,7 +204,7 @@ public:
 
   private:
     friend class Timer;
-    struct sigevent m_event{};
+    struct sigevent m_event {};
   };
 
   class Set {
@@ -239,18 +239,12 @@ public:
   };
 #endif
 
-  explicit Signal(Number signo, int signal_value = 0)
-    : m_signo{int(signo)}, m_sigvalue{signal_value} {}
-
-  Signal(Number signo, void *signal_pointer)
-    : m_signo{int(signo)}, m_sigvalue{.sival_ptr = signal_pointer} {}
-
+  explicit Signal(Number signo, int signal_value = 0);
+  Signal(Number signo, void *signal_pointer);
   const Signal &send(pid_t pid) const;
   Signal &send(pid_t pid) { return API_CONST_CAST_SELF(Signal, send, pid); }
-
   const Signal &queue(pid_t pid) const;
   Signal &queue(pid_t pid) { return API_CONST_CAST_SELF(Signal, queue, pid); }
-
   const Signal &send(const Thread &t) const;
   Signal &send(const Thread &t) { return API_CONST_CAST_SELF(Signal, send, t); }
 
@@ -267,20 +261,23 @@ public:
   API_NO_DISCARD void *sigptr() const { return m_sigvalue.sival_ptr; }
 
   class HandlerScope {
+    static void deleter(Number *number) {
+      Signal(*number).set_handler(SignalHandler::default_());
+    }
+
   public:
     HandlerScope(Signal &signal, const SignalHandler &handler)
-      : m_signo(signal.number()) {
+      : m_resource(signal.number(), &deleter) {
       signal.set_handler(handler);
     }
-    ~HandlerScope() { Signal(m_signo).set_handler(SignalHandler::default_()); }
 
   private:
-    Number m_signo{};
+    api::SystemResource<Number, decltype(&deleter)> m_resource = {Number::null};
   };
 
 private:
   int m_signo{};
-  union sigval m_sigvalue{};
+  union sigval m_sigvalue {};
 };
 
 #if defined __linux

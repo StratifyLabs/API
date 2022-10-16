@@ -80,3 +80,19 @@ int DataFile::interface_lseek(int offset, int whence) const {
   fake_seek(m_location, m_data.size(), offset, whence);
   return m_location;
 }
+DataFile &DataFile::reserve(size_t size) & {
+    m_data.reserve(size);
+    return *this;
+}
+DataFile &DataFile::resize(size_t size) & {
+  m_data.resize(size);
+  return *this;
+}
+DataFile &DataFile::copy(var::View view) & {
+  m_data.copy(view);
+  return *this;
+}
+DataFile &DataFile::set_flags(OpenMode open_flags) & {
+  m_open_flags = open_flags;
+  return *this;
+}

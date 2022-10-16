@@ -9,38 +9,41 @@
 
 namespace var {
 
-template <typename T> class Stack : public ContainerObject<Stack<T>, std::stack<T>, T> {
+template <typename T>
+class Stack : public ContainerObject<Stack<T>, std::stack<T>, T> {
   using Base = ContainerObject<Stack<T>, std::stack<T>, T>;
+
 public:
-  Stack() : Base(){}
+  Stack() : Base() {}
 
   T &top() { return this->m_container.top(); }
   const T &top() const { return this->m_container.top(); }
 
-  Stack &push(const T &value) {
+  Stack &push(const T &value) & {
     this->m_container.push_back(value);
     return *this;
   }
 
+  Stack &&push(const T &value) && { return std::move(push(value)); }
   template <class... Args> Stack<T> &emplace(Args &&...args) {
     this->m_container.emplace(args...);
     return *this;
   }
-
-  Stack &pop() {
+  Stack &pop() & {
     this->m_container.pop();
     return *this;
   }
+  Stack &&pop() && { return std::move(pop()); }
 
   API_NO_DISCARD bool is_empty() const { return this->m_container.empty(); }
   API_NO_DISCARD u32 count() const { return this->m_container.size(); }
 
-  Stack &clear() {
+  Stack &clear() & {
     // deconstruct objects in the list using pop
     this->m_container.clear();
     return *this;
   }
-
+  Stack &&clear() && { return std::move(clear()); }
 };
 } // namespace var
 #endif // VAR_API_VAR_STACK_HPP_

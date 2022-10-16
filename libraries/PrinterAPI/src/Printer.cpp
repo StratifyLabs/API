@@ -654,6 +654,7 @@ Printer::trace(const char *function, int line, StringView message) {
     interface_print_final(function);
     interface_print_final(NumberString(line, ":%d "));
     interface_print_final(message);
+    interface_print_final("\n");
   }
   return *this;
 }

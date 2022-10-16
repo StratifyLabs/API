@@ -63,3 +63,7 @@ int ViewFile::interface_lseek(int offset, int whence) const {
   fake_seek(m_location, m_view.size(), offset, whence);
   return m_location;
 }
+ViewFile &ViewFile::set_flags(const OpenMode &open_flags) & {
+    m_open_flags = open_flags;
+    return *this;
+}

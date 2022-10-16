@@ -13,54 +13,81 @@ struct ReplaceCharacter {
   API_PMAZ(old_character, ReplaceCharacter, char, 0);
 };
 
-template <class Derived, int Size> class StackString {
+struct StackStringObject {
+  char *buffer = nullptr;
+  size_t size{};
+
+  StackStringObject(char *buffer, size_t size);
+  auto capacity() const -> decltype(size);
+  auto append(const char value) const -> void;
+  auto append(var::StringView value) const -> void;
+  auto assign(const var::StringView value) const -> void;
+  auto assign(const char *value) const -> void;
+  auto move(char *other, size_t other_size) -> void;
+  auto replace(char old_character, char new_character) const -> void;
+  auto length() const -> size_t;
+  auto back() const -> char;
+  auto at(size_t offset) const -> char;
+  auto to_upper() const -> void;
+  auto to_lower() const -> void;
+  auto pop_front(size_t count) -> void;
+  auto pop_back(size_t count) -> void;
+  auto truncate(size_t new_length) -> void;
+};
+
+template <class Derived, size_t Size> class StackString {
+protected:
+  using Buffer = char[Size];
+  Buffer m_buffer;
+  StackStringObject m_stack_string_object;
+
 public:
   using Base = StringView::Base;
-  Derived &clear() {
+
+  StackString<Derived, Size>(const StackString &a)
+    : m_stack_string_object{m_buffer, Size} {
+    append(a.m_buffer);
+  }
+  StackString<Derived, Size> &operator=(const StackString &) = default;
+  StackString<Derived, Size>(StackString &&a)
+    : m_stack_string_object{m_buffer, Size} {
+    move(a);
+  }
+  StackString<Derived, Size> &operator=(StackString &&a) {
+    move(a);
+    return *this;
+  }
+
+  auto &clear() {
     m_buffer[0] = 0;
     m_buffer[Size - 1] = 0;
     return static_cast<Derived &>(*this);
   }
 
   API_NO_DISCARD bool is_empty() const { return m_buffer[0] == 0; }
-  API_NO_DISCARD explicit operator bool() const {
-    return m_buffer[0] != 0;
-  }
+  API_NO_DISCARD explicit operator bool() const { return m_buffer[0] != 0; }
 
-  Derived &append(const char a) {
-    const size_t len = strnlen(m_buffer, Size - 1);
-    if (len < Size - 1) {
-      m_buffer[len] = a;
-      m_buffer[len + 1] = 0;
-    }
+  auto &append(const char a) {
+    m_stack_string_object.append(a);
     return static_cast<Derived &>(*this);
   }
 
-  Derived &append(const StringView a) {
-    const size_t len = strnlen(m_buffer, Size - 1);
-    const size_t s = a.length() > Size - 1 - len ? Size - 1 - len : a.length();
-    m_buffer[len + s] = 0;
-    memcpy(m_buffer + len, a.data(), s);
+  auto &append(const StringView a) {
+    m_stack_string_object.append(a);
     return static_cast<Derived &>(*this);
   }
 
-  API_NO_DISCARD size_t length() const { return strnlen(m_buffer, Size - 1); }
-  API_NO_DISCARD char back() const {
-    const size_t len = length();
-    if (len) {
-      return m_buffer[length() - 1];
-    }
-    return 0;
-  }
+  API_NO_DISCARD auto length() const { return m_stack_string_object.length(); }
+  API_NO_DISCARD auto back() const { return m_stack_string_object.back(); }
 
   API_NO_DISCARD constexpr size_t capacity() const { return Size - 1; }
-  API_NO_DISCARD char *data() { return m_buffer; }
+  API_NO_DISCARD auto *data() { return m_buffer; }
   API_NO_DISCARD const char *cstring() const { return m_buffer; }
   API_NO_DISCARD StringView string_view() const { return StringView(m_buffer); }
 
-  Derived operator*(u32 a) const {
+  Derived operator*(unsigned a) const {
     Derived result;
-    for (u32 i = 0; i < a; i++) {
+    for (auto i = 0U; i < a; i++) {
       result.append(string_view());
     }
     return result;
@@ -94,115 +121,60 @@ public:
   }
 
   API_NO_DISCARD char at(size_t offset) const {
-    if (offset < Size) {
-      return m_buffer[offset];
-    }
-    return 0;
+    return m_stack_string_object.at(offset);
   }
 
-  template <typename... Args>
-  Derived &format(const char *format, Args... args) {
+  template <typename... Args> auto &format(const char *format, Args... args) {
     ::snprintf(m_buffer, capacity(), format, args...);
     return static_cast<Derived &>(*this);
   }
 
-  Derived &to_upper() {
-    for (size_t i = 0; i < capacity(); i++) {
-      m_buffer[i] = std::toupper(m_buffer[i]);
-    }
+  auto &to_upper() {
+    m_stack_string_object.to_upper();
     return static_cast<Derived &>(*this);
   }
 
-  Derived &to_lower() {
-    for (size_t i = 0; i < capacity(); i++) {
-      m_buffer[i] = std::tolower(m_buffer[i]);
-    }
+  auto &to_lower() {
+    m_stack_string_object.to_lower();
     return static_cast<Derived &>(*this);
   }
 
-  Derived &pop_front(size_t count = 1) {
-    const auto safe_count = count < capacity() ? count : capacity();
-    for (size_t i = safe_count; i < capacity(); i++) {
-      m_buffer[i - safe_count] = m_buffer[i];
-      if (m_buffer[i] == 0) {
-        break;
-      }
-    }
+  auto &pop_front(size_t count = 1) {
+    m_stack_string_object.pop_front(count);
     return static_cast<Derived &>(*this);
   }
 
-  Derived &pop_back(size_t count = 1) {
-    const auto end = length() > count ? length() - count : 0;
-    m_buffer[end] = 0;
+  auto &pop_back(size_t count = 1) {
+    m_stack_string_object.pop_back(count);
     return static_cast<Derived &>(*this);
   }
 
-  Derived &truncate(size_t new_length) {
-    const auto current_length = length();
-    const auto end = current_length > new_length ? new_length : current_length;
-    m_buffer[end] = 0;
+  auto &truncate(size_t new_length) {
+    m_stack_string_object.truncate(new_length);
     return static_cast<Derived &>(*this);
   }
-
-#if 0
-  class Replace {
-    API_AF(Replace, char, old_character, 0);
-    API_AF(Replace, char, new_character, 0);
-  };
-#endif
 
   using Replace = ReplaceCharacter;
 
-  Derived &replace(const Replace &options) {
-    for (size_t i = 0; i < capacity(); i++) {
-      if (m_buffer[i] == options.old_character) {
-        m_buffer[i] = options.new_character;
-      }
-    }
+  auto &replace(const Replace &options) {
+    m_stack_string_object.replace(options.old_character, options.new_character);
     return static_cast<Derived &>(*this);
   }
 
-  inline Derived &operator()(const Replace &options) {
-    return replace(options);
-  }
-
-  StackString<Derived, Size>(const StackString &) = default;
-  StackString<Derived, Size> &operator=(const StackString &) = default;
-
-  StackString<Derived, Size>(StackString &&a) { move(a); }
-
-  StackString<Derived, Size> &operator=(StackString &&a) {
-    move(a);
-    return *this;
-  }
+  auto &operator()(const Replace &options) { return replace(options); }
 
 protected:
-  StackString() { m_buffer[0] = 0; }
-  StackString(const StringView a) {
-    m_buffer[Size - 1] = 0;
-    const size_t s = a.length() > Size - 1 ? Size - 1 : a.length();
-    m_buffer[s] = 0;
-    memcpy(m_buffer, a.data(), s);
+  StackString() : m_stack_string_object{m_buffer, Size} {}
+  StackString(const StringView a) : m_stack_string_object{m_buffer, Size} {
+    m_stack_string_object.assign(a);
   }
 
-  StackString(const char *a) {
-    m_buffer[Size - 1] = 0;
-    if (a == nullptr) {
-      m_buffer[0] = 0;
-    } else {
-      strncpy(m_buffer, a, Size - 1);
-    }
+  StackString(const char *a) : m_stack_string_object{m_buffer, Size} {
+    m_stack_string_object.assign(a);
   }
-
-  char m_buffer[Size];
 
 private:
-  void move(StackString &a) {
-    char tmp[Size];
-    strncpy(tmp, a.m_buffer, capacity());
-    strncpy(a.m_buffer, m_buffer, capacity());
-    strncpy(m_buffer, tmp, capacity());
-  }
+  void move(StackString &a) { m_stack_string_object.move(a.m_buffer, Size); }
 };
 
 class IdString : public StackString<IdString, 24> {
@@ -251,7 +223,7 @@ public:
   PathString &operator&=(const StringView a) { return append(a); }
 
   PathString operator/(const var::StringView a) {
-    return PathString(*this).append("/").append(a);
+    return PathString(*this).append('/').append(a);
   }
 
   PathString operator&(const var::StringView a) {
