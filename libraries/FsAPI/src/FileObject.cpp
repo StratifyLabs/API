@@ -19,15 +19,15 @@ size_t FileObject::size() const {
   return seek_size;
 }
 
-const FileObject &FileObject::read(void *buf, int nbyte) const {
+const FileObject &FileObject::read(var::View view) const {
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL("", interface_read(buf, nbyte));
+  API_SYSTEM_CALL("", interface_read(view.data(), view.size()));
   return *this;
 }
 
-const FileObject &FileObject::write(const void *buf, int nbyte) const {
+const FileObject &FileObject::write(var::View view) const {
   API_RETURN_VALUE_IF_ERROR(*this);
-  API_SYSTEM_CALL("", interface_write(buf, nbyte));
+  API_SYSTEM_CALL("", interface_write(view.data(), view.size()));
   return *this;
 }
 
@@ -47,26 +47,8 @@ int FileObject::location() const {
   return seek(0, Whence::current).return_value();
 }
 
-var::GeneralString FileObject::gets(char term) const {
-  char c = 0;
-  var::GeneralString result;
-  int bytes_received = 0;
-  while ((c != term) && is_success()) {
-    if (read(var::View(c)).return_value() == 1) {
-      result.append(c);
-      bytes_received++;
-      if (bytes_received == result.capacity()) {
-        c = term;
-      }
-    } else {
-      c = term;
-    }
-  }
-
-  return result;
-}
-
-const FileObject &FileObject::ioctl(int request, void *argument) const {
+const FileObject &
+FileObject::ioctl_implementation(int request, void *argument) const {
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL("", interface_ioctl(request, argument));
   return *this;
@@ -120,7 +102,8 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
     file_read_buffer[0] = 0;
 
     if (const int bytes_read
-        = source_file.read(file_read_buffer, page_size).return_value();
+        = source_file.read(var::View(file_read_buffer, page_size))
+            .return_value();
         bytes_read > 0) {
       if (options.transformer()) {
         const size_t transform_size
@@ -131,9 +114,9 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
             .set_input(var::View(file_read_buffer, page_size))
             .set_output(var::View(file_write_buffer, transform_size)));
 
-        write(file_write_buffer, bytes_to_write);
+        write(var::View(file_write_buffer, bytes_to_write));
       } else {
-        write(file_read_buffer, bytes_read);
+        write(var::View(file_read_buffer, bytes_read));
         if (return_value() != bytes_read) {
           if (options.progress_callback()) {
             options.progress_callback()->update(0, 0);
@@ -171,8 +154,9 @@ FileObject::write(const FileObject &source_file, const Write &options) const {
     if (
       options.progress_callback()
       && options.progress_callback()->update(
-        int(size_processed),
-        int(file_size)) == api::ProgressCallback::IsAbort::yes) {
+           int(size_processed),
+           int(file_size))
+           == api::ProgressCallback::IsAbort::yes) {
       options.progress_callback()->update(0, 0);
       API_SYSTEM_CALL("aborted", size_processed);
       return *this;
@@ -247,8 +231,9 @@ bool FileObject::verify(const FileObject &source_file, const Verify &options)
     if (
       options.progress_callback()
       && options.progress_callback()->update(
-        int(size_processed),
-        int(verify_size)) == api::ProgressCallback::IsAbort::yes) {
+           int(size_processed),
+           int(verify_size))
+           == api::ProgressCallback::IsAbort::yes) {
       options.progress_callback()->update(0, 0);
       API_SYSTEM_CALL("aborted", size_processed);
       return false;
@@ -285,4 +270,42 @@ void FileObject::fake_seek(
   } else if (location < 0) {
     location = 0;
   }
+}
+
+auto FileObject::read_line_implementation(char term, char *buffer, size_t size)
+  const -> var::StringView {
+  const auto file_location = location();
+  const auto bytes_read = read(var::View(buffer, size)).return_value();
+  auto result = bytes_read > 0 ? var::StringView{buffer, size_t(bytes_read)}
+                               : var::StringView{};
+  auto offset = size_t{};
+  for (auto c : result) {
+    if (c == term) {
+      const auto new_length = offset + 1;
+      seek(file_location + new_length);
+      result.truncate(new_length);
+      return result;
+    }
+    ++offset;
+  }
+  return result;
+}
+
+auto FileObject::get_line_implementation(char term, char *buffer, size_t size)
+  const -> var::StringView {
+  auto c = '\0';
+  auto bytes_received = size_t{};
+  while ((c != term) && is_success()) {
+    if (read(var::View(c)).return_value() == 1) {
+      buffer[bytes_received] = c;
+      ++bytes_received;
+      if (bytes_received == size) {
+        c = term;
+      }
+    } else {
+      c = term;
+    }
+  }
+
+  return var::StringView{buffer, bytes_received};
 }

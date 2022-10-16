@@ -126,24 +126,40 @@ public:
     return self();
   }
 
-  template<typename Function> const Derived &for_each(Function function) const {
+  template<typename Function> const Derived &for_each(Function function) const & {
     std::for_each(begin(), end(), function);
     return self();
   };
 
-  template<typename Function> Derived &for_each(Function function) {
+  template<typename Function> Derived &for_each(Function function) & {
     std::for_each(begin(), end(), function);
     return self();
   };
 
-  Derived &assign_adjacent_difference(const T &initial_value = T()) {
+  template<typename Function> Derived &&for_each(Function function) && {
+    return std::move(for_each(function));
+  };
+
+  template<typename Function> auto any_of(Function function) {
+    return std::any_of(begin(), end(), function);
+  };
+
+  Derived &assign_adjacent_difference(const T &initial_value = T()) & {
     std::adjacent_difference(begin(), end(), initial_value);
     return self();
   }
 
-  Derived &rotate_left(size_t count) {
+  Derived &&assign_adjacent_difference(const T &initial_value = T()) && {
+    return std::move(assign_adjacent_difference(initial_value));
+  }
+
+  Derived &rotate_left(size_t count) & {
     std::rotate(begin(), std::advance(begin(), count), end());
     return self();
+  }
+
+  Derived &&rotate_left(size_t count) && {
+    return std::move(rotate_left(count));
   }
 
   template<typename CompareFunction> bool is_sorted(CompareFunction compare_function) const {
@@ -197,7 +213,7 @@ protected:
 
 template <class Derived, typename Container, typename T>
 class ContainerObject : public ContainerObjectForwardOnly<Derived, Container, T> {
-  using Base = ContainerObject<Derived, Container, T>;
+  using Base = ContainerObjectForwardOnly<Derived, Container, T>;
 public:
 
   typename Container::const_reverse_iterator rbegin() const noexcept {

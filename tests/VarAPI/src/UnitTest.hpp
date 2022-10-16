@@ -120,6 +120,7 @@ public:
     TEST_ASSERT_RESULT(tokenizer_api_case());
     TEST_ASSERT_RESULT(view_api_case());
     TEST_ASSERT_RESULT(data_api_case());
+    TEST_ASSERT_RESULT(ring_api_case());
     return true;
   }
 
@@ -255,6 +256,16 @@ public:
       TEST_ASSERT(container_test<Container>([](Container &a) { a.resize(4); }));
     }
 
+    {
+      auto count = int{};
+      auto list = Vector<int>().resize(10).for_each(
+        [&count](auto &value) { value = ++count; });
+      auto verify_count = int{};
+      for (const auto entry : list) {
+        TEST_ASSERT(entry == ++verify_count);
+      }
+    }
+
     return true;
   }
 
@@ -305,16 +316,99 @@ public:
     return true;
   }
 
+  bool ring_api_case() {
+
+    int count = 0;
+    struct Item {
+      struct Data {
+        int value{};
+        int *counter = nullptr;
+      };
+      Data data;
+      void increment() {
+        if (data.counter) {
+          ++(*data.counter);
+        }
+      }
+      void decrement() {
+        if (data.counter) {
+          --(*data.counter);
+        }
+      }
+      Item() = default;
+      Item(const Data &data) : data{data} { increment(); }
+      Item(const Item &item) : data{item.data} { increment(); }
+      Item &operator=(const Item &item) {
+        data = item.data;
+        increment();
+        return *this;
+      }
+      Item &operator=(Item &&item) {
+        std::swap(data, item.data);
+        increment();
+        return *this;
+      }
+      Item(Item &&item) : data{item.data} {
+        std::swap(data, item.data);
+        increment();
+      }
+      ~Item() { decrement(); }
+    };
+    Printer::Object po(printer(), "Ring");
+
+    {
+      constexpr auto size = size_t{4};
+      auto ring = Ring<Item, size>();
+      auto value = 0;
+      for (const auto index : api::Index(size)) {
+        ring.push(Item({value, &count}));
+        ++value;
+      }
+      for (const auto index : api::Index(size)) {
+        TEST_ASSERT(ring.at(index).data.value == index);
+      }
+      for (const auto rotate_index : api::Index(size)) {
+        Printer::Object rotate_object(
+          printer(),
+          "rotateBackward" | NumberString(rotate_index));
+        for (const auto index : api::Index(size)) {
+          printer().key(
+            "ring" | NumberString(index),
+            NumberString(ring.at(index).data.value));
+          TEST_ASSERT(
+            ring.at(index).data.value == (index + rotate_index) % size);
+        }
+        ring.rotate_backward();
+      }
+      for (const auto rotate_index : api::Index(size)) {
+        Printer::Object rotate_object(
+          printer(),
+          "rotateForward" | NumberString(rotate_index));
+        for (const auto index : api::Index(size)) {
+          printer().key(
+            "ring" | NumberString(index),
+            NumberString(ring.at(index).data.value));
+            TEST_ASSERT(
+              ring.at(index).data.value
+              == (size + index - rotate_index) % size);
+        }
+        ring.rotate_forward();
+      }
+    }
+    TEST_ASSERT(count == 0);
+    return is_success();
+  }
+
   bool view_api_case() {
     Printer::Object po(printer(), "View");
 
     TEST_EXPECT(V().to_const_char() == nullptr);
 
-    char buffer[32];
+    char buffer_space[32];
 
-    View view_buffer(buffer);
-    TEST_ASSERT(view_buffer.size() == sizeof(buffer));
-    TEST_ASSERT(view_buffer.to_char() == buffer);
+    View view_buffer(buffer_space);
+    TEST_ASSERT(view_buffer.size() == sizeof(buffer_space));
+    TEST_ASSERT(view_buffer.to_char() == buffer_space);
 
     const char test[] = "test1234567890\n";
     View view_test(test);
@@ -417,6 +511,10 @@ public:
         View(dest).fill<u64>(0x00);
       }
       TEST_ASSERT(View(source) == View(dest));
+    }
+    {
+      Array<u32, 16> array;
+      array.for_each([](u32 &value) { value = 7; });
     }
 
     {
@@ -722,38 +820,62 @@ public:
         "translating it into a radix-64 representation. The term Base64 "
         "originates from a specific MIME content transfer encoding. Each "
         "Base64 digit represents exactly 6 bits of data. Three 8-bit bytes "
-        "(i.e., a total of 24 bits) can therefore be represented by four 6-bit "
-        "Base64 digits. Common to all binary-to-text encoding schemes, Base64 "
+        "(i.e., a total of 24 bits) can therefore be represented by four "
+        "6-bit "
+        "Base64 digits. Common to all binary-to-text encoding schemes, "
+        "Base64 "
         "is designed to carry data stored in binary formats across channels "
         "that only reliably support text content. Base64 is particularly "
-        "prevalent on the World Wide Web[1] where its uses include the ability "
+        "prevalent on the World Wide Web[1] where its uses include the "
+        "ability "
         "to embed image files or other binary assets inside textual assets "
-        "such as HTML and CSS files.[2] Base64 is also widely used for sending "
+        "such as HTML and CSS files.[2] Base64 is also widely used for "
+        "sending "
         "e-mail attachments. This is required because SMTP in its original "
         "form was designed to transport 7 bit ASCII characters only. This "
-        "encoding causes an overhead of 33–36% (33% by the encoding itself, up "
+        "encoding causes an overhead of 33–36% (33% by the encoding itself, "
+        "up "
         "to 3% more by the inserted line breaks).";
 
     static constexpr StringView test_output
-      = "SW4gY29tcHV0ZXIgc2NpZW5jZSwgQmFzZTY0IGlzIGEgZ3JvdXAgb2YgYmluYXJ5LXRvLX"
-        "RleHQgZW5jb2Rpbmcgc2NoZW1lcyB0aGF0IHJlcHJlc2VudCBiaW5hcnkgZGF0YSBpbiBh"
-        "biBBU0NJSSBzdHJpbmcgZm9ybWF0IGJ5IHRyYW5zbGF0aW5nIGl0IGludG8gYSByYWRpeC"
-        "02NCByZXByZXNlbnRhdGlvbi4gVGhlIHRlcm0gQmFzZTY0IG9yaWdpbmF0ZXMgZnJvbSBh"
-        "IHNwZWNpZmljIE1JTUUgY29udGVudCB0cmFuc2ZlciBlbmNvZGluZy4gRWFjaCBCYXNlNj"
-        "QgZGlnaXQgcmVwcmVzZW50cyBleGFjdGx5IDYgYml0cyBvZiBkYXRhLiBUaHJlZSA4LWJp"
-        "dCBieXRlcyAoaS5lLiwgYSB0b3RhbCBvZiAyNCBiaXRzKSBjYW4gdGhlcmVmb3JlIGJlIH"
-        "JlcHJlc2VudGVkIGJ5IGZvdXIgNi1iaXQgQmFzZTY0IGRpZ2l0cy4gQ29tbW9uIHRvIGFs"
-        "bCBiaW5hcnktdG8tdGV4dCBlbmNvZGluZyBzY2hlbWVzLCBCYXNlNjQgaXMgZGVzaWduZW"
-        "QgdG8gY2FycnkgZGF0YSBzdG9yZWQgaW4gYmluYXJ5IGZvcm1hdHMgYWNyb3NzIGNoYW5u"
-        "ZWxzIHRoYXQgb25seSByZWxpYWJseSBzdXBwb3J0IHRleHQgY29udGVudC4gQmFzZTY0IG"
-        "lzIHBhcnRpY3VsYXJseSBwcmV2YWxlbnQgb24gdGhlIFdvcmxkIFdpZGUgV2ViWzFdIHdo"
-        "ZXJlIGl0cyB1c2VzIGluY2x1ZGUgdGhlIGFiaWxpdHkgdG8gZW1iZWQgaW1hZ2UgZmlsZX"
-        "Mgb3Igb3RoZXIgYmluYXJ5IGFzc2V0cyBpbnNpZGUgdGV4dHVhbCBhc3NldHMgc3VjaCBh"
-        "cyBIVE1MIGFuZCBDU1MgZmlsZXMuWzJdIEJhc2U2NCBpcyBhbHNvIHdpZGVseSB1c2VkIG"
-        "ZvciBzZW5kaW5nIGUtbWFpbCBhdHRhY2htZW50cy4gVGhpcyBpcyByZXF1aXJlZCBiZWNh"
-        "dXNlIFNNVFAgaW4gaXRzIG9yaWdpbmFsIGZvcm0gd2FzIGRlc2lnbmVkIHRvIHRyYW5zcG"
-        "9ydCA3IGJpdCBBU0NJSSBjaGFyYWN0ZXJzIG9ubHkuIFRoaXMgZW5jb2RpbmcgY2F1c2Vz"
-        "IGFuIG92ZXJoZWFkIG9mIDMz4oCTMzYlICgzMyUgYnkgdGhlIGVuY29kaW5nIGl0c2VsZi"
+      = "SW4gY29tcHV0ZXIgc2NpZW5jZSwgQmFzZTY0IGlzIGEgZ3JvdXAgb2YgYmluYXJ5LXRv"
+        "LX"
+        "RleHQgZW5jb2Rpbmcgc2NoZW1lcyB0aGF0IHJlcHJlc2VudCBiaW5hcnkgZGF0YSBpbi"
+        "Bh"
+        "biBBU0NJSSBzdHJpbmcgZm9ybWF0IGJ5IHRyYW5zbGF0aW5nIGl0IGludG8gYSByYWRp"
+        "eC"
+        "02NCByZXByZXNlbnRhdGlvbi4gVGhlIHRlcm0gQmFzZTY0IG9yaWdpbmF0ZXMgZnJvbS"
+        "Bh"
+        "IHNwZWNpZmljIE1JTUUgY29udGVudCB0cmFuc2ZlciBlbmNvZGluZy4gRWFjaCBCYXNl"
+        "Nj"
+        "QgZGlnaXQgcmVwcmVzZW50cyBleGFjdGx5IDYgYml0cyBvZiBkYXRhLiBUaHJlZSA4LW"
+        "Jp"
+        "dCBieXRlcyAoaS5lLiwgYSB0b3RhbCBvZiAyNCBiaXRzKSBjYW4gdGhlcmVmb3JlIGJl"
+        "IH"
+        "JlcHJlc2VudGVkIGJ5IGZvdXIgNi1iaXQgQmFzZTY0IGRpZ2l0cy4gQ29tbW9uIHRvIG"
+        "Fs"
+        "bCBiaW5hcnktdG8tdGV4dCBlbmNvZGluZyBzY2hlbWVzLCBCYXNlNjQgaXMgZGVzaWdu"
+        "ZW"
+        "QgdG8gY2FycnkgZGF0YSBzdG9yZWQgaW4gYmluYXJ5IGZvcm1hdHMgYWNyb3NzIGNoYW"
+        "5u"
+        "ZWxzIHRoYXQgb25seSByZWxpYWJseSBzdXBwb3J0IHRleHQgY29udGVudC4gQmFzZTY0"
+        "IG"
+        "lzIHBhcnRpY3VsYXJseSBwcmV2YWxlbnQgb24gdGhlIFdvcmxkIFdpZGUgV2ViWzFdIH"
+        "do"
+        "ZXJlIGl0cyB1c2VzIGluY2x1ZGUgdGhlIGFiaWxpdHkgdG8gZW1iZWQgaW1hZ2UgZmls"
+        "ZX"
+        "Mgb3Igb3RoZXIgYmluYXJ5IGFzc2V0cyBpbnNpZGUgdGV4dHVhbCBhc3NldHMgc3VjaC"
+        "Bh"
+        "cyBIVE1MIGFuZCBDU1MgZmlsZXMuWzJdIEJhc2U2NCBpcyBhbHNvIHdpZGVseSB1c2Vk"
+        "IG"
+        "ZvciBzZW5kaW5nIGUtbWFpbCBhdHRhY2htZW50cy4gVGhpcyBpcyByZXF1aXJlZCBiZW"
+        "Nh"
+        "dXNlIFNNVFAgaW4gaXRzIG9yaWdpbmFsIGZvcm0gd2FzIGRlc2lnbmVkIHRvIHRyYW5z"
+        "cG"
+        "9ydCA3IGJpdCBBU0NJSSBjaGFyYWN0ZXJzIG9ubHkuIFRoaXMgZW5jb2RpbmcgY2F1c2"
+        "Vz"
+        "IGFuIG92ZXJoZWFkIG9mIDMz4oCTMzYlICgzMyUgYnkgdGhlIGVuY29kaW5nIGl0c2Vs"
+        "Zi"
         "wgdXAgdG8gMyUgbW9yZSBieSB0aGUgaW5zZXJ0ZWQgbGluZSBicmVha3MpLg==";
 
     TEST_ASSERT(Base64().is_valid(test_output));
@@ -1216,9 +1338,33 @@ public:
     }
 
     {
-      S s("testing");
+      const auto s = S("testing");
       TEST_ASSERT(String(s).to_upper() == "TESTING");
       TEST_ASSERT(String(s).to_upper().to_lower() == s);
+      {
+        auto t = s;
+        t.to_upper();
+        TEST_ASSERT(t == String{s}.to_upper());
+      }
+      {
+        auto t = s;
+        TEST_ASSERT(t.to_upper() == String{s}.to_upper());
+      }
+    }
+
+    {
+      const auto s = S("TESTING");
+      TEST_ASSERT(String(s).to_lower() == "testing");
+      TEST_ASSERT(String(s).to_lower().to_upper() == s);
+      {
+        auto t = s;
+        t.to_lower();
+        TEST_ASSERT(t == String{s}.to_lower());
+      }
+      {
+        auto t = s;
+        TEST_ASSERT(t.to_lower() == String{s}.to_lower());
+      }
     }
 
     {

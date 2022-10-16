@@ -516,13 +516,13 @@ public:
 
     printer().key("size", NumberString(f.size()));
     printer().object("contents", View(f.data()));
-    printer().key("line", f.gets().string_view());
+    printer().key("line", f.get_line().string_view());
 
-    TEST_ASSERT(f.seek(0).gets() == test_strings.at(0));
-    TEST_ASSERT(f.gets() == test_strings.at(1));
-    TEST_ASSERT(f.gets() == test_strings.at(2));
-    TEST_ASSERT(f.gets() == test_strings.at(3));
-    TEST_ASSERT(f.gets() == test_strings.at(4));
+    TEST_ASSERT(f.seek(0).get_line() == test_strings.at(0));
+    TEST_ASSERT(f.get_line() == test_strings.at(1));
+    TEST_ASSERT(f.get_line() == test_strings.at(2));
+    TEST_ASSERT(f.get_line() == test_strings.at(3));
+    TEST_ASSERT(f.get_line() == test_strings.at(4));
 
     TEST_ASSERT(
       F(F::IsOverwrite::yes, file_name).write(test_strings.at(0)).is_success());
@@ -619,7 +619,8 @@ public:
         = LambdaFile()
             .set_read_callback(
               [&lambda_file_data](int location, var::View view) -> int {
-                View data_at_location = View(lambda_file_data).pop_front(location);
+                View data_at_location
+                  = View(lambda_file_data).pop_front(location);
                 const size_t size = data_at_location.size() > view.size()
                                       ? view.size()
                                       : data_at_location.size();
@@ -647,6 +648,12 @@ public:
 
       TEST_ASSERT(incoming.data().add_null_terminator() == hello);
       TEST_ASSERT(lambda_file_data.add_null_terminator() == hello);
+    }
+
+    {
+      auto ref_object = Printer::Object(printer(), "refQualified");
+      auto file
+        = F(F::IsOverwrite::yes, "fileTest.txt").write("Hello.txt").seek(0);
     }
 
     printer().key("complete", __FUNCTION__);

@@ -41,7 +41,7 @@ class Array
     = ContainerObject<Array<T, SizeValue>, std::array<T, SizeValue>, T>;
 
 public:
-  Array() : Base(){}
+  Array() : Base() {}
   Array(const std::array<T, SizeValue> &array) : Base(array) {}
   Array(std::array<T, SizeValue> &&array) : Base(std::move(array)) {}
   Array(std::initializer_list<T> il) : Base(il) {}

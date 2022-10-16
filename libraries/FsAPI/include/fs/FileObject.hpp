@@ -52,30 +52,14 @@ public:
 
   API_NO_DISCARD int location() const;
 
-  const FileObject &read(void *buf, int size) const;
-  FileObject &read(void *buf, int size) {
-    return API_CONST_CAST_SELF(FileObject, read, buf, size);
-  }
-
-  const FileObject &read(var::View view) const {
-    return read(view.to_void(), int(view.size()));
-  }
-
+  const FileObject &read(var::View view) const;
   FileObject &read(var::View view) {
-    return read(view.to_void(), int(view.size()));
+    return API_CONST_CAST_SELF(FileObject, read, view);
   }
 
-  const FileObject &write(const void *buf, int size) const;
-  FileObject &write(const void *buf, int size) {
-    return API_CONST_CAST_SELF(FileObject, write, buf, size);
-  }
-
-  const FileObject &write(var::View view) const {
-    return write(view.to_const_void(), int(view.size()));
-  }
-
+  const FileObject &write(var::View view) const;
   FileObject &write(var::View view) {
-    return write(view.to_const_void(), int(view.size()));
+    return API_CONST_CAST_SELF(FileObject, write, view);
   }
 
   class Write {
@@ -86,7 +70,11 @@ public:
 
   private:
     API_ACCESS_FUNDAMENTAL(Write, int, location, -1);
-    API_ACCESS_FUNDAMENTAL(Write, size_t, page_size, FSAPI_LINK_DEFAULT_PAGE_SIZE);
+    API_ACCESS_FUNDAMENTAL(
+      Write,
+      size_t,
+      page_size,
+      FSAPI_LINK_DEFAULT_PAGE_SIZE);
     API_ACCESS_FUNDAMENTAL(Write, size_t, size, static_cast<size_t>(-1));
     API_ACCESS_FUNDAMENTAL(Write, char, terminator, 0);
     API_ACCESS_FUNDAMENTAL(Write, chrono::MicroTime, timeout, 0_microseconds);
@@ -156,6 +144,16 @@ public:
     return API_CONST_CAST_SELF(FileObject, write, source_file, options);
   }
 
+  template <typename Type>
+  const FileObject &ioctl(int request, Type *args = nullptr) const {
+    ioctl_implementation(request, static_cast<void *>(args));
+    return *this;
+  }
+
+  template <typename Type> FileObject &ioctl(int request, Type *args) {
+    return API_CONST_CAST_SELF(FileObject, ioctl, request, args);
+  }
+
   const FileObject &write(
     const FileObject &source_file,
     const var::Transformer &transformer,
@@ -180,49 +178,35 @@ public:
     return API_CONST_CAST_SELF(FileObject, seek, location, whence);
   }
 
-  var::GeneralString gets(char term = '\n') const;
-
-  template <class StringType> StringType get_line(char term = '\n') const {
+  /*! \details Does a character size read until `terminal_character` is found`
+   *
+   */
+  template <class StringType = var::GeneralString>
+  StringType get_line(char terminal_character = '\n') const {
     StringType result;
-    const auto file_location = location();
-    const auto bytes_read = read(var::View(result.data(), result.capacity())).return_value();
-    if( bytes_read > 0){
-      result.truncate(bytes_read);
-    } else {
-      return result;
-    }
-    size_t offset{};
-    for (auto c : result.string_view()) {
-      if (c == term) {
-        const auto new_length = offset + 1;
-        seek(file_location + new_length);
-        result.truncate(new_length);
-        return result;
-      }
-      ++offset;
-    }
-    return result;
+    return StringType{get_line_implementation(
+      terminal_character,
+      result.data(),
+      result.capacity())};
   }
 
-  class Ioctl {
-    API_ACCESS_FUNDAMENTAL(Ioctl, int, request, 0);
-    API_ACCESS_FUNDAMENTAL(Ioctl, void *, argument, nullptr);
-  };
-
-  const FileObject &ioctl(int request, void *arg) const;
-  FileObject &ioctl(int request, void *arg) {
-    return API_CONST_CAST_SELF(FileObject, ioctl, request, arg);
-  }
-
-  const FileObject &ioctl(int request) const { return ioctl(request, nullptr); }
-  FileObject &ioctl(int request) { return ioctl(request, nullptr); }
-
-  const FileObject &ioctl(const Ioctl &options) const {
-    return ioctl(options.request(), options.argument());
-  }
-
-  FileObject &ioctl(const Ioctl &options) {
-    return ioctl(options.request(), options.argument());
+  /*! \details Reads in a line from a file.
+   *
+   * The entire `StringType` is read from the file. The file then
+   * seeks back to the original location.
+   *
+   * Don't use this with sockets: use get_line().
+   *
+   * Use this when reading large text files. It performs
+   * much faster then `get_line()` but requires seekable
+   * files.
+   *
+   */
+  template <class StringType = var::GeneralString>
+  StringType read_line(char term = '\n') const {
+    StringType result;
+    return StringType{
+      read_line_implementation(term, result.data(), result.capacity())};
   }
 
   const FileObject &sync() const;
@@ -233,110 +217,94 @@ protected:
   virtual int interface_read(void *buf, int nbyte) const = 0;
   virtual int interface_write(const void *buf, int nbyte) const = 0;
   virtual int interface_ioctl(int request, void *argument) const = 0;
-
   virtual int interface_fsync() const { return 0; }
-
   static void fake_seek(int &location, size_t size, int offset, int whence);
-
-  static int fake_ioctl(int request, void *argument) {
-    MCU_UNUSED_ARGUMENT(request);
-    MCU_UNUSED_ARGUMENT(argument);
+  static int fake_ioctl(int, void *) {
     errno = ENOTSUP;
     return -1;
   }
 
+private:
+  const FileObject &ioctl_implementation(int request, void *arg) const;
+  auto get_line_implementation(char term, char *buffer, size_t size) const
+    -> var::StringView;
+  auto read_line_implementation(char term, char *buffer, size_t size) const
+    -> var::StringView;
 };
 
 template <class Derived> class FileAccess : public FileObject {
 public:
-  const Derived &read(void *buf, size_t size) const {
-    return static_cast<const Derived &>(FileObject::read(buf, size));
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL read(var::View view) QUAL {                                        \
+    FileObject::read(view);                                                    \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-
-  Derived &read(void *buf, size_t size) {
-    return static_cast<Derived &>(FileObject::read(buf, size));
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL write(var::View view) QUAL {                                       \
+    FileObject::write(view);                                                   \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-
-  const Derived &read(var::View view) const {
-    return static_cast<const Derived &>(FileObject::read(view));
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL sync() QUAL {                                                      \
+    FileObject::sync();                                                        \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-
-  Derived &read(var::View view) {
-    return static_cast<Derived &>(FileObject::read(view));
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL write(                                                             \
+    const FileObject &source_file,                                             \
+    const Write &options = Write()) QUAL {                                     \
+    FileObject::write(source_file, options);                                   \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
 
-  const Derived &write(const void *buf, size_t size) const {
-    return static_cast<const Derived &>(FileObject::write(buf, size));
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL write(                                                             \
+    const FileObject &source_file,                                             \
+    const var::Transformer &transformer,                                       \
+    const Write &options = Write()) QUAL {                                     \
+    FileObject::write(source_file, transformer, options);                      \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
 
-  Derived &write(const void *buf, size_t size) {
-    return static_cast<Derived &>(FileObject::write(buf, size));
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL seek(int location, Whence whence = Whence::set) QUAL {             \
+    FileObject::seek(location, whence);                                        \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
 
-  const Derived &write(var::View view) const {
-    return static_cast<const Derived &>(FileObject::write(view));
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  template <typename Type> auto QUAL ioctl(int request, Type *arg) QUAL {      \
+    FileObject::ioctl(request, arg);                                           \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-
-  Derived &write(var::View view) {
-    return static_cast<Derived &>(FileObject::write(view));
-  }
-
-  const Derived &sync() const {
-    return static_cast<const Derived &>(FileObject::sync());
-  }
-
-  Derived &sync() { return static_cast<Derived &>(FileObject::sync()); }
-
-  const Derived &
-  write(const FileObject &source_file, const Write &options = Write()) const {
-    return static_cast<const Derived &>(
-      FileObject::write(source_file, options));
-  }
-
-  Derived &
-  write(const FileObject &source_file, const Write &options = Write()) {
-    return static_cast<Derived &>(FileObject::write(source_file, options));
-  }
-
-  const Derived &write(
-    const FileObject &source_file,
-    const var::Transformer &transformer,
-    const Write &options = Write()) const {
-    return static_cast<const Derived &>(
-      FileObject::write(source_file, transformer, options));
-  }
-
-  Derived &write(
-    const FileObject &source_file,
-    const var::Transformer &transformer,
-    const Write &options = Write()) {
-    return static_cast<Derived &>(
-      FileObject::write(source_file, transformer, options));
-  }
-
-  const Derived &seek(int location, Whence whence = Whence::set) const {
-    return static_cast<const Derived &>(FileObject::seek(location, whence));
-  }
-
-  Derived &seek(int location, Whence whence = Whence::set) {
-    return static_cast<Derived &>(FileObject::seek(location, whence));
-  }
-
-  const Derived &ioctl(int request, void *arg) const {
-    return static_cast<const Derived &>(FileObject::ioctl(request, arg));
-  }
-
-  Derived &ioctl(int request, void *arg) {
-    return static_cast<Derived &>(FileObject::ioctl(request, arg));
-  }
-
-  const Derived &ioctl(const Ioctl &options) const {
-    return static_cast<const Derived &>(FileObject::ioctl(options));
-  }
-
-  Derived &ioctl(const Ioctl &options) {
-    return static_cast<Derived &>(FileObject::ioctl(options));
-  }
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
 
   Derived &&move() { return std::move(static_cast<Derived &>(*this)); }
 
@@ -350,111 +318,86 @@ template <class Derived> class FileMemberAccess {
 public:
   using Whence = fs::FileObject::Whence;
   using Write = fs::FileObject::Write;
-  using Ioctl = fs::FileObject::Ioctl;
 
   FileMemberAccess(const fs::FileObject &file)
-    : m_file_member_reference_access{&file} {
-  }
+    : m_file_member_reference_access{&file} {}
 
-  //a move should not copy or swap anything
-  //The member pointer should always point to the
-  //derived owner's internal m_file
-  FileMemberAccess(FileMemberAccess&&){}
-  FileMemberAccess & operator=(FileMemberAccess&&){
-    return *this;
-  }
+  // a move should not copy or swap anything
+  // The member pointer should always point to the
+  // derived owner's internal m_file
+  FileMemberAccess(FileMemberAccess &&) {}
+  FileMemberAccess &operator=(FileMemberAccess &&) { return *this; }
 
-  FileMemberAccess(const FileMemberAccess&) = delete;
-  FileMemberAccess& operator=(const FileMemberAccess&) = delete;
+  FileMemberAccess(const FileMemberAccess &) = delete;
+  FileMemberAccess &operator=(const FileMemberAccess &) = delete;
 
-  const Derived &read(void *buf, size_t size) const {
-    m_file_member_reference_access->read(buf, int(size));
-    return static_cast<const Derived &>(*this);
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL read(var::View view) QUAL {                                        \
+    m_file_member_reference_access->read(view);                                \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-  Derived &read(void *buf, size_t size) {
-    m_file_member_reference_access->read(buf, int(size));
-    return static_cast<Derived &>(*this);
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL write(var::View view) QUAL {                                       \
+    m_file_member_reference_access->write(view);                               \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-  const Derived &read(var::View view) const {
-    m_file_member_reference_access->read(view);
-    return static_cast<const Derived &>(*this);
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL write(                                                             \
+    const fs::FileObject &source_file,                                         \
+    const Write &options = Write()) QUAL {                                     \
+    m_file_member_reference_access->write(source_file, options);               \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-  Derived &read(var::View view) {
-    m_file_member_reference_access->read(view);
-    return static_cast<Derived &>(*this);
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL write(                                                             \
+    const fs::FileObject &source_file,                                         \
+    const var::Transformer &transformer,                                       \
+    const Write &options = Write()) QUAL {                                     \
+    m_file_member_reference_access->write(source_file, transformer, options);  \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-  const Derived &write(const void *buf, size_t size) const {
-    m_file_member_reference_access->write(buf, size);
-    return static_cast<const Derived &>(*this);
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL seek(int location, Whence whence = Whence::set) QUAL {             \
+    m_file_member_reference_access->seek(location, whence);                    \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-  Derived &write(const void *buf, size_t size) {
-    m_file_member_reference_access->write(buf, size);
-    return static_cast<Derived &>(*this);
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  template <typename Type> auto QUAL ioctl(int request, Type *arg) QUAL {      \
+    m_file_member_reference_access->ioctl(request, arg);                       \
+    return static_cast<Derived QUAL>(*this);                                   \
   }
-  const Derived &write(var::View view) const {
-    m_file_member_reference_access->write(view);
-    return static_cast<const Derived &>(*this);
-  }
-  Derived &write(var::View view) {
-    m_file_member_reference_access->write(view);
-    return static_cast<Derived &>(*this);
-  }
-  const Derived &write(
-    const fs::FileObject &source_file,
-    const Write &options = Write()) const {
-    m_file_member_reference_access->write(source_file, options);
-    return static_cast<const Derived &>(*this);
-  }
-  Derived &
-  write(const fs::FileObject &source_file, const Write &options = Write()) {
-    m_file_member_reference_access->write(source_file, options);
-    return static_cast<Derived &>(*this);
-  }
-  const Derived &write(
-    const fs::FileObject &source_file,
-    const var::Transformer &transformer,
-    const Write &options = Write()) const {
-    m_file_member_reference_access->write(source_file, transformer, options);
-    return static_cast<const Derived &>(*this);
-  }
-  Derived &write(
-    const fs::FileObject &source_file,
-    const var::Transformer &transformer,
-    const Write &options = Write()) {
-    m_file_member_reference_access->write(source_file, transformer, options);
-    return static_cast<Derived &>(*this);
-  }
-  const Derived &seek(int location, Whence whence = Whence::set) const {
-    m_file_member_reference_access->seek(location, whence);
-    return static_cast<const Derived &>(*this);
-  }
-  Derived &seek(int location, Whence whence = Whence::set) {
-    m_file_member_reference_access->seek(location, whence);
-    return static_cast<Derived &>(*this);
-  }
-  const Derived &ioctl(int request, void *arg) const {
-    m_file_member_reference_access->ioctl(request, arg);
-    return static_cast<const Derived &>(*this);
-  }
-  Derived &ioctl(int request, void *arg) {
-    m_file_member_reference_access->ioctl(request, arg);
-    return static_cast<Derived &>(*this);
-  }
-  const Derived &ioctl(const Ioctl &options) const {
-    m_file_member_reference_access->ioctl(options);
-    return static_cast<const Derived &>(*this);
-  }
-  Derived &ioctl(const Ioctl &options) {
-    m_file_member_reference_access->ioctl(options);
-    return static_cast<Derived &>(*this);
-  }
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
 
 private:
-  //This should not be moved during move operations
-  //the file it points to will move the fd from the temporary
-  //to the new location and this will point to the new location
-  const fs::FileObject * m_file_member_reference_access = nullptr;
-};
+  // This should not be moved during move operations
+  // the file it points to will move the fd from the temporary
+  // to the new location and this will point to the new location
+  const fs::FileObject *m_file_member_reference_access = nullptr;
+}; // namespace fs
 
 } // namespace fs
 

@@ -27,7 +27,7 @@ Data Data::from_string(StringView value) {
   return result;
 }
 
-Data &Data::resize(size_t s) {
+Data &Data::resize(size_t s) & {
   if (s > size()) {
     API_RETURN_VALUE_IF_ERROR(*this);
   }
@@ -47,7 +47,7 @@ const char *Data::add_null_terminator() {
   return reinterpret_cast<const char *>(data_u8());
 }
 
-Data &Data::copy(const View a, const Copy &options) {
+Data &Data::copy(const View a, const Copy &options) & {
   const u32 bytes_to_copy
     = options.size() < a.size() ? options.size() : a.size();
 
@@ -66,10 +66,25 @@ Data &Data::copy(const View a, const Copy &options) {
   return *this;
 }
 
-Data &Data::append(const View view) {
+Data &Data::append(const View view) & {
   return copy(view, Copy().set_destination_position(size()));
 }
 
 StringView Data::string_view() const {
   return {reinterpret_cast<const char *>(data_u8()), size()};
+}
+
+Data &Data::free() & {
+  m_data = std::vector<u8>();
+  return *this;
+}
+Data &Data::erase(const Data::Erase &options) & {
+  m_data.erase(
+    m_data.begin() + options.position(),
+    m_data.begin() + options.size());
+  return *this;
+}
+Data &Data::reserve(size_t size) & {
+  m_data.reserve(size);
+  return *this;
 }

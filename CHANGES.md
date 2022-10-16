@@ -4,17 +4,22 @@
 
 ## New Features
 
+- WARNING: There are some **breaking changes**. These were either bug-prone or safety concerns
+  - Removed `FileObject::write(void * buffer, size_t size)` use `FileObject::write(var::View view)`
+  - Removed `FileObject::read(void * buffer, size_t size)` use `FileObject::read(var::View view)`
+  - Fixed spelling of `delimiter` in `var::Tokenizer` (was `delimeter`)
+  - Use api::Function with api::ProgressCallback instead of `context` and `callback`
+    - This is a much safer alternative (really more of a bug fix)
+  - Removed `FileObject::ioctl(const Ioctl&)` use `FileObject::ioctl(int request, Type * type)`
+  - `fs::LambdaFile` using `api::Function` rather than a c-style function pointer
+    - `context` was passed but now must be captured in the lambda
+  - Removed `fs::FileObject::gets()` use `fs::FileObject::get_line()`
+- Added `rvalue` reference functions for some function-chained member functions
 - Escape characters that are printed within quotes with `printer::Printer::print()`
 - Add `is_character_wise` to `var::ReplaceString` which replaces each character in `old_string`
 - Add `StringView::pop_encapsulated()` which will get a substring after the encapsulation
-- WARNING BREAKING CHANGE: Fix spelling of `delimiter` in `var::Tokenizer` (was `delimeter`)
 - Add `StringView::get_encapsulated` to find encapsulated tokens in a string
-- WARNING BREAKING CHANGE: Use api::Function with api::ProgressCallback instead of `context` and `callback`
-  - This is a much safer alternative (really more of a bug fix)
 - Add option to execute threads with a lambda
-- WARNING Breaking API Change: `fs::LambdaFile` using `api::Function` rather than a c-style function pointer
-  - `context` was passed but now must be captured in the lambda
-  - This won't affect many people. `fs::LambdaFile` is not frequently used
 - Add ignore between `(){}[]<>` to `var::Tokenizer`
   - Also handles recursive symbols `${${test}}`
 - Add `var::Base64::is_valid()` to check to see if a string view is valid Base64
@@ -29,6 +34,7 @@
 
 ## Bug Fixes
 
+- Fixed `var::Ring` and added unit tests
 - Make `var::StringView::pop_front(), pop_back(), and truncate()` safe (checks length)
 - `fs::FileObject` uses `size_t` for size
 - Fixed `Printer::trace` to never truncate

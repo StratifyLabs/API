@@ -4,8 +4,8 @@
 #define VAR_API_VECTOR_HPP_
 
 #include <functional>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include "ContainerObject.hpp"
 
@@ -28,15 +28,17 @@ public:
   using const_reverse_iterator =
     typename std::vector<T>::const_reverse_iterator;
 
-
-
   iterator insert(const_iterator position, const T &value) {
     return this->m_container.insert(position, value);
   }
 
-  Vector<T> &insert(size_t position, const T &value) {
+  Vector<T> &insert(size_t position, const T &value) & {
     insert(this->begin() + position, value);
     return *this;
+  }
+
+  Vector<T> &&insert(size_t position, const T &value) && {
+    return std::move(insert(position, value));
   }
 
   iterator insert(const_iterator position, size_t n, const T &value) {
@@ -47,61 +49,77 @@ public:
     return this->m_container(position, value);
   }
 
-  Vector<T> &insert(size_t position, T &&value) {
+  Vector<T> &insert(size_t position, T &&value) & {
     insert(this->begin() + position, value);
     return *this;
+  }
+
+  Vector<T> &&insert(size_t position, T &&value) && {
+    return std::move(insert(position, value));
   }
 
   iterator insert(const_iterator position, std::initializer_list<T> il) {
     return this->m_container.insert(position, il);
   }
 
-  Vector<T> &operator<<(const Vector<T> &a) {
+  Vector<T> &operator<<(const Vector<T> &a) & {
     for (size_t i = 0; i < a.count(); i++) {
       *this << a.at(i);
     }
     return *this;
   }
 
-  Vector<T> &push_back(const T &a) {
+  Vector<T> &&operator<<(const Vector<T> &a) && {
+    return std::move(*this << a);
+  }
+
+  Vector<T> &push_back(const T &a) & {
     this->m_container.push_back(a);
     return *this;
   }
+  Vector<T> &&push_back(const T &a) && { return std::move(push_back(a)); }
 
-  Vector<T> &push_back(T &&a) {
+  Vector<T> &push_back(T &&a) & {
     this->m_container.push_back(std::forward<T>(a));
     return *this;
   }
+  Vector<T> &&push_back(T &&a) && { return std::move(push_back(a)); }
 
-  Vector<T> &pop_back() {
+  Vector<T> &pop_back() & {
     this->m_container.pop_back();
     return *this;
   }
+  Vector<T> &&pop_back() && { return std::move(pop_back()); }
 
-  template<class ...Args> T& emplace_back(Args&&... args){
+  template <class... Args> T &emplace_back(Args &&...args) {
     return this->m_container.emplace_back(args...);
   }
 
-  Vector &shrink_to_fit() {
+  Vector &shrink_to_fit() & {
     this->m_container.shrink_to_fit();
     return *this;
   }
+
+  Vector &&shrink_to_fit() && { return std::move(shrink_to_fit()); }
 
   class Erase {
     API_AF(Erase, size_t, position, 0);
     API_AF(Erase, size_t, count, 1);
   };
 
-  Vector &erase(const Erase &options) {
+  Vector &erase(const Erase &options) & {
     this->m_container.erase(
       this->m_container.begin() + options.position(),
       this->m_container.begin() + options.position() + options.count());
     return *this;
   }
 
+  Vector &&erase(const Erase &options) && { return std::move(erase(options)); }
+
   Vector &operator()(const Erase &options) { return erase(options); }
 
-  Vector &remove(u32 pos) { return erase(Erase().set_position(pos)); }
+  Vector &remove(u32 pos) & { return erase(Erase().set_position(pos)); }
+  Vector &&remove(u32 pos) && { return std::move(remove(pos)); }
 
   API_NO_DISCARD const T &operator[](size_t offset) const {
     return this->m_container[offset];
@@ -125,20 +143,24 @@ public:
       bsearch(&a, std::vector<T>::data(), this->count(), sizeof(T), compare));
   }
 
-  Vector<T> &resize(size_t count) {
+  Vector<T> &resize(size_t count) & {
     this->m_container.resize(count);
     return *this;
   }
 
-  Vector<T> &reserve(size_t count) {
+  Vector<T> &&resize(size_t count) && { return std::move(resize(count)); }
+
+  Vector<T> &reserve(size_t count) & {
     this->m_container.reserve(count);
     return *this;
   }
+  Vector<T> &&reserve(size_t count) && { return std::move(reserve(count)); }
 
-  Vector<T> &free() {
+  Vector<T> &free() & {
     this->m_container = Vector<T>();
     return *this;
   }
+  Vector<T> &&free() && { return std::move(free()); }
 
   template <typename ConvertedType> Vector<ConvertedType> convert() const {
     Vector<ConvertedType> result;
@@ -170,8 +192,7 @@ public:
   Vector<T> operator/(const T &a) const { return operate_single(a, divide); }
 
   Vector<T> operator<<(u32 a) const {
-    Vector<T> result;
-    result.resize(this->count());
+    auto result = Vector<T>().resize(this->count());
     if (a < this->count()) {
       for (u32 i = 0; i < this->count() - a; i++) {
         result.at(i) = this->at(i + a);
@@ -181,8 +202,7 @@ public:
   }
 
   Vector<T> operator>>(u32 a) const {
-    Vector<T> result;
-    result.resize(this->count());
+    auto result = Vector<T>().resize(this->count());
     if (a < this->count()) {
       for (u32 i = 0; i < this->count() - a; i++) {
         result.at(i + a) = this->at(i);
@@ -191,9 +211,12 @@ public:
     return result;
   }
 
-  Vector<T> &clear() {
+  Vector<T> &clear() &{
     this->m_container.clear();
     return *this;
+  }
+  Vector<T> &&clear() &&{
+    return std::move(clear());
   }
 
   API_NO_DISCARD bool is_empty() const { return this->m_container.empty(); }

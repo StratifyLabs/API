@@ -21,7 +21,6 @@ class StringView;
 
 class DataInfo {
 public:
-
 #if !defined __link
   DataInfo() : m_info{mallinfo()} {}
   API_NO_DISCARD u32 arena() const { return m_info.arena; }
@@ -60,11 +59,10 @@ public:
   const char *add_null_terminator();
 
   API_NO_DISCARD u32 capacity() const { return m_data.capacity(); }
-  Data &resize(size_t size);
-  Data &free() {
-    m_data = std::vector<u8>();
-    return *this;
-  }
+  Data &resize(size_t size) &;
+  Data &&resize(size_t size) && { return std::move(resize(size)); }
+  Data &free() &;
+  Data &&free() && { return std::move(free()); }
 
   class Copy {
   public:
@@ -75,33 +73,33 @@ public:
     API_AF(Copy, size_t, size, -1);
   };
 
-  Data &copy(View a, const Copy &options = Copy());
-  Data &append(View view);
+  Data &copy(View a, const Copy &options = Copy()) &;
+  Data &&copy(View a, const Copy &options = Copy()) && {
+    return std::move(copy(a, options));
+  }
+  Data &append(View view) &;
+  Data &&append(View view) && { return std::move(append(view)); }
 
   class Erase {
     API_AF(Erase, size_t, position, 0);
     API_AF(Erase, size_t, size, 0);
   };
 
-  Data &erase(const Erase &options) {
-    m_data.erase(
-      m_data.begin() + options.position(),
-      m_data.begin() + options.size());
-    return *this;
-  }
+  Data &erase(const Erase &options) &;
+  Data &&erase(const Erase &options) && { return std::move(erase(options)); }
   inline Data &operator()(const Erase &options) { return erase(options); }
 
 #if !defined __link
   static void reclaim_heap_space() { ::free((void *)1); }
 #else
   static void reclaim_heap_space() {
-    //this is only implemented on StratifyOS
+    // this is only implemented on StratifyOS
   }
 #endif
 
-  Data &reserve(size_t size) {
-    m_data.reserve(size);
-    return *this;
+  Data &reserve(size_t size) &;
+  Data && reserve(size_t size) && {
+    return std::move(reserve(size));
   }
 
   bool operator==(const var::Data &data) const { return data.m_data == m_data; }

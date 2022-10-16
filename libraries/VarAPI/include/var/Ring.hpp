@@ -1,11 +1,8 @@
 /*! \file */ // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc; see
              // LICENSE.md for rights.
 
-
 #ifndef VAR_API_VAR_RING_HPP_
 #define VAR_API_VAR_RING_HPP_
-
-#include <new>
 
 #include "Array.hpp"
 
@@ -14,35 +11,28 @@ namespace var {
 template <typename T, size_t ItemCount> class Ring {
 public:
   using Buffer = Array<T, ItemCount>;
-
-  Ring() = default;
-
-  ~Ring() {
-    while (is_empty() == false) {
-      // this will ensure the destructor gets called
-      pop();
-    }
-  }
-
   API_NO_DISCARD u32 count_ready() const {
     // how many item are available
-    if (m_tail == m_count) {
-      return m_count; // ring is full
+    if (m_tail == ItemCount) {
+      return ItemCount; // ring is full
     }
 
     if (m_head > m_tail) {
       return m_head - m_tail;
     }
 
-    return m_count - (m_tail - m_head);
+    return ItemCount - (m_tail - m_head);
   }
+  API_NO_DISCARD bool is_full() const { return m_tail == ItemCount; }
+  API_NO_DISCARD bool is_empty() const {
+    return m_tail == m_head; }
 
-  API_NO_DISCARD bool is_full() const { return m_tail == m_count; }
-  API_NO_DISCARD bool is_empty() const { return m_tail == m_head; }
-
-  Ring &set_overflow_allowed(bool value = true) {
+  Ring &set_overflow_allowed(bool value = true) & {
     m_is_overflow_allowed = value;
     return *this;
+  }
+  Ring &&set_overflow_allowed(bool value = true) && {
+    return std::move(set_overflow_allowed(value));
   }
 
   T &at(size_t position) {
@@ -56,14 +46,14 @@ public:
   }
 
   T &back() {
-    if (m_tail == m_count) {
+    if (m_tail == ItemCount) {
       return m_buffer.at(m_head);
     }
     return m_buffer.at(m_tail);
   }
 
   const T &back() const {
-    if (m_tail == m_count) {
+    if (m_tail == ItemCount) {
       return m_buffer.at(m_head);
     }
     return m_buffer.at(m_tail);
@@ -73,18 +63,18 @@ public:
     if (m_head) {
       return m_buffer.at(m_head - 1);
     }
-    return m_buffer.at(m_count - 1);
+    return m_buffer.at(ItemCount - 1);
   }
 
   const T &front() const {
     if (m_head) {
       return m_buffer.at(m_head - 1);
     }
-    return m_buffer.at(m_count - 1);
+    return m_buffer.at(ItemCount - 1);
   }
 
-  Ring &push(const T &value) {
-    if (m_tail == m_count) {
+  Ring &push(const T &value) & {
+    if (m_tail == ItemCount) {
       if (m_is_overflow_allowed) {
         back().~T(); // destruct item that will be lost
       } else {
@@ -94,36 +84,36 @@ public:
     }
 
     // construct a new item at head
-    new ((void *)(static_cast<T *>(&m_buffer.at(m_head)))) T(value);
+    m_buffer.at(m_head) = value;
 
     // increment the head
-    m_head++;
-    if (m_head == m_count) {
+    if (++m_head == ItemCount) {
       m_head = 0;
     }
 
     if (m_head == m_tail) {
-      m_tail = m_count;
+      m_tail = ItemCount;
     } // ring is full
     return *this;
   }
+  Ring &&push(const T &value) && { return std::move(push(value)); }
 
-  Ring &pop() {
+  Ring &pop() & {
     if (m_head == m_tail) {
       // Ring is empty
       return *this;
     }
     back().~T();
-    if (m_tail == m_count) {
+    if (m_tail == ItemCount) {
       // ring is full
       m_tail = m_head;
     }
-    m_tail++;
-    if (m_tail == m_count) {
+    if (++m_tail == ItemCount) {
       m_tail = 0;
     }
     return *this;
   }
+  Ring &&pop() && { return std::move(pop()); }
 
   API_NO_DISCARD Array<T, ItemCount> to_linear_data() const {
     Array<T, ItemCount> result;
@@ -134,37 +124,34 @@ public:
     return result;
   }
 
-  Ring &rotate_forward() {
-    if (m_tail == m_count) {
+  Ring &rotate_forward() & {
+    if (m_tail == ItemCount) {
       // buffer is full - just rewind the head the head
       if (m_head) {
-        m_head--;
+        --m_head;
       } else {
-        m_head = m_count - 1;
+        m_head = ItemCount - 1;
       }
     }
     return *this;
   }
+  Ring &&rotate_forward() && { return std::move(rotate_forward()); }
 
-  Ring &rotate_backward() {
-    if (m_tail == m_count) {
+  Ring &rotate_backward() & {
+    if (m_tail == ItemCount) {
       // buffer is full - just increment the head
-      m_head++;
-      if (m_head == m_count) {
+      if (++m_head == ItemCount) {
         m_head = 0;
       }
     }
     return *this;
   }
+  Ring &&rotate_backward() && { return std::move(rotate_backward()); }
 
 private:
-  u32 m_head{};
-  u32 m_tail{};
-  u32 m_count{};
+  size_t m_head{};
+  size_t m_tail{};
   bool m_is_overflow_allowed = true;
-
-  u32 frame_size() { return sizeof(T); }
-
   Buffer m_buffer;
 };
 

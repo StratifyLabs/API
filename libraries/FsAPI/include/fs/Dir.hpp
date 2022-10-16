@@ -75,28 +75,40 @@ private:
 
 template <class Derived> class DirAccess : public DirObject {
 public:
-  const Derived &rewind() const {
+  const Derived &rewind() const & {
     API_RETURN_VALUE_IF_ERROR(static_cast<const Derived &>(*this));
     interface_rewinddir();
     return static_cast<const Derived &>(*this);
   }
 
-  Derived &rewind() {
+  Derived &rewind() & {
     API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
     interface_rewinddir();
     return static_cast<Derived &>(*this);
   }
 
-  const Derived &seek(size_t location) const {
+  Derived &&rewind() && {
+    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
+    interface_rewinddir();
+    return static_cast<Derived &&>(*this);
+  }
+
+  const Derived &seek(size_t location) const & {
     API_RETURN_VALUE_IF_ERROR(static_cast<const Derived &>(*this));
     interface_seekdir(location);
     return static_cast<const Derived &>(*this);
   }
 
-  Derived &seek(size_t location) {
+  Derived &seek(size_t location) & {
     API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
     interface_seekdir(location);
     return static_cast<Derived &>(*this);
+  }
+
+  Derived &&seek(size_t location) && {
+    API_RETURN_VALUE_IF_ERROR(static_cast<Derived &>(*this));
+    interface_seekdir(location);
+    return static_cast<Derived &&>(*this);
   }
 };
 

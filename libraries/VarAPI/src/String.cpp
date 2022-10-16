@@ -24,6 +24,21 @@ var::String var::operator+(const var::String &lhs, var::StringView rhs) {
 
 using namespace var;
 
+namespace {
+void string_to_upper(std::string &string) {
+  std::for_each(string.begin(), string.end(), [](char &c) {
+    c = std::toupper(c);
+  });
+}
+
+void string_to_lower(std::string &string) {
+  std::for_each(string.begin(), string.end(), [](char &c) {
+    c = std::tolower(c);
+  });
+}
+
+} // namespace
+
 String String::m_empty_string;
 
 String::String(const Data &data)
@@ -33,13 +48,22 @@ String::String(const View &view) {
   m_string.assign(view.to_const_char(), view.size());
 }
 
-String &String::format(const char *format, ...) {
+String &String::format(const char *format, ...) & {
   va_list args;
   va_start(args, format);
   vformat(format, args);
   va_end(args);
   return *this;
 }
+
+String &&String::format(const char *format, ...) && {
+  va_list args;
+  va_start(args, format);
+  vformat(format, args);
+  va_end(args);
+  return std::move(*this);
+}
+
 
 String &String::vformat(const char *fmt, va_list list) {
 
@@ -68,7 +92,7 @@ String &String::vformat(const char *fmt, va_list list) {
   return *this;
 }
 
-String &String::erase(StringView string_to_erase, size_t position) {
+String &String::erase(StringView string_to_erase, size_t position) & {
   size_t erase_pos;
   const size_t len = string_to_erase.length();
   while ((erase_pos = StringView(*this).find(string_to_erase, position))
@@ -79,7 +103,7 @@ String &String::erase(StringView string_to_erase, size_t position) {
   return *this;
 }
 
-String &String::replace(const Replace &options) {
+String &String::replace(const Replace &options) & {
   if (options.is_character_wise) {
     auto new_options = options;
     new_options.set_character_wise(false);
@@ -105,17 +129,17 @@ String &String::replace(const Replace &options) {
   return *this;
 }
 
-String &String::to_upper() {
-  for (auto &c : m_string) {
+String &String::to_upper() & {
+  std::for_each(m_string.begin(), m_string.end(), [](char &c) {
     c = std::toupper(c);
-  }
+  });
   return *this;
 }
 
-String &String::to_lower() {
-  for (auto &c : m_string) {
+String &String::to_lower() & {
+  std::for_each(m_string.begin(), m_string.end(), [](char &c) {
     c = std::tolower(c);
-  }
+  });
   return *this;
 }
 
@@ -137,4 +161,67 @@ size_t String::count(var::StringView occurance) const {
     }
   }
   return item_count;
+}
+
+String &String::remove_whitespace() & {
+  return replace(Replace{
+    .count = 0,
+    .is_character_wise = true,
+    .new_string = StringView{},
+    .old_string = StringView::whitespace(),
+  });
+}
+
+String &String::insert(
+  const StringView string_to_insert,
+  const String::Insert &options) & {
+  if (options.sub_position() == npos) {
+    m_string.insert(options.position(), string_to_insert.m_string_view);
+  } else {
+    m_string.insert(
+      options.position(),
+      string_to_insert.m_string_view,
+      options.sub_position(),
+      options.sub_length());
+  }
+  return *this;
+}
+String &String::clear() & {
+  m_string.clear();
+  return *this;
+}
+
+String &String::free() & { return *this = String(); }
+
+String &String::erase(const String::Erase &options) & {
+  m_string.erase(options.position(), options.length());
+  return *this;
+}
+String &String::push_back(char a) & {
+  m_string.push_back(a);
+  return *this;
+}
+
+String &String::pop_front(size_t pop_size) & {
+  return erase(Erase().set_position(0).set_length(pop_size));
+}
+
+String &String::pop_back(size_t pop_size) & {
+  while (length() && pop_size--) {
+    m_string.pop_back();
+  }
+  return *this;
+}
+String &String::resize(size_t size) & {
+  m_string.resize(size);
+  return *this;
+}
+String &String::reserve(size_t size) & {
+  m_string.reserve(size);
+  return *this;
+}
+
+String &String::append(const StringView &a) & {
+  m_string.append(a.m_string_view);
+  return *this;
 }

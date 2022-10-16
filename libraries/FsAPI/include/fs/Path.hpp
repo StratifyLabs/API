@@ -43,7 +43,7 @@ public:
   /*! \details
    *
    * This checks to see if name or any parent directory in the path
-   * starts with `.` following by a valid file/directory name.
+   * starts with `.` followed by a valid file/directory name.
    *
    * @param path The path to consider
    * @return true the entity specified by `path` is hidden.
