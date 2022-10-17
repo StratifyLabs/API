@@ -113,11 +113,17 @@ auto StackStringObject::to_lower() const -> void {
   }
 }
 auto StackStringObject::pop_front(size_t count) -> void {
-  const auto total = capacity();
-  const auto safe_count = count < total ? count : total;
-  for (auto i = safe_count; i < total && buffer[i]; i++) {
-    buffer[i - safe_count] = buffer[i];
+  const auto current_length = length();
+  if( count >= current_length ){
+    buffer[0] = '\0';
+    return;
   }
+
+  const auto total = current_length - count;
+  for (auto i = 0; i < total; ++i) {
+    buffer[i] = buffer[i+count];
+  }
+  buffer[total] = '\0';
 }
 auto StackStringObject::pop_back(size_t count) -> void {
   const auto total = length();
