@@ -53,6 +53,9 @@ public:
 
   bool is_asserted();
   Cond & set_asserted(bool value = true);
+  explicit operator bool() {
+    return is_asserted();
+  }
 
   Mutex &mutex() { return *m_mutex; }
 

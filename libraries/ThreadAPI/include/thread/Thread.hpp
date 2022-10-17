@@ -97,7 +97,7 @@ public:
   Thread(void * argument, function_t thread_function){
     construct(Attributes(), Construct().set_argument(argument).set_function(thread_function));
   }
-  Thread(Function && function);
+  explicit Thread(Function && function);
   Thread(const Attributes &attributes, Function && function);
   ~Thread();
 

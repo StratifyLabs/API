@@ -15,6 +15,7 @@
     - `context` was passed but now must be captured in the lambda
   - Removed `fs::FileObject::gets()` use `fs::FileObject::get_line()`
   - Use `api::Function` for the `fs::FileSystem::ExcludeCallback`
+- Add `operator bool()` to `thread::Cond` to check if the condition is asserted
 - Separate `var::StackString` logic from the template
 - Added `rvalue` reference functions for some function-chained member functions
 - Escape characters that are printed within quotes with `printer::Printer::print()`
