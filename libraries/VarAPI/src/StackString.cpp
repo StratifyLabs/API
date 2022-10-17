@@ -46,28 +46,24 @@ auto StackStringObject::append(const char value) const -> void {
 }
 
 auto StackStringObject::assign(const var::StringView value) const -> void {
-  buffer[size - 1] = 0;
-  const auto length = value.length() > size - 1 ? size - 1 : value.length();
-  buffer[length] = 0;
-  memcpy(buffer, value.data(), length);
+  const auto capacity = this->capacity();
+  const auto value_length = value.length();
+  const auto effective_length = value_length > capacity ? capacity : value_length;
+  buffer[effective_length] = 0;
+  memcpy(buffer, value.data(), effective_length);
 }
 
 auto StackStringObject::assign(const char *value) const -> void {
-  buffer[size - 1] = 0;
-  if (value == nullptr) {
-    buffer[0] = 0;
-  } else {
-    strncpy(buffer, value, size - 1);
-  }
+  assign(StringView(value));
 }
 
 auto StackStringObject::move(char *other, size_t other_size) -> void {
   API_ASSERT(size == other_size);
   char tmp[size];
-  strncpy(tmp, other, size);
-  strncpy(other, buffer, size);
-  strncpy(buffer, tmp, size);
-
+  const auto capacity = this->capacity();
+  strncpy(tmp, other, capacity);
+  strncpy(other, buffer, capacity);
+  strncpy(buffer, tmp, capacity);
 }
 
 auto StackStringObject::replace(char old_character, char new_character) const
