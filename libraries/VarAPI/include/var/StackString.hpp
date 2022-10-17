@@ -24,6 +24,7 @@ struct StackStringObject {
   auto assign(const var::StringView value) const -> void;
   auto assign(const char *value) const -> void;
   auto move(char *other, size_t other_size) -> void;
+  auto copy(const char *other, size_t other_size) -> void;
   auto replace(char old_character, char new_character) const -> void;
   auto length() const -> size_t;
   auto back() const -> char;
@@ -48,7 +49,11 @@ public:
     : m_stack_string_object{m_buffer, Size} {
     append(a.m_buffer);
   }
-  StackString<Derived, Size> &operator=(const StackString &) = default;
+  StackString<Derived, Size> &operator=(const StackString &a){
+    m_stack_string_object.copy(a.m_buffer, Size);
+    return *this;
+  }
+
   StackString<Derived, Size>(StackString &&a)
     : m_stack_string_object{m_buffer, Size} {
     move(a);

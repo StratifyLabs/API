@@ -54,6 +54,10 @@ auto StackStringObject::assign(const var::StringView value) const -> void {
 }
 
 auto StackStringObject::assign(const char *value) const -> void {
+  if( value == nullptr ){
+    buffer[0] = '\0';
+    return;
+  }
   assign(StringView(value));
 }
 
@@ -136,4 +140,9 @@ auto StackStringObject::truncate(size_t new_length) -> void {
   buffer[end] = 0;
 }
 auto StackStringObject::capacity() const -> decltype(size) { return size - 1; }
+
+auto StackStringObject::copy(const char *other, size_t other_size) -> void {
+  API_ASSERT(size == other_size);
+  strncpy(buffer, other, capacity());
+}
 } // namespace var
