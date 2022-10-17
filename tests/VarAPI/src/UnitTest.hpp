@@ -297,6 +297,10 @@ public:
       auto path2 = PathString(path);
       printer().key("path", path).key("path2", path2);
       TEST_ASSERT(path == path2);
+      TEST_ASSERT(path.pop_front() == "est1");
+      TEST_ASSERT(path.pop_front(2) == "t1");
+      TEST_ASSERT(path.pop_front(1) == "1");
+      TEST_ASSERT(path.pop_front(4) == "");
     }
 
     {
