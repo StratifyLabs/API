@@ -227,8 +227,8 @@ public:
   String &&free() && { return std::move(free()); }
   String &push_back(char a) &;
   String &&push_back(char a) && { return std::move(push_back(a)); }
-  String &pop_back(size_t pop_size) &;
-  String &&pop_back(size_t pop_size) && {
+  String &pop_back(size_t pop_size = 1) &;
+  String &&pop_back(size_t pop_size = 1) && {
     return std::move(pop_back(pop_size));
   }
   String &pop_front(size_t pop_size = 1) &;

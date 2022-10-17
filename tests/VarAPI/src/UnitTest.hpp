@@ -1166,11 +1166,15 @@ public:
     }
 
     {
-      SV sv("105");
+      auto sv = StringView("105");
       TEST_EXPECT(sv.to_long() == 105);
       TEST_EXPECT(sv.to_unsigned_long() == 105);
       TEST_EXPECT(sv.to_long(SV::Base::decimal) == 105);
       TEST_EXPECT(sv.to_unsigned_long(SV::Base::decimal) == 105);
+      TEST_ASSERT(StringView{sv}.pop_back() == "10");
+      TEST_ASSERT(StringView{sv}.pop_back(1) == "10");
+      TEST_ASSERT(StringView{sv}.pop_front(1) == "05");
+      TEST_ASSERT(StringView{sv}.pop_front() == "05");
     }
 
     {
@@ -1289,6 +1293,14 @@ public:
         s.erase(S::Erase().set_position(1).set_length(1)) == ",,3,4,5");
       S all("all");
       TEST_ASSERT(all.erase(S::Erase().set_length(500)).is_empty());
+    }
+
+    {
+      auto s = S("1,2,3,4,5");
+      TEST_ASSERT(s.pop_back() == "1,2,3,4,");
+      TEST_ASSERT(s.pop_back(1) == "1,2,3,4");
+      TEST_ASSERT(s.pop_front() == ",2,3,4");
+      TEST_ASSERT(s.pop_front(1) == "2,3,4");
     }
 
     {
