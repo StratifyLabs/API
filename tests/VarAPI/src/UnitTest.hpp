@@ -277,7 +277,16 @@ public:
       PRINTER_TRACE(printer(), KeyString().format("length: %d", s.length()));
       TEST_ASSERT(strlen(s.cstring()) == sizeof(s0) - 1);
       TEST_ASSERT(strlen(KeyString(s0).cstring()) == sizeof(s0) - 1);
+      {
+        const KeyString key_string = "test1";
+        TEST_ASSERT(key_string == "test1");
+      }
 
+      {
+        KeyString key_string;
+        key_string = "test1";
+        TEST_ASSERT(key_string == "test1");
+      }
       TEST_ASSERT(KeyString("test") == "test");
       TEST_ASSERT(NumberString("test") == "test");
       TEST_ASSERT(GeneralString("test") == "test");
