@@ -19,14 +19,15 @@ struct StackStringObject {
 
   StackStringObject(char *buffer, size_t size);
   auto capacity() const -> decltype(size);
+  auto copy(const char *other, size_t size) const -> void;
   auto append(const char value) const -> void;
   auto append(var::StringView value) const -> void;
   auto assign(const var::StringView value) const -> void;
   auto assign(const char *value) const -> void;
   auto move(char *other, size_t other_size) -> void;
   auto replace(char old_character, char new_character) const -> void;
-  auto length() const -> size_t;
-  auto back() const -> char;
+  API_NO_DISCARD auto length() const -> size_t;
+  API_NO_DISCARD auto back() const -> char;
   auto at(size_t offset) const -> char;
   auto to_upper() const -> void;
   auto to_lower() const -> void;
@@ -46,10 +47,13 @@ public:
 
   StackString<Derived, Size>(const StackString &a)
     : m_stack_string_object{m_buffer, Size} {
-    append(a.m_buffer);
+    m_stack_string_object.copy(a.m_buffer, a.m_stack_string_object.size);
   }
-  StackString<Derived, Size> &operator=(const StackString &) = default;
-  StackString<Derived, Size>(StackString &&a)
+  StackString<Derived, Size> &operator=(const StackString &a) {
+    m_stack_string_object.copy(a.m_buffer, a.m_stack_string_object.size);
+    return *this;
+  }
+  StackString<Derived, Size>(StackString &&a) noexcept
     : m_stack_string_object{m_buffer, Size} {
     move(a);
   }
@@ -78,6 +82,7 @@ public:
   }
 
   API_NO_DISCARD auto length() const { return m_stack_string_object.length(); }
+  API_NO_DISCARD auto front() const { return m_buffer[0]; }
   API_NO_DISCARD auto back() const { return m_stack_string_object.back(); }
 
   API_NO_DISCARD constexpr size_t capacity() const { return Size - 1; }
@@ -124,9 +129,15 @@ public:
     return m_stack_string_object.at(offset);
   }
 
-  template <typename... Args> auto &format(const char *format, Args... args) {
+  template <typename... Args> auto &format(const char *format, Args... args) & {
     ::snprintf(m_buffer, capacity(), format, args...);
     return static_cast<Derived &>(*this);
+  }
+
+  template <typename... Args>
+  auto &&format(const char *format, Args... args) && {
+    ::snprintf(m_buffer, capacity(), format, args...);
+    return static_cast<Derived &&>(*this);
   }
 
   auto &to_upper() {
@@ -168,7 +179,6 @@ protected:
   StackString(const StringView a) : m_stack_string_object{m_buffer, Size} {
     m_stack_string_object.assign(a);
   }
-
   StackString(const char *a) : m_stack_string_object{m_buffer, Size} {
     m_stack_string_object.assign(a);
   }

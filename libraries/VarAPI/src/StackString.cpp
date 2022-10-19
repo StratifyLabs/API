@@ -46,6 +46,10 @@ auto StackStringObject::append(const char value) const -> void {
 }
 
 auto StackStringObject::assign(const var::StringView value) const -> void {
+  if (buffer == value.data()) {
+    // don't assign to self
+    return;
+  }
   buffer[size - 1] = 0;
   const auto length = value.length() > size - 1 ? size - 1 : value.length();
   buffer[length] = 0;
@@ -53,21 +57,39 @@ auto StackStringObject::assign(const var::StringView value) const -> void {
 }
 
 auto StackStringObject::assign(const char *value) const -> void {
-  buffer[size - 1] = 0;
+  if (buffer == value) {
+    // don't assign to self
+    return;
+  }
   if (value == nullptr) {
     buffer[0] = 0;
   } else {
-    strncpy(buffer, value, size - 1);
+    const auto capacity = this->capacity();
+    buffer[capacity] = 0;
+    strncpy(buffer, value, capacity);
   }
 }
 
+auto StackStringObject::copy(const char *other, size_t size) const -> void {
+  if (buffer == other) {
+    return;
+  }
+  API_ASSERT(size == this->size);
+  const auto capacity = this->capacity();
+  buffer[capacity] = '\0';
+  strncpy(buffer, other, capacity);
+}
+
 auto StackStringObject::move(char *other, size_t other_size) -> void {
+  if (buffer == other) {
+    // don't assign to self
+    return;
+  }
   API_ASSERT(size == other_size);
   char tmp[size];
   strncpy(tmp, other, size);
   strncpy(other, buffer, size);
   strncpy(buffer, tmp, size);
-
 }
 
 auto StackStringObject::replace(char old_character, char new_character) const
@@ -118,14 +140,14 @@ auto StackStringObject::to_lower() const -> void {
 }
 auto StackStringObject::pop_front(size_t count) -> void {
   const auto current_length = length();
-  if( count >= current_length ){
+  if (count >= current_length) {
     buffer[0] = '\0';
     return;
   }
 
   const auto total = current_length - count;
   for (auto i = 0; i < total; ++i) {
-    buffer[i] = buffer[i+count];
+    buffer[i] = buffer[i + count];
   }
   buffer[total] = '\0';
 }
@@ -134,10 +156,12 @@ auto StackStringObject::pop_back(size_t count) -> void {
   const auto end = total > count ? total - count : 0;
   buffer[end] = 0;
 }
+
 auto StackStringObject::truncate(size_t new_length) -> void {
   const auto current_length = length();
   const auto end = current_length > new_length ? new_length : current_length;
   buffer[end] = 0;
 }
 auto StackStringObject::capacity() const -> decltype(size) { return size - 1; }
+
 } // namespace var

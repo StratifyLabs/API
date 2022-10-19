@@ -282,6 +282,7 @@ public:
         TEST_ASSERT(key_string == "test1");
       }
 
+
       {
         KeyString key_string;
         key_string = "test1";
