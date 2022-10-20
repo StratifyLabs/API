@@ -12,9 +12,9 @@
 #include "var/MagicEnum.hpp"
 
 #if defined __link
-#define BIG_BUFFER_SIZE 10 * 1024 * 1024
+#define BIG_BUFFER_SIZE (10 * 1024 * 1024)
 #else
-#define BIG_BUFFER_SIZE 1024
+#define BIG_BUFFER_SIZE (1024)
 #endif
 
 using S = var::String;
@@ -105,9 +105,9 @@ class UnitTest : public test::Test {
   }
 
 public:
-  UnitTest(var::StringView name) : test::Test(name) {}
+  explicit UnitTest(var::StringView name) : test::Test(name) {}
 
-  bool execute_class_api_case() {
+  bool execute_class_api_case() override {
 
     TEST_ASSERT_RESULT(set_api_case());
     TEST_ASSERT_RESULT(magic_enum_api_case());
@@ -288,9 +288,47 @@ public:
         key_string = "test1";
         TEST_ASSERT(key_string == "test1");
       }
+      {
+        KeyString string0("Hello");
+        TEST_ASSERT(string0 == "Hello");
+        KeyString string1 = ("Hello");
+        TEST_ASSERT(string1 == "Hello");
+        KeyString string2 = StringView{"Hello"};
+        TEST_ASSERT(string2 == "Hello");
+        KeyString string3{StringView{"Hello3"}};
+        TEST_ASSERT(string3 == "Hello3");
+        string2 = string3;
+        TEST_ASSERT(string2 == "Hello3");
+        string1 = std::move(string2);
+        TEST_ASSERT(string1 == "Hello3");
+        TEST_ASSERT(string2 == "Hello");
+      }
+      {
+        auto string0 = KeyString("Hello");
+        TEST_ASSERT(string0 == "Hello");
+        auto  string1 = KeyString("Hello");
+        TEST_ASSERT(string1 == "Hello");
+        auto string2 = KeyString(StringView{"Hello2"});
+        TEST_ASSERT(string2 == "Hello2");
+        auto string3 = KeyString{std::move(string2)};
+        TEST_ASSERT(string3 == "Hello2");
+        TEST_ASSERT(string2 == "");
+        string3 = std::move(string3);
+        TEST_ASSERT(string3 == "Hello2");
+        string3 = string3;
+        TEST_ASSERT(string3 == "Hello2");
+      }
       TEST_ASSERT(KeyString("test") == "test");
       TEST_ASSERT(NumberString("test") == "test");
       TEST_ASSERT(GeneralString("test") == "test");
+
+      {
+        const auto string0 = KeyString().format("Hello%d", 5);
+        TEST_ASSERT(string0 == "Hello5");
+        auto string1 = string0;
+        TEST_ASSERT(string1 == "Hello5");
+        TEST_ASSERT(string1 == string0);
+      }
     }
 
     {
@@ -353,12 +391,12 @@ public:
         int *counter = nullptr;
       };
       Data data;
-      void increment() {
+      void increment() const {
         if (data.counter) {
           ++(*data.counter);
         }
       }
-      void decrement() {
+      void decrement() const {
         if (data.counter) {
           --(*data.counter);
         }
@@ -376,7 +414,7 @@ public:
         increment();
         return *this;
       }
-      Item(Item &&item) : data{item.data} {
+      Item(Item &&item) noexcept : data{item.data} {
         std::swap(data, item.data);
         increment();
       }
@@ -464,8 +502,8 @@ public:
         u32 y;
       };
 
-      struct test_struct t;
-      struct test_struct t0;
+      struct test_struct t{};
+      struct test_struct t0{};
       View(t).fill<u8>(0xaa);
       View(t0).fill<u8>(0xbb);
 
@@ -1448,7 +1486,4 @@ public:
     printer().key("complete", __FUNCTION__);
     return true;
   }
-
-private:
-  const void *m_original_context = nullptr;
 };
