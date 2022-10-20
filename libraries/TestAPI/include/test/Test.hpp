@@ -150,12 +150,13 @@ public:
       const chrono::MicroTime &maximum);
   };
 
+  static printer::Printer &printer();
+
 protected:
   API_NO_DISCARD const chrono::ClockTimer &case_timer() const;
   chrono::ClockTimer &case_timer() { return m_case_timer; }
   static u32 get_score(u32 microseconds);
   var::StringView name() const { return m_name.cstring(); }
-  static printer::Printer &printer();
 
 private:
   bool m_case_result = true;

@@ -58,12 +58,12 @@ void Test::ScopeImplementation::deleter(void *) {
 }
 
 Printer &Test::printer() {
+  API_ASSERT(test_printer);
   return *test_printer;
 }
 
 
 Test::Test(var::StringView name) : m_name(name) {
-  API_ASSERT(test_printer);
   printer().open_object(name);
 }
 
