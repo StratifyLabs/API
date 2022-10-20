@@ -35,11 +35,6 @@ macro(api_target NAME DEPENDENCIES)
     __PROJECT_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
     __PROJECT_VERSION_MINOR=${PROJECT_VERSION_MINOR}
     __PROJECT_VERSION_PATCH=${PROJECT_VERSION_PATCH})
-  if(CMSDK_IS_ARM)
-    target_compile_options(${RELEASE_TARGET}
-      PUBLIC
-      -fno-threadsafe-statics)
-  endif()
   target_include_directories(${RELEASE_TARGET}
     PUBLIC
     $<INSTALL_INTERFACE:include/${NAME}>
@@ -69,15 +64,14 @@ macro(api_target NAME DEPENDENCIES)
     SOURCE ${RELEASE_TARGET}
     DESTINATION ${DEBUG_TARGET})
   string(REPLACE ":" " " DEPENDENCY_LIST "${DEPENDENCIES}")
-  if(CMSDK_IS_ARM)
-    set(DEPENDENCY_LIST ${DEPENDENCY_LIST} StratifyOS_crt)
-  endif()
   cmsdk2_library_add_dependencies(
     TARGET ${RELEASE_TARGET}
-    DEPENDENCIES ${DEPENDENCY_LIST})
+    DEPENDENCIES ${DEPENDENCY_LIST}
+    TARGETS RELEASE_TARGET_LIST)
   cmsdk2_library_add_dependencies(
     TARGET ${DEBUG_TARGET}
-    DEPENDENCIES ${DEPENDENCY_LIST})
+    DEPENDENCIES ${DEPENDENCY_LIST}
+    TARGETS DEBUG_TARGET_LIST)
 endmacro()
 
 function(api2_target)
@@ -94,7 +88,7 @@ function(api2_target)
   endforeach()
   api_target(${ARGS_NAME} "${ARGS_DEPENDENCIES}")
   if(ARGS_TARGETS)
-    set(${ARGS_TARGETS} ${RELEASE_TARGET} ${DEBUG_TARGET} PARENT_SCOPE)
+    set(${ARGS_TARGETS} ${RELEASE_TARGET_LIST} ${DEBUG_TARGET_LIST} PARENT_SCOPE)
   endif()
 endfunction()
 
