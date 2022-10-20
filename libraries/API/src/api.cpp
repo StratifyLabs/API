@@ -134,6 +134,12 @@ auto ProgressCallback::update(int value, int total) const -> IsAbort {
   return IsAbort::no;
 }
 
+int ProgressCallback::update_function(const void *context, int value, int total) {
+  const auto * progress_callback = reinterpret_cast<const ProgressCallback*>(context);
+  const auto result = progress_callback->update(value, total);
+  return result == IsAbort::yes;
+}
+
 const char *Demangler::demangle(const char *input) {
 #if defined __link
   m_buffer.reset(static_cast<char *>(malloc(m_length)));

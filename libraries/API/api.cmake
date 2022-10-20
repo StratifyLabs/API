@@ -69,6 +69,9 @@ macro(api_target NAME DEPENDENCIES)
     SOURCE ${RELEASE_TARGET}
     DESTINATION ${DEBUG_TARGET})
   string(REPLACE ":" " " DEPENDENCY_LIST "${DEPENDENCIES}")
+  if(CMSDK_IS_ARM)
+    set(DEPENDENCY_LIST ${DEPENDENCY_LIST} StratifyOS_crt)
+  endif()
   cmsdk2_library_add_dependencies(
     TARGET ${RELEASE_TARGET}
     DEPENDENCIES ${DEPENDENCY_LIST})

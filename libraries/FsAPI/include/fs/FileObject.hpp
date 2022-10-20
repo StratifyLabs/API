@@ -144,7 +144,7 @@ public:
     return API_CONST_CAST_SELF(FileObject, write, source_file, options);
   }
 
-  template <typename Type>
+  template <typename Type = void>
   const FileObject &ioctl(int request, Type *args = nullptr) const {
     ioctl_implementation(request, static_cast<void *>(args));
     return *this;
@@ -306,6 +306,16 @@ public:
   FSAPI_FUNCTION_GROUP(&&)
 #undef FSAPI_FUNCTION_GROUP
 
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL ioctl(int request) QUAL {                                          \
+    FileObject::ioctl<void>(request, static_cast<void *>(nullptr));            \
+    return static_cast<Derived QUAL>(*this);                                   \
+  }
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+
   Derived &&move() { return std::move(static_cast<Derived &>(*this)); }
 
 protected:
@@ -385,6 +395,18 @@ public:
 #define FSAPI_FUNCTION_GROUP(QUAL)                                             \
   template <typename Type> auto QUAL ioctl(int request, Type *arg) QUAL {      \
     m_file_member_reference_access->ioctl(request, arg);                       \
+    return static_cast<Derived QUAL>(*this);                                   \
+  }
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL ioctl(int request) QUAL {                                          \
+    m_file_member_reference_access->ioctl<void>(                               \
+      request,                                                                 \
+      static_cast<void *>(nullptr));                                           \
     return static_cast<Derived QUAL>(*this);                                   \
   }
   FSAPI_FUNCTION_GROUP(const &)

@@ -48,9 +48,13 @@ private:                                                                       \
 #define API_ACCESS_FUNDAMENTAL(c, t, v, iv)                                    \
 public:                                                                        \
   t v() const { return m_##v; }                                                \
-  c &set_##v(t value) {                                                        \
+  c &set_##v(t value) & {                                                      \
     m_##v = value;                                                             \
     return *this;                                                              \
+  }                                                                            \
+  c &&set_##v(t value) && {                                                    \
+    m_##v = value;                                                             \
+    return std::move(*this);                                                   \
   }                                                                            \
                                                                                \
 private:                                                                       \

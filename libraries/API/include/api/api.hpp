@@ -6,6 +6,7 @@
 #include <cerrno>
 #include <climits>
 #include <cstring>
+#include <tuple>
 
 #include <memory>
 #include <vector>
@@ -27,6 +28,7 @@ template <class Type, class Deleter = std::default_delete<Type>>
 using UniquePointer = std::unique_ptr<Type, Deleter>;
 template<typename FunctionType >
 using Function = std::function<FunctionType>;
+static constexpr auto ignore = std::ignore;
 
 /*! \details
  *
@@ -478,9 +480,10 @@ public:
    */
   auto update(int value, int total) const -> IsAbort;
 
+  static int update_function(const void * context, int value, int total);
+
 private:
   API_AF(ProgressCallback, Callback, callback, {});
-  //API_AF(ProgressCallback, void *, context, nullptr);
 
 };
 
