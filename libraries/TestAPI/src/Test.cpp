@@ -9,29 +9,79 @@ using namespace var;
 using namespace test;
 using namespace printer;
 
-var::DataInfo Test::m_final_data_info;
+namespace {
+unsigned final_duration_microseconds = {};
+bool is_final_result = true;
+DataInfo final_data_info = {};
+Printer * test_printer = nullptr;
+} // namespace
 
-printer::Printer *Test::m_printer = nullptr;
+Test::ScopeImplementation::ScopeImplementation(
+  const Test::Initialize &options,
+  printer::Printer *printer_instance) {
+  test_printer = printer_instance;
 
-bool Test::m_final_result = true;
-u32 Test::m_final_duration_microseconds = 0;
+  final_duration_microseconds = 0;
 
-Test::Test(var::StringView name) {
-  printer().open_object(name);
-  m_name = name;
-  m_test_result = true;
-  m_test_duration_microseconds = 0;
+  {
+    Printer::Object pg(printer(), "system");
+    printer().key("operatingSystem", sys::System::operating_system_name());
+    printer().key("processor", sys::System::processor());
+  }
+
+  {
+    Printer::Object pg(printer(), "test");
+    printer().key("name", options.name());
+    printer().key("version", options.version());
+    printer().key("gitHash", options.git_hash());
+    printer().key("apiVersion", var::StringView(api::ApiInfo::version()));
+    printer().key("apiGitHash", var::StringView(api::ApiInfo::git_hash()));
+  }
+
+  final_data_info = var::DataInfo();
 }
 
-Test::~Test() {
-  // close the JSON object
+void Test::ScopeImplementation::deleter(void *) {
+  Printer::Object pg(printer(), "finalResult");
+  printer().key_bool("result", is_final_result);
+  printer().key(
+    "finalResult",
+    is_final_result ? StringView("___finalResultPass___")
+                    : StringView("___finalResultFail___"));
+  printer().key(
+    "microseconds",
+    NumberString(final_duration_microseconds).string_view());
+  printer().key_bool("memoryLeak", final_data_info == var::DataInfo());
+  printer().key(
+    "score",
+    NumberString(get_score(final_duration_microseconds)).string_view());
+}
+
+Printer &Test::printer() {
+  return *test_printer;
+}
+
+
+Test::Test(var::StringView name) : m_name(name) {
+  API_ASSERT(test_printer);
+  printer().open_object(name);
+}
+
+
+void Test::deleter(Test::TestData *test_data) {
   Printer::Object pg(printer(), "testResult");
-  printer().key_bool("result", m_test_result);
-  printer().key("score", NumberString(get_score(m_test_duration_microseconds)));
-  printer().key("microseconds", NumberString(m_test_duration_microseconds));
-  printer().key_bool("memoryLeak", m_test_data_info == var::DataInfo());
+  printer().key_bool("result", test_data->result);
+  printer().key(
+    "score",
+    NumberString(get_score(test_data->duration_microseconds)));
+  printer().key(
+    "microseconds",
+    NumberString(test_data->duration_microseconds));
+  printer().key_bool(
+    "memoryLeak",
+    test_data->data_info == var::DataInfo());
   printer().close_object();
-  m_final_duration_microseconds += m_test_duration_microseconds;
+  final_duration_microseconds += test_data->duration_microseconds;
 }
 
 u32 Test::get_score(u32 microseconds) {
@@ -77,7 +127,7 @@ void Test::close_case() {
   m_case_timer.stop();
   {
     printer::Printer::Object po(printer(), "caseResult");
-    m_test_duration_microseconds += m_case_timer.micro_time().microseconds();
+    m_test_data->duration_microseconds += m_case_timer.micro_time().microseconds();
     printer()
       .key_bool("result", m_case_result)
       .key(
@@ -93,28 +143,6 @@ void Test::close_case() {
   m_case_result = true;
 }
 
-void Test::initialize(const Initialize &options) {
-  API_ASSERT(options.printer() != nullptr);
-  m_printer = options.printer();
-  m_final_duration_microseconds = 0;
-
-  {
-    Printer::Object pg(printer(), "system");
-    printer().key("operatingSystem", sys::System::operating_system_name());
-    printer().key("processor", sys::System::processor());
-  }
-
-  {
-    Printer::Object pg(printer(), "test");
-    printer().key("name", options.name());
-    printer().key("version", options.version());
-    printer().key("gitHash", options.git_hash());
-    printer().key("apiVersion", var::StringView(api::ApiInfo::version()));
-    printer().key("apiGitHash", var::StringView(api::ApiInfo::git_hash()));
-  }
-
-  m_final_data_info = var::DataInfo();
-}
 
 Test::ExecuteFlags Test::parse_execution_flags(const sys::Cli &cli) {
   ExecuteFlags o_execute_flags = ExecuteFlags::null;
@@ -171,21 +199,6 @@ u32 Test::parse_test(const sys::Cli &cli, var::StringView name, u32 test_flag) {
   return 0;
 }
 
-void Test::finalize() {
-  Printer::Object pg(printer(), "finalResult");
-  printer().key_bool("result", m_final_result);
-  printer().key(
-    "finalResult",
-    m_final_result ? StringView("___finalResultPass___")
-                   : StringView("___finalResultFail___"));
-  printer().key(
-    "microseconds",
-    NumberString(m_final_duration_microseconds).string_view());
-  printer().key_bool("memoryLeak", m_final_data_info == var::DataInfo());
-  printer().key(
-    "score",
-    NumberString(get_score(m_final_duration_microseconds)).string_view());
-}
 
 void Test::execute_api_case() {
   Case cg(this, "api");
@@ -215,4 +228,64 @@ bool Test::execute_class_performance_case() {
 bool Test::execute_class_stress_case() {
   printer().key("stress", "no test");
   return true;
+}
+void Test::set_case_failed() {
+  m_case_result = false;
+  m_test_data->result = false;
+  is_final_result = false;
+}
+
+bool Test::final_result() { return is_final_result; }
+bool Test::expect(const char *function, unsigned int line, bool value) {
+  if (value) {
+    return true;
+  }
+
+  printer().key(
+    var::String().format("expect%d", line),
+    var::String().format("%s failed", function));
+
+  if (is_error()) {
+    printer().object("errorContext", api::ExecutionContext::error());
+  }
+
+  printer().error(var::String().format("test failed"));
+  set_case_failed();
+  return false;
+}
+const chrono::ClockTimer &Test::case_timer() const {
+  return m_case_timer;
+}
+
+void Test::TimedScope::deleter(Test::TimedScope::TimedScopeData *test_scope) {
+  const auto stop = test_scope->test->case_timer().milliseconds();
+  const auto duration = stop - test_scope->start;
+  printer()
+    .key("minimum (ms)", var::NumberString(test_scope->minimum))
+    .key("maximum (ms)", var::NumberString(test_scope->maximum))
+    .key("duration (ms)", var::NumberString(duration));
+  if (duration < test_scope->minimum) {
+    printer().error("duration below minimum");
+    test_scope->test->set_case_failed();
+  } else if (duration > test_scope->maximum) {
+    printer().error("duration above maximum");
+    test_scope->test->set_case_failed();
+  }
+  printer().close_object();
+}
+
+Test::TimedScope::TimedScope(
+  Test &test,
+  const var::StringView name,
+  const chrono::MicroTime &minimum,
+  const chrono::MicroTime &maximum)
+  : m_data(
+    {.test = &test,
+     .name = name,
+     .start = test.case_timer().milliseconds(),
+     .minimum = minimum.milliseconds(),
+     .maximum = maximum.milliseconds()},
+    &deleter) {
+  printer().open_object(name);
+  API_ASSERT(minimum < maximum);
 }

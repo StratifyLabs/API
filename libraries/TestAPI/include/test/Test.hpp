@@ -62,32 +62,46 @@ struct TestFlags {
 API_OR_NAMED_FLAGS_OPERATOR(TestFlags, ExecuteFlags)
 
 class Test : public api::ExecutionContext, public TestFlags {
+  struct TestData {
+    bool result = true;
+    u32 duration_microseconds = {};
+    var::DataInfo data_info;
+  };
+  static void deleter(TestData *test_data);
+  api::SystemResource<TestData, decltype(&deleter)> m_test_data;
+
 public:
   class Initialize {
     API_AC(Initialize, var::StringView, name);
     API_AC(Initialize, var::StringView, version);
     API_AC(Initialize, var::StringView, git_hash);
-    API_AF(Initialize, printer::Printer *, printer, nullptr);
   };
 
-  static void initialize(const Initialize &options);
-  static void finalize();
+private:
+  class ScopeImplementation {
+    static void deleter(void *);
+    api::SystemResource<void *, decltype(&deleter)> m_deleter
+      = {nullptr, &deleter};
 
-  class Scope {
   public:
-    explicit Scope(const Initialize &options) { initialize(options); }
-    ~Scope() { finalize(); }
+    ScopeImplementation(const Initialize &options, printer::Printer *printer);
+  };
+
+public:
+  template <class PrinterType> class Scope {
+    PrinterType m_printer;
+    ScopeImplementation m_scope_implementation;
+  public:
+    explicit Scope(const Initialize &options)
+      : m_scope_implementation(options, &m_printer) {}
   };
 
   static ExecuteFlags parse_execution_flags(const sys::Cli &cli);
-  static u32 parse_test(const sys::Cli &cli, var::StringView name,
-                        u32 test_flag);
+  static u32
+  parse_test(const sys::Cli &cli, var::StringView name, u32 test_flag);
 
   explicit Test(var::StringView name);
-  ~Test();
-
   void execute(const sys::Cli &cli);
-
   void execute(ExecuteFlags execute_flags = ExecuteFlags::all) {
     if (execute_flags & ExecuteFlags::api) {
       execute_api_case();
@@ -108,94 +122,47 @@ public:
   virtual bool execute_class_performance_case();
   virtual bool execute_class_stress_case();
 
-  API_NO_DISCARD bool result() const { return m_test_result; }
+  API_NO_DISCARD bool result() const { return m_test_data->result; }
   API_NO_DISCARD bool case_result() const { return m_case_result; }
 
-  void set_case_failed() {
-    m_case_result = false;
-    m_test_result = false;
-    m_final_result = false;
-  }
+  void set_case_failed();
 
-  bool expect(const char *function, unsigned int line, bool value) {
-    if (value) {
-      return true;
-    }
+  bool expect(const char *function, unsigned int line, bool value);
 
-    printer().key(var::String().format("expect%d", line),
-                  var::String().format("%s failed", function));
-
-    if (is_error()) {
-      printer().object("errorContext", api::ExecutionContext::error());
-    }
-
-    printer().error(var::String().format("test failed"));
-    set_case_failed();
-    return false;
-  }
-
-  API_NO_DISCARD static bool final_result() { return m_final_result; }
+  API_NO_DISCARD static bool final_result();
 
   class TimedScope {
+    struct TimedScopeData {
+      Test *test;
+      var::StringView name;
+      u32 start;
+      u32 minimum;
+      u32 maximum;
+    };
+    static void deleter(TimedScopeData *test_scope);
+    api::SystemResource<TimedScopeData, decltype(&deleter)> m_data;
+
   public:
-    TimedScope(Test &test, const var::StringView name,
-               const chrono::MicroTime &minimum,
-               const chrono::MicroTime &maximum)
-        : m_test(test), m_name(name), m_start(test.case_timer().milliseconds()),
-          m_minimum(minimum.milliseconds()), m_maximum(maximum.milliseconds()) {
-      m_test.printer().open_object(name);
-      API_ASSERT(m_minimum < m_maximum);
-    }
-
-    ~TimedScope() {
-      const auto stop = m_test.case_timer().milliseconds();
-      const auto duration = stop - m_start;
-      m_test.printer()
-          .key("minimum (ms)", var::NumberString(m_minimum))
-          .key("maximum (ms)", var::NumberString(m_maximum))
-          .key("duration (ms)", var::NumberString(duration));
-      if (duration < m_minimum) {
-        m_test.printer().error("duration below minimum");
-        m_test.set_case_failed();
-      } else if (duration > m_maximum) {
-        m_test.printer().error("duration above maximum");
-        m_test.set_case_failed();
-      }
-      m_test.printer().close_object();
-    }
-
-  private:
-    Test &m_test;
-    var::StringView m_name;
-    u32 m_start;
-    u32 m_minimum;
-    u32 m_maximum;
+    TimedScope(
+      Test &test,
+      var::StringView name,
+      const chrono::MicroTime &minimum,
+      const chrono::MicroTime &maximum);
   };
 
 protected:
-  API_NO_DISCARD const chrono::ClockTimer &case_timer() const { return m_case_timer; }
+  API_NO_DISCARD const chrono::ClockTimer &case_timer() const;
   chrono::ClockTimer &case_timer() { return m_case_timer; }
-
   static u32 get_score(u32 microseconds);
-
   var::StringView name() const { return m_name.cstring(); }
-
-  static printer::Printer &printer() { return *m_printer; }
+  static printer::Printer &printer();
 
 private:
-  bool m_test_result = true;
   bool m_case_result = true;
   var::DataInfo m_case_data_info;
-  var::DataInfo m_test_data_info;
   chrono::ClockTimer m_case_timer;
-  u32 m_test_duration_microseconds;
   var::KeyString m_name;
   Test *m_parent = nullptr;
-
-  static var::DataInfo m_final_data_info;
-  static bool m_final_result;
-  static u32 m_final_duration_microseconds;
-  static printer::Printer *m_printer;
 
   friend class Case;
   void open_case(var::StringView case_name);

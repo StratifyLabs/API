@@ -706,8 +706,10 @@ public:
   const Type &value() const { return m_value; }
 
   Type *pointer_to_value() { return &m_value; }
-
   const Type *pointer_to_value() const { return &m_value; }
+
+  Type * operator ->() { return &m_value; }
+  const Type * operator ->() const { return &m_value; }
 
 private:
   Type m_value = {};
