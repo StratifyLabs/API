@@ -38,6 +38,7 @@
 
 ## Bug Fixes
 
+- Fix build warning on Linux with `sys::System::launch_browswer()`
 - Fixed `var::Ring` and added unit tests
 - Make `var::StringView::pop_front(), pop_back(), and truncate()` safe (checks length)
 - `fs::FileObject` uses `size_t` for size

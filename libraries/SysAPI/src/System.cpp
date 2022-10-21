@@ -109,8 +109,8 @@ var::StringView System::user_data_path() {
 
 void System::launch_browser(var::StringView url){
 #if defined __link
-  var::String command = var::String(is_macosx() ? "open" : "start") + " " + url;
-  system(command.cstring());
+  const auto command = var::String(is_macosx() ? "open" : "start") + " " + url;
+  api::ignore = system(command.cstring());
 #endif
 }
 
