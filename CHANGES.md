@@ -16,6 +16,11 @@
   - Removed `fs::FileObject::gets()` use `fs::FileObject::get_line()`
   - Use `api::Function` for the `fs::FileSystem::ExcludeCallback`
   - `Test::initialize` is now part of `Test::Scope` to guarantee the existence of a printer
+- Add `var::Tokenizer::DelimiterType::ordered_characters` to tokenize with an ordered set of characters
+  - For example: `1+2=3` can tokenize with `+=` and get `1`, `2`, and `3`.
+- Add `var::Tokenizer::DelimiterType::ordered_strings` to tokenize with an ordered set of strings
+  - For example: `1+=2==3` can tokenize with `|+=|==` and get `1`, `2`, and `3`.
+  - The first character in the `delimiters` is the one character delimiter for the strings in the set
 - Add `operator bool()` to `thread::Cond` to check if the condition is asserted
 - Separate `var::StackString` logic from the template
 - Added `rvalue` reference functions for some function-chained member functions

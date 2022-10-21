@@ -282,7 +282,6 @@ public:
         TEST_ASSERT(key_string == "test1");
       }
 
-
       {
         KeyString key_string;
         key_string = "test1";
@@ -306,7 +305,7 @@ public:
       {
         auto string0 = KeyString("Hello");
         TEST_ASSERT(string0 == "Hello");
-        auto  string1 = KeyString("Hello");
+        auto string1 = KeyString("Hello");
         TEST_ASSERT(string1 == "Hello");
         auto string2 = KeyString(StringView{"Hello2"});
         TEST_ASSERT(string2 == "Hello2");
@@ -502,8 +501,8 @@ public:
         u32 y;
       };
 
-      struct test_struct t{};
-      struct test_struct t0{};
+      struct test_struct t {};
+      struct test_struct t0 {};
       View(t).fill<u8>(0xaa);
       View(t0).fill<u8>(0xbb);
 
@@ -824,6 +823,106 @@ public:
 
       TEST_ASSERT(
         token.sort(T::SortBy::descending).join(".") == "7.5.4.3.2.1.0");
+    }
+
+    {
+      auto t = T(
+        "000:100+200=300",
+        T::Construct().set_delimiters(":+=").set_delimiter_type(
+          T::DelimiterType::ordered_characters));
+      TEST_ASSERT(t.count() == 4);
+      TEST_ASSERT(t.at(0) == "000");
+      TEST_ASSERT(t.at(1) == "100");
+      TEST_ASSERT(t.at(2) == "200");
+      TEST_ASSERT(t.at(3) == "300");
+    }
+    {
+      const auto t = T(
+        "000:=100+=200==300",
+        T::Construct()
+          .set_delimiters("|:=|+=|==")
+          .set_delimiter_type(T::DelimiterType::ordered_strings));
+      TEST_ASSERT(t.count() == 4);
+      TEST_ASSERT(t.at(0) == "000");
+      TEST_ASSERT(t.at(1) == "100");
+      TEST_ASSERT(t.at(2) == "200");
+      TEST_ASSERT(t.at(3) == "300");
+    }
+    {
+      auto t = T(
+        "000=:=100=++=200++300",
+        T::Construct()
+          .set_delimiters("|=:=|=++=|++")
+          .set_delimiter_type(T::DelimiterType::ordered_strings));
+      TEST_ASSERT(t.count() == 4);
+      TEST_ASSERT(t.at(0) == "000");
+      TEST_ASSERT(t.at(1) == "100");
+      TEST_ASSERT(t.at(2) == "200");
+      TEST_ASSERT(t.at(3) == "300");
+    }
+    {
+      auto t = T(
+        "000=:=(100=++=200)++300",
+        T::Construct()
+          .set_delimiters("|=:=|=++=|++")
+          .set_delimiter_type(T::DelimiterType::ordered_strings));
+      TEST_ASSERT(t.count() == 4);
+      TEST_ASSERT(t.at(0) == "000");
+      TEST_ASSERT(t.at(1) == "(100");
+      TEST_ASSERT(t.at(2) == "200)");
+      TEST_ASSERT(t.at(3) == "300");
+    }
+    {
+      auto t = T(
+        "000=:=(100++200)++300",
+        T::Construct()
+          .set_delimiters("|=:=|++")
+          .set_delimiter_type(T::DelimiterType::ordered_strings)
+          .set_ignore_between("("));
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "000");
+      TEST_ASSERT(t.at(1) == "(100++200)");
+      TEST_ASSERT(t.at(2) == "300");
+    }
+    {
+      auto t = T(
+        "000=:=(100=:=200)++300",
+        T::Construct()
+          .set_delimiters("|=:=|++")
+          .set_delimiter_type(T::DelimiterType::ordered_strings)
+          .set_ignore_between("("));
+      TEST_ASSERT(t.count() == 3);
+      TEST_ASSERT(t.at(0) == "000");
+      TEST_ASSERT(t.at(1) == "(100=:=200)");
+      TEST_ASSERT(t.at(2) == "300");
+    }
+    {
+      auto t = T(
+        "000:100+200=300=400=500=600",
+        T::Construct().set_delimiters(":+=").set_delimiter_type(
+          T::DelimiterType::ordered_characters));
+      TEST_ASSERT(t.count() == 7);
+      TEST_ASSERT(t.at(0) == "000");
+      TEST_ASSERT(t.at(1) == "100");
+      TEST_ASSERT(t.at(2) == "200");
+      TEST_ASSERT(t.at(3) == "300");
+      TEST_ASSERT(t.at(4) == "400");
+      TEST_ASSERT(t.at(5) == "500");
+      TEST_ASSERT(t.at(6) == "600");
+    }
+
+    {
+      auto t = T(
+        "000:100+200=300=400=500=600",
+        T::Construct()
+          .set_delimiters(":+=")
+          .set_delimiter_type(T::DelimiterType::ordered_characters)
+          .set_maximum_delimiter_count(3));
+      TEST_ASSERT(t.count() == 4);
+      TEST_ASSERT(t.at(0) == "000");
+      TEST_ASSERT(t.at(1) == "100");
+      TEST_ASSERT(t.at(2) == "200");
+      TEST_ASSERT(t.at(3) == "300=400=500=600");
     }
 
     printer().key("complete", __FUNCTION__);

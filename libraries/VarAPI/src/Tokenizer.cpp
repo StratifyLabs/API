@@ -3,43 +3,86 @@
 // Copyright 2011-2020 Tyler Gilbert and Stratify Labs, Inc
 
 #include "var/Tokenizer.hpp"
+#include "var/Queue.hpp"
 #include "var/View.hpp"
 
 using namespace var;
 
 Tokenizer::Tokenizer(var::StringView input, const Construct &options) {
-  parse(input, options);
-}
-
-void Tokenizer::parse(var::StringView input, const Construct &options) {
-
   const auto length = input.length();
+  var::Queue<StringView> container;
 
-  const auto delimiter_length = options.delimiters.length();
+  auto cursor = size_t{};
+  auto sub_position = size_t{};
+  auto current_delimiter_position = size_t{};
+  struct State {
+    size_t delimiter_length{};
+    Tokenizer ordered_string_tokens{};
+  };
 
-  m_token_list = StringViewList();
-  size_t cursor = 0;
-  size_t sub_position = 0;
+  auto state = [&]() {
+    if (
+      options.delimiter_type == DelimiterType::characters
+      || options.delimiter_type == DelimiterType::ordered_characters) {
+      return State{size_t{1}};
+    }
+    if (options.delimiter_type == DelimiterType::string) {
+      return State{options.delimiters.length()};
+    }
 
+    const auto delimiters = StringView{options.delimiters}.truncate(1);
+    const auto input = StringView{options.delimiters}.pop_front();
+    auto result
+      = Tokenizer(input, Tokenizer::Construct().set_delimiters(delimiters));
+    API_ASSERT(result.count() > 0);
+    return State{result.at(0).length(), std::move(result)};
+  }();
+
+  if (options.delimiter_type == DelimiterType::ordered_characters) {
+    API_ASSERT(options.delimiters.length());
+  }
+
+  auto push_token = [&]() {
+    container.push(StringView{input}
+                     .pop_front(sub_position)
+                     .truncate(cursor - sub_position));
+    sub_position = cursor + state.delimiter_length;
+  };
+  auto get_input_string = [&]() {
+    return StringView{input}.pop_front(cursor).truncate(state.delimiter_length);
+  };
   while (cursor < length) {
     const auto cursor_character = input.at(cursor);
+    auto is_match = false;
     if (
       options.delimiter_type == DelimiterType::string
-      && StringView{input}.pop_front(cursor).truncate(delimiter_length)
-           == options.delimiters) {
-      m_token_list.push_back(input(StringView::GetSubstring()
-                                     .set_position(sub_position)
-                                     .set_length(cursor - sub_position)));
-
-      sub_position = cursor + delimiter_length;
+      && get_input_string() == options.delimiters) {
+      push_token();
+      cursor += state.delimiter_length-1;
     } else if (
       options.delimiter_type == DelimiterType::characters
       && options.delimiters.contains(cursor_character)) {
-      m_token_list.push_back(input(StringView::GetSubstring()
-                                     .set_position(sub_position)
-                                     .set_length(cursor - sub_position)));
-
-      sub_position = cursor + 1;
+      push_token();
+    } else if (
+      options.delimiter_type == DelimiterType::ordered_characters
+      && cursor_character
+           == options.delimiters.at(current_delimiter_position)) {
+      push_token();
+      if (current_delimiter_position < options.delimiters.length() - 1) {
+        ++current_delimiter_position;
+      }
+    } else if (
+      options.delimiter_type == DelimiterType::ordered_strings
+      && get_input_string()
+           == state.ordered_string_tokens.at(current_delimiter_position)) {
+      push_token();
+      if (
+        current_delimiter_position < state.ordered_string_tokens.count() - 1) {
+        ++current_delimiter_position;
+      }
+      cursor += state.delimiter_length-1;
+      state.delimiter_length
+        = state.ordered_string_tokens.at(current_delimiter_position).length();
     } else if (options.ignore_between.contains(cursor_character)) {
       // skip the space between specific characters
       const auto start = cursor_character;
@@ -53,7 +96,7 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
         } else if ((end != start) && (current_cursor_character == start)) {
           ++count;
         }
-        if(count) {
+        if (count) {
           ++cursor;
         }
       }
@@ -61,17 +104,20 @@ void Tokenizer::parse(var::StringView input, const Construct &options) {
 
     if (
       options.maximum_delimiter_count
-      && (m_token_list.count() == options.maximum_delimiter_count)) {
+      && (container.count() == options.maximum_delimiter_count)) {
       cursor = length - 1;
     }
 
-    cursor++;
+    ++cursor;
   }
 
   // push the last token
-  m_token_list.push_back(input(StringView::GetSubstring()
-                                 .set_position(sub_position)
-                                 .set_length(cursor - sub_position)));
+  push_token();
+
+  m_token_list.reserve(container.count());
+  for (const auto &item : container) {
+    m_token_list.push_back(item);
+  }
 }
 
 StringView Tokenizer::at(u32 n) const {

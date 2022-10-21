@@ -14,7 +14,9 @@ public:
 
   enum class DelimiterType {
     characters,
-    string
+    string,
+    ordered_characters,
+    ordered_strings
   };
 
   struct Construct {
@@ -38,9 +40,9 @@ public:
 
 protected:
 private:
+  Tokenizer() = default;
   StringViewList m_token_list;
   StringView m_input;
-  void parse(StringView input, const Construct &options);
 };
 
 typedef Tokenizer Token;
