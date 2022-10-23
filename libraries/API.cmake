@@ -119,7 +119,7 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
     ${CMAKE_CURRENT_SOURCE_DIR}/src)
   set_property(TARGET ${TEST_TARGET} PROPERTY CXX_STANDARD 17)
   set(CTEST_OUTPUT_ON_FAILURE ON)
-  cmsdk2_app_add_targets_for_architectures(
+  cmsdk2_app_add_dependencies(
     TARGET ${TEST_TARGET}
     RAM_SIZE ${RAM_SIZE}
     DEPENDENCIES "${DEPENDENCIES}")
