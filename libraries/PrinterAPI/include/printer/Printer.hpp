@@ -212,7 +212,8 @@ public:
     return &m_progress_callback;
   }
 
-  auto update_progress(int progress, int total) -> api::ProgressCallback::IsAbort;
+  auto update_progress(int progress, int total)
+    -> api::ProgressCallback::IsAbort;
 
   Printer &set_progress_key(var::StringView progress_key) {
     m_progress_state = 0;
@@ -289,26 +290,40 @@ public:
     IsNewline is_newline);
 
   class Object {
-    static void deleter(Printer * printer){
-      printer->close_object();
-    }
+    static void deleter(Printer *printer) { printer->close_object(); }
     std::unique_ptr<Printer, decltype(&deleter)> m_pointer;
+
   public:
     Object(Printer &printer, var::StringView name, Level level = Level::info)
       : m_pointer(&printer, deleter) {
       printer.open_object(name, level);
     }
+    Object(
+      Printer &printer,
+      var::StringView name,
+      api::Function<void()> function, Level level = Level::info)
+      : m_pointer(&printer, deleter) {
+      printer.open_object(name);
+      function();
+    }
   };
 
   class Array {
-    static void deleter(Printer * printer){
-      printer->close_array();
-    }
+    static void deleter(Printer *printer) { printer->close_array(); }
     std::unique_ptr<Printer, decltype(&deleter)> m_pointer;
+
   public:
     Array(Printer &printer, var::StringView name, Level level = Level::info)
       : m_pointer(&printer, deleter) {
       printer.open_array(name, level);
+    }
+    Array(
+      Printer &printer,
+      var::StringView name,
+      api::Function<void()> function, Level level = Level::info)
+      : m_pointer(&printer, deleter) {
+      printer.open_object(name);
+      function();
     }
   };
 

@@ -81,9 +81,13 @@ public:
     return std::accumulate(begin(), end(), initial_value);
   }
 
-  Derived &fill(const T &value) {
+  Derived &fill(const T &value) & {
     std::fill(begin(), end(), value);
     return self();
+  }
+
+  Derived &&fill(const T &value) && {
+    return std::move(fill(value));
   }
 
   API_NO_DISCARD size_t find_offset(const T &a) const {
@@ -116,14 +120,21 @@ public:
   using SortComparator = bool (*)(const T &a, const T &b);
   using sort_compartor_t = SortComparator;
 
-  template<typename CompareFunction> Derived &sort(CompareFunction compare_function) {
+  template<typename CompareFunction> Derived &sort(CompareFunction compare_function) &{
     std::sort(begin(), end(), compare_function);
     return self();
   }
 
-  Derived &populate_by_incrementing(const T &initial_value = T()) {
+  template<typename CompareFunction> Derived &&sort(CompareFunction compare_function) &&{
+    return std::move(sort(compare_function));
+  }
+
+  Derived &populate_by_incrementing(const T &initial_value = T()) &{
     std::iota(begin(), end(), initial_value);
     return self();
+  }
+  Derived &&populate_by_incrementing(const T &initial_value = T()) &&{
+    return std::move(populate_by_incrementing(initial_value));
   }
 
   template<typename Function> const Derived &for_each(Function function) const & {

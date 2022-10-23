@@ -16,6 +16,8 @@
   - Removed `fs::FileObject::gets()` use `fs::FileObject::get_line()`
   - Use `api::Function` for the `fs::FileSystem::ExcludeCallback`
   - `Test::initialize` is now part of `Test::Scope` to guarantee the existence of a printer
+- Pass a lambda to `printer::Printer::Object` to execute inside an object scope
+- Pass a lambda to `printer::Printer::Array` to execute inside an object scope
 - Add `var::Tokenizer::DelimiterType::ordered_characters` to tokenize with an ordered set of characters
   - For example: `1+2=3` can tokenize with `+=` and get `1`, `2`, and `3`.
 - Add `var::Tokenizer::DelimiterType::ordered_strings` to tokenize with an ordered set of strings
