@@ -1,15 +1,19 @@
 include(${CMAKE_CURRENT_LIST_DIR}/api.cmake)
+
 api2_target(
   NAME API
   TARGETS TARGET_LIST)
+
 foreach(TARGET ${TARGET_LIST})
   message(STATUS "API has target ${TARGET}")
   target_sources(${TARGET}
     PRIVATE
     api.cmake
     ../API.cmake)
+  get_target_property(ARCH ${TARGET} CMSDK_PROPERTY_ARCH)
+  target_compile_definitions(${TARGET} PUBLIC __${ARCH})
   if(API_PUBLIC_COMPILE_OPTIONS)
-    message(STATUS "Apply: ${API_PUBLIC_COMPILE_OPTIONS} to ${TARGET} as PUBLIC")
+    message(STATUS "API: ${API_PUBLIC_COMPILE_OPTIONS} to ${TARGET} as PUBLIC")
     target_compile_options(${TARGET} PUBLIC ${API_PUBLIC_COMPILE_OPTIONS})
   endif()
   if(${CMSDK_IS_ARM})
