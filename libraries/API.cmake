@@ -122,7 +122,7 @@ function(api_add_test_executable NAME RAM_SIZE DEPENDENCIES)
   cmsdk2_app_add_dependencies(
     TARGET ${TEST_TARGET}
     RAM_SIZE ${RAM_SIZE}
-    DEPENDENCIES "${DEPENDENCIES}")
+    DEPENDENCIES ${DEPENDENCIES})
   target_compile_options(${TEST_TARGET}
     PRIVATE
     -Os)
