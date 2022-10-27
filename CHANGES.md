@@ -5,6 +5,7 @@
 ## Bug fixes
 
 - Fixed a bug with cmsdk2 building applications and tests
+- Add rvalue versions of functions to API `set()` macros
 
 # Version 1.6.0
 
