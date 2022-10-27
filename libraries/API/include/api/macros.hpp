@@ -63,30 +63,36 @@ private:                                                                       \
 #define API_AF(c, t, v, iv) API_ACCESS_FUNDAMENTAL(c, t, v, iv)
 
 #define API_PUBLIC_MEMBER(CLASS, TYPE, NAME, INITIAL_VALUE)                    \
-  CLASS &set_##NAME(TYPE value_parameter) {                                    \
+  CLASS &set_##NAME(TYPE value_parameter) & {                                  \
     NAME = value_parameter;                                                    \
     return *this;                                                              \
   }                                                                            \
-                                                                               \
+  CLASS &&set_##NAME(TYPE value_parameter) && {                                \
+    return std::move(set_##NAME(value_parameter));                             \
+  }                                                                            \
   TYPE NAME = INITIAL_VALUE
 
 #define API_PUBLIC_MEMBER_AZ(NAME, CLASS, TYPE, INITIAL_VALUE)                 \
-  CLASS &set_##NAME(TYPE value_parameter) {                                    \
+  CLASS &set_##NAME(TYPE value_parameter) & {                                  \
     NAME = value_parameter;                                                    \
     return *this;                                                              \
   }                                                                            \
-                                                                               \
+  CLASS &&set_##NAME(TYPE value_parameter) && {                                \
+    return std::move(set_##NAME(value_parameter));                             \
+  }                                                                            \
   TYPE NAME = INITIAL_VALUE
 
 #define API_PMAZ(NAME, CLASS, TYPE, INITIAL_VALUE)                             \
   API_PUBLIC_MEMBER_AZ(NAME, CLASS, TYPE, INITIAL_VALUE)
 
 #define API_PUBLIC_BOOL(CLASS, NAME, INITIAL_VALUE)                            \
-  CLASS &set_##NAME(bool value_parameter = true) {                             \
+  CLASS &set_##NAME(bool value_parameter = true) & {                           \
     is_##NAME = value_parameter;                                               \
     return *this;                                                              \
   }                                                                            \
-                                                                               \
+  CLASS &&set_##NAME(bool value_parameter = true) && {                         \
+    return std::move(set_##NAME(value_parameter));                             \
+  }                                                                            \
   bool is_##NAME = INITIAL_VALUE
 
 #define API_ACCESS_MEMBER_FUNDAMENTAL(c, t, p, v)                              \
@@ -108,10 +114,11 @@ public:                                                                        \
 #define API_ACCESS_MEMBER_FUNDAMENTAL_WITH_ALIAS(c, t, p, a, v)                \
 public:                                                                        \
   API_NO_DISCARD t a() const { return m_##p.v; }                               \
-  c &set_##a(t value) {                                                        \
+  c &set_##a(t value) & {                                                      \
     m_##p.v = value;                                                           \
     return *this;                                                              \
-  }
+  }                                                                            \
+  c &&set_##a(t value) && { return std::move(set_##a(value)); }
 
 #define API_AMFWA(c, t, p, a, v)                                               \
   API_ACCESS_MEMBER_FUNDAMENTAL_WITH_ALIAS(c, t, p, a, v)
@@ -119,10 +126,11 @@ public:                                                                        \
 #define API_ACCESS_MEMBER_COMPOUND(c, t, p, v)                                 \
 public:                                                                        \
   API_NO_DISCARD const t &v() const { return m_##p.v; }                        \
-  c &set_##v(const t &value) {                                                 \
+  c &set_##v(const t &value) & {                                               \
     m_##p.v = value;                                                           \
     return *this;                                                              \
-  }
+  }                                                                            \
+  c &&set_##v(const t &value) && { return std::move(set_##v(value)); }
 
 #define API_AMC(c, t, p, v) API_ACCESS_MEMBER_COMPOUND(c, t, p, v)
 
@@ -139,10 +147,11 @@ private:                                                                       \
 public:                                                                        \
   API_NO_DISCARD const t &v() const { return m_##v; }                          \
   t &v() { return m_##v; }                                                     \
-  c &set_##v(const t &value) {                                                 \
+  c &set_##v(const t &value) & {                                               \
     m_##v = value;                                                             \
     return *this;                                                              \
   }                                                                            \
+  c &&set_##v(const t &value) && { return std::move(set_##v(value)); }         \
                                                                                \
 private:                                                                       \
   t m_##v
@@ -154,9 +163,12 @@ public:                                                                        \
   API_NO_DISCARD var::StringView VALUE_NAME() const {                          \
     return m_##VALUE_NAME.string_view();                                       \
   }                                                                            \
-  PARENT_VALUE &set_##VALUE_NAME(const var::StringView value) {                \
+  PARENT_VALUE &set_##VALUE_NAME(const var::StringView value) & {              \
     m_##VALUE_NAME = value.to_string();                                        \
     return *this;                                                              \
+  }                                                                            \
+  PARENT_VALUE &&set_##VALUE_NAME(const var::StringView value) && {            \
+    return std::move(set_##VALUE_NAME(value));                                 \
   }                                                                            \
                                                                                \
 private:                                                                       \
@@ -175,18 +187,20 @@ private:                                                                       \
 #define API_RAC(c, t, v) API_READ_ACCESS_COMPOUND(c, t, v)
 
 #define API_ACCESS_DERIVED_COMPOUND(c, d, t, v)                                \
-  d &set_##v(const t &value) {                                                 \
+  d &set_##v(const t &value) & {                                               \
     c::set_##v(value);                                                         \
     return static_cast<d &>(*this);                                            \
-  }
+  }                                                                            \
+  d &&set_##v(const t &value) && { return std::move(set_##v(value)); }
 
 #define API_ADC(c, d, t, v) API_ACCESS_DERIVED_COMPOUND(c, d, t, v)
 
 #define API_ACCESS_DERIVED_FUNDAMETAL(c, d, t, v)                              \
-  d &set_##v(t value) {                                                        \
+  d &set_##v(t value) & {                                                      \
     c::set_##v(value);                                                         \
     return static_cast<d &>(*this);                                            \
-  }
+  }                                                                            \
+  d &&set_##v(t value) && { return std::move(set_##v(value)); }
 
 #define API_ADF(c, d, t, v) API_ACCESS_DERIVED_FUNDAMETAL(c, d, t, v)
 
@@ -194,7 +208,8 @@ private:                                                                       \
   d &set_##v(bool value = true) {                                              \
     c::set_##v(value);                                                         \
     return static_cast<d &>(*this);                                            \
-  }
+  }                                                                            \
+  d &&set_##v(bool value = true) && { return std::move(set_##v(value)); }
 
 #define API_ADB(c, d, v) API_ACCESS_DERIVED_BOOL(c, d, v)
 
