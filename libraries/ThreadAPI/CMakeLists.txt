@@ -1,7 +1,6 @@
 include(${CMAKE_CURRENT_LIST_DIR}/../API/api.cmake)
 api2_target(
   NAME ThreadAPI
-  VERSION ${API_PROJECT_VERSION}
   TARGETS TARGET_LIST
   DEPENDENCIES FsAPI VarAPI ChronoAPI)
 

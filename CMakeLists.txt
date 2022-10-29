@@ -1,9 +1,8 @@
 cmake_minimum_required (VERSION 3.12)
 cmsdk2_minimum_required(2.1.2)
-set(API_PROJECT_VERSION 1.6.4 CACHE INTERNAL "API version")
 project(API
 	LANGUAGES CXX C
-	VERSION ${API_PROJECT_VERSION})
+	VERSION 1.6.4)
 add_subdirectory(libraries/API API)
 add_subdirectory(libraries/VarAPI VarAPI)
 add_subdirectory(libraries/PrinterAPI PrinterAPI)

@@ -2,6 +2,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/api.cmake)
 
 api2_target(
   NAME API
+  VERSION ${PROJECT_VERSION}
   TARGETS TARGET_LIST)
 
 foreach(TARGET ${TARGET_LIST})
