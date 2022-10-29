@@ -6,6 +6,7 @@
 
 - Fixed a bug with moving `FileAccess<>` objects
   - This is an API breaking change that was necessary to fix the bug
+- Removed awkward and bug prone move semantics from `var::StackString`
 
 # Version 1.6.3
 
