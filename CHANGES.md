@@ -8,6 +8,7 @@
   - This is an API breaking change that was necessary to fix the bug
 - Removed awkward and bug prone move semantics from `var::StackString`
 - Update version in CMakeLists.txt
+- Enforce minimum versions for CMakeSDK
 
 # Version 1.6.3
 
