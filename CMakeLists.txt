@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 3.12)
-set(API_PROJECT_VERSION 1.3.0 CACHE INTERNAL "API version")
+cmsdk2_minimum_required(2.1.2)
+set(API_PROJECT_VERSION 1.6.4 CACHE INTERNAL "API version")
 project(API
 	LANGUAGES CXX C
 	VERSION ${API_PROJECT_VERSION})
