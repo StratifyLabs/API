@@ -154,6 +154,15 @@ public:
     return API_CONST_CAST_SELF(FileObject, ioctl, request, args);
   }
 
+  const FileObject &ioctl(int request) const {
+    ioctl_implementation(request, nullptr);
+    return *this;
+  }
+
+  FileObject &ioctl(int request) {
+    return API_CONST_CAST_SELF(FileObject, ioctl, request);
+  }
+
   const FileObject &write(
     const FileObject &source_file,
     const var::Transformer &transformer,
@@ -324,26 +333,18 @@ protected:
 private:
 };
 
-template <class Derived> class FileMemberAccess {
+template <class Derived, typename FileType> class FileMemberAccess {
+protected:
+  template <typename... Arguments>
+  explicit FileMemberAccess(Arguments... arguments) : m_file(arguments...) {}
+
 public:
   using Whence = fs::FileObject::Whence;
   using Write = fs::FileObject::Write;
 
-  FileMemberAccess(const fs::FileObject &file)
-    : m_file_member_reference_access{&file} {}
-
-  // a move should not copy or swap anything
-  // The member pointer should always point to the
-  // derived owner's internal m_file
-  FileMemberAccess(FileMemberAccess &&) {}
-  FileMemberAccess &operator=(FileMemberAccess &&) { return *this; }
-
-  FileMemberAccess(const FileMemberAccess &) = delete;
-  FileMemberAccess &operator=(const FileMemberAccess &) = delete;
-
 #define FSAPI_FUNCTION_GROUP(QUAL)                                             \
   auto QUAL read(var::View view) QUAL {                                        \
-    m_file_member_reference_access->read(view);                                \
+    m_file.read(view);                                                         \
     return static_cast<Derived QUAL>(*this);                                   \
   }
   FSAPI_FUNCTION_GROUP(const &)
@@ -352,7 +353,7 @@ public:
 #undef FSAPI_FUNCTION_GROUP
 #define FSAPI_FUNCTION_GROUP(QUAL)                                             \
   auto QUAL write(var::View view) QUAL {                                       \
-    m_file_member_reference_access->write(view);                               \
+    m_file.write(view);                                                        \
     return static_cast<Derived QUAL>(*this);                                   \
   }
   FSAPI_FUNCTION_GROUP(const &)
@@ -363,7 +364,7 @@ public:
   auto QUAL write(                                                             \
     const fs::FileObject &source_file,                                         \
     const Write &options = Write()) QUAL {                                     \
-    m_file_member_reference_access->write(source_file, options);               \
+    m_file.write(source_file, options);                                        \
     return static_cast<Derived QUAL>(*this);                                   \
   }
   FSAPI_FUNCTION_GROUP(const &)
@@ -375,7 +376,7 @@ public:
     const fs::FileObject &source_file,                                         \
     const var::Transformer &transformer,                                       \
     const Write &options = Write()) QUAL {                                     \
-    m_file_member_reference_access->write(source_file, transformer, options);  \
+    m_file.write(source_file, transformer, options);                           \
     return static_cast<Derived QUAL>(*this);                                   \
   }
   FSAPI_FUNCTION_GROUP(const &)
@@ -384,7 +385,7 @@ public:
 #undef FSAPI_FUNCTION_GROUP
 #define FSAPI_FUNCTION_GROUP(QUAL)                                             \
   auto QUAL seek(int location, Whence whence = Whence::set) QUAL {             \
-    m_file_member_reference_access->seek(location, whence);                    \
+    m_file.seek(location, whence);                                             \
     return static_cast<Derived QUAL>(*this);                                   \
   }
   FSAPI_FUNCTION_GROUP(const &)
@@ -393,8 +394,9 @@ public:
 #undef FSAPI_FUNCTION_GROUP
 
 #define FSAPI_FUNCTION_GROUP(QUAL)                                             \
-  template <typename Type> auto QUAL ioctl(int request, Type *arg) QUAL {      \
-    m_file_member_reference_access->ioctl(request, arg);                       \
+  template <typename Type>                                                     \
+  auto QUAL ioctl(int request, Type *arg = nullptr) QUAL {                     \
+    m_file.ioctl(request, arg);                                                \
     return static_cast<Derived QUAL>(*this);                                   \
   }
   FSAPI_FUNCTION_GROUP(const &)
@@ -402,23 +404,14 @@ public:
   FSAPI_FUNCTION_GROUP(&&)
 #undef FSAPI_FUNCTION_GROUP
 
-#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
-  auto QUAL ioctl(int request) QUAL {                                          \
-    m_file_member_reference_access->ioctl<void>(                               \
-      request,                                                                 \
-      static_cast<void *>(nullptr));                                           \
-    return static_cast<Derived QUAL>(*this);                                   \
-  }
-  FSAPI_FUNCTION_GROUP(const &)
-  FSAPI_FUNCTION_GROUP(&)
-  FSAPI_FUNCTION_GROUP(&&)
-#undef FSAPI_FUNCTION_GROUP
+  const FileType &file() const { return m_file; }
+  FileType &file() { return m_file; }
 
 private:
   // This should not be moved during move operations
   // the file it points to will move the fd from the temporary
   // to the new location and this will point to the new location
-  const fs::FileObject *m_file_member_reference_access = nullptr;
+  FileType m_file;
 }; // namespace fs
 
 } // namespace fs

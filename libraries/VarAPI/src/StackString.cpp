@@ -32,7 +32,7 @@ GeneralString operator|(const StringView lhs, const StringView rhs) {
   return GeneralString(lhs).append(rhs);
 }
 
-StackStringObject::StackStringObject(char *buffer, size_t size)
+StackStringObject::StackStringObject(char * buffer, size_t size)
   : buffer{buffer}, size{size} {
   buffer[0] = '\0';
 }

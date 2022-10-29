@@ -45,6 +45,7 @@ protected:
 public:
   using Base = StringView::Base;
 
+#if 1
   StackString<Derived, Size>(const StackString &a)
     : m_stack_string_object{m_buffer, Size} {
     m_stack_string_object.copy(a.m_buffer, a.m_stack_string_object.size);
@@ -61,6 +62,7 @@ public:
     move(a);
     return *this;
   }
+#endif
 
   auto &clear() {
     m_buffer[0] = 0;
