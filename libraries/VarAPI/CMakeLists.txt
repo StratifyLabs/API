@@ -2,7 +2,6 @@ include(${CMAKE_CURRENT_LIST_DIR}/../API/api.cmake)
 
 api2_target(
   NAME VarAPI
-  VERSION ${API_PROJECT_VERSION}
   DEPENDENCIES API)
 
 if(${CMSDK_IS_LINK})
