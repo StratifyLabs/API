@@ -1,10 +1,23 @@
 > Please see [Semantic Versioning on Github](https://blog.stratifylabs.dev/device/2021-07-12-Semantic-Versioning-and-Github/) for more details on managing the `CHANGES.md` file.
 
+# Version 1.6.3
+
+## Bug Fixes
+
+- No fixes. Just updated CHANGES.md
+
+# Version 1.6.2
+
+## Bug Fixes
+
+- None. Just fixing git release.
+
 # Version 1.6.1
 
 ## Bug fixes
 
 - Fixed a bug with cmsdk2 building applications and tests
+- Add rvalue versions of functions to API `set()` macros
 
 # Version 1.6.0
 
