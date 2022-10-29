@@ -17,7 +17,6 @@ struct StackStringObject {
   char *buffer = nullptr;
   size_t size{};
 
-  StackStringObject(char *buffer, size_t size);
   auto capacity() const -> decltype(size);
   auto copy(const char *other, size_t size) const -> void;
   auto append(const char value) const -> void;
@@ -38,31 +37,13 @@ struct StackStringObject {
 
 template <class Derived, size_t Size> class StackString {
 protected:
-  using Buffer = char[Size];
-  Buffer m_buffer;
-  StackStringObject m_stack_string_object;
+  char m_buffer[Size];
+  char * buffer() const {
+    return const_cast<char*>(m_buffer);
+  }
 
 public:
   using Base = StringView::Base;
-
-#if 1
-  StackString<Derived, Size>(const StackString &a)
-    : m_stack_string_object{m_buffer, Size} {
-    m_stack_string_object.copy(a.m_buffer, a.m_stack_string_object.size);
-  }
-  StackString<Derived, Size> &operator=(const StackString &a) {
-    m_stack_string_object.copy(a.m_buffer, a.m_stack_string_object.size);
-    return *this;
-  }
-  StackString<Derived, Size>(StackString &&a) noexcept
-    : m_stack_string_object{m_buffer, Size} {
-    move(a);
-  }
-  StackString<Derived, Size> &operator=(StackString &&a) {
-    move(a);
-    return *this;
-  }
-#endif
 
   auto &clear() {
     m_buffer[0] = 0;
@@ -74,21 +55,25 @@ public:
   API_NO_DISCARD explicit operator bool() const { return m_buffer[0] != 0; }
 
   auto &append(const char a) {
-    m_stack_string_object.append(a);
+    StackStringObject{buffer(), Size}.append(a);
     return static_cast<Derived &>(*this);
   }
 
   auto &append(const StringView a) {
-    m_stack_string_object.append(a);
+    StackStringObject{buffer(), Size}.append(a);
     return static_cast<Derived &>(*this);
   }
 
-  API_NO_DISCARD auto length() const { return m_stack_string_object.length(); }
+  API_NO_DISCARD auto length() const {
+    return StackStringObject{buffer(), Size}.length();
+  }
   API_NO_DISCARD auto front() const { return m_buffer[0]; }
-  API_NO_DISCARD auto back() const { return m_stack_string_object.back(); }
+  API_NO_DISCARD auto back() const {
+    return StackStringObject{buffer(), Size}.back();
+  }
 
   API_NO_DISCARD constexpr size_t capacity() const { return Size - 1; }
-  API_NO_DISCARD auto *data() { return m_buffer; }
+  API_NO_DISCARD auto *data() { return buffer(); }
   API_NO_DISCARD const char *cstring() const { return m_buffer; }
   API_NO_DISCARD StringView string_view() const { return StringView(m_buffer); }
 
@@ -128,7 +113,7 @@ public:
   }
 
   API_NO_DISCARD char at(size_t offset) const {
-    return m_stack_string_object.at(offset);
+    return StackStringObject{m_buffer, Size}.at(offset);
   }
 
   template <typename... Args> auto &format(const char *format, Args... args) & {
@@ -143,50 +128,48 @@ public:
   }
 
   auto &to_upper() {
-    m_stack_string_object.to_upper();
+    StackStringObject{buffer(), Size}.to_upper();
     return static_cast<Derived &>(*this);
   }
 
   auto &to_lower() {
-    m_stack_string_object.to_lower();
+    StackStringObject{buffer(), Size}.to_lower();
     return static_cast<Derived &>(*this);
   }
 
   auto &pop_front(size_t count = 1) {
-    m_stack_string_object.pop_front(count);
+    StackStringObject{buffer(), Size}.pop_front(count);
     return static_cast<Derived &>(*this);
   }
 
   auto &pop_back(size_t count = 1) {
-    m_stack_string_object.pop_back(count);
+    StackStringObject{buffer(), Size}.pop_back(count);
     return static_cast<Derived &>(*this);
   }
 
   auto &truncate(size_t new_length) {
-    m_stack_string_object.truncate(new_length);
+    StackStringObject{buffer(), Size}.truncate(new_length);
     return static_cast<Derived &>(*this);
   }
 
   using Replace = ReplaceCharacter;
 
   auto &replace(const Replace &options) {
-    m_stack_string_object.replace(options.old_character, options.new_character);
+    StackStringObject{buffer(), Size}.replace(
+      options.old_character,
+      options.new_character);
     return static_cast<Derived &>(*this);
   }
 
   auto &operator()(const Replace &options) { return replace(options); }
 
 protected:
-  StackString() : m_stack_string_object{m_buffer, Size} {}
-  StackString(const StringView a) : m_stack_string_object{m_buffer, Size} {
-    m_stack_string_object.assign(a);
+  StackString() { m_buffer[0] = '\0'; }
+  StackString(const StringView a) {
+    StackStringObject{buffer(), Size}.assign(a);
   }
-  StackString(const char *a) : m_stack_string_object{m_buffer, Size} {
-    m_stack_string_object.assign(a);
-  }
+  StackString(const char *a) { StackStringObject{buffer(), Size}.assign(a); }
 
-private:
-  void move(StackString &a) { m_stack_string_object.move(a.m_buffer, Size); }
 };
 
 class IdString : public StackString<IdString, 24> {

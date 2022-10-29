@@ -300,7 +300,6 @@ public:
         TEST_ASSERT(string2 == "Hello3");
         string1 = std::move(string2);
         TEST_ASSERT(string1 == "Hello3");
-        TEST_ASSERT(string2 == "Hello");
       }
       {
         auto string0 = KeyString("Hello");
@@ -311,7 +310,6 @@ public:
         TEST_ASSERT(string2 == "Hello2");
         auto string3 = KeyString{std::move(string2)};
         TEST_ASSERT(string3 == "Hello2");
-        TEST_ASSERT(string2 == "");
         string3 = std::move(string3);
         TEST_ASSERT(string3 == "Hello2");
         string3 = string3;
@@ -896,6 +894,7 @@ public:
       TEST_ASSERT(t.at(1) == "(100=:=200)");
       TEST_ASSERT(t.at(2) == "300");
     }
+
     {
       auto t = T(
         "000:100+200=300=400=500=600",
