@@ -659,6 +659,26 @@ public:
         = F(F::IsOverwrite::yes, "fileTest.txt").write("Hello.txt").seek(0);
     }
 
+    {
+      class SelfFile : public FileMemberAccess<SelfFile, File> {
+      public:
+        SelfFile(File::IsOverwrite is_overwrite, var::StringView name)
+          : FileMemberAccess(is_overwrite, name) {}
+        SelfFile(var::StringView name)
+          : FileMemberAccess(name) {}
+      };
+
+      {
+        auto self_file
+          = SelfFile(File::IsOverwrite::yes, "Testing.txt").write("Hello ");
+        self_file.write("World");
+
+        const auto read_self = SelfFile("Testing.txt");
+        auto self_data = DataFile().write(read_self.file());
+        API_ASSERT(
+          self_data.data().add_null_terminator() == StringView{"Hello World"});
+      }
+    }
     printer().key("complete", __FUNCTION__);
     return true;
   }

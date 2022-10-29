@@ -8,9 +8,9 @@
 #include <cstring>
 #include <tuple>
 
+#include <functional>
 #include <memory>
 #include <vector>
-#include <functional>
 
 #include "macros.hpp"
 
@@ -26,8 +26,7 @@ namespace api {
 
 template <class Type, class Deleter = std::default_delete<Type>>
 using UniquePointer = std::unique_ptr<Type, Deleter>;
-template<typename FunctionType >
-using Function = std::function<FunctionType>;
+template <typename FunctionType> using Function = std::function<FunctionType>;
 static constexpr auto ignore = std::ignore;
 
 /*! \details
@@ -444,9 +443,7 @@ public:                                                                        \
  */
 class ProgressCallback {
 public:
-  enum class IsAbort {
-    no, yes
-  };
+  enum class IsAbort { no, yes };
 
   /*! \details Defines the callback function prototype.
    *
@@ -460,8 +457,7 @@ public:
    * shown as indeterminate.
    *
    */
-  using Callback = Function<IsAbort(int,int)>;
-
+  using Callback = Function<IsAbort(int, int)>;
 
   /*! \details Constructs an empty object. */
   ProgressCallback(Callback callback);
@@ -480,11 +476,10 @@ public:
    */
   auto update(int value, int total) const -> IsAbort;
 
-  static int update_function(const void * context, int value, int total);
+  static int update_function(const void *context, int value, int total);
 
 private:
   API_AF(ProgressCallback, Callback, callback, {});
-
 };
 
 /*! \sa Range */
@@ -708,8 +703,8 @@ public:
   Type *pointer_to_value() { return &m_value; }
   const Type *pointer_to_value() const { return &m_value; }
 
-  Type * operator ->() { return &m_value; }
-  const Type * operator ->() const { return &m_value; }
+  Type *operator->() { return &m_value; }
+  const Type *operator->() const { return &m_value; }
 
 private:
   Type m_value = {};
@@ -720,6 +715,7 @@ private:
     std::swap(m_deleter, a.m_deleter);
   }
 };
+
 
 /*! \details
  *
@@ -757,7 +753,7 @@ class ErrorScope {
     int error_number = errno;
   };
 
-  static void deleter(Context * context){
+  static void deleter(Context *context) {
     ExecutionContext::m_private_context.get_error() = context->error;
     errno = context->error_number;
   }
@@ -765,7 +761,9 @@ class ErrorScope {
   ErrorResource m_error_resource;
 
 public:
-  ErrorScope() : m_error_resource({}, &deleter) { ExecutionContext::reset_error(); }
+  ErrorScope() : m_error_resource({}, &deleter) {
+    ExecutionContext::reset_error();
+  }
 };
 
 /*! \cond */
