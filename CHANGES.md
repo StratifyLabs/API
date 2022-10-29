@@ -1,5 +1,12 @@
 > Please see [Semantic Versioning on Github](https://blog.stratifylabs.dev/device/2021-07-12-Semantic-Versioning-and-Github/) for more details on managing the `CHANGES.md` file.
 
+# Version 1.6.4 (unreleased)
+
+## Bug Fixes
+
+- Fixed a bug with moving `FileAccess<>` objects
+  - This is an API breaking change that was necessary to fix the bug
+
 # Version 1.6.3
 
 ## Bug Fixes
