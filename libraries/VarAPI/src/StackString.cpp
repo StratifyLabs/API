@@ -32,11 +32,6 @@ GeneralString operator|(const StringView lhs, const StringView rhs) {
   return GeneralString(lhs).append(rhs);
 }
 
-StackStringObject::StackStringObject(char *buffer, size_t size)
-  : buffer{buffer}, size{size} {
-  buffer[0] = '\0';
-}
-
 auto StackStringObject::append(const char value) const -> void {
   const auto len = strnlen(buffer, size - 1);
   if (len < size - 1) {

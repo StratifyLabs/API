@@ -154,6 +154,15 @@ public:
     return API_CONST_CAST_SELF(FileObject, ioctl, request, args);
   }
 
+  const FileObject &ioctl(int request) const {
+    ioctl_implementation(request, nullptr);
+    return *this;
+  }
+
+  FileObject &ioctl(int request) {
+    return API_CONST_CAST_SELF(FileObject, ioctl, request);
+  }
+
   const FileObject &write(
     const FileObject &source_file,
     const var::Transformer &transformer,
@@ -385,18 +394,9 @@ public:
 #undef FSAPI_FUNCTION_GROUP
 
 #define FSAPI_FUNCTION_GROUP(QUAL)                                             \
-  template <typename Type> auto QUAL ioctl(int request, Type *arg) QUAL {      \
+  template <typename Type>                                                     \
+  auto QUAL ioctl(int request, Type *arg = nullptr) QUAL {                     \
     m_file.ioctl(request, arg);                                                \
-    return static_cast<Derived QUAL>(*this);                                   \
-  }
-  FSAPI_FUNCTION_GROUP(const &)
-  FSAPI_FUNCTION_GROUP(&)
-  FSAPI_FUNCTION_GROUP(&&)
-#undef FSAPI_FUNCTION_GROUP
-
-#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
-  auto QUAL ioctl(int request) QUAL {                                          \
-    m_file.ioctl(request);                                                     \
     return static_cast<Derived QUAL>(*this);                                   \
   }
   FSAPI_FUNCTION_GROUP(const &)
@@ -407,7 +407,10 @@ public:
   const FileType &file() const { return m_file; }
   FileType &file() { return m_file; }
 
-protected:
+private:
+  // This should not be moved during move operations
+  // the file it points to will move the fd from the temporary
+  // to the new location and this will point to the new location
   FileType m_file;
 }; // namespace fs
 
