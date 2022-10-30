@@ -113,7 +113,7 @@ public:
   }
 
   API_NO_DISCARD char at(size_t offset) const {
-    return StackStringObject{m_buffer, Size}.at(offset);
+    return StackStringObject{buffer(), Size}.at(offset);
   }
 
   template <typename... Args> auto &format(const char *format, Args... args) & {
