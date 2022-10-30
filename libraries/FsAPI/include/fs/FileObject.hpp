@@ -394,9 +394,18 @@ public:
 #undef FSAPI_FUNCTION_GROUP
 
 #define FSAPI_FUNCTION_GROUP(QUAL)                                             \
-  template <typename Type>                                                     \
-  auto QUAL ioctl(int request, Type *arg = nullptr) QUAL {                     \
+  template <typename Type> auto QUAL ioctl(int request, Type *arg) QUAL {      \
     m_file.ioctl(request, arg);                                                \
+    return static_cast<Derived QUAL>(*this);                                   \
+  }
+  FSAPI_FUNCTION_GROUP(const &)
+  FSAPI_FUNCTION_GROUP(&)
+  FSAPI_FUNCTION_GROUP(&&)
+#undef FSAPI_FUNCTION_GROUP
+
+#define FSAPI_FUNCTION_GROUP(QUAL)                                             \
+  auto QUAL ioctl(int request) QUAL {                                          \
+    m_file.ioctl(request);                                                     \
     return static_cast<Derived QUAL>(*this);                                   \
   }
   FSAPI_FUNCTION_GROUP(const &)
@@ -407,10 +416,7 @@ public:
   const FileType &file() const { return m_file; }
   FileType &file() { return m_file; }
 
-private:
-  // This should not be moved during move operations
-  // the file it points to will move the fd from the temporary
-  // to the new location and this will point to the new location
+protected:
   FileType m_file;
 }; // namespace fs
 

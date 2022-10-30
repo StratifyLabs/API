@@ -1,7 +1,7 @@
 macro(api_target NAME DEPENDENCIES)
   project(
     ${NAME}
-    VERSION ${API_PROJECT_VERSION}
+    VERSION ${PROJECT_VERSION}
     LANGUAGES CXX)
   install(DIRECTORY include/ DESTINATION include/${NAME})
   cmsdk2_add_library(
