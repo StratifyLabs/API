@@ -5,7 +5,7 @@
 ## Bug Fixes
 
 - Removed extraneous include files from unit tests
-- Enable precompiling of some headers
+- ~Enable precompiling of some headers~ (this causes some problems. don't enable for now)
 - Use `CMakeSDK` v2.1.4 to better copy targets
 
 # Version 1.6.4
