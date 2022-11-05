@@ -76,23 +76,27 @@ macro(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
 endmacro()
 
 function(api2_add_library)
-  set(OPTIONS "")
-  set(PREFIX ARGS)
-  set(ONE_VALUE_ARGS NAME OPTION TARGETS)
-  set(MULTI_VALUE_ARGS DEPENDENCIES)
-  cmake_parse_arguments(PARSE_ARGV 0 ${PREFIX} "${OPTIONS}" "${ONE_VALUE_ARGS}" "${MULTI_VALUE_ARGS}")
-
-  set(REQUIRED_ARGS NAME DEPENDENCIES)
-  foreach(VALUE ${REQUIRED_ARGS})
-    if(NOT ARGS_${VALUE})
-      message(FATAL_ERROR "api2_add_api_library_option requires ${VALUE}")
-    endif()
-  endforeach()
+  cmsdk2_internal_parse_arguments(
+    INTERNAL_FUNCTION_NAME api2_add_library
+    ARGUMENTS ${ARGV}
+    REQUIRED NAME
+    ONE_VALUE NAME OPTION TARGETS OPTION VERSION
+    MULTI_VALUE DEPENDENCIES PRECOMPILED_HEADERS)
 
   api_add_api_library_option(${ARGS_NAME} "${ARGS_DEPENDENCIES}" "${ARGS_OPTION}")
+  set(TARGET_LIST ${RELEASE_TARGET_LIST} ${DEBUG_TARGET_LIST})
+
   if(ARGS_TARGETS)
     set(${ARGS_TARGETS} ${TARGET_LIST} PARENT_SCOPE)
   endif()
+  foreach(TARGET ${TARGET_LIST})
+    foreach(HEADER ${ARGS_PRECOMPILED_HEADERS})
+      target_precompile_headers(${TARGET}
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${HEADER}>)
+    endforeach()
+  endforeach()
+
   if(ARGS_VERSION)
     set(${ARGS_NAME}_VERSION ${ARGS_VERSION} CACHE INTERNAL "Set ${ARGS_NAME}_VERSION")
   else()
