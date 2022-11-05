@@ -2,12 +2,10 @@
 #include <cstdio>
 
 #include "api/api.hpp"
-#include "chrono.hpp"
-#include "fs.hpp"
-#include "sys.hpp"
 #include "test/Test.hpp"
 
-#include "var.hpp"
+using namespace chrono;
+using namespace var;
 
 class UnitTest : public test::Test {
 public:

@@ -2,12 +2,13 @@
 #include <cstdio>
 
 #include "api/api.hpp"
-#include "chrono.hpp"
-#include "printer.hpp"
-#include "sys.hpp"
 #include "test/Test.hpp"
-#include "thread.hpp"
-#include "var.hpp"
+#include "printer/MarkdownPrinter.hpp"
+#include "thread/Thread.hpp"
+
+using namespace printer;
+using namespace var;
+using namespace thread;
 
 class UnitTest : public test::Test {
 public:
