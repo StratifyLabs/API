@@ -205,7 +205,7 @@ private:                                                                       \
 #define API_ADF(c, d, t, v) API_ACCESS_DERIVED_FUNDAMETAL(c, d, t, v)
 
 #define API_ACCESS_DERIVED_BOOL(c, d, v)                                       \
-  d &set_##v(bool value = true) {                                              \
+  d &set_##v(bool value = true) & {                                            \
     c::set_##v(value);                                                         \
     return static_cast<d &>(*this);                                            \
   }                                                                            \
