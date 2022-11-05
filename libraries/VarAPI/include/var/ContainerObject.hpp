@@ -155,6 +155,10 @@ public:
     return std::any_of(begin(), end(), function);
   };
 
+  template<typename Function> auto any_of(Function function) const {
+    return std::any_of(begin(), end(), function);
+  };
+
   Derived &assign_adjacent_difference(const T &initial_value = T()) & {
     std::adjacent_difference(begin(), end(), initial_value);
     return self();
