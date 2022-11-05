@@ -4,7 +4,6 @@
 #ifndef VAR_API_ITEM_HPP_
 #define VAR_API_ITEM_HPP_
 
-#include <cstdio>
 #include <cstring>
 #include <type_traits>
 

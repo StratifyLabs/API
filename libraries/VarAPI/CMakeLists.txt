@@ -2,7 +2,9 @@ include(${CMAKE_CURRENT_LIST_DIR}/../API/api.cmake)
 
 api2_target(
   NAME VarAPI
-  DEPENDENCIES API)
+  DEPENDENCIES API
+  PRECOMPILED_HEADERS var/ContainerObject.hpp var/StringView.hpp var/View.hpp
+  TARGETS TARGET_LIST)
 
 if(${CMSDK_IS_LINK})
   if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/magic_enum)

@@ -3,9 +3,7 @@
 #ifndef VAR_API_DEQUE_HPP_
 #define VAR_API_DEQUE_HPP_
 
-#include <cstdio>
 #include <deque>
-#include <new>
 
 #include "ContainerObject.hpp"
 
