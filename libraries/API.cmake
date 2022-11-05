@@ -55,18 +55,16 @@ macro(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
     OPTION "${LIB_OPTION}"
     CONFIG debug
     ARCH ${CMSDK_ARCH})
+  cmsdk2_library_add_dependencies(
+    TARGET ${RELEASE_TARGET}
+    DEPENDENCIES ${DEPENDENCIES}
+    TARGETS RELEASE_TARGET_LIST)
   cmsdk2_copy_target(
     SOURCE ${RELEASE_TARGET}
     DESTINATION ${DEBUG_TARGET})
-  string(REPLACE ":" " " DEPENDENCY_LIST "${DEPENDENCIES}")
   cmsdk2_library_add_dependencies(
     TARGET ${DEBUG_TARGET}
-    DEPENDENCIES ${DEPENDENCY_LIST}
     TARGETS DEBUG_TARGET_LIST)
-  cmsdk2_library_add_dependencies(
-    TARGET ${RELEASE_TARGET}
-    DEPENDENCIES ${DEPENDENCY_LIST}
-    TARGETS RELEASE_TARGET_LIST)
   set(TARGET_LIST ${RELEASE_TARGET_LIST} ${DEBUG_TARGET_LIST})
   install(DIRECTORY include/
     DESTINATION include/${NAME}

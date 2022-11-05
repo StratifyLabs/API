@@ -70,7 +70,6 @@ macro(api_target NAME DEPENDENCIES)
     TARGETS RELEASE_TARGET_LIST)
   cmsdk2_library_add_dependencies(
     TARGET ${DEBUG_TARGET}
-    DEPENDENCIES ${DEPENDENCY_LIST}
     TARGETS DEBUG_TARGET_LIST)
 endmacro()
 

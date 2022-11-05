@@ -6,6 +6,7 @@
 
 - Removed extraneous include files from unit tests
 - Enable precompiling of some headers
+- Use `CMakeSDK` v2.1.4 to better copy targets
 
 # Version 1.6.4
 
