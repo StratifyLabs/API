@@ -2,16 +2,21 @@
 #include <cstdio>
 
 #include "api/api.hpp"
-#include "chrono.hpp"
-#include "fs.hpp"
-#include "printer.hpp"
-#include "sys.hpp"
 #include "test/Test.hpp"
-#include "var.hpp"
+#include "var/Tokenizer.hpp"
+#include "var/Base64.hpp"
+#include "var/Set.hpp"
+#include "var/Ring.hpp"
+#include "fs/DataFile.hpp"
+#include "fs/ViewFile.hpp"
 
-#include "var/MagicEnum.hpp"
+using namespace fs;
+using namespace var;
+using namespace printer;
+using namespace chrono;
 
 #if defined __link
+#include "var/MagicEnum.hpp"
 #define BIG_BUFFER_SIZE (10 * 1024 * 1024)
 #else
 #define BIG_BUFFER_SIZE (1024)

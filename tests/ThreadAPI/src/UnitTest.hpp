@@ -3,12 +3,16 @@
 #include <signal.h>
 
 #include "api/api.hpp"
-#include "chrono.hpp"
-#include "fs.hpp"
-#include "sys.hpp"
 #include "test/Test.hpp"
-#include "thread.hpp"
-#include "var.hpp"
+#include "thread/Thread.hpp"
+#include "thread/Mutex.hpp"
+#include "thread/Sem.hpp"
+#include "thread/Cond.hpp"
+#include "thread/Signal.hpp"
+
+using namespace var;
+using namespace chrono;
+using namespace thread;
 
 #if defined __win32
 #define IS_CANCEL_OK false
@@ -36,7 +40,6 @@ class UnitTest : public test::Test {
   M m_mutex;
   M m_thread_mutex;
   Cond m_cond = Cond(m_thread_mutex);
-  Sem *m_sem_pointer;
 
 #if defined __link
   static constexpr size_t minimum_stack_size = 65536;
