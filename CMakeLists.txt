@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.12)
 cmsdk2_minimum_required(2.1.2)
 project(API
 	LANGUAGES CXX C
-	VERSION 1.6.4)
+	VERSION 1.6.5)
 add_subdirectory(libraries/API API)
 add_subdirectory(libraries/VarAPI VarAPI)
 add_subdirectory(libraries/PrinterAPI PrinterAPI)

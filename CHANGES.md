@@ -5,6 +5,7 @@
 ## Bug Fixes
 
 - Removed extraneous include files from unit tests
+- Enable precompiling of some headers
 
 # Version 1.6.4
 
