@@ -7,6 +7,7 @@
 - Removed extraneous include files from unit tests
 - ~Enable precompiling of some headers~ (this causes some problems. don't enable for now)
 - Use `CMakeSDK` v2.1.4 to better copy targets
+- Add `const` version of `ContainerObject::any_of`
 
 # Version 1.6.4
 
