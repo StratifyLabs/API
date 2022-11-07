@@ -59,7 +59,7 @@ macro(api_target NAME DEPENDENCIES)
   endif ()
   if (IS_API AND API_PUBLIC_LINK_OPTIONS)
     target_link_options(${RELEASE_TARGET} PUBLIC ${API_PUBLIC_LINK_OPTIONS})
-  endif()
+  endif ()
   cmsdk2_library_add_dependencies(
     TARGET ${RELEASE_TARGET}
     DEPENDENCIES ${DEPENDENCIES}
