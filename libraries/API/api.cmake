@@ -60,14 +60,13 @@ macro(api_target NAME DEPENDENCIES)
   if (IS_API AND API_PUBLIC_LINK_OPTIONS)
     target_link_options(${RELEASE_TARGET} PUBLIC ${API_PUBLIC_LINK_OPTIONS})
   endif ()
+  cmsdk2_library_add_dependencies(
+    TARGET ${RELEASE_TARGET}
+    DEPENDENCIES ${DEPENDENCIES}
+    TARGETS RELEASE_TARGET_LIST)
   cmsdk2_copy_target(
     SOURCE ${RELEASE_TARGET}
     DESTINATION ${DEBUG_TARGET})
-  string(REPLACE ":" " " DEPENDENCY_LIST "${DEPENDENCIES}")
-  cmsdk2_library_add_dependencies(
-    TARGET ${RELEASE_TARGET}
-    DEPENDENCIES ${DEPENDENCY_LIST}
-    TARGETS RELEASE_TARGET_LIST)
   cmsdk2_library_add_dependencies(
     TARGET ${DEBUG_TARGET}
     TARGETS DEBUG_TARGET_LIST)
