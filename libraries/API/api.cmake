@@ -3,7 +3,6 @@ macro(api_target NAME DEPENDENCIES)
     ${NAME}
     VERSION ${PROJECT_VERSION}
     LANGUAGES CXX)
-  install(DIRECTORY include/ DESTINATION include/${NAME})
   cmsdk2_add_library(
     TARGET RELEASE_TARGET
     NAME ${NAME}
@@ -26,24 +25,15 @@ macro(api_target NAME DEPENDENCIES)
     TARGET ${RELEASE_TARGET}
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
     VISIBILITY PRIVATE)
-  target_sources(${RELEASE_TARGET}
-    PRIVATE
-    ${HEADERS}
-    ${SOURCES})
   target_compile_definitions(${RELEASE_TARGET}
     PRIVATE
     __PROJECT_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
     __PROJECT_VERSION_MINOR=${PROJECT_VERSION_MINOR}
     __PROJECT_VERSION_PATCH=${PROJECT_VERSION_PATCH})
+  message(STATUS "  ${RELEASE_TARGET} Include -> ${CMAKE_CURRENT_SOURCE_DIR}/include")
   target_include_directories(${RELEASE_TARGET}
     PUBLIC
     $<INSTALL_INTERFACE:include/${NAME}>
-    INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
-  target_include_directories(${RELEASE_TARGET}
-    PUBLIC
-    $<INSTALL_INTERFACE:include/${NAME}>
-    PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
   cmsdk2_add_library(
     TARGET DEBUG_TARGET
@@ -70,6 +60,7 @@ macro(api_target NAME DEPENDENCIES)
   cmsdk2_library_add_dependencies(
     TARGET ${DEBUG_TARGET}
     TARGETS DEBUG_TARGET_LIST)
+  set(TARGET_LIST ${RELEASE_TARGET_LIST} ${DEBUG_TARGET_LIST})
 endmacro()
 
 function(api2_target)
@@ -95,6 +86,11 @@ function(api2_target)
       endforeach ()
     endif ()
   endforeach ()
+
+  cmsdk2_install(
+    NAME ${ARGS_NAME}
+    TARGETS ${TARGET_LIST}
+    EXPORT APITargets)
 
   set(${ARGS_NAME}_VERSION ${PROJECT_VERSION} CACHE INTERNAL "Set ${ARGS_NAME}_VERSION")
   message(STATUS "  Set ${ARGS_NAME}_VERSION -> ${PROJECT_VERSION}")

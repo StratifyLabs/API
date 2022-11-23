@@ -6,6 +6,7 @@ add_subdirectory(ChronoAPI testsChronoAPI)
 add_subdirectory(FsAPI testsFsAPI)
 add_subdirectory(VarAPI testsVarAPI)
 add_subdirectory(ThreadAPI testsThreadAPI)
+add_subdirectory(SysAPI testsSysAPI)
 
 
 

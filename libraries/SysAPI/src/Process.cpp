@@ -56,6 +56,25 @@ using namespace sys;
 using namespace var;
 using namespace thread;
 
+namespace {
+constexpr auto stop_sequence = StringView{
+  ";askdryqwepibafgo;aisu;drapoasdf1023498yafgbcnvn,zxn.lk;d[pfsda]][asd["
+  "p]{}}{AKPGJFojd;skfjgns[]{}asdkf77983124ba;"
+  "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
+  "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
+  "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
+  "dfupuiy2ipu3y4aslkdjnflajg"};
+
+auto create_cstring_list_from_strings(StringList &list) {
+  auto result = Vector<char *>().reserve(list.count());
+  for (const auto &item : list) {
+    result.push_back(const_cast<char*>(item.cstring()));
+  }
+  return result;
+}
+
+} // namespace
+
 Process::Environment::Environment(char **env) : Process::Arguments("") {
   char **effective_env = (env == nullptr) ? environ : env;
   size_t i = 0;
@@ -96,14 +115,14 @@ Process::Environment::set_working_directory(const StringView path) {
   return set("PWD", path);
 }
 
-const char *Process::Environment::find(const StringView variable) const {
+var::String Process::Environment::find(const StringView variable) const {
   const auto check = NameString(variable).append("=");
-  for (const auto *value : variables()) {
-    if (value && StringView(value).find(check) == 0) {
-      return value + check.length();
+  for (const auto &value : variables()) {
+    if (value.string_view().starts_with(check)) {
+      return String{value.string_view().pop_front(check.length())};
     }
   }
-  return "";
+  return {};
 }
 
 PathString Process::which(const StringView executable) {
@@ -165,7 +184,7 @@ Process::Process(const Arguments &arguments, const Environment &environment)
     API_RETURN_ASSIGN_ERROR("arguments are empty", EINVAL);
   }
 
-  if (StringView(arguments.get_value(0)).is_empty()) {
+  if (arguments.arguments().front().string_view().is_empty()) {
     API_RETURN_ASSIGN_ERROR("no executable was found", EINVAL);
   }
 
@@ -177,7 +196,7 @@ Process::Process(const Arguments &arguments, const Environment &environment)
 
   PathString cwd;
   _getcwd(cwd.data(), cwd.capacity());
-  const PathString pwd = environment.find("PWD");
+  const auto pwd = environment.find("PWD");
 
   if (pwd.is_empty() == false) {
     _chdir(pwd.cstring());
@@ -221,9 +240,9 @@ Process::Process(const Arguments &arguments, const Environment &environment)
     .hStdError = error_pipe.write};
 
   PROCESS_INFORMATION process_info{};
-  PathString path;
+  auto path = String{};
   for (const auto &arg : arguments.arguments()) {
-    path.append(arg).append(" ");
+    path += arg + " ";
   }
   path.pop_back();
 
@@ -265,7 +284,7 @@ Process::Process(const Arguments &arguments, const Environment &environment)
     // this will run in the child process
     Arguments args(arguments);
 
-    if (chdir(environment.find("PWD")) < 0) {
+    if (chdir(environment.find("PWD").cstring()) < 0) {
       API_RETURN_ASSIGN_ERROR("failed to chdir to PWD", errno);
     }
 
@@ -283,7 +302,10 @@ Process::Process(const Arguments &arguments, const Environment &environment)
     // delete m_standard_error;
 
     // replace the current process with the one specified
-    ::execve(args.path(), args.m_arguments.data(), environ);
+    ::execve(
+      args.arguments().front().cstring(),
+      create_cstring_list_from_strings(args.m_arguments).data(),
+      environ);
     perror("failed to launch\n");
     exit(1);
   } else {
@@ -309,7 +331,7 @@ void Process::pid_deleter(pid_t *pid) {
   API_ASSERT((*pid == -1));
 }
 
-Process &Process::wait() {
+Process &Process::wait() & {
   API_RETURN_VALUE_IF_ERROR(*this);
 
 #if defined __win32
@@ -430,55 +452,48 @@ void Process::update_redirect(Redirect *redirect) {
   auto &data_file = redirect->data_file;
   auto &pipe = redirect->pipe;
   auto &mutex = redirect->mutex;
-  {
-    thread::Mutex::Scope mutex_scope(mutex);
+  thread::Mutex::Scope(mutex, [&]() {
     data_file.seek(0, fs::File::Whence::end);
-  }
-  bool is_stop_requested;
-  do {
+  });
+  for (bool is_stop_requested = false; !is_stop_requested;) {
     {
       api::ErrorScope error_scope;
       const auto bytes_read = pipe.read_file().read(buffer).return_value();
       if (bytes_read > 0) {
-        const auto stop_string = StringView(Redirect::stop_sequence);
-        if (buffer.data() == stop_string) {
-          is_stop_requested = true;
-        } else {
-          thread::Mutex::Scope mutex_scope(mutex);
+        auto incoming_string = StringView{buffer.data(), size_t(bytes_read)};
+        const auto stop_position = incoming_string.find(stop_sequence);
+        if (stop_position != StringView::npos) {
+          incoming_string.truncate(stop_position);
+        }
+        thread::Mutex::Scope(mutex, [&]() {
           // data file is write append, we want to preserve
           // the file location for reading the data file
-          fs::File::LocationScope location_scope(data_file);
-          data_file.write(View(buffer.data(), bytes_read));
-        }
+          auto location_scope = fs::File::LocationScope(data_file);
+          data_file.write(incoming_string);
+        });
       }
     }
 
-    {
-      thread::Mutex::Scope mutex_scope(mutex);
+    thread::Mutex::Scope(mutex, [&]() {
       is_stop_requested = redirect->is_stop_requested;
-    }
-  } while (!is_stop_requested);
-}
-
-void *Process::update_redirect_thread_function(void *args) {
-  auto *options = reinterpret_cast<Redirect *>(args);
-  options->self->update_redirect(options);
-  return nullptr;
+    });
+  }
 }
 
 void Process::Redirect::start_thread() {
   thread = thread::Thread(
     thread::Thread::Attributes().set_stack_size(512 * 1024).set_joinable(),
-    this,
-    update_redirect_thread_function);
+    [this]() -> void * {
+      self->update_redirect(this);
+      return nullptr;
+    });
 }
 
 String Process::Redirect::read() {
   auto mutex_scope = thread::Mutex::Scope(mutex);
   Array<char, 1024> buffer;
   String result;
-  auto bytes_read = 0;
-  do {
+  for (int bytes_read = 1; bytes_read > 0;) {
     api::ErrorScope error_scope;
     bytes_read
       = data_file.read(View(buffer.data(), buffer.count() - 1)).return_value();
@@ -486,14 +501,12 @@ String Process::Redirect::read() {
       buffer.at(bytes_read) = 0;
       result += buffer.data();
     }
-  } while (bytes_read > 0);
+  }
   return result;
 }
 
 void Process::Redirect::wait_stop() {
-
   Mutex::Scope(mutex, [&]() { is_stop_requested = true; });
-
   pipe.write_file().write(stop_sequence);
   if (thread.is_joinable()) {
     thread.join();

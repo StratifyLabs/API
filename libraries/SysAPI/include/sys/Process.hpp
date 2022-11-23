@@ -47,18 +47,8 @@ public:
 
   class Arguments : public api::ExecutionContext {
   public:
-    Arguments(const Arguments &arguments) { copy(arguments); }
-
-    Arguments &operator=(const Arguments &arguments) {
-      copy(arguments);
-      return *this;
-    }
-
-    Arguments(Arguments &&) = default;
-    Arguments &operator=(Arguments &&) = default;
-
-    explicit Arguments(const var::StringView path) : m_path(path) {
-      m_arguments.push_back(nullptr);
+    Arguments() = default;
+    explicit Arguments(const var::StringView path) {
       if (path != "") {
 #if defined __win32
         push(fs::Path::name(path));
@@ -68,81 +58,38 @@ public:
       }
     }
 
-    ~Arguments() {
-      for (auto *value : m_arguments) {
-        if (value) {
-          free(value);
-        }
-      }
-    }
-
-    Arguments &push(const var::StringView argument) {
-      auto *value = create(argument);
-      API_ASSERT(m_arguments.count());
-      m_arguments.back() = value;
-      m_arguments.push_back(nullptr);
+    Arguments &push(const var::StringView argument) & {
+      m_arguments.push_back(var::String{argument});
       return *this;
     }
-
-    char *get_value(size_t offset) {
-      if (offset < m_arguments.count()) {
-        return m_arguments.at(offset);
-      }
-      return nullptr;
+    Arguments &&push(const var::StringView argument) && {
+      return std::move(push(argument));
     }
 
-    const char *get_value(size_t offset) const {
-      if (offset < m_arguments.count()) {
-        return m_arguments.at(offset);
-      }
-      return nullptr;
-    }
-
-    var::Vector<char *> &arguments() { return m_arguments; }
-
-    const var::Vector<char *> &arguments() const { return m_arguments; }
+    var::StringList &arguments() { return m_arguments; }
+    const var::StringList &arguments() const { return m_arguments; }
 
   protected:
     friend Process;
 
     void replace(size_t offset, const var::StringView argument) {
-      free(m_arguments.at(offset));
-      m_arguments.at(offset) = create(argument);
-    }
-
-  private:
-    var::Vector<char *> m_arguments;
-    API_RAC(Arguments, var::PathString, path);
-    void copy(const Arguments &arguments) {
-      m_path = arguments.path();
-      m_arguments.push_back(nullptr);
-      for (const auto *value : arguments.m_arguments) {
-        value &&push(value).is_success();
+      if (offset < m_arguments.count()) {
+        m_arguments.at(offset) = var::String{argument};
       }
     }
 
-    char *create(const var::StringView argument) {
-      const auto length = argument.length();
-      char *value = reinterpret_cast<char *>(malloc(length + 1));
-      API_ASSERT(value != nullptr);
-      var::View(value, length).copy(var::View(argument.data(), length));
-      value[length] = 0;
-      return value;
-    }
+  private:
+    var::StringList m_arguments;
   };
 
   class Environment : private Arguments {
   public:
     explicit Environment(char **env = nullptr);
-
     Environment &set(const var::StringView name, const var::StringView value);
     Environment &set_working_directory(const var::StringView path);
-
-    var::Vector<char *> &variables() { return arguments(); }
-
-    const var::Vector<char *> &variables() const { return arguments(); }
-
-    const char *find(const var::StringView variable) const;
+    var::StringList &variables() { return arguments(); }
+    const var::StringList &variables() const { return arguments(); }
+    var::String find(const var::StringView variable) const;
 
   private:
     friend Process;
@@ -155,7 +102,8 @@ public:
   Process() = default;
   Process(const Arguments &arguments, const Environment &environment);
 
-  Process &wait();
+  Process &wait() &;
+  Process && wait() && { return std::move(wait()); }
   bool is_running();
   pid_t pid() const { return m_pid.value(); }
 
@@ -188,16 +136,7 @@ public:
   }
 
 private:
-
-
   struct Redirect {
-    static constexpr auto stop_sequence
-      = ";askdryqwepibafgo;aisu;drapoasdf1023498yafgbcnvn,zxn.lk;d[pfsda]][asd["
-        "p]{}}{AKPGJFojd;skfjgns[]{}asdkf77983124ba;"
-        "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
-        "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
-        "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
-        "dfupuiy2ipu3y4aslkdjnflajg";
     thread::Thread thread;
     thread::Mutex mutex;
     Pipe pipe;
@@ -214,7 +153,7 @@ private:
 #endif
   };
 
-  static void pid_deleter(pid_t * pid);
+  static void pid_deleter(pid_t *pid);
 
   using PidResource = api::SystemResource<pid_t, decltype(&pid_deleter)>;
   using RedirectPointer = api::UniquePointer<Redirect>;
@@ -232,7 +171,6 @@ private:
   RedirectPointer m_standard_output;
   RedirectPointer m_standard_error;
 
-  static void *update_redirect_thread_function(void *args);
   void update_redirect(Redirect *options);
 };
 

@@ -19,3 +19,22 @@ if(API_IS_TEST)
 	add_subdirectory(tests tests)
 endif()
 
+include(CMakePackageConfigHelpers)
+configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+	"${CMAKE_CURRENT_BINARY_DIR}/APIConfig.cmake"
+	INSTALL_DESTINATION ${CMSDK_LOCAL_PATH}/cmake/packages)
+
+write_basic_package_version_file(
+	"${CMAKE_CURRENT_BINARY_DIR}/APIConfigVersion.cmake"
+	VERSION "${PROJECT_VERSION}"
+	COMPATIBILITY SameMinorVersion)
+
+install(FILES
+	"${CMAKE_CURRENT_BINARY_DIR}/APIConfig.cmake"
+	"${CMAKE_CURRENT_BINARY_DIR}/APIConfigVersion.cmake"
+	DESTINATION ${CMSDK_LOCAL_PATH}/cmake/packages)
+
+install(EXPORT APITargets
+	FILE APITargets.cmake
+	NAMESPACE API::
+	DESTINATION ${CMSDK_LOCAL_PATH}/cmake/packages)
