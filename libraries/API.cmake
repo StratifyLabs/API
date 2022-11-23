@@ -91,34 +91,6 @@ function(api2_add_library)
     endif ()
   endforeach ()
 
-  if (${ARGS_NAME} STREQUAL JsonAPI)
-
-    cmsdk2_install(
-      NAME ${ARGS_NAME}
-      TARGETS ${TARGET_LIST}
-      EXPORT ${ARGS_NAME}Targets)
-
-    include(CMakePackageConfigHelpers)
-    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-      "${CMAKE_CURRENT_BINARY_DIR}/${ARGS_NAME}Config.cmake"
-      INSTALL_DESTINATION ${CMSDK_LOCAL_PATH}/cmake/packages)
-
-    write_basic_package_version_file(
-      "${CMAKE_CURRENT_BINARY_DIR}/${ARGS_NAME}ConfigVersion.cmake"
-      VERSION "${${ARGS_NAME}_VERSION}"
-      COMPATIBILITY SameMinorVersion)
-
-    install(FILES
-      "${CMAKE_CURRENT_BINARY_DIR}/${ARGS_NAME}Config.cmake"
-      "${CMAKE_CURRENT_BINARY_DIR}/${ARGS_NAME}ConfigVersion.cmake"
-      DESTINATION ${CMSDK_LOCAL_PATH}/cmake/packages)
-
-    install(EXPORT ${ARGS_NAME}Targets
-      FILE ${ARGS_NAME}Targets.cmake
-      NAMESPACE API::
-      DESTINATION ${CMSDK_LOCAL_PATH}/cmake/packages)
-  endif ()
-
   if (ARGS_VERSION)
     set(${ARGS_NAME}_VERSION ${ARGS_VERSION} CACHE INTERNAL "Set ${ARGS_NAME}_VERSION")
   else ()
