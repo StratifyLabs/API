@@ -87,11 +87,6 @@ function(api2_target)
     endif ()
   endforeach ()
 
-  cmsdk2_install(
-    NAME ${ARGS_NAME}
-    TARGETS ${TARGET_LIST}
-    EXPORT APITargets)
-
   set(${ARGS_NAME}_VERSION ${PROJECT_VERSION} CACHE INTERNAL "Set ${ARGS_NAME}_VERSION")
   message(STATUS "  Set ${ARGS_NAME}_VERSION -> ${PROJECT_VERSION}")
 endfunction()
