@@ -62,15 +62,7 @@ macro(api_add_api_library_option NAME DEPENDENCIES LIB_OPTION)
   cmsdk2_copy_target(
     SOURCE ${RELEASE_TARGET}
     DESTINATION ${DEBUG_TARGET})
-  cmsdk2_library_add_dependencies(
-    TARGET ${DEBUG_TARGET}
-    TARGETS DEBUG_TARGET_LIST)
   set(TARGET_LIST ${RELEASE_TARGET_LIST} ${DEBUG_TARGET_LIST})
-  install(DIRECTORY include/
-    DESTINATION include/${NAME}
-    PATTERN CMakelists.txt EXCLUDE)
-  install(FILES ${NAME}.cmake
-    DESTINATION ${CMSDK_LOCAL_PATH}/cmake/targets)
 endmacro()
 
 function(api2_add_library)
@@ -93,10 +85,39 @@ function(api2_add_library)
         message(STATUS "  Adding precompiled header ${HEADER}")
         target_precompile_headers(${TARGET}
           PUBLIC
+          $<INSTALL_INTERFACE:include/${HEADER}>
           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${HEADER}>)
       endforeach ()
     endif ()
   endforeach ()
+
+  if (${ARGS_NAME} STREQUAL JsonAPI)
+
+    cmsdk2_install(
+      NAME ${ARGS_NAME}
+      TARGETS ${TARGET_LIST}
+      EXPORT ${ARGS_NAME}Targets)
+
+    include(CMakePackageConfigHelpers)
+    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+      "${CMAKE_CURRENT_BINARY_DIR}/${ARGS_NAME}Config.cmake"
+      INSTALL_DESTINATION ${CMSDK_LOCAL_PATH}/cmake/packages)
+
+    write_basic_package_version_file(
+      "${CMAKE_CURRENT_BINARY_DIR}/${ARGS_NAME}ConfigVersion.cmake"
+      VERSION "${${ARGS_NAME}_VERSION}"
+      COMPATIBILITY SameMinorVersion)
+
+    install(FILES
+      "${CMAKE_CURRENT_BINARY_DIR}/${ARGS_NAME}Config.cmake"
+      "${CMAKE_CURRENT_BINARY_DIR}/${ARGS_NAME}ConfigVersion.cmake"
+      DESTINATION ${CMSDK_LOCAL_PATH}/cmake/packages)
+
+    install(EXPORT ${ARGS_NAME}Targets
+      FILE ${ARGS_NAME}Targets.cmake
+      NAMESPACE API::
+      DESTINATION ${CMSDK_LOCAL_PATH}/cmake/packages)
+  endif ()
 
   if (ARGS_VERSION)
     set(${ARGS_NAME}_VERSION ${ARGS_VERSION} CACHE INTERNAL "Set ${ARGS_NAME}_VERSION")
