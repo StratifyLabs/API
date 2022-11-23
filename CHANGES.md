@@ -4,6 +4,9 @@
 
 ## Bug Fixes
 
+- Fixed a bug in `Process::read_standard_output()` where the garbage stop token was polluting the output
+- Removed bug-prone management of `Process::Arguments`
+  - WARNING: this may cause build breakages that need to be fixed to avoid the bugs with 1.6.4
 - Removed extraneous include files from unit tests
 - ~Enable precompiling of some headers~ (this causes some problems. don't enable for now)
 - Use `CMakeSDK` v2.1.4 to better copy targets
