@@ -137,7 +137,6 @@ private:
   static void dir_deleter(DIR *dirp);
   api::UniquePointer<DIR, decltype(&dir_deleter)> m_dirp;
 
-  DIR *open(var::StringView path);
 };
 
 } // namespace fs

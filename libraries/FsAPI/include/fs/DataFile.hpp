@@ -51,9 +51,13 @@ public:
   const OpenMode &flags() const { return m_open_flags; }
 
   /*! \details Accesses (read-only) the member data object. */
-  const var::Data &data() const { return m_data; }
+  const var::Data &data() const & { return m_data; }
+  /*! \details Moves the data to the return value (rvalue only). */
+  var::Data data() const && { return std::move(m_data); }
   /*! \details Accesses the member data object. */
-  var::Data &data() { return m_data; }
+  var::Data &data() & { return m_data; }
+  /*! \details Moves the data to the return value (rvalue only). */
+  var::Data data() && { return std::move(m_data); }
 
 private:
   mutable int m_location = 0; // offset location for seeking/reading/writing
