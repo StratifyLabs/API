@@ -4,7 +4,9 @@
 
 ## Bug Fixes
 
-- None yet
+- Use rule of zero with `sys::TemporaryDirectory`
+- Cleanup management of `api::Error`
+- Cleanup construct/destruct `thread::Thread`
 
 # Version 1.6.5
 
