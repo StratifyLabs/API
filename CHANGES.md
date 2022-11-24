@@ -7,6 +7,8 @@
 - Use rule of zero with `sys::TemporaryDirectory`
 - Cleanup management of `api::Error`
 - Cleanup construct/destruct `thread::Thread`
+- Safer `rvalue` (move the data) return for `fs::DataFile::data()`
+- Cleanup `fs::Dir` object management
 
 # Version 1.6.5
 
