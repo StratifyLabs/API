@@ -67,7 +67,7 @@ public:
 
     printer().key("signature", String().format("%p", error().signature()));
 
-    void *thread_error_signature;
+    void *thread_error_signature = nullptr;
     // create a thread and make sure it's error context is independent
     Thread t(
       Thread::Attributes().set_detach_state(Thread::DetachState::joinable),
@@ -85,6 +85,7 @@ public:
 
           return error().signature();
         }));
+    PRINTER_TRACE(printer(), "join thread");
     t.join(&thread_error_signature);
 
     printer().key("signature", String().format("%p", error().signature()));

@@ -2,6 +2,7 @@
 
 #include "thread/Thread.hpp"
 #include "chrono.hpp"
+#include "thread/Cond.hpp"
 #include "thread/Mutex.hpp"
 
 #include <cstdio>
@@ -14,21 +15,30 @@ using namespace thread;
 #endif
 
 namespace {
-struct StartUp {
+struct StartupFunction {
   void *argument = nullptr;
   Thread::function_t function = nullptr;
   Thread::Function thread_function;
 };
 
-void *handle_thread(void *args) {
-  static Mutex error_creation_mutex;
-  auto *startup_pointer = reinterpret_cast<StartUp *>(args);
-  StartUp startup(*startup_pointer);
-  delete startup_pointer;
+struct StartUp {
+  StartupFunction function;
+  Mutex mutex;
+  Cond cond = Cond{mutex};
+  void *signature = nullptr;
+};
 
-  void *result = startup.function ? startup.function(startup.argument)
-                                  : startup.thread_function();
-  api::ExecutionContext::free_context();
+void *handle_thread(void *args) {
+  auto *startup_pointer = reinterpret_cast<StartUp *>(args);
+
+  auto startup_function = startup_pointer->function;
+  startup_pointer->signature = api::Error::get_thread_signature();
+  startup_pointer->cond.set_asserted().broadcast();
+
+  void *result = startup_function.function
+                   ? startup_function.function(startup_function.argument)
+                   : startup_function.thread_function();
+
   return result;
 }
 
@@ -178,33 +188,38 @@ void Thread::construct(const Attributes &attributes, const Construct &options) {
   // this can't be a member of Thread because if thread gets
   // moved the address will be wrong
   // this is deleted in the new thread OR below if creation fails
-  auto *startup = new StartUp{
+
+  auto startup = StartUp{.function{
     .argument = options.argument,
     .function = options.function,
-    .thread_function = options.thread_function};
+    .thread_function = options.thread_function}};
 
   // First create the thread
+  auto id = pthread_t{};
   int result = API_SYSTEM_CALL(
     "pthread_create",
-    pthread_create(&m_id, &attributes.m_pthread_attr, handle_thread, startup));
+    pthread_create(&id, &attributes.m_pthread_attr, handle_thread, &startup));
   if (result < 0) {
-    m_state = State::error;
-    delete startup;
+    context->state = State::error;
   } else {
-    m_state = attributes.get_detach_state() == DetachState::joinable
-                ? State::joinable
-                : State::detached;
+    startup.cond.wait_until_asserted();
+    context->id = id;
+    context->signature = startup.signature;
+    context->state = attributes.get_detach_state() == DetachState::joinable
+                       ? State::joinable
+                       : State::detached;
   }
 }
 
-Thread::~Thread() {
+void Thread::deleter(Thread::Context *context) {
   api::ErrorScope error_scope;
-  if (is_joinable()) {
+  if (context->state == State::joinable) {
+    API_SYSTEM_CALL("", pthread_cancel(context->id));
     API_RESET_ERROR();
-    cancel();
-    API_RESET_ERROR();
-    join();
+    void *tmp_ptr;
+    API_SYSTEM_CALL("", pthread_join(context->id, &tmp_ptr));
   }
+  api::ExecutionContext::free_context(context->signature);
 }
 
 Thread &Thread::set_sched_parameters(Sched::Policy policy, int priority) {
@@ -242,7 +257,8 @@ int Thread::get_sched_parameters(int &policy, int &priority) const {
 }
 
 bool Thread::is_valid() const {
-  return (m_state == State::joinable) || (m_state == State::detached);
+  return (context->state == State::joinable)
+         || (context->state == State::detached);
 }
 
 const Thread &Thread::cancel() const {
@@ -279,7 +295,7 @@ Thread::CancelState Thread::set_cancel_state(CancelState cancel_state) {
   return CancelState(old);
 }
 
-Thread &Thread::join(void **value) {
+Thread &Thread::join(void **value) & {
   API_RETURN_VALUE_IF_ERROR(*this);
   API_ASSERT(is_joinable());
 
@@ -288,7 +304,7 @@ Thread &Thread::join(void **value) {
 
   const int local_result = API_SYSTEM_CALL("", pthread_join(id(), ptr));
   if (local_result == 0) {
-    m_state = State::completed;
+    context->state = State::completed;
   }
   return *this;
 }
@@ -298,7 +314,7 @@ const char *Thread::to_cstring(Thread::CancelState value) {
   case CancelState::disable:
     return "disable";
   case CancelState::enable:
-    return "disable";
+    return "enable";
   }
   return "unknown";
 }
@@ -311,4 +327,10 @@ const char *Thread::to_cstring(Thread::CancelType value) {
     return "asynchronous";
   }
   return "unknown";
+}
+
+const Thread &Thread::kill(int signal_number) const {
+  API_RETURN_VALUE_IF_ERROR(*this);
+  API_SYSTEM_CALL("", pthread_kill(id(), signal_number));
+  return *this;
 }

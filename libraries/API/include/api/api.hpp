@@ -199,11 +199,11 @@ public:
     UniquePointer<char *, decltype(&symbol_deleter)> m_symbol_pointer;
   };
 
-  API_NO_DISCARD const char *message() const { return m_message; }
-  API_NO_DISCARD int error_number() const { return m_error_number; }
-  API_NO_DISCARD int line_number() const { return m_line_number; }
+  API_NO_DISCARD auto message() const { return m_message; }
+  API_NO_DISCARD auto error_number() const { return m_error_number; }
+  API_NO_DISCARD auto line_number() const { return m_line_number; }
 
-  API_NO_DISCARD void *signature() const { return m_signature; }
+  API_NO_DISCARD auto signature() const { return m_signature; }
 
   constexpr static size_t backtrace_buffer_size() {
     return m_backtrace_buffer_size;
@@ -214,6 +214,17 @@ public:
   API_NO_DISCARD bool is_guarded() const { return m_is_guarded; }
   void set_guarded(bool value = true) { m_is_guarded = value; }
 
+  explicit Error(void *signature) : m_signature(signature) {}
+
+  auto nullify() { m_signature = nullptr; }
+  auto update_signature(void *signature) { m_signature = signature; }
+
+  void update_error_context(int result, int line, const char *message);
+
+  static auto get_thread_signature() -> void * {
+    return &errno;
+  }
+
 private:
 #if defined __link
   static constexpr size_t api_backtrace_size = 512;
@@ -221,9 +232,6 @@ private:
   static constexpr size_t api_backtrace_size = 32;
 #endif
 
-  explicit Error(void *signature) : m_signature(signature) {}
-  friend class PrivateExecutionContext;
-  friend class BacktraceSymbols;
   static constexpr size_t m_message_size = PATH_MAX;
   static constexpr size_t m_backtrace_buffer_size = api_backtrace_size;
 
@@ -249,83 +257,35 @@ private:
   }
 };
 
-class PrivateExecutionContext {
-protected:
-  friend class ExecutionContext;
-  inline bool is_error() const { return value() < 0; }
-  inline bool is_success() const { return value() >= 0; }
-  API_NO_DISCARD inline int value() const { return errno; }
-
-  API_NO_DISCARD size_t context_count() const {
-    if (m_error_list) {
-      return m_error_list->size() + 1;
-    }
-    return 1;
-  }
-
-  Error &get_error();
-
-  void free_context();
-  void update_error_context(int result, int line, const char *message);
-
-private:
-  friend class ErrorScope;
-  PrivateExecutionContext() = default;
-  Error m_error = Error(&errno);
-  std::vector<Error> *m_error_list = nullptr;
-};
-
 /*! \details This class is the base class for almost all classes
  * in all API frameworks.
  */
 class ExecutionContext {
 public:
-  static int
-  handle_system_call_result(int line, const char *message, int value) {
-    if (value >= 0) {
-      errno = value;
-    } else {
-      m_private_context.update_error_context(value, line, message);
-    }
-    return value;
-  }
+  static auto
+  handle_system_call_result(int line, const char *message, int value) -> int;
 
   template <typename T>
-  static T *
+  static auto
   handle_system_call_null_result(int line, const char *message, T *value) {
     if (value == nullptr) {
-      m_private_context.update_error_context(-1, line, message);
+      error().update_error_context(-1, line, message);
     }
     return value;
   }
 
-  static Error &error() { return m_private_context.get_error(); }
-  static void free_context() { return m_private_context.free_context(); }
+  static auto error() -> Error &;
+  static void free_context(void * signature);
   static void exit_fatal(const char *message);
+  static size_t context_count();
+  static void reset_error();
+  static bool is_error();
+  static bool is_success();
+  static int return_value();
 
-  static inline size_t context_count() {
-    return m_private_context.context_count();
-  }
-  static inline void reset_error() {
-    errno = 0;
-    error().reset();
-  }
-  static inline bool is_error() { return m_private_context.is_error(); }
-  static inline bool is_success() { return m_private_context.is_success(); }
-  static inline int return_value() { return m_private_context.value(); }
 
 private:
   friend class ErrorScope;
-  static PrivateExecutionContext m_private_context;
-};
-
-class ThreadExecutionContext {
-public:
-  ThreadExecutionContext(const ThreadExecutionContext &) = delete;
-  ThreadExecutionContext &operator=(const ThreadExecutionContext &) = delete;
-  ThreadExecutionContext(ThreadExecutionContext &&) = delete;
-  ThreadExecutionContext &operator=(ThreadExecutionContext &&) = delete;
-  ~ThreadExecutionContext() { ExecutionContext::free_context(); }
 };
 
 class Demangler {
@@ -716,7 +676,6 @@ private:
   }
 };
 
-
 /*! \details
  *
  * This class saves a copy of the error context on the stack and sets the
@@ -749,21 +708,16 @@ private:
  */
 class ErrorScope {
   struct Context {
-    Error error = ExecutionContext::m_private_context.get_error();
+    Error error = ExecutionContext::error();
     int error_number = errno;
   };
 
-  static void deleter(Context *context) {
-    ExecutionContext::m_private_context.get_error() = context->error;
-    errno = context->error_number;
-  }
+  static void deleter(Context *context);
   using ErrorResource = SystemResource<Context, decltype(&deleter)>;
   ErrorResource m_error_resource;
 
 public:
-  ErrorScope() : m_error_resource({}, &deleter) {
-    ExecutionContext::reset_error();
-  }
+  ErrorScope();
 };
 
 /*! \cond */

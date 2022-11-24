@@ -19,12 +19,18 @@ namespace sys {
 class TemporaryDirectory : public api::ExecutionContext {
 public:
   explicit TemporaryDirectory(var::StringView parent = "");
-  TemporaryDirectory(const TemporaryDirectory&) = delete;
-  TemporaryDirectory& operator=(const TemporaryDirectory&) = delete;
-  ~TemporaryDirectory();
+
+  API_NO_DISCARD var::StringView path() const & {
+    return path_resource.value().string_view();
+  }
+
+  API_NO_DISCARD var::PathString path() const && {
+    return path_resource.value();
+  }
 
 private:
-  API_AC(TemporaryDirectory, var::PathString, path);
+  static void deleter(var::PathString * path);
+  api::SystemResource<var::PathString, decltype(&deleter)> path_resource;
 };
 
 } // namespace sys
