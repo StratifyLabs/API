@@ -7,6 +7,17 @@
 
 using namespace fs;
 
+namespace {
+DIR * dir_open(var::StringView path) {
+  API_RETURN_VALUE_IF_ERROR(nullptr);
+  var::PathString path_string(path);
+  auto *result = API_SYSTEM_CALL_NULL(
+    path_string.cstring(),
+    static_cast<DIR *>(::opendir(path_string.cstring())));
+  return result;
+}
+}
+
 const char *DirObject::read() const {
   API_RETURN_VALUE_IF_ERROR(nullptr);
   struct dirent *dirent_result = nullptr;
@@ -29,19 +40,9 @@ var::PathString DirObject::get_entry() const {
 }
 
 Dir::Dir(var::StringView path)
-  : DirAccess<Dir>(path), m_dirp(open(path), &dir_deleter) {}
+  : DirAccess<Dir>(path), m_dirp(dir_open(path), &dir_deleter) {}
 
-DIR *Dir::open(var::StringView path) {
-  API_RETURN_VALUE_IF_ERROR(nullptr);
-  var::PathString path_string(path);
-  DIR *result = API_SYSTEM_CALL_NULL(
-    path_string.cstring(),
-    reinterpret_cast<DIR *>(::opendir(path_string.cstring())));
-  if (result) {
-    set_path(path_string);
-  }
-  return result;
-}
+
 
 #if !defined __link
 int Dir::count() const {
