@@ -9,6 +9,8 @@
 - Cleanup construct/destruct `thread::Thread`
 - Safer `rvalue` (move the data) return for `fs::DataFile::data()`
 - Cleanup `fs::Dir` object management
+- Fix `Process::Arguments` for launching applications on Posix
+  - Properly resolve executables passed to `Process::Process()`
 
 # Version 1.6.5
 
