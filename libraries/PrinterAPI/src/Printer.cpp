@@ -117,28 +117,28 @@ void Printer::print(
     interface_print_final(" ");
   }
 
-  auto print_escaped = [&](StringView value){
-    for(const auto character: value){
-      const auto print_value = [&](){
-        if( character == '"'){
+  auto print_escaped = [&](StringView value) {
+    for (const auto character : value) {
+      const auto print_value = [&]() {
+        if (character == '"') {
           return StringView{"\\\""};
         }
-        if( character == '\b'){
+        if (character == '\b') {
           return StringView{"\\b"};
         }
-        if( character == '\f'){
+        if (character == '\f') {
           return StringView{"\\f"};
         }
-        if( character == '\n'){
+        if (character == '\n') {
           return StringView{"\\n"};
         }
-        if( character == '\r'){
+        if (character == '\r') {
           return StringView{"\\r"};
         }
-        if( character == '\t'){
+        if (character == '\t') {
           return StringView{"\\t"};
         }
-        if( character == '\\'){
+        if (character == '\\') {
           return StringView{"\\\\"};
         }
 
@@ -553,16 +553,20 @@ auto Printer::update_progress(int progress, int total)
 
       } else {
 
-        const auto target = [&](){
-          const auto is_overflow =  INT_MAX / width > progress;
-          const auto scaled_progress = is_overflow ? progress / width : progress;
+        const auto target = [&]() {
+          const auto is_overflow = total && (INT_MAX / width < total);
+          if( is_overflow ){
+            //printf("overflow %d/%d!!!\n", progress, total);
+          }
+          const auto scaled_progress
+            = is_overflow ? progress / width : progress;
           const auto scaled_total = is_overflow ? total / width : progress;
-          return (scaled_progress * width + scaled_total / 2) / scaled_total;
+          return scaled_total
+                   ? (scaled_progress * width + scaled_total / 2) / scaled_total
+                   : 0;
         }();
 
-        while (
-          (total != 0)
-          && (m_progress_state <= target)) {
+        while ((total != 0) && (m_progress_state <= target)) {
           interface_print_final("#");
           m_progress_state++;
           fflush(stdout);
@@ -654,8 +658,7 @@ Printer &Printer::fatal(const StringView a) {
   return *this;
 }
 
-Printer &
-Printer::trace(const char *function, int line, StringView message) {
+Printer &Printer::trace(const char *function, int line, StringView message) {
   if (verbose_level() == Level::trace) {
     interface_print_final(">> trace ");
     interface_print_final(function);
@@ -705,8 +708,7 @@ Printer &Printer::operator<<(const View a) {
       } else if (o_flags & Flags::blob) {
         for (u32 j = 0; j < 16; j++) {
           if (i * 16 + j < a.size()) {
-            data_string
-              |= NumberString().format("%02X", ptru8[i * 16 + j]);
+            data_string |= NumberString().format("%02X", ptru8[i * 16 + j]);
           } else {
             data_string |= "__";
           }
@@ -751,8 +753,7 @@ Printer &Printer::operator<<(const View a) {
       }
     } else if (o_flags & Flags::type_float) {
       const auto *ptrfloat = a.to_const_float();
-      data_string
-        = NumberString().format("%0.3f", ptrfloat[i]).string_view();
+      data_string = NumberString().format("%0.3f", ptrfloat[i]).string_view();
     } else {
       // default is signed values
       if (o_flags & Flags::width_32) {
@@ -764,9 +765,8 @@ Printer &Printer::operator<<(const View a) {
       } else if (o_flags & Flags::blob) {
         for (u32 j = 0; j < 16; j++) {
           if (i * 16 + j < a.size()) {
-            data_string |= NumberString()
-                             .format("%d", ptru8[i * 16 + j])
-                             .string_view();
+            data_string
+              |= NumberString().format("%d", ptru8[i * 16 + j]).string_view();
           } else {
             data_string |= "__";
           }
@@ -795,15 +795,11 @@ Printer &Printer::operator<<(const View a) {
 #define USE_DEMANGLER 0
 
 Printer &Printer::operator<<(const api::Error &error_context) {
-  key(
-    "lineNumber",
-    NumberString(error_context.line_number()).string_view());
+  key("lineNumber", NumberString(error_context.line_number()).string_view());
   key(
     "returnValue",
     NumberString(api::ExecutionContext::return_value()).string_view());
-  key(
-    "errorNumber",
-    NumberString(error_context.error_number()).string_view());
+  key("errorNumber", NumberString(error_context.error_number()).string_view());
   key("message", StringView(error_context.message()));
 #if defined __link
 
