@@ -126,6 +126,16 @@ public:
     printer().disable_flags(Printer::Flags::simple_progress);
     print_progress();
 
+    {
+      auto total_object = Printer::Object(printer(), "INT_MAX/50");
+      const auto total = INT_MAX / 50;
+      for (auto index : api::Index(total)) {
+        printer().update_progress(index*50, total*50);
+      }
+      printer().update_progress(0, 0);
+    }
+
+
     TEST_ASSERT(is_success());
 
     {
