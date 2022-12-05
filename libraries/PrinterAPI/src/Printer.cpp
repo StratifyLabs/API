@@ -494,7 +494,7 @@ u32 Printer::get_bitmap_pixel_color(char c, u8 bits_per_pixel) {
 
 auto Printer::update_progress(int progress, int total)
   -> api::ProgressCallback::IsAbort {
-  const u32 width = m_progress_width;
+  const auto width = m_progress_width;
 
   if (verbose_level() >= Level::info) {
 
@@ -553,9 +553,16 @@ auto Printer::update_progress(int progress, int total)
 
       } else {
 
+        const auto target = [&](){
+          const auto is_overflow =  INT_MAX / width > progress;
+          const auto scaled_progress = is_overflow ? progress / width : progress;
+          const auto scaled_total = is_overflow ? total / width : progress;
+          return (scaled_progress * width + scaled_total / 2) / scaled_total;
+        }();
+
         while (
           (total != 0)
-          && (m_progress_state <= (progress * width + total / 2) / total)) {
+          && (m_progress_state <= target)) {
           interface_print_final("#");
           m_progress_state++;
           fflush(stdout);
