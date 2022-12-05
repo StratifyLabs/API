@@ -4,6 +4,7 @@
 
 ## Bug Fixes
 
+- Fixed a bug with `Printer::update_progress()` overflowing with large input
 - Use rule of zero with `sys::TemporaryDirectory`
 - Cleanup management of `api::Error`
 - Cleanup construct/destruct `thread::Thread`
