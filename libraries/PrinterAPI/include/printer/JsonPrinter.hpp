@@ -9,7 +9,7 @@
 
 namespace printer {
 
-class JsonPrinter : public Printer {
+class JsonPrinter : public DerivedPrinter<JsonPrinter> {
 public:
   JsonPrinter();
 

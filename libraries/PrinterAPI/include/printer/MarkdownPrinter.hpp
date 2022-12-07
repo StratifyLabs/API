@@ -11,7 +11,7 @@
 
 namespace printer {
 
-class MarkdownPrinter : public Printer {
+class MarkdownPrinter : public DerivedPrinter<MarkdownPrinter> {
 public:
   MarkdownPrinter();
 
