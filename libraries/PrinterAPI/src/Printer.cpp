@@ -852,3 +852,15 @@ Printer &Printer::operator<<(const StringViewList &a) {
   }
   return *this;
 }
+Printer &Printer::enable_flags(PrinterFlags::Flags value) {
+  m_print_flags |= value;
+  return *this;
+}
+Printer &Printer::disable_flags(PrinterFlags::Flags value) {
+  m_print_flags &= ~value;
+  return *this;
+}
+Printer &Printer::set_flags(PrinterFlags::Flags value) {
+  m_print_flags = value;
+  return *this;
+}

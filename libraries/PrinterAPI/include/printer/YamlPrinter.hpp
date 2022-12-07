@@ -8,7 +8,7 @@
 
 namespace printer {
 
-class YamlPrinter : public Printer {
+class YamlPrinter : public DerivedPrinter<YamlPrinter> {
 public:
   YamlPrinter();
 
