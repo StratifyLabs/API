@@ -560,7 +560,7 @@ auto Printer::update_progress(int progress, int total)
           }
           const auto scaled_progress
             = is_overflow ? progress / width : progress;
-          const auto scaled_total = is_overflow ? total / width : progress;
+          const auto scaled_total = is_overflow ? total / width : total;
           return scaled_total
                    ? (scaled_progress * width + scaled_total / 2) / scaled_total
                    : 0;
