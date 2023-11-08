@@ -13,6 +13,7 @@
 - Cleanup `fs::Dir` object management
 - Fix `Process::Arguments` for launching applications on Posix
   - Properly resolve executables passed to `Process::Process()`
+- Fixed a bug where the debug target list was not getting generated correctly
 
 # Version 1.6.5
 
