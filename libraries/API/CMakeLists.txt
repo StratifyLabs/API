@@ -12,7 +12,7 @@ foreach(TARGET ${TARGET_LIST})
     api.cmake
     ../API.cmake)
   get_target_property(ARCH ${TARGET} CMSDK_PROPERTY_ARCH)
-  target_compile_definitions(${TARGET} PUBLIC __${ARCH})
+  target_compile_definitions(${TARGET} PUBLIC __${ARCH}=__${ARCH})
   if(API_PUBLIC_COMPILE_OPTIONS)
     message(STATUS "API: ${API_PUBLIC_COMPILE_OPTIONS} to ${TARGET} as PUBLIC")
     target_compile_options(${TARGET} PUBLIC ${API_PUBLIC_COMPILE_OPTIONS})

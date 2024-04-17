@@ -98,7 +98,7 @@ Process::Environment &Process::Environment::set(
   const auto starts_with = name | "=";
   for (auto i = size_t{}; i < m_arguments.count(); ++i) {
     const auto current_value = m_arguments.at(i);
-    if (current_value != nullptr) {
+    if (!current_value.is_empty()) {
       if (StringView{current_value}.find(starts_with) == 0) {
         replace(i, format(name, value));
         return *this;
