@@ -30,21 +30,17 @@ Printer &
 operator<<(Printer &printer, const sys::Process::Arguments &arguments) {
   auto count = size_t{};
   for (const auto &arg : arguments.arguments()) {
-    if (arg != nullptr) {
-      printer.key(var::NumberString(count, "[%04d]"), arg);
-      ++count;
-    }
+    printer.key(var::NumberString(count, "[%04d]"), arg);
+    ++count;
   }
   return printer;
 }
 
 Printer &operator<<(Printer &printer, const sys::Process::Environment &env) {
   for (const auto &variable : env.variables()) {
-    if (variable != nullptr) {
-      const auto value_list = var::StringView(variable).split("=");
-      if (value_list.count() > 1) {
-        printer.key(value_list.at(0), value_list.at(1));
-      }
+    const auto value_list = var::StringView(variable).split("=");
+    if (value_list.count() > 1) {
+      printer.key(value_list.at(0), value_list.at(1));
     }
   }
   return printer;
@@ -64,14 +60,6 @@ constexpr auto stop_sequence = StringView{
   "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
   "iasdkjbflaskjdhflasidugajsbga;sokfguaspoiduyfgaskldjfbas;"
   "dfupuiy2ipu3y4aslkdjnflajg"};
-
-auto create_cstring_list_from_strings(StringList &list) {
-  auto result = Vector<char *>().reserve(list.count());
-  for (const auto &item : list) {
-    result.push_back(const_cast<char*>(item.cstring()));
-  }
-  return result;
-}
 
 } // namespace
 
@@ -95,15 +83,14 @@ Process::Environment &Process::Environment::set(
   };
 
   // check to see if the entry exists
-  const auto starts_with = name | "=";
-  for (auto i = size_t{}; i < m_arguments.count(); ++i) {
-    const auto current_value = m_arguments.at(i);
-    if (!current_value.is_empty()) {
-      if (StringView{current_value}.find(starts_with) == 0) {
-        replace(i, format(name, value));
-        return *this;
-      }
+  const auto starts_with = name + "=";
+  auto index = size_t{};
+  for (const auto &entry : arguments()) {
+    if (StringView{entry}.starts_with(starts_with)) {
+      replace(index, format(name, value));
+      return *this;
     }
+    ++index;
   }
 
   push(format(name, value));
@@ -190,13 +177,14 @@ Process::Process(const Arguments &arguments, const Environment &environment)
 
   bool is_process_launched = false;
 
+  const auto pwd = environment.find("PWD");
+
 #if defined __win32
   m_process_information = new PROCESS_INFORMATION;
   *m_process_information = PROCESS_INFORMATION{};
 
   PathString cwd;
   _getcwd(cwd.data(), cwd.capacity());
-  const auto pwd = environment.find("PWD");
 
   if (pwd.is_empty() == false) {
     _chdir(pwd.cstring());
@@ -271,7 +259,28 @@ Process::Process(const Arguments &arguments, const Environment &environment)
   is_process_launched = true;
 #else
 
-  const auto pwd = environment.find("PWD");
+  const auto full_path = [&]() {
+    const auto arguments_front = arguments.arguments().front();
+    // pull path
+    if (arguments_front.front() == '/') {
+      return PathString{arguments_front.string_view()};
+    }
+
+    // relative path
+    if (arguments_front.string_view().contains("/")) {
+      return Process::Environment().find("PWD").string_view() / arguments_front;
+    }
+
+    // search the path
+    return which(arguments_front);
+  }();
+
+  if (!fs::FileSystem().exists(full_path)) {
+    API_RETURN_ASSIGN_ERROR(
+      "cannot find executable file " | full_path.string_view(),
+      EINVAL);
+  }
+
   if (fs::FileSystem().directory_exists(pwd) == false) {
     API_RETURN_ASSIGN_ERROR(
       ("cannot change dir to `" | StringView(pwd)) | "`",
@@ -282,8 +291,6 @@ Process::Process(const Arguments &arguments, const Environment &environment)
   if (fork_result == 0) {
 
     // this will run in the child process
-    Arguments args(arguments);
-
     if (chdir(environment.find("PWD").cstring()) < 0) {
       API_RETURN_ASSIGN_ERROR("failed to chdir to PWD", errno);
     }
@@ -301,12 +308,42 @@ Process::Process(const Arguments &arguments, const Environment &environment)
     // delete m_standard_output;
     // delete m_standard_error;
 
+    static auto create_cstring = [](const String &string) {
+      auto *result = new char[string.length() + 1];
+      strcpy(result, string.cstring());
+      return result;
+    };
+
+    auto create_cstring_list_from_strings = [](const StringList &list) {
+      auto result = Vector<char *>().reserve(list.count() + 1);
+      for (const auto &item : list) {
+        result.push_back(create_cstring(item));
+      }
+      return result.push_back(nullptr);
+    };
+
+    auto path = create_cstring(String{full_path.string_view()});
+    auto args_cstring_list
+      = create_cstring_list_from_strings(arguments.arguments());
+    auto environ_cstring_list
+      = create_cstring_list_from_strings(environment.arguments());
+
     // replace the current process with the one specified
-    ::execve(
-      args.arguments().front().cstring(),
-      create_cstring_list_from_strings(args.m_arguments).data(),
-      environ);
-    perror("failed to launch\n");
+    ::execve(path, args_cstring_list.data(), environ_cstring_list.data());
+
+    printf("\nPath:%s\n", path);
+    for (const auto arg : args_cstring_list) {
+      if (arg) {
+        printf("Arg:%s\n", arg);
+      }
+    }
+
+    for (const auto env : environ_cstring_list) {
+      if (env) {
+        printf("Env:%s\n", env);
+      }
+    }
+    perror("sys::Process() -> failed to launch");
     exit(1);
   } else {
     m_pid = PidResource(fork_result, &pid_deleter);

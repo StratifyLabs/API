@@ -158,34 +158,27 @@ public:
   Printer &error(var::StringView a);
   Printer &fatal(var::StringView a);
   Printer &newline();
-
   Printer &error(api::PrivateExecutionContext result, u32 line_number);
-
-  Printer &enable_flags(Flags value) {
-    m_print_flags |= value;
-    return *this;
-  }
-  Printer &disable_flags(Flags value) {
-    m_print_flags &= ~value;
-    return *this;
-  }
+  Printer &enable_flags(Flags value);
+  Printer &disable_flags(Flags value);
+  Printer &set_flags(Flags value);
 
   Flags flags() const { return m_print_flags; }
-  Printer &set_flags(Flags value) {
-    m_print_flags = value;
-    return *this;
-  }
 
   class FlagScope {
+    struct Context {
+      Printer *printer;
+      Flags flags;
+    };
+    static void deleter(Context *context) {
+      context->printer->set_flags(context->flags);
+    }
+    using Resource = api::SystemResource<Context, decltype(&deleter)>;
+    Resource m_resource;
+
   public:
     explicit FlagScope(Printer &printer)
-      : m_printer(printer), m_flags(printer.flags()) {}
-
-    ~FlagScope() { m_printer.set_flags(m_flags); }
-
-  private:
-    Flags m_flags;
-    Printer &m_printer;
+      : m_resource({&printer, printer.flags()}, &deleter) {}
   };
 
   using FlagGuard = FlagScope;
@@ -301,7 +294,8 @@ public:
     Object(
       Printer &printer,
       var::StringView name,
-      api::Function<void()> function, Level level = Level::info)
+      api::Function<void()> function,
+      Level level = Level::info)
       : m_pointer(&printer, deleter) {
       printer.open_object(name);
       function();
@@ -320,7 +314,8 @@ public:
     Array(
       Printer &printer,
       var::StringView name,
-      api::Function<void()> function, Level level = Level::info)
+      api::Function<void()> function,
+      Level level = Level::info)
       : m_pointer(&printer, deleter) {
       printer.open_object(name);
       function();
@@ -369,6 +364,78 @@ private:
 #if defined __link
   bool m_is_bash = false;
 #endif
+};
+
+template <typename Derived> class DerivedPrinter : public Printer {
+public:
+  Derived &set_verbose_level(Level level) & {
+    return static_cast<Derived &>(Printer::set_verbose_level(level));
+  }
+
+  Derived &&set_verbose_level(Level level) && {
+    return std::move(set_verbose_level(level));
+  }
+
+  Derived &set_verbose_level(var::StringView level) & {
+    return static_cast<Derived &>(Printer::set_verbose_level(level));
+  }
+
+  Derived &&set_verbose_level(var::StringView level) && {
+    return std::move(set_verbose_level(level));
+  }
+
+  Derived &trace(const char *function, int line, var::StringView message) & {
+    return static_cast<Derived &>(Printer::trace(function, line, message));
+  }
+  Derived &&trace(const char *function, int line, var::StringView message) && {
+    return std::move(trace(function, line, message));
+  }
+  Derived &debug(var::StringView a) & {
+    return static_cast<Derived &>(Printer::debug(a));
+  }
+  Derived &&debug(var::StringView a) && { return std::move(debug(a)); }
+  Derived &message(var::StringView a) & {
+    return static_cast<Derived &>(Printer::message(a));
+  }
+  Derived &&message(var::StringView a) && { return std::move(message(a)); }
+  Derived &info(var::StringView a) & {
+    return static_cast<Derived &>(Printer::info(a));
+  }
+  Derived &&info(var::StringView a) && { return std::move(info(a)); }
+  Derived &warning(var::StringView a) & {
+    return static_cast<Derived &>(Printer::warning(a));
+  }
+  Derived &&warning(var::StringView a) && { return std::move(warning(a)); }
+  Derived &error(var::StringView a) & {
+    return static_cast<Derived &>(Printer::error(a));
+  }
+  Derived &&error(var::StringView a) && { return std::move(error(a)); }
+  Derived &fatal(var::StringView a) & {
+    return static_cast<Derived &>(Printer::info(a));
+  }
+  Derived &&fatal(var::StringView a) && { return std::move(fatal(a)); }
+  Derived &newline() & { return static_cast<Derived &>(Printer::newline()); }
+  Derived &&newline() && { return std::move(newline()); }
+#if 0
+  Derived &error(api::PrivateExecutionContext result, u32 line_number) & {
+    return static_cast<Derived &>(Printer::info(result, line_number));
+  }
+  Derived &&error(api::PrivateExecutionContext result, u32 line_number) && {
+    return std::move(error(result, line_number));
+  }
+#endif
+  Derived &enable_flags(Flags value) & {
+    return static_cast<Derived &>(Printer::enable_flags(value));
+  }
+  Derived &&enable_flags(Flags value) && { return std::move(enable_flags(value)); }
+  Derived &disable_flags(Flags value) & {
+    return static_cast<Derived &>(Printer::disable_flags(value));
+  }
+  Derived &&disable_flags(Flags value) && { return std::move(disable_flags(value)); }
+  Derived &set_flags(Flags value) & {
+    return static_cast<Derived &>(Printer::set_flags(value));
+  }
+  Derived &&set_flags(Flags value) && { return std::move(set_flags(value)); }
 };
 
 class NullPrinter : public Printer {

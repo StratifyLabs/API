@@ -2,8 +2,8 @@
 #include <cstdio>
 
 #include "api/api.hpp"
-#include "test/Test.hpp"
 #include "printer/MarkdownPrinter.hpp"
+#include "test/Test.hpp"
 #include "thread/Thread.hpp"
 
 using namespace printer;
@@ -14,13 +14,25 @@ class UnitTest : public test::Test {
 public:
   UnitTest(var::StringView name) : test::Test(name) {}
 
-  bool execute_class_api_case() {
-    TEST_ASSERT_RESULT(markdown_printer_test());
-    TEST_ASSERT_RESULT(api_case());
+  auto printer_case() {
+    auto printer_case = Printer::Object(printer(), "printer");
+    {
+      auto hide_message
+        = Printer::Object(printer(), "debugOnly", Printer::Level::message);
+      printer().key("debug", "only shown during `message` or greater");
+    }
+
+    printer().object("errorWithMessage", error(), Printer::Level::message);
+
+    {
+      auto yaml_printer = YamlPrinter().set_verbose_level(Printer::Level::info);
+      printer().object("hideThisError", error(), Printer::Level::debug);
+      printer().object("showThisError", error(), Printer::Level::info);
+    }
     return true;
   }
 
-  bool markdown_printer_test() {
+  auto markdown_printer_test() {
     MarkdownPrinter md;
     {
       MarkdownPrinter::Header h(md, "Header");
@@ -41,7 +53,7 @@ public:
     return true;
   }
 
-  bool api_case() {
+  auto api_case() {
 
     TEST_ASSERT(error().signature() == static_cast<const void *>(&(errno)));
     TEST_ASSERT(is_success());
@@ -126,14 +138,23 @@ public:
     printer().disable_flags(Printer::Flags::simple_progress);
     print_progress();
 
+    {
+      auto total_object = Printer::Object(printer(), "INT_MAX/50");
+      const auto total = INT_MAX / 50;
+      for (auto index : api::Index(total)) {
+        printer().update_progress(index * 50, total * 50);
+      }
+      printer().update_progress(0, 0);
+    }
+
     TEST_ASSERT(is_success());
 
     {
       const u16 last = 200;
       int value = 0;
-      for(auto i: api::Index(last)) {
+      for (auto i : api::Index(last)) {
         TEST_ASSERT(sizeof(i) == sizeof(u16));
-        value+=i;
+        value += i;
       }
       printer().key("indexValueU16", NumberString(value));
     }
@@ -141,9 +162,9 @@ public:
     {
       const size_t last = 200;
       int value = 0;
-      for(auto i: api::Index(last)) {
+      for (auto i : api::Index(last)) {
         TEST_ASSERT(sizeof(i) == sizeof(size_t));
-        value+=i;
+        value += i;
       }
       printer().key("indexValueSize", NumberString(value));
     }
@@ -152,9 +173,9 @@ public:
       const u16 first = 50;
       const u16 last = 200;
       int value = 0;
-      for(auto i: api::Range(first, last)) {
+      for (auto i : api::Range(first, last)) {
         TEST_ASSERT(sizeof(i) == sizeof(u16));
-        value+=i;
+        value += i;
       }
       printer().key("rangeValueU16", NumberString(value));
     }
@@ -163,13 +184,20 @@ public:
       const size_t first = 50;
       const size_t last = 200;
       int value = 0;
-      for(auto i: api::Range(first,last)) {
+      for (auto i : api::Range(first, last)) {
         TEST_ASSERT(sizeof(i) == sizeof(size_t));
-        value+=i;
+        value += i;
       }
       printer().key("rangeValueSize", NumberString(value));
     }
 
+    return true;
+  }
+
+  bool execute_class_api_case() {
+    TEST_ASSERT_RESULT(markdown_printer_test());
+    TEST_ASSERT_RESULT(api_case());
+    TEST_ASSERT_RESULT(printer_case());
     return true;
   }
 

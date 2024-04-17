@@ -4,11 +4,16 @@
 
 ## Bug Fixes
 
+- Fixed a bug when creating a Printer, modifying it and moving it.
+- Fixed a bug with `Printer::update_progress()` overflowing with large input
 - Use rule of zero with `sys::TemporaryDirectory`
 - Cleanup management of `api::Error`
 - Cleanup construct/destruct `thread::Thread`
 - Safer `rvalue` (move the data) return for `fs::DataFile::data()`
 - Cleanup `fs::Dir` object management
+- Fix `Process::Arguments` for launching applications on Posix
+  - Properly resolve executables passed to `Process::Process()`
+- Fixed a bug where the debug target list was not getting generated correctly
 
 # Version 1.6.5
 

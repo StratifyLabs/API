@@ -1,6 +1,8 @@
 ﻿
 #include <signal.h>
 
+#include <printer/YamlPrinter.hpp>
+
 #include "UnitTest.hpp"
 
 #define VERSION "0.1"
@@ -16,7 +18,7 @@ int main(int argc, char *argv[]) {
   sys::Cli cli(argc, argv);
   {
     auto scope
-      = test::Test::Scope<printer::Printer>(test::Test::Initialize()
+      = test::Test::Scope<printer::YamlPrinter>(test::Test::Initialize()
                                               .set_name(cli.get_name())
                                               .set_version(VERSION)
                                               .set_git_hash(CMSDK_GIT_HASH));
