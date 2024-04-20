@@ -1,10 +1,12 @@
 > Please see [Semantic Versioning on Github](https://blog.stratifylabs.dev/device/2021-07-12-Semantic-Versioning-and-Github/) for more details on managing the `CHANGES.md` file.
 
-# Version 1.7.0 (unreleased)
+# Version 1.7.0
 
 ## New Features
 
-- None yet
+- Updated all libraries to CMSDK 2.0
+- Fix some build issues with macOs and `#define __link`
+- Fixed some C++ build issues on macOs with `File::ioctl()`
 
 ## Bug Fixes
 
