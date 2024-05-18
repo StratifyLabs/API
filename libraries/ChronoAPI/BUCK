@@ -1,0 +1,21 @@
+cxx_library(
+    name = "chrono",
+    srcs = [
+        "src/ClockTime.cpp",
+        "src/ClockTimer.cpp",
+        "src/DateTime.cpp",
+        "src/MicroTime.cpp",
+    ],
+    exported_headers = {
+        "ClockTime.hpp": "include/chrono/ClockTime.hpp",
+        "ClockTimer.hpp": "include/chrono/ClockTimer.hpp",
+        "DateTime.hpp": "include/chrono/DateTime.hpp",
+        "MicroTime.hpp": "include/chrono/MicroTime.hpp",
+    },
+    header_namespace = "chrono",
+    exported_deps = [
+        "API//:printer",
+    ],
+    visibility = ["PUBLIC"],
+    #link_style = "static"
+)

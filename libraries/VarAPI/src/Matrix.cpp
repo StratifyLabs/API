@@ -1,3 +1,3 @@
-#include "Matrix.hpp"
+#include "var/Matrix.hpp"
 
-Matrix::Matrix() {}
+static int unused_value = 0;

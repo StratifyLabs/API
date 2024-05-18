@@ -5,7 +5,7 @@
 
 /*! \cond */
 
-#include "../var/Queue.hpp"
+#include "var/Queue.hpp"
 #include "Test.hpp"
 
 namespace test {

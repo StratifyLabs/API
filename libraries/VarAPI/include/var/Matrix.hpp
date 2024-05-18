@@ -1,7 +1,7 @@
 #ifndef VAR_API_MATRIX_HPP_
 #define VAR_API_MATRIX_HPP_
 
-#include "../sys/Printer.hpp"
+//#include "sys/Printer.hpp"
 #include "Vector.hpp"
 
 namespace var {
@@ -64,6 +64,7 @@ public:
 private:
 };
 
+/*
 template <typename T>
 printer::Printer &
 operator<<(printer::Printer &printer, const Matrix<T> &matrix) {
@@ -81,6 +82,7 @@ operator<<(printer::Printer &printer, const Matrix<T> &matrix) {
   }
   return printer;
 }
+*/
 
 } // namespace var
 

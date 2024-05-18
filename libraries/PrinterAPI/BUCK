@@ -1,0 +1,20 @@
+cxx_library(
+    name = "printer",
+    srcs = [
+        "src/JsonPrinter.cpp",
+        "src/MarkdownPrinter.cpp",
+        "src/Printer.cpp",
+        "src/YamlPrinter.cpp",
+    ],
+    exported_headers = {
+        "JsonPrinter.hpp": "include/printer/JsonPrinter.hpp",
+        "MarkdownPrinter.hpp": "include/printer/MarkdownPrinter.hpp",
+        "Printer.hpp": "include/printer/Printer.hpp",
+        "YamlPrinter.hpp": "include/printer/YamlPrinter.hpp",
+    },
+    header_namespace = "printer",
+    exported_deps = [
+        "API//librariesVarAPI:var",
+    ],
+    visibility = ["PUBLIC"],
+)

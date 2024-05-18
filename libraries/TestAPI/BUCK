@@ -1,0 +1,23 @@
+
+
+cxx_library(
+    name = "test",
+    srcs = [
+        "src/Case.cpp",
+        "src/Engine.cpp",
+        "src/Test.cpp"
+    ],
+    exported_headers = {
+        "Case.hpp": "include/test/Case.hpp",
+        "Engine.hpp": "include/test/Engine.hpp",
+        "Test.hpp": "include/test/Test.hpp",
+        "Function.hpp": "include/test/Function.hpp"
+    },
+    header_namespace = "test",
+    exported_deps = [
+        "API//:sys",
+        "API//:var",
+        "API//:chrono"
+    ],
+    visibility = ["PUBLIC"]
+)

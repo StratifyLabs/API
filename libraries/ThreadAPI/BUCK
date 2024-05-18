@@ -1,0 +1,30 @@
+cxx_library(
+    name = "thread",
+    srcs = [
+        "src/Cond.cpp",
+        "src/Mq.cpp",
+        "src/Mutex.cpp",
+        "src/Sched.cpp",
+        "src/Sem.cpp",
+        "src/Signal.cpp",
+        "src/Thread.cpp",
+        "src/Timer.cpp",
+    ],
+    exported_headers = {
+        "Cond.hpp": "include/thread/Cond.hpp",
+        "Mq.hpp": "include/thread/Mq.hpp",
+        "Mutex.hpp": "include/thread/Mutex.hpp",
+        "Sched.hpp": "include/thread/Sched.hpp",
+        "Sem.hpp": "include/thread/Sem.hpp",
+        "Signal.hpp": "include/thread/Signal.hpp",
+        "Thread.hpp": "include/thread/Thread.hpp",
+        "Timer.hpp": "include/thread/Timer.hpp",
+    },
+    header_namespace = "thread",
+    exported_deps = [
+        "API//librariesChronoAPI:chrono",
+        "API//librariesFsAPI:fs",
+        "API//librariesVarAPI:var",
+    ],
+    visibility = ["PUBLIC"],
+)

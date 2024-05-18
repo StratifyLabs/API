@@ -1,4 +1,4 @@
-#include <chrono.hpp>
+#include "chrono/ClockTime.hpp"
 
 #include "thread/Cond.hpp"
 
@@ -92,7 +92,7 @@ Cond &Cond::wait() {
 }
 
 Cond &Cond::wait_timed(const chrono::ClockTime &timeout) {
-  const auto abs_timeout = ClockTime::get_system_time() + timeout;
+  const auto abs_timeout = chrono::ClockTime::get_system_time() + timeout;
   API_RETURN_VALUE_IF_ERROR(*this);
   API_SYSTEM_CALL(
     "",

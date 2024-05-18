@@ -1,0 +1,49 @@
+
+
+cxx_library(
+    name = "var",
+    srcs = [
+        "src/Array.cpp",
+        "src/Base64.cpp",
+        "src/Data.cpp",
+        "src/Flags.cpp",
+        "src/List.cpp",
+        "src/Matrix.cpp",
+        "src/Queue.cpp",
+        "src/Ring.cpp",
+        "src/StackString.cpp",
+        "src/String.cpp",
+        "src/StringView.cpp",
+        "src/Tokenizer.cpp",
+        "src/Vector.cpp",
+        "src/View.cpp"
+    ],
+    exported_headers = {
+        "Array.hpp": "include/var/Array.hpp",
+        "Data.hpp": "include/var/Data.hpp",
+        "MagicEnum.hpp": "include/var/MagicEnum.hpp",
+        "Set.hpp": "include/var/Set.hpp",
+        "StringView.hpp": "include/var/StringView.hpp",
+        "magic_enum.hpp": "include/var/magic_enum.hpp",
+        "Deque.hpp": "include/var/Deque.hpp",
+        "Matrix.hpp": "include/var/Matrix.hpp",
+        "Stack.hpp": "include/var/Stack.hpp",
+        "Tokenizer.hpp": "include/var/Tokenizer.hpp",
+        "magic_enum_fuse.hpp": "include/var/magic_enum_fuse.hpp",
+        "Base64.hpp": "include/var/Base64.hpp",
+        "Flags.hpp": "include/var/Flags.hpp",
+        "Queue.hpp": "include/var/Queue.hpp",
+        "StackString.hpp": "include/var/StackString.hpp",
+        "Vector.hpp": "include/var/Vector.hpp",
+        "ContainerObject.hpp": "include/var/ContainerObject.hpp",
+        "List.hpp": "include/var/List.hpp",
+        "Ring.hpp": "include/var/Ring.hpp",
+        "String.hpp": "include/var/String.hpp",
+        "View.hpp": "include/var/View.hpp"
+    },
+    header_namespace = "var",
+    exported_deps = [
+        "API//librariesAPI:api"
+    ],
+    visibility = ["PUBLIC"]
+)

@@ -1,0 +1,15 @@
+cxx_library(
+    name = "api",
+    srcs = [
+        "src/api.cpp"
+    ],
+    exported_headers = {
+        "api.hpp": "include/api/api.hpp",
+        "macros.hpp": "include/api/macros.hpp",
+    },
+    exported_deps = [
+        "CMakeSDK//:sdk"
+    ],
+    header_namespace = "api",
+    visibility = ["PUBLIC"]
+)

@@ -1,0 +1,27 @@
+cxx_library(
+    name = "sys",
+    srcs = [
+        "src/Cli.cpp",
+        "src/Pipe.cpp",
+        "src/Process.cpp",
+        "src/System.cpp",
+        "src/TemporaryDirectory.cpp",
+        "src/Version.cpp",
+    ],
+    exported_headers = {
+        "Cli.hpp": "include/sys/Cli.hpp",
+        "Pipe.hpp": "include/sys/Pipe.hpp",
+        "Process.hpp": "include/sys/Process.hpp",
+        "System.hpp": "include/sys/System.hpp",
+        "TemporaryDirectory.hpp": "include/sys/TemporaryDirectory.hpp",
+        "Version.hpp": "include/sys/Version.hpp",
+    },
+    header_namespace = "sys",
+    exported_deps = [
+        "API//librariesThreadAPI:thread",
+        "API//librariesFsAPI:fs",
+        "API//librariesPrinterAPI:printer",
+        "API//librariesVarAPI:var",
+    ],
+    visibility = ["PUBLIC"],
+)
