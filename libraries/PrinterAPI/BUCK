@@ -14,7 +14,7 @@ cxx_library(
     },
     header_namespace = "printer",
     exported_deps = [
-        "API//librariesVarAPI:var",
+        "API//:var",
     ],
     visibility = ["PUBLIC"],
 )

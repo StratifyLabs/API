@@ -22,9 +22,9 @@ cxx_library(
     },
     header_namespace = "thread",
     exported_deps = [
-        "API//librariesChronoAPI:chrono",
-        "API//librariesFsAPI:fs",
-        "API//librariesVarAPI:var",
+        "API//:chrono",
+        "API//:fs",
+        "API//:var",
     ],
     visibility = ["PUBLIC"],
 )

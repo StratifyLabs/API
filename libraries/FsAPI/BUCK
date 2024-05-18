@@ -29,8 +29,8 @@ cxx_library(
     },
     header_namespace = "fs",
     exported_deps = [
-        "API//librariesChronoAPI:chrono",
-        "API//librariesPrinterAPI:printer",
+        "API//:chrono",
+        "API//:printer",
     ],
     visibility = ["PUBLIC"],
 )

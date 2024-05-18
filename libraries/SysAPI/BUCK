@@ -18,10 +18,10 @@ cxx_library(
     },
     header_namespace = "sys",
     exported_deps = [
-        "API//librariesThreadAPI:thread",
-        "API//librariesFsAPI:fs",
-        "API//librariesPrinterAPI:printer",
-        "API//librariesVarAPI:var",
+        "API//:thread",
+        "API//:fs",
+        "API//:printer",
+        "API//:var",
     ],
     visibility = ["PUBLIC"],
 )

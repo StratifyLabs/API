@@ -43,7 +43,7 @@ cxx_library(
     },
     header_namespace = "var",
     exported_deps = [
-        "API//librariesAPI:api"
+        "API//:api"
     ],
     visibility = ["PUBLIC"]
 )
