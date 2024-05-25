@@ -1,4 +1,10 @@
-cxx_library(
+"""
+Chrono Library
+"""
+
+load("@API//library.bzl", "api_library")
+
+api_library(
     name = "chrono",
     srcs = [
         "src/ClockTime.cpp",
@@ -12,10 +18,7 @@ cxx_library(
         "DateTime.hpp": "include/chrono/DateTime.hpp",
         "MicroTime.hpp": "include/chrono/MicroTime.hpp",
     },
-    header_namespace = "chrono",
     exported_deps = [
         "API//:printer",
-    ],
-    visibility = ["PUBLIC"],
-    #link_style = "static"
+    ]
 )

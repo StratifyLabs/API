@@ -1,4 +1,10 @@
-cxx_library(
+"""
+Filesystem library
+"""
+
+load("@API//library.bzl", "api_library")
+
+api_library(
     name = "printer",
     srcs = [
         "src/JsonPrinter.cpp",
@@ -12,9 +18,7 @@ cxx_library(
         "Printer.hpp": "include/printer/Printer.hpp",
         "YamlPrinter.hpp": "include/printer/YamlPrinter.hpp",
     },
-    header_namespace = "printer",
     exported_deps = [
         "API//:var",
     ],
-    visibility = ["PUBLIC"],
 )

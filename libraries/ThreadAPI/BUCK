@@ -1,4 +1,10 @@
-cxx_library(
+"""
+Filesystem library
+"""
+
+load("@API//library.bzl", "api_library")
+
+api_library(
     name = "thread",
     srcs = [
         "src/Cond.cpp",
@@ -20,11 +26,9 @@ cxx_library(
         "Thread.hpp": "include/thread/Thread.hpp",
         "Timer.hpp": "include/thread/Timer.hpp",
     },
-    header_namespace = "thread",
     exported_deps = [
         "API//:chrono",
         "API//:fs",
         "API//:var",
-    ],
-    visibility = ["PUBLIC"],
+    ]
 )

@@ -1,4 +1,10 @@
-cxx_library(
+"""
+Filesystem library
+"""
+
+load("@API//library.bzl", "api_library")
+
+api_library(
     name = "sys",
     srcs = [
         "src/Cli.cpp",
@@ -16,12 +22,10 @@ cxx_library(
         "TemporaryDirectory.hpp": "include/sys/TemporaryDirectory.hpp",
         "Version.hpp": "include/sys/Version.hpp",
     },
-    header_namespace = "sys",
     exported_deps = [
         "API//:thread",
         "API//:fs",
         "API//:printer",
         "API//:var",
-    ],
-    visibility = ["PUBLIC"],
+    ]
 )

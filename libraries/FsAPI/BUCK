@@ -1,4 +1,10 @@
-cxx_library(
+"""
+Filesystem library
+"""
+
+load("@API//library.bzl", "api_library")
+
+api_library(
     name = "fs",
     srcs = [
         "src/AssetFileSystem.cpp",
@@ -27,10 +33,8 @@ cxx_library(
         "Path.hpp": "include/fs/Path.hpp",
         "dirent_windows.h": "include/fs/dirent_windows.h",
     },
-    header_namespace = "fs",
     exported_deps = [
         "API//:chrono",
         "API//:printer",
-    ],
-    visibility = ["PUBLIC"],
+    ]
 )

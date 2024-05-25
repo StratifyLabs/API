@@ -1,6 +1,10 @@
+"""
+Filesystem library
+"""
 
+load("@API//library.bzl", "api_library")
 
-cxx_library(
+api_library(
     name = "var",
     srcs = [
         "src/Array.cpp",
@@ -41,9 +45,7 @@ cxx_library(
         "String.hpp": "include/var/String.hpp",
         "View.hpp": "include/var/View.hpp"
     },
-    header_namespace = "var",
     exported_deps = [
         "API//:api"
-    ],
-    visibility = ["PUBLIC"]
+    ]
 )

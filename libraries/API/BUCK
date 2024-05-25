@@ -1,6 +1,12 @@
-cxx_library(
+"""
+API Library
+"""
+
+load("@API//library.bzl", "api_library")
+
+api_library(
     name = "api",
-    srcs = [
+        srcs = [
         "src/api.cpp"
     ],
     exported_headers = {
@@ -8,8 +14,8 @@ cxx_library(
         "macros.hpp": "include/api/macros.hpp",
     },
     exported_deps = [
-        "CMakeSDK//:sdk"
+        "CMakeSDK//:sdk",
+        "root//deps/StratifyOS/include:sos_include"
     ],
-    header_namespace = "api",
-    visibility = ["PUBLIC"]
 )
+
