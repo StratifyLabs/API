@@ -14,8 +14,8 @@ api_library(
         "macros.hpp": "include/api/macros.hpp",
     },
     exported_deps = [
-        "CMakeSDK//:sdk",
-        "root//deps/StratifyOS/include:sos_include"
+        "SDK//:sdk",
+        "StratifyOS//include:sos_include"
     ],
 )
 
