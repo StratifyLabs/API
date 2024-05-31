@@ -15,7 +15,7 @@ api_library(
     },
     exported_deps = [
         "SDK//:sdk",
-        "StratifyOS//include:sos_include"
+        "StratifyOS//include:sos_include",
     ],
 )
 

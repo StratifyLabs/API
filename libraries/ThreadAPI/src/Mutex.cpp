@@ -132,7 +132,7 @@ Mutex &Mutex::lock() {
 #if !defined __link
 Mutex &Mutex::lock_timed(const chrono::ClockTime &clock_time) {
   API_RETURN_VALUE_IF_ERROR(*this);
-  const auto calc_time = ClockTime::get_system_time() + clock_time;
+  const auto calc_time = chrono::ClockTime::get_system_time() + clock_time;
   API_SYSTEM_CALL(
     "",
     pthread_mutex_timedlock(m_mutex.pointer_to_value(), calc_time));
